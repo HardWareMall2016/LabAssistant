@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/top_tmp_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/space_8"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_black"
+            android:textSize="@dimen/text_size_18"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_4"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_12" />
+
+            <TextView
+                android:id="@+id/tv_source"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/detail_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:minHeight="200dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:baselineAligned="false"
+        android:visibility="visible" >
+
+        <RelativeLayout
+            android:id="@+id/woyaobaoming"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" 
+            android:background="@drawable/daily_bottom_btn_selector">
+
+            <TextView
+                android:id="@+id/fenxiang"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/module_fenxiang_img"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="分享" />
+
+            <TextView
+                android:id="@+id/baoming"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/module_baoming_img"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="我要报名"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/gray" />
+
+        <RelativeLayout
+            android:id="@+id/taolun"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" 
+            android:background="@drawable/daily_bottom_btn_selector">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:drawableLeft="@drawable/module_taolu_img"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="评论" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/spliter"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_above="@id/bottom_area"
+        android:background="@color/main_black" />
+
+    <WebView
+        android:id="@+id/wv_td"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/spliter"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_below="@id/top_tmp_area"
+        android:background="@color/transparent" />
+
+    <net.oschina.app.v2.ui.empty.EmptyLayout
+        android:id="@+id/error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+</RelativeLayout>

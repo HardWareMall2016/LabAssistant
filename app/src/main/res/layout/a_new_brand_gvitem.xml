@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false" >
+
+    <RelativeLayout
+        android:id="@+id/iv_brandgvitem01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:padding="1dp" 
+        android:background="#FFFFFF"
+        android:layout_marginRight="1px">
+
+        <ImageView
+            android:id="@+id/iv_brandgvitem_img01"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/bm2x" />
+
+        <TextView
+            android:id="@+id/tv_brandgvitem_tx01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_brandgvitem_img01"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="pingpai" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/iv_brandgvitem02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:layout_marginRight="1px"
+        android:padding="1dp" >
+
+        <ImageView
+            android:id="@+id/iv_brandgvitem_img02"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/bm2x" />
+
+        <TextView
+            android:id="@+id/tv_brandgvitem_tx02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_brandgvitem_img02"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+
+            android:text="pingpai" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/iv_brandgvitem03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:padding="1dp" >
+
+        <ImageView
+            android:id="@+id/iv_brandgvitem_img03"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/bm2x" />
+
+        <TextView
+            android:id="@+id/tv_brandgvitem_tx03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_brandgvitem_img03"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="pingpai" />
+    </RelativeLayout>
+
+</LinearLayout>

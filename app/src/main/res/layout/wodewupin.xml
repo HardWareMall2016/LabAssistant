@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/space_10"
+    android:paddingLeft="@dimen/space_10"
+    android:paddingRight="@dimen/space_10" >
+
+    <RelativeLayout
+        android:id="@+id/ll_myanswer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_90"
+        android:background="@drawable/rectangle_item"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <!-- 我的物品的图标 -->
+
+        <ImageView
+            android:id="@+id/iv_mycargo"
+            android:layout_width="@dimen/space_60"
+            android:layout_height="@dimen/space_60"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/space_15"
+            android:contentDescription="@null"
+            android:scaleType="fitXY" />
+
+        <!-- 兑换信息 -->
+
+        <TextView
+            android:id="@+id/tv_exchange_info"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_20"
+            android:layout_gravity="center_vertical"
+            android:layout_below="@+id/tvContainer"
+              android:layout_toRightOf="@id/iv_mycargo"
+              android:layout_marginTop="@dimen/space_9"
+            android:text="兑换成"/>
+
+        <LinearLayout
+            android:id="@+id/tvContainer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_50"
+            android:layout_toRightOf="@id/iv_mycargo"
+            android:orientation="vertical" >
+
+            <!-- 商品名称 -->
+
+            <TextView
+                android:id="@+id/tv_cargo_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/space_14"
+                android:text="实施降低" />
+            <!-- 水平线性，一个图片，一个价格 -->
+
+
+            <!-- 钱的数量 -->
+
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/dollar"
+                android:drawablePadding="8dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

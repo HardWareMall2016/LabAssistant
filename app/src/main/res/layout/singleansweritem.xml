@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_100"
+        android:layout_margin="@dimen/space_10"
+        android:background="@drawable/askmeagain_item"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_10" >
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+              <!--  用户图片  -->
+                <net.oschina.app.v2.ui.AvatarView
+                    android:id="@+id/iv_defaulthead"
+                    android:layout_width="@dimen/space_40"
+                    android:layout_height="@dimen/space_40"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_default_avatar" />
+                 <ImageView
+			        android:id="@+id/iv_sign"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="bottom|right"
+			        android:src="@drawable/user_v_sign" />
+            </FrameLayout>
+          <!--   图像之外的垂直线性 -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10"
+                android:orientation="vertical" >
+           <!-- 姓名，等级 -->
+                <TextView
+                    android:id="@+id/tv_default_name_level"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/space_14"
+                    android:hint="@string/default_name_level"
+                    android:textSize="@dimen/space_12" />
+                <!-- 推荐的答案 -->
+                <TextView
+                    android:id="@+id/tv_default_content"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/space_24"
+                    android:hint="@string/default_recommend"
+                    android:textSize="@dimen/space_18"
+                    android:textStyle="bold" />
+                <!-- 回答问题的时间 -->
+                <TextView
+                    android:id="@+id/tv_answer_default_timebefore"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/space_20"
+                    android:text="@string/answer_time_before" />
+                
+               <!-- 原问题 --> 
+                     <TextView
+                    android:id="@+id/tv_default_answer_origin"
+                    android:layout_width="fill_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="@dimen/space_22"
+                    android:text="@string/default_recommend_question" />
+               
+              <!--   底部的布局 -->
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/space_22"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/tv_default_surportnumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:hint="@string/question_detail_surport" />
+
+                    <TextView
+                        android:id="@+id/tv_apart_line"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/apart_line" />
+
+                    <TextView
+                        android:id="@+id/tv_default_ask_again"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:hint="@string/ask_again" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

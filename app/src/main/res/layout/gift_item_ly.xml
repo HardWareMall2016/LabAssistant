@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_10"
+        android:gravity="center_horizontal"
+        android:layout_weight="1" >
+
+        <RelativeLayout
+            android:id="@+id/ll_myanswer01"
+            android:layout_width="120dp"
+            android:layout_height="160dp"
+            android:background="@drawable/goods_bg"
+            android:padding="10dp" >
+
+            <!-- 我的物品的图标 -->
+
+            <ImageView
+                android:id="@+id/iv_mycargo01"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop" />
+
+            <!-- 商品名称 -->
+
+            <TextView
+                android:id="@+id/tv_cargo_name01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_mycargo01"
+                android:layout_marginTop="10dp"
+                android:hint="@string/mycargo_default"
+                android:textSize="@dimen/space_12" />
+
+            <!-- 钱的数量 -->
+
+            <TextView
+                android:id="@+id/tv_money01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_cargo_name01"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/dollar"
+                android:hint="@string/mycargo_num_default"
+                android:textColor="@color/reward"
+                android:textSize="@dimen/space_14" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/goods_sign01"
+            android:layout_width="50dp"
+            android:layout_height="50dp" 
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/space_10"
+        android:gravity="center_horizontal"
+        android:layout_weight="1" >
+
+        <RelativeLayout
+            android:id="@+id/ll_myanswer02"
+           	android:layout_width="120dp"
+            android:layout_height="160dp"
+            android:background="@drawable/goods_bg"
+            android:padding="10dp" >
+
+            <!-- 我的物品的图标 -->
+
+            <ImageView
+                android:id="@+id/iv_mycargo02"
+                android:layout_width="120dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop" />
+
+            <!-- 商品名称 -->
+
+            <TextView
+                android:id="@+id/tv_cargo_name02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_mycargo02"
+                android:layout_marginTop="10dp"
+                android:hint="@string/mycargo_default"
+                android:textSize="@dimen/space_12" />
+
+            <!-- 钱的数量 -->
+
+            <TextView
+                android:id="@+id/tv_money02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_cargo_name02"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/dollar"
+                android:hint="@string/mycargo_num_default"
+                android:textColor="@color/reward"
+                android:textSize="@dimen/space_14" />
+        </RelativeLayout>
+        
+        <ImageView
+            android:id="@+id/goods_sign02"
+            android:layout_width="50dp"
+            android:layout_height="50dp" 
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:popupbtn="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical" >
+
+    <!--
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@color/list_item_background_normal"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <net.oschina.app.v2.model.popupbuttonlibrary.PopupButton
+            android:id="@+id/ib_separate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:text="@string/lb_separate"
+            android:textColor="@color/main_black"
+            android:textSize="@dimen/text_size_16"
+            popupbtn:normalBg="@drawable/tab_bkg_line"
+            popupbtn:normalIcon="@drawable/arrow_down_shop"
+            popupbtn:pressBg="@drawable/tab_bkg_selected"
+            popupbtn:pressIcon="@drawable/arrow_up_shop" />
+    </LinearLayout>    -->
+
+    <LinearLayout
+        android:id="@+id/ll_separete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FAFBFD"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <!-- #D8D9DB -->
+
+        <net.oschina.app.v2.model.popupbuttonlibrary.PopupButton
+            android:id="@+id/ib_separate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/popup_button_color"
+            android:text="@string/lb_separate"
+            android:textColor="@color/main_black"
+            android:textSize="@dimen/text_size_16"
+            android:drawablePadding="4dp"
+            popupbtn:normalBg="@color/btn_pressed"
+            popupbtn:normalIcon="@drawable/arrow_down_shop"
+            popupbtn:pressBg="@color/btn_pressed"
+            popupbtn:pressIcon="@drawable/arrow_up_shop" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/ll_separeteSpit"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/ll_separete" />
+
+    <RelativeLayout 
+        android:id="@+id/inputContainer"
+        android:layout_below="@+id/ll_separeteSpit"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+          android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp" 
+        >
+         <net.oschina.app.v2.emoji.EmojiEditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/ask_input_bg"
+        android:ems="10"
+        android:gravity="top|left"
+        android:hint="@string/question_public_content"
+        android:padding="@dimen/space_12"
+        android:textColor="@color/main_black"
+        android:textSize="@dimen/text_size_16"
+        
+      >
+
+<!--         <requestFocus />
+ -->
+    </net.oschina.app.v2.emoji.EmojiEditText>
+    
+         <TextView 
+             android:id="@+id/numberCount"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+         
+             android:textColor="@color/red"
+             android:textSize="@dimen/text_size_11"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentRight="true"
+             android:layout_margin="6dp"
+             />
+    </RelativeLayout>
+    
+    
+   
+
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/list_item_background_normal"
+        android:padding="@dimen/space_8"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_below="@+id/inputContainer"
+          >
+
+        <RelativeLayout
+            android:id="@+id/rl_img"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/light_gray"
+                android:clickable="true"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/iv_clear_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/ib_clear_image_selector" />
+        </RelativeLayout>
+    </RelativeLayout>
+<RelativeLayout
+        android:id="@+id/xuanshangContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/list_item_background_normal"
+        android:padding="@dimen/space_8" 
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_below="@+id/bottom">
+
+        <TextView
+            android:id="@+id/tv_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/compose_clear_selector"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:textColor="@color/main_gray"
+            android:textSize="@dimen/text_size_14"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_xuanshang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_clear"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/tv_clear"
+            android:clickable="true"
+            android:textColor="@color/reward"
+            android:textSize="@dimen/text_size_14" />
+
+        <ImageView
+            android:id="@+id/iv_xuanshang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_clear"
+            android:layout_toLeftOf="@id/tv_xuanshang"
+            android:src="@drawable/dollar"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_superlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/tv_clear"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:textColor="@color/text_blue"
+            android:textSize="@dimen/text_size_14" />
+    </RelativeLayout>
+    
+
+    <LinearLayout 
+         
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        >
+         
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/list_divider_color"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:id="@+id/bottomContainer"
+        android:background="#EBEBED">
+
+        <ImageButton
+            android:id="@+id/ib_picture"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:padding="@dimen/space_8"
+            android:src="@drawable/at_photo" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/list_divider_color"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp" />
+
+        <ImageButton
+            android:id="@+id/ib_emoji_keyboard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:padding="@dimen/space_8"
+            android:src="@drawable/at_reward" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/list_divider_color"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp" />
+
+        <ImageButton
+            android:id="@+id/ib_mention"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:padding="@dimen/space_8"
+            android:src="@drawable/at_friend" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/list_divider_color"
+        android:layout_below="@+id/bottomContainer"/>
+
+    <LinearLayout
+        android:id="@+id/ly_emoji"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EBEBED"
+        android:orientation="vertical"
+        android:paddingTop="8dp"
+        android:visibility="gone" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tv_myjifen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/tv_wodejifen"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/text_size_16" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/tv_wodejifen_hint"
+                    android:textColor="@color/main_gray"
+                    android:textSize="@dimen/text_size_12" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/ib_selectseparate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:text="@string/tv_wodejifen_bt"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/text_size_16"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/list_divider_color" />
+
+        <net.oschina.app.v2.activity.tweet.view.UIScroreView
+            android:id="@+id/item_scoreview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            />
+    </LinearLayout>
+    </LinearLayout>
+   
+
+</RelativeLayout>

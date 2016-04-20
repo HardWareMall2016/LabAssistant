@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="50dp"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" >
+
+            <LinearLayout 
+                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                >
+                 <CheckBox
+                android:id="@+id/ck_xuanshagn_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="悬赏" />
+            </LinearLayout>
+           
+<LinearLayout 
+                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                >
+            <CheckBox
+                android:id="@+id/ck_unsolved_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector"
+                android:text="未解决" />
+             </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#56C2E6"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:text="选择分类"
+            android:textSize="14sp" 
+            android:textColor="@color/white"/>
+
+        <net.oschina.app.v2.activity.tweet.view.UIGroupView
+            android:id="@+id/tweet_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#56C2E6"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:text="选择子类"
+            android:textSize="14sp"
+            android:textColor="@color/white" />
+
+        <net.oschina.app.v2.activity.tweet.view.UIGroupView
+            android:id="@+id/tweet_sub_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp" />
+
+        <TextView
+            android:id="@+id/btn_confirm"
+            android:layout_width="80dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:background="@drawable/common_btn_selector"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="16dp"/>
+    </LinearLayout>
+    
+
+</RelativeLayout>

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="60dp"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/first_plane"
+        android:layout_width="60dp"
+        android:layout_height="match_parent" >
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@color/red" />
+
+        <net.oschina.app.v2.activity.tweet.view.CircleImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/list_item_avatar_size1"
+            android:layout_height="@dimen/list_item_avatar_size1"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_default_avatar" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingRight="@dimen/space_8"
+        android:layout_marginLeft="-5dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/username_text_color"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/tv_rank"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="@dimen/space_8"
+                android:text="@string/app_name"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/question_comment_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" >
+
+            <ImageView
+                android:id="@+id/left_arrow"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:scaleType="fitXY"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/left_arrow"
+                android:background="@drawable/common_list_circle_item_bg"
+                android:orientation="vertical"
+                android:id="@+id/itemContent" >
+
+                <LinearLayout
+                    android:id="@+id/group_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="4dp"
+                    android:visibility="gone" >
+
+                    <net.oschina.app.v2.ui.text.TweetTextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:text="@string/app_name"
+                         android:lineSpacingExtra="2dp"
+                        android:textColor="@color/question_text_color"
+                        android:textSize="@dimen/question_text_size" />
+
+                    <ImageView
+                        android:id="@+id/iv_pic"
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="@dimen/space_5"
+                        android:contentDescription="@null"
+                        android:src="@drawable/pic_bg"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tv_byask"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/space_5"
+                        android:text=""
+                        android:textColor="@color/main_gray"
+                        android:textSize="@dimen/text_size_12" />
+
+                    <FrameLayout
+                        android:id="@+id/group_fisrt"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_15"
+                        android:layout_marginTop="4dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/tv_from"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/main_gray"
+                            android:textSize="@dimen/text_size_12" />
+
+                        <TextView
+                            android:id="@+id/tv_comment_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:drawableLeft="@drawable/myquestion_question"
+                            android:drawablePadding="@dimen/space_5"
+                            android:text="@string/comment_count"
+                            android:textColor="@color/main_gray"
+                            android:textSize="@dimen/text_size_12" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/question_comment_spliter"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/list_divider_color" />
+
+                <!-- ic_comment_count -->
+                <RelativeLayout
+                    android:id="@+id/group_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="1dp"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:id="@+id/ta_ans"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ta_ans_label"
+                        android:textColor="@color/main_gray"
+                        android:textSize="@dimen/text_size_12" />
+
+                    <TextView
+                        android:id="@+id/comment_pic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_toRightOf="@id/ta_ans"
+                        android:contentDescription="@null"
+                        android:text="【图片】"
+                        android:textSize="@dimen/text_size_12" />
+
+                    <TextView
+                        android:id="@+id/comment_status"
+                        android:layout_width="36dp"
+                        android:layout_height="18dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/red_rectangle"
+                        android:gravity="center"
+                        android:text="被采纳"
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_answered"
+                android:layout_width="@dimen/space_30"
+                android:layout_height="@dimen/space_30"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@+id/left_arrow" />
+
+        </RelativeLayout>
+
+        <!-- 推送内容 -->
+
+        <RelativeLayout
+            android:id="@+id/group_push"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/push_arrow"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_marginTop="4dp"
+                android:scaleType="fitXY"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_toRightOf="@id/push_arrow"
+                android:background="@drawable/common_list_circle_item_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <ImageView
+                    android:id="@+id/push_iv"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/push_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/main_gray"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+       </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

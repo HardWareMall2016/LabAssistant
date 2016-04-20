@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/more_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#33bfe8"
+    android:orientation="vertical" >
+
+    <ImageView 
+        android:id="@+id/centerImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:src="@drawable/guide_pageone"
+        />
+    
+    <TextView 
+        android:id="@+id/title1"
+        android:text="让实验更简单更快乐"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:layout_below="@+id/centerImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dp"
+        />
+    
+    <TextView 
+        android:text="专注于实验室检测行业的问答、技术交流平台"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:layout_below="@+id/title1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        />
+</RelativeLayout>

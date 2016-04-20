@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/space_10"
+    android:paddingLeft="@dimen/space_10"
+    android:paddingRight="@dimen/space_10" >
+
+    <!-- 矩形内部的布局 -->
+
+    <LinearLayout
+        android:id="@+id/ll_myanswer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rect_bg_selector"
+        android:orientation="vertical"
+        android:padding="@dimen/space_10" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <!-- 系统消息的图标， -->
+
+            <ImageView
+                android:id="@+id/iv_xitongxiaoxi"
+                android:layout_width="@dimen/space_30"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:src="@drawable/xitongxiaoxi" />
+
+            <!-- 完成任务的提示 -->
+
+            <TextView
+                android:id="@+id/tv_isfinish_newtask"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/space_20"
+                android:layout_weight="1"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center_vertical"
+                android:hint="@string/isfinish_newtask"
+                android:textColor="@color/question_text_color"
+                android:textSize="14sp" />
+
+            <!-- 完成任务的时间 -->
+
+            <TextView
+                android:id="@+id/tv_timebefore"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_20"
+                android:gravity="center_vertical"
+                android:textColor="@color/main_gray"
+                android:textSize="14sp">
+            </TextView>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="@dimen/space_10"
+            android:background="@color/list_divider_color" />
+
+        <!-- 任务完成的提示 -->
+
+        <TextView
+            android:id="@+id/tv_show_sysinfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_10"
+            android:layout_marginTop="@dimen/space_10"
+            android:hint="@string/sysinfo_show"
+            android:textColor="@color/question_text_color"
+            android:textSize="14sp" />
+        
+    </LinearLayout>
+
+</LinearLayout>

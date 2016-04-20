@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/answer_after_bg_with_shadow_normal"
+        android:orientation="vertical"
+        android:paddingBottom="1px"
+        android:paddingRight="1px" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/tv_answer_after_who"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="这里是我追问谁"
+                android:textColor="@color/main_gray"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_answer_after_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/time"
+                android:text="这里是追问时间"
+                android:textColor="@color/main_gray"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_answer_after_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_answer_after_who"
+                android:layout_marginTop="5dp"
+                android:text="这里是追问内容"
+                android:textColor="@color/question_text_color"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/question_comment_spliter"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/list_divider_color" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/answer_after_bg_normal"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/tv_answer_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="这里是回答内容"
+                android:textColor="@color/main_blue"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_answer_content"
+                android:layout_marginTop="10dp" 
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:id="@+id/qContent">
+
+                <ImageView
+                    android:id="@+id/iv_question_tip"
+                    android:layout_width="70dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/answer_after_question_tip"
+                    android:scaleType="fitXY"/>
+
+                <TextView
+                    android:id="@+id/tv_question_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="这里是问题"
+                    android:textColor="@color/question_text_color"
+                    android:textSize="14sp" />
+            </LinearLayout>
+            <ImageView 
+                android:id="@+id/qImage"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_below="@+id/qContent"
+                android:layout_marginTop="12dp"
+                android:visibility="gone"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

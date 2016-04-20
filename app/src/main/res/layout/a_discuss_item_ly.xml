@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/tmp_top_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <!--  
+        <net.oschina.app.v2.activity.tweet.view.CircleImageView
+            android:id="@+id/user_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/head_default" />
+            -->
+        
+        <ImageView 
+            android:id="@+id/iv_avastarBg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/iv_boss_bg"
+           	android:layout_marginTop="5dp"
+           	android:layout_marginLeft="5dp"
+           	android:visibility="invisible"
+            />
+        
+        <net.oschina.app.v2.activity.tweet.view.CircleImageView
+            android:id="@+id/user_icon"
+            android:layout_width="@dimen/list_item_avatar_size"
+            android:layout_height="@dimen/list_item_avatar_size"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="5dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_default_avatar" />
+
+        <ImageView
+            android:id="@+id/iv_sign"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignBottom="@id/user_icon"
+            android:layout_alignRight="@id/user_icon"
+            android:layout_marginRight="-7dp"
+            android:src="@drawable/user_v_sign" />
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/user_icon"
+            android:text="name" 
+            android:textSize="14sp"
+            android:textColor="@color/username_text_color"/>
+        
+        <TextView
+            android:id="@+id/user_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/user_name"
+            android:background="@drawable/level_bg_shape"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:text="level" 
+              android:textColor="@color/white"
+        android:layout_marginTop="5dp"
+        android:textSize="8sp"/>
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="10分钟前" 
+            android:textSize="14sp"
+            android:textColor="@color/main_gray"
+            android:drawableLeft="@drawable/time"/>
+    </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/tv_ding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tmp_top_line"
+        android:gravity="center"
+        android:layout_marginRight="10dp"
+        android:text="1120" />
+    
+    <ImageView 
+        android:id="@+id/iv_ding"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_toLeftOf="@id/tv_ding"
+        android:layout_alignBottom="@id/tv_ding"
+        android:src="@drawable/module_taolu_ding"
+        />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tmp_top_line"
+        android:layout_toLeftOf="@id/iv_ding"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="14sp"
+        android:textColor="@color/question_text_color"
+        android:padding="4dp"
+        android:text="讨论讨论" />
+
+</RelativeLayout>

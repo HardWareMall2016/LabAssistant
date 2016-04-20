@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp" >
+        
+        <LinearLayout
+            android:id="@+id/shang_ping_rong_qi"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/marketbg"
+            android:orientation="vertical"
+            android:padding="8dp" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="#FFFFFF" >
+
+                <net.oschina.app.v2.activity.find.view.CustomViewPager
+                    android:id="@+id/viewpager_activitycenter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/img_count_tx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="1/3" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" >
+
+                <Button
+                    android:id="@+id/dui_huan_btn"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/btn_mall_red_selector"
+                    android:text="兑换"
+                    android:textColor="#FFFFFF" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@id/dui_huan_btn"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/shang_pin_ming_cheng"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="5dp"
+                        android:text="iphone 5s"
+                        android:textColor="#B78842"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:id="@+id/shang_pin_jia_ge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:drawableLeft="@drawable/dollar"
+                        android:drawablePadding="10dp"
+                        android:text="1000"
+                        android:textColor="@color/reward" />
+
+                    <TextView
+                        android:id="@+id/shang_pin_dui_huan_tiao_jian"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="兑换条件"
+                        android:textColor="#B78842" 
+                        android:textSize="14sp"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_margin="10dp"
+                android:background="@color/main_gray" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" >
+
+                <TextView
+                    android:id="@+id/shang_pin_xiang_qing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:paddingBottom="20dp"
+                    android:text="奖品介绍:" 
+                    android:textColor="#B78842"
+                    android:textSize="14sp"/>
+            </ScrollView>
+        </LinearLayout>
+        
+        <ImageView 
+            android:id="@+id/iv_sign"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/close_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:contentDescription="@null"
+            android:padding="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/mall_module_close_img" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/communicat_bg_shape"
+    android:orientation="vertical" >
+
+    <!-- 底部控制条 -->
+
+    <LinearLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/list_item_background_normal"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/list_divider_color" />
+
+        <LinearLayout
+            android:id="@+id/bottomview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/list_item_background_normal"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/list_divider_color" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="80dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="8dp"
+                android:background="@drawable/actionbar_send_icon"
+                android:text="点击登录"
+                android:textColor="#fff"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/ly_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/list_item_background_normal"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="4dp"
+            android:paddingRight="6dp"
+            android:paddingTop="4dp"
+            android:visibility="gone" >
+
+            <ImageButton
+                android:id="@+id/btn_takephoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_8"
+                android:background="@null"
+                android:contentDescription="@null"
+                android:src="@drawable/takephoto" />
+
+            <ImageButton
+                android:id="@+id/btn_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/space_4"
+                android:background="@drawable/btn_ok"
+                android:contentDescription="@null" />
+
+            <net.oschina.app.v2.emoji.EmojiEditText
+                android:id="@+id/et_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_toLeftOf="@id/btn_send"
+                android:layout_toRightOf="@id/btn_takephoto"
+                android:background="@drawable/comment_edittext_selector"
+                android:gravity="center_vertical"
+                android:minHeight="40dp"
+                android:paddingBottom="@dimen/space_2"
+                android:paddingLeft="10dp"
+                android:paddingRight="@dimen/space_26"
+                android:paddingTop="@dimen/space_2"
+                android:textColor="@color/main_black"
+                android:textColorHint="#FF0000"
+                android:maxLines="4"
+                android:textSize="@dimen/text_size_16" />
+        </RelativeLayout>
+    </LinearLayout>
+
+   
+
+    <RelativeLayout
+        android:id="@+id/tip_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="12dp"
+        android:background="#F36F7A" >
+        
+        <TextView
+            android:id="@+id/tip_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingLeft="3dp"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="友情提示:"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_toRightOf="@id/tip_bold"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:text="点击聊天框可以选择追问的对象哦！"/>
+        
+        <ImageView 
+            android:id="@+id/tip_close"
+            android:layout_width="20sp"
+            android:layout_height="20sp" 
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="3dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/tip_close"
+            android:scaleType="centerCrop"
+            />
+    </RelativeLayout>
+    
+     <!-- 交互部分 -->
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_layout"
+        android:layout_below="@id/tip_layout" >
+    </FrameLayout>
+
+</RelativeLayout>

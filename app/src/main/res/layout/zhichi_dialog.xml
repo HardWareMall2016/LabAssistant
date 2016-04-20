@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/zhichi_bg_shape"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+       <!-- <ImageView  android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:src="@drawable/zhichi_top_shape"/>
+        <ImageView  android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginTop="-2dp"
+        android:src="@color/white"/> -->
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_20"
+            android:gravity="center_horizontal"
+            android:text="支持TA"
+            android:textSize="18sp" />
+        
+         <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+          	android:layout_gravity="center_horizontal"
+            android:textSize="14sp"
+            android:layout_marginTop="6dp"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5px"
+            android:layout_marginTop="@dimen/space_20"
+            android:background="#D8ECDA" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" 
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/ib_zhichi"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/space_40"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="支持"
+                android:textColor="@color/blue_btn" />
+ 			<View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="#D8ECDA" />
+            <Button
+                android:id="@+id/ib_chakanzhichi"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/space_40"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:text="查看支持者"
+                android:textColor="@color/blue_btn" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

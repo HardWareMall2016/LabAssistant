@@ -1,0 +1,50 @@
+package net.oschina.app.v2.activity;
+
+import android.content.Context;
+
+public class IsGuid {
+	// ƫ���ļ���
+	public static final String SHAREDPREFERENCES_NAME = "isguid_pref";
+	// ��������KEY
+	private static final String KEY_GUIDE_ACTIVITY = "guid_activity";
+
+
+	public static boolean activityIsGuided(Context context, String className) {
+		if (context == null || className == null
+				|| "".equalsIgnoreCase(className))
+			return false;
+		String[] classNames = context
+				.getSharedPreferences(SHAREDPREFERENCES_NAME,
+						Context.MODE_WORLD_READABLE)
+				.getString(KEY_GUIDE_ACTIVITY, "").split("\\|");// ȡ���������� ��
+																// com.my.MainActivity
+		for (String string : classNames) {
+			if (className.equalsIgnoreCase(string)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	public static void setIsGuided(Context context, String className) {
+		if (context == null || className == null
+				|| "".equalsIgnoreCase(className))
+			return;
+		String classNames = context.getSharedPreferences(
+				SHAREDPREFERENCES_NAME, Context.MODE_WORLD_READABLE).getString(
+				KEY_GUIDE_ACTIVITY, "");
+		StringBuilder sb = new StringBuilder(classNames).append("|").append(
+				className);// ���ֵ
+		context.getSharedPreferences(SHAREDPREFERENCES_NAME,
+				Context.MODE_WORLD_READABLE)// �����޸ĺ��ֵ
+				.edit().putString(KEY_GUIDE_ACTIVITY, sb.toString()).commit();
+	}
+
+	public static void clearGuid(Context context) {
+		context.getSharedPreferences(SHAREDPREFERENCES_NAME,
+				Context.MODE_WORLD_READABLE)// �����޸ĺ��ֵ
+				.edit().putString(KEY_GUIDE_ACTIVITY, "").commit();
+	}
+
+}

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="8dp" >
+
+      <ImageView 
+            android:id="@+id/iv_avastarBg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/iv_boss_bg"
+            />
+      
+     <net.oschina.app.v2.activity.tweet.view.CircleImageView
+            android:id="@+id/item_image"
+            android:layout_width="@dimen/list_item_avatar_size"
+            android:layout_height="@dimen/list_item_avatar_size"
+            android:layout_marginRight="@dimen/space_8"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_default_avatar" />
+ <ImageView
+            android:id="@+id/iv_sign"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignBottom="@id/item_image"
+            android:layout_alignRight="@id/item_image"
+            android:layout_marginRight="-3dp"
+            android:src="@drawable/user_v_sign" />
+     
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/item_image"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textSize="14sp"
+        android:textColor="#63D4E4" />
+
+    <TextView
+        android:id="@+id/item_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/item_name"
+        android:background="@drawable/level_bg_shape"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp"
+        android:textSize="8sp" />
+
+    <TextView
+        android:id="@+id/item_buiness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/item_image"
+        android:layout_toRightOf="@id/item_image"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/item_v"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/item_image"
+        android:layout_marginLeft="36dp"
+        android:src="@drawable/btn_radio_on"
+        android:visibility="gone" />
+
+    <CheckBox
+        android:id="@+id/item_ckbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:button="@drawable/checkbox_selector"
+        android:layout_centerVertical="true" />
+
+</RelativeLayout>

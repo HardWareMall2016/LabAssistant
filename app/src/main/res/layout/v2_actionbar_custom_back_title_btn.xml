@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/action_bar_bg"
+    android:gravity="center_vertical" >
+
+    <ImageButton
+        android:layout_alignParentLeft="true"
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:background="@color/umeng_socialize_titlebar_item_background_normal"
+        android:paddingLeft="@dimen/space_8"
+        android:paddingRight="@dimen/space_8"
+        android:contentDescription="@null"
+        android:layout_centerVertical="true"
+        android:src="@drawable/actionbar_back_icon_normal" />
+    <TextView
+        android:layout_toRightOf="@id/btn_back"
+        android:id="@+id/tv_back_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_18" 
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_actionbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_horizontal"
+        android:text="@string/app_name"
+        android:textColor="@color/action_bar_title"
+        android:textSize="@dimen/text_size_18" />
+    
+    <TextView 
+        android:id="@+id/tv_actionbar_right_more"
+        android:layout_width="60dp"
+        android:visibility="visible"
+        android:layout_marginRight="10dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        android:background="@drawable/corners_btn_selector"
+        />
+</RelativeLayout>

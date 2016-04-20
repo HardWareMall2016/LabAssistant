@@ -1,0 +1,154 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/marketbg"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/iv_mallhead"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:background="@color/white"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F2AC53"
+        android:orientation="horizontal" >
+
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="5dp" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="25dp" >
+
+                <ImageView
+                    android:id="@+id/iv_mall_jifen"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/jifen"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:id="@+id/tv_mall_jifen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/iv_mall_jifen"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:text="我的积分：0" />
+            </RelativeLayout>
+
+            
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.00"
+            android:orientation="vertical"
+            android:padding="5dp" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="25dp" 
+                android:layout_gravity="center_horizontal"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_indentify"
+                    android:layout_width="44dp"
+                    android:layout_height="22dp"
+                    android:layout_toRightOf="@+id/tv_indentify"
+                    android:src="@drawable/noidentify" />
+
+                <TextView
+                    android:id="@+id/tv_indentify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:text="认证情况：" />
+            </RelativeLayout>
+
+           
+        </LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F2AC53"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        >
+        
+         <TextView
+                android:id="@+id/tv_answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/mall_tip_bg_shape"
+                android:onClick="answer"
+                android:paddingTop="4dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:paddingBottom="4dp"
+                android:textColor="#CEB07C"
+                android:text="回答问题赚取积分 >"
+                android:textSize="10sp" />
+            
+            <TextView
+                android:id="@+id/tv_answer_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/mall_tip_bg_shape"
+                android:padding="4dp"
+                android:singleLine="true"
+                android:gravity="center_horizontal"
+                android:onClick="answer"
+                android:textColor="#CEB07C"
+                android:text="认证用户积分翻倍，可换取高级礼品 >"
+                android:layout_marginLeft="12dp"
+                android:textSize="10sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/realtabcontent"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
+    
+<!--  <
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottom_nav" >
+
+        <android.support.v4.app.FragmentTabHost
+            android:id="@android:id/tabhost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0" />
+        </android.support.v4.app.FragmentTabHost>
+    </RelativeLayout>
+-->
+
+</LinearLayout>

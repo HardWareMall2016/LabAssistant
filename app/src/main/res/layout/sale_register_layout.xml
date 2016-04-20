@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/space_8" >
+
+        <RelativeLayout
+            android:id="@+id/tip_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+          
+            android:background="#F36F7A" >
+
+            <ImageView
+                android:id="@+id/tip_close"
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/tip_close" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/tip_close"
+                android:paddingLeft="3dp"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:text="助手贴士：实物礼品以快递的方式送达，学习资料会通过邮件的形式送达，请务必填写正确的信息，如有问题，可联系助手客服QQ:2076938360"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </RelativeLayout>
+        
+        <LinearLayout style="@style/item_input_container" >
+
+            <!-- 输入昵称 -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/baoming_lianxiren"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/et_username"
+                style="@style/item_input_edittext" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/transparent" />
+
+        <LinearLayout style="@style/item_input_container" >
+
+            <!-- 输入昵称 -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/baoming_shouji"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/et_phone"
+                style="@style/item_input_edittext" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/transparent" />
+
+        <LinearLayout style="@style/item_input_container" >
+
+            <!-- 输入昵称 -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lb_place"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/et_place"
+                style="@style/item_input_edittext" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/transparent" />
+
+        <LinearLayout style="@style/item_input_container" >
+
+            <!-- 输入昵称 -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lb_email"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/et_email"
+                style="@style/item_input_edittext" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/transparent" />
+
+        <LinearLayout style="@style/item_input_container" >
+
+            <!-- 输入昵称 -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/baoming_danwei"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_16" />
+
+            <EditText
+                android:id="@+id/et_danwei"
+                style="@style/item_input_edittext" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/transparent" />
+
+        <Button
+            android:id="@+id/subBtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/main_green"
+            android:text="提交"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/text_size_16" />
+    </LinearLayout>
+
+</ScrollView>

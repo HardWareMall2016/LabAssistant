@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="@dimen/space_60"
+	    android:orientation="horizontal"
+	    android:layout_marginTop="@dimen/space_2"
+	    >
+
+	    <ImageView
+	        android:id="@+id/iv_myfocus_head"
+	        android:layout_width="@dimen/space_50"
+	        android:layout_height="@dimen/space_50"
+	        android:contentDescription="@null"
+	        android:padding="@dimen/space_5"
+	        android:src="@drawable/ic_default_avatar" />
+
+	    <!-- 线性布局 ，内容-->
+	    <LinearLayout 
+	        android:layout_width="0dp"
+	        android:layout_weight="1"
+	        android:layout_height="fill_parent"
+	        android:orientation="vertical"
+	        android:layout_marginTop="@dimen/space_5"
+	        android:layout_marginLeft="@dimen/space_5"
+	        >
+	        <TextView 
+	            android:id="@+id/tv_myfocus"
+	            android:layout_width="wrap_content"
+	            android:layout_height="@dimen/space_20"
+	            android:hint="Coco lv1"
+	            />
+	        <TextView 
+	            android:id="@+id/tv_mycompany"
+	            android:layout_width="wrap_content"
+	            android:layout_height="@dimen/space_15"
+	            android:hint="深圳国际传媒有限公司"
+	            />
+	        
+	    </LinearLayout>
+	    <ImageView 
+	        android:id="@+id/iv_cancel_focus"
+	        android:layout_width="wrap_content"
+	        android:layout_weight="0"
+	        android:layout_height="@dimen/space_40"
+	        android:src="@drawable/focus"
+	        android:layout_gravity="center_vertical"
+	        />
+	</LinearLayout>   
+</LinearLayout>

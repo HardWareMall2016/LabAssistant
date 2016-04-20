@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/space_10" >
+ <!-- android:padding="@dimen/space_8"  -->
+    <LinearLayout
+        style="@style/item_input_container"
+       >
+        <!-- 手机号码 -->
+        <TextView 
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/space_24"
+            android:hint="请输入您的手机号"
+            />
+       <!--android:hint="@string/bund_phonenumber"  -->
+        <EditText
+            android:id="@+id/et_obatin_verify"
+            style="@style/item_input_edittext"
+            />
+        <!-- 验证码按钮 -->
+             <TextView 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <Button
+            android:id="@+id/bt_obtain_cons"
+            android:layout_width="@dimen/space_90"
+            android:layout_height="@dimen/space_30"
+            android:clickable="true"
+            android:layout_marginRight="4dp"
+            android:contentDescription="@null"
+            android:background="@drawable/obtain_cons" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_cons"
+        style="@style/item_input_container"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal" >
+        <TextView 
+            android:id="@+id/tv_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/verify_code"
+            />
+        <!-- 输入验证码 -->
+        <EditText
+            android:id="@+id/et_cons"
+            style="@style/item_input_edittext"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_alter_password"
+        style="@style/item_input_container"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal" >
+       <!-- 昵称 -->
+          <TextView 
+            android:id="@+id/tv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="请输入6-16位密码"
+            />
+           <EditText
+            android:id="@+id/et_input_password"
+            android:inputType="textPassword" 
+            style="@style/item_input_edittext"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_nickname"
+        style="@style/item_input_container"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal" >
+         <!-- 昵称 -->
+          <TextView 
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/nickname"
+            />
+        <EditText
+            android:id="@+id/et_nickname"
+            style="@style/item_input_edittext"
+          />
+        
+       
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_gender"
+        style="@style/item_input_container"
+        android:orientation="horizontal" 
+        android:layout_marginTop="@dimen/space_1">
+        <!-- 性别 -->
+        <TextView
+            android:id="@+id/tv_gender"
+            android:layout_height="wrap_content"
+            android:hint="@string/gender" 
+            android:textSize="@dimen/space_15"
+            android:layout_width="wrap_content"
+            />
+        <RadioGroup
+            android:id="@+id/rg_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            
+            android:paddingLeft="@dimen/space_10" >
+
+            <RadioButton
+                android:id="@+id/bt_man"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:hint="@string/gender_man" />
+
+            <RadioButton
+                android:id="@+id/bt_woman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/gender_woman" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_recommender"
+        style="@style/item_input_container"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal" >
+  	<TextView 
+            android:id="@+id/tv_recmmend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/recmend"
+            />
+        <!-- 推荐人 -->
+        <EditText
+            android:id="@+id/et_recommender"
+            style="@style/item_input_edittext"
+            android:hint="填写推荐人，对方会获得50积分"
+             />
+    </LinearLayout>
+    <!-- 确认注册 -->
+    <Button
+        android:id="@+id/btn_regist"
+        style="@style/button_common_blue"
+        android:layout_marginTop="30dp"
+        android:text="@string/regist" 
+        android:layout_gravity="center_horizontal"/>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_10"
+        android:orientation="horizontal" >
+        <!-- 底部协议 -->
+        <TextView
+            android:id="@+id/tv_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:hint="@string/agreement" />
+        <TextView
+            android:id="@+id/tv_agreement_append"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/agreement_append"
+            android:textColor="@color/regist_bt_color" />
+    </LinearLayout>
+</LinearLayout>

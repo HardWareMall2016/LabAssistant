@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_activity"
+        android:layout_width="fill_parent"
+        android:layout_height="210dp"
+        android:visibility="visible"
+        android:orientation="vertical" >
+
+        <net.oschina.app.v2.activity.find.view.CustomViewPager
+            android:id="@+id/viewpager_activitycenter"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/gallery_point_linearcenter"
+            android:layout_width="fill_parent"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:orientation="horizontal" > 
+        </LinearLayout>
+    </LinearLayout>

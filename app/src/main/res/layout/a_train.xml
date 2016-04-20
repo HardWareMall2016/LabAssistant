@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 培训中心 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" >
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_train"
+                android:layout_width="match_parent"
+                android:layout_height="190dip"
+                android:layout_centerHorizontal="true" >
+            </android.support.v4.view.ViewPager>
+
+            <ListView
+                android:id="@+id/lv_train"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vp_train" >
+            </ListView>
+        </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>

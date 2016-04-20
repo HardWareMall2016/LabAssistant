@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_margin="4dp"
+        android:background="@drawable/list_item_background" >
+
+        <TextView
+            android:id="@+id/a_weeklist_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+           	android:layout_marginRight="6dp"
+            android:padding="4dp"
+            />
+
+         <ImageView 
+            android:id="@+id/iv_avastarBg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/iv_boss_bg"
+            android:layout_toRightOf="@+id/a_weeklist_order"
+            android:visibility="invisible"
+            />
+         
+         <net.oschina.app.v2.activity.tweet.view.CircleImageView
+            android:id="@+id/user_icon"
+            android:layout_width="@dimen/list_item_avatar_size"
+            android:layout_height="@dimen/list_item_avatar_size"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:layout_toRightOf="@+id/a_weeklist_order"
+             android:layout_marginRight="10dp"
+            android:src="@drawable/ic_default_avatar"
+            />
+        <ImageView
+            android:id="@+id/iv_sign"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignBottom="@id/user_icon"
+            android:layout_alignRight="@id/user_icon"
+            android:layout_marginRight="-7dp"
+            android:src="@drawable/user_v_sign" />
+
+        <LinearLayout
+            android:id="@+id/tmp_right_area"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/weekrank_beicainashu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="1111"
+                android:textSize="@dimen/text_size_12" />
+
+            <TextView
+                android:id="@+id/tmp_cai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="被采纳数"
+                android:textSize="@dimen/text_size_12" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/user_icon"
+            android:layout_toLeftOf="@id/tmp_right_area"
+            android:layout_toRightOf="@id/user_icon"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/weekrank_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:padding="4dp"
+                android:text="Coco"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+            android:id="@+id/weekrank_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@id/weekrank_name"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/level_bg_shape"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="8sp" />
+           
+
+            <TextView
+                android:id="@+id/danwei_ming"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/weekrank_name"
+                android:padding="4dp"
+                android:text="深圳国际传媒有限公司"
+                android:textSize="@dimen/text_size_12" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

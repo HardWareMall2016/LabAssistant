@@ -1,0 +1,85 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:id="@+id/ll_activity"
+        android:layout_width="fill_parent"
+        android:layout_height="220dp"
+        android:orientation="vertical" >
+
+        <net.oschina.app.v2.activity.find.view.CustomViewPager
+            android:id="@+id/viewpager_activitycenter"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/gallery_point_linearcenter"
+            android:layout_width="fill_parent"
+            android:layout_height="20dp"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/middle_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_activity"
+        android:gravity="center_vertical" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/home_shiyanquan_bg" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="3dp"
+            android:src="@drawable/home_shiyanquan" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/group_login_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/middle_layout"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <!-- 助手图标 -->
+
+        <TextView
+            android:id="@+id/tv_appname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/login_description"
+            android:textColor="@color/main_gray"
+            android:textSize="16.0dip"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/iv_login"
+            android:layout_width="150dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/common_btn_selector"
+            android:gravity="center"
+            android:text="立即登录"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:background="@color/action_bar_bg">
+
+<!--         android:background="@drawable/umeng_socialize_titlebar_item_background_selector" -->
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@null"
+        android:paddingLeft="@dimen/space_8"
+        android:paddingRight="@dimen/space_8"
+        android:background="@color/umeng_socialize_titlebar_item_background_normal"
+        android:src="@drawable/actionbar_back_icon_normal" />
+
+    <TextView
+        android:id="@+id/tx_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/btn_back"
+        android:textSize="@dimen/text_size_16"
+        android:text="返回"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_actionbar_title02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:padding="8dp"
+        android:paddingLeft="@dimen/space_16"
+        android:text="回答高手"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:background="@drawable/rank_category_middle_selector"
+        android:textSize="@dimen/text_size_12" />
+
+    <TextView
+        android:id="@+id/tv_actionbar_title01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/tv_actionbar_title02"
+        android:padding="8dp"
+        android:paddingLeft="@dimen/space_16"
+        android:paddingRight="@dimen/space_16"
+        android:background="@drawable/rank_category_left_selector"
+        android:text="正解达人"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_12" />
+
+    <TextView
+        android:id="@+id/tv_actionbar_title03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/tv_actionbar_title02"
+        android:padding="8dp"
+        android:paddingRight="@dimen/space_16"
+        android:background="@drawable/rank_category_right_selector"
+        android:text="助手红人"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_12" />
+    
+
+
+</RelativeLayout>

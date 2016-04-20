@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.shiyanzhushou.app"
+    android:versionCode="3"
+    android:versionName="1.3">
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="19" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RESTART_PACKAGES" />
+
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <!-- 个推SDK权限配置开始 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!-- <uses-permission android:name="getui.permission.GetuiService.第三方包名" /> -->
+    <!-- <uses-permission android:name="getui.permission.GetuiService.com.getui.demo" /> -->
+    <uses-permission android:name="getui.permission.GetuiService.com.shiyanzhushou.app" />
+
+    <!-- 自定义权限 -->
+    <!--
+    <permission
+        android:name="getui.permission.GetuiService.第三方包名"
+        android:protectionLevel="normal" >
+    </permission>
+    -->
+    <!--
+    <permission
+        android:name="getui.permission.GetuiService.com.getui.demo"
+        android:protectionLevel="normal" >
+    </permission>
+    -->
+    <permission
+        android:name="getui.permission.GetuiService.com.shiyanzhushou.app"
+        android:protectionLevel="normal"></permission>
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.flash"
+        android:required="false" />
+    <uses-feature android:name="android.hardware.screen.landscape" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <application
+        android:name="net.oschina.app.v2.AppContext"
+        android:allowBackup="true"
+        android:icon="@drawable/app_icon"
+        android:label="@string/app_name"
+        android:theme="@style/ActionBarBaseTheme">
+
+        <!-- 1 -->
+        <!-- 个推SDK配置开始 -->
+        <!-- 配置的第三方参数属性 -->
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="nZWe1sNnGq6vzrK5NLCIW6" />
+        <meta-data
+            android:name="PUSH_APPKEY"
+            android:value="yf0m3vgB9L8UJ8cg9Kmw93" />
+        <meta-data
+            android:name="PUSH_APPSECRET"
+            android:value="zSfbrCpFXv9xvCDfXjajn9" />
+        <meta-data
+            android:name="PUSH_GROUPID"
+            android:value="" />
+        <!-- 设置AppKey -->
+        <meta-data
+            android:name="TESTIN_APPKEY"
+            android:value="f8a5c6865f036b5cfcd13fd7d7d66d96" />
+        <!-- 设置渠道信息 -->
+        <meta-data
+            android:name="TESTIN_CHANNEL"
+            android:value="official" />
+
+        <!-- 配置第三方Receiver -->
+        <receiver
+            android:name="net.oschina.app.v2.broadcast.PushDemoReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.nZWe1sNnGq6vzrK5NLCIW6" />
+                <action android:name="net.oschina.app.v2.CLEAR_NOTI_ACTION" />
+            </intent-filter>
+        </receiver>
+
+
+        <!-- 配置SDK核心服务 -->
+        <service
+            android:name="com.igexin.sdk.PushService"
+            android:exported="true"
+            android:label="NotificationCenter"
+            android:process=":pushservice"></service>
+
+        <receiver android:name="com.igexin.sdk.PushReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.igexin.sdk.action.refreshls" />
+                <!-- 以下三项为可选的action声明，可大大提高service存活率和消息到达速度 -->
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.igexin.sdk.PushManagerReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.pushmanager" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.igexin.sdk.PushActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+        <!-- 配置弹框activity -->
+        <activity
+            android:name="com.igexin.getuiext.activity.GetuiExtActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="android.task.myServicetask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <receiver
+            android:name="com.igexin.getuiext.service.PayloadReceiver"
+            android:exported="false">
+            <intent-filter>
+
+                <!-- 这个com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4固定，不能修改 -->
+                <action android:name="com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4" />
+                <!-- 替换为android:name="com.igexin.sdk.action.第三方的appId" -->
+                <action android:name="com.igexin.sdk.action.nZWe1sNnGq6vzrK5NLCIW6" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.igexin.getuiext.service.GetuiExtService"
+            android:process=":pushservice" />
+        <!-- 个推download模块配置 -->
+        <service
+            android:name="com.igexin.download.DownloadService"
+            android:process=":pushservice" />
+
+        <receiver android:name="com.igexin.download.DownloadReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="com.igexin.download.DownloadProvider"
+            android:authorities="downloads.com.shiyanzhushou.app"
+            android:process=":pushservice" />
+        <!-- 替换为downloads.第三方包名 -->
+        <!-- =========================================================================== -->
+
+
+        <!-- " -->
+        <activity
+            android:name="net.oschina.app.v2.activity.SplashActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarBaseThemeNoTitle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="net.oschina.app.v2.activity.WoGanXingQuActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name="net.oschina.app.v2.activity.GuideMainActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+
+        </activity>
+
+        <activity
+            android:name="net.oschina.app.v2.activity.MainActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="net.oschina.app.v2.activity.oauth.AuthorizeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarBaseTheme" />
+        <activity
+            android:name="net.oschina.app.v2.activity.user.LoginActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.emoji.SupperListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.favorite.fragment.SaleActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.favorite.fragment.QuestionPageActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <!--
+             <activity
+            android:name="net.oschina.app.v2.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        -->
+        <activity
+            android:name="net.oschina.app.v2.activity.GuidActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarBaseTheme.Transparent.NoTitleBar" />
+        <activity
+            android:name="net.oschina.app.v2.activity.news.DetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarBaseTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="net.oschina.app.v2.activity.news.InterestActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarBaseTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+
+        <activity
+            android:name="net.oschina.app.v2.activity.DiscussActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.MallActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.ShiWuLiPinActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.tweet.TweetPublicActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.tweet.TweetDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.tweet.CommunicatActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name="net.oschina.app.v2.activity.RankActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.FindPasswordActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.BaoMingActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.common.SimpleBackActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name="net.oschina.app.v2.activity.common.BtnBackActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name="net.oschina.app.v2.activity.common.SearchBackActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.common.DailyActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.common.WeeklyActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.common.LawsActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.common.ActivityCenterActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.common.BrandActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.common.TrainActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.common.MallActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.common.GiftActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.common.LearnActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.find.fragment.ShowTitleDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="net.oschina.app.v2.activity.image.ImagePreviewActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/ActionBarBaseTheme.Preview" />
+
+        <activity
+            android:name="net.oschina.app.v2.activity.ImageShowerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ImageScale" />
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.umeng.fb.ConversationActivity"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name="com.umeng.fb.ContactActivity"
+            android:theme="@android:style/Theme.NoTitleBar" />
+
+        <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID -->
+                <data android:scheme="1105023611" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+        <!-- activity -->
+        <activity android:name="net.oschina.app.v2.activity.user.activity.MyQuestionDetail"></activity>
+        <activity android:name="net.oschina.app.v2.activity.user.activity.MyAnswerDetail"></activity>
+        <activity android:name="net.oschina.app.v2.activity.RegistActivity"></activity>
+        <activity android:name="net.oschina.app.v2.activity.YinSiTiaoKuanActivity"></activity>
+
+        <service android:name="net.oschina.app.v2.service.ServerTaskService">
+            <intent-filter>
+                <action android:name="net.oschina.app.v2.ACTION_PUBLIC_BLOG_COMMENT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="net.oschina.app.v2.ACTION_PUBLIC_COMMENT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="net.oschina.app.v2.ACTION_PUBLIC_POST" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="net.oschina.app.v2.ACTION_PUBLIC_TWEET" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name="net.oschina.app.v2.broadcast.AlarmReceiver"></receiver>
+        <receiver android:name="net.oschina.app.v2.broadcast.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="net.oschina.app.v2.service.NoticeService"
+            android:process=":notice" />
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" />
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="54a90bc9fd98c597700008de"></meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="channel_beta"></meta-data>
+    </application>
+
+</manifest>

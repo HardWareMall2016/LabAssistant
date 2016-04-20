@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="pstsIndicatorColor" format="color" />
+        <attr name="pstsUnderlineColor" format="color" />
+        <attr name="pstsDividerColor" format="color" />
+        <attr name="pstsCheckedTextColor" format="reference" />
+        <attr name="pstsUncheckedTextColor" format="reference" />
+        <attr name="pstsIndicatorHeight" format="dimension" />
+        <attr name="pstsUnderlineHeight" format="dimension" />
+        <attr name="pstsDividerPadding" format="dimension" />
+        <attr name="pstsTabPaddingLeftRight" format="dimension" />
+        <attr name="pstsScrollOffset" format="dimension" />
+        <attr name="pstsTabBackground" format="reference" />
+        <attr name="pstsShouldExpand" format="boolean" />
+        <attr name="pstsTextAllCaps" format="boolean" />
+    </declare-styleable>
+        <declare-styleable name="BGABanner">
+        <attr name="pointContainerWidth" format="dimension">
+            <enum name="match_parent" value="-1" />
+            <enum name="wrap_content" value="-2" />
+        </attr>
+        <attr name="pointContainerHeight" format="dimension">
+            <enum name="wrap_content" value="-2" />
+        </attr>
+        <attr name="pointContainerBackground" format="reference|color" />
+        <attr name="pointFocusedImg" format="reference" />
+        <attr name="pointUnfocusedImg" format="reference" />
+        <attr name="pointSpacing" format="dimension" />
+        <attr name="pointEdgeSpacing" format="dimension" />
+        <attr name="pointVisibility" format="boolean" />
+        <attr name="pointAutoPlayAble" format="boolean" />
+        <attr name="pointAutoPlayInterval" format="integer" />
+        <attr name="pointGravity">
+            <flag name="top" value="0x30" />
+            <flag name="bottom" value="0x50" />
+            <flag name="left" value="0x03" />
+            <flag name="right" value="0x05" />
+            <flag name="center_horizontal" value="0x01" />
+        </attr>
+    </declare-styleable>
+    
+        <declare-styleable name="popupbtn">
+        <!-- 正常状态下的背景 -->
+        <attr name="normalBg" format="reference" />
+        <!-- 按下状态下的背景 -->
+        <attr name="pressBg" format="reference" />
+        <!-- 正常状态下的图标 -->
+        <attr name="normalIcon" format="reference" />
+        <!-- 按下状态下的图标 -->
+        <attr name="pressIcon" format="reference" />
+        <!-- 按钮的padding -->
+
+    </declare-styleable>
+    
+         <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/space_8" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/space_60"
+            android:background="@drawable/bianqian">
+
+            <!-- 输入昵称 -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="我的助手ID号"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_20" />
+
+            <TextView
+                android:id="@+id/myid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="85642"
+                android:textColor="@color/red"
+                android:textSize="@dimen/text_size_30" />
+
+            <TextView
+                android:id="@+id/yiyaoqing_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10"
+                android:gravity="center_horizontal"
+                android:text="本周已邀请人数：0"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/shengyuyaoqing_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_5"
+                android:gravity="center_horizontal"
+                android:text="本周可邀请人数：0"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/zongyaoqing_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_5"
+                android:gravity="center_horizontal"
+                android:text="总邀请人数：0"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/ball_num"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/space_5"
+                android:text="你的魅力已经打败了0%的网友"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/shengyu_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_5"
+                android:gravity="center_horizontal"
+                android:text="距下次更新邀请限制数还有：%s天"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_16" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:text="邀请朋友们一起加入实验助手吧！"
+            android:textColor="@color/main_gray"
+            android:textSize="@dimen/text_size_14" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:padding="@dimen/space_8" >
+
+            <Button
+                android:id="@+id/bt_sms"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/common_btn_selector"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="发送短信给好友"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/text_size_14" />
+
+            <Button
+                android:id="@+id/bt_weixin"
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/common_btn_selector"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="发微信给好友"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

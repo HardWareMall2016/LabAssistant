@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:toggle="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
+
+        <RelativeLayout
+            style="@style/setting_item_container"
+            android:padding="@dimen/space_12">
+
+            <TextView
+                style="@style/setting_item_text"
+                android:layout_alignParentLeft="true"
+                android:text="活动推送" />
+
+            <net.oschina.app.v2.ui.tooglebutton.ToggleButton
+                android:id="@+id/tb_load_huodong"
+                android:layout_width="65dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                toggle:borderWidth="0.1dp"
+                toggle:onColor="@color/main_green" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
+
+        <RelativeLayout
+            style="@style/setting_item_container"
+            android:padding="@dimen/space_12">
+
+            <TextView
+                style="@style/setting_item_text"
+                android:layout_alignParentLeft="true"
+                android:text="回答我的" />
+
+            <net.oschina.app.v2.ui.tooglebutton.ToggleButton
+                android:id="@+id/tb_load_ask"
+                android:layout_width="65dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                toggle:borderWidth="0.1dp"
+                toggle:onColor="@color/main_green" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
+
+        <RelativeLayout
+            style="@style/setting_item_container"
+            android:padding="@dimen/space_12">
+
+            <TextView
+                style="@style/setting_item_text"
+                android:layout_alignParentLeft="true"
+                android:text="回答被采纳" />
+
+            <net.oschina.app.v2.ui.tooglebutton.ToggleButton
+                android:id="@+id/tb_load_caina"
+                android:layout_width="65dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                toggle:borderWidth="0.1dp"
+                toggle:onColor="@color/main_green" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
+
+        <RelativeLayout
+            style="@style/setting_item_container"
+            android:padding="@dimen/space_12">
+
+            <TextView
+                style="@style/setting_item_text"
+                android:layout_alignParentLeft="true"
+                android:text="讨论／追问" />
+
+            <net.oschina.app.v2.ui.tooglebutton.ToggleButton
+                android:id="@+id/tb_load_zhuiwen"
+                android:layout_width="65dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                toggle:borderWidth="0.1dp"
+                toggle:onColor="@color/main_green" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
+
+        <RelativeLayout
+            style="@style/setting_item_container"
+            android:padding="@dimen/space_12">
+
+            <TextView
+                style="@style/setting_item_text"
+                android:layout_alignParentLeft="true"
+                android:text="系统消息" />
+
+            <net.oschina.app.v2.ui.tooglebutton.ToggleButton
+                android:id="@+id/tb_load_systemmessage"
+                android:layout_width="65dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                toggle:borderWidth="0.1dp"
+                toggle:onColor="@color/main_green" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
+
+        <RelativeLayout
+            style="@style/setting_item_container"
+            android:padding="@dimen/space_12" >
+
+            <TextView
+                style="@style/setting_item_text"
+                android:layout_alignParentLeft="true"
+                android:text="粉丝求助" />
+
+            <net.oschina.app.v2.ui.tooglebutton.ToggleButton
+                android:id="@+id/tb_load_fensiqiuzhu"
+                android:layout_width="65dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                toggle:borderWidth="0.1dp"
+                toggle:onColor="@color/main_green" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

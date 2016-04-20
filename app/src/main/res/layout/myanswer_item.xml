@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 我的回答 -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/space_10"
+    android:paddingRight="@dimen/space_10"
+    android:paddingTop="@dimen/space_10" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/common_list_item_bg"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/question_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_10" >
+
+             <TextView
+                android:id="@+id/question_title_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:textColor="@color/question_text_color"
+                android:lineSpacingExtra="5dp"
+                android:textSize="@dimen/question_text_size" />
+                
+                 />
+ 		<TextView
+                android:id="@+id/question_time_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_12"
+                android:layout_below="@id/question_title_tv"
+                  />
+          
+
+            <TextView
+                android:id="@+id/question_category_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/question_title_tv"
+               
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_12" />
+            
+           
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/comment_spliter"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/list_divider_color" />
+
+        <RelativeLayout
+            android:id="@+id/comment_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_10" >
+
+           
+
+            <TextView
+                android:id="@+id/comment_content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/question_text_size" 
+                />
+          
+            <TextView
+                        android:id="@+id/pic_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                android:layout_alignBottom="@id/comment_content_tv"
+                android:layout_toRightOf="@id/comment_content_tv"
+                android:contentDescription="@null"
+                android:paddingBottom="2dp"
+                        android:text="【图片】"
+                        android:textSize="@dimen/text_size_12" 
+                        />
+               <TextView
+                android:id="@+id/comment_status_iv"
+                android:layout_width="38dp"
+                android:layout_height="18dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/red_rectangle"
+                android:gravity="center"
+                android:text="被采纳"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/reanswer_spliter"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/list_divider_color"
+            android:visibility="gone" />
+        
+        <RelativeLayout
+            android:id="@+id/newreplyContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/list_item_background"
+            android:paddingLeft="10dp"
+           >
+
+            <TextView
+                android:id="@+id/question_reanswer_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/text_size_16"
+                />
+            
+             <TextView
+                android:id="@+id/newreply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#F7765B"
+                android:textSize="@dimen/text_size_12"
+                />
+             
+             <TextView
+                android:id="@+id/newreplyTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_userName"
+                android:textSize="@dimen/text_size_12"
+                 android:text="2分钟前"
+                 android:layout_toRightOf="@+id/newreply"
+                 android:layout_marginLeft="12dp"
+                />
+          
+        </RelativeLayout>
+    </LinearLayout>
+  		
+</RelativeLayout>

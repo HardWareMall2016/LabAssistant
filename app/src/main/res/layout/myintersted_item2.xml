@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" 
+    android:padding="@dimen/space_20">
+    
+    <ImageView 
+        android:id="@+id/iv_neirong"
+        android:layout_width="@dimen/space_50"
+        android:layout_height="@dimen/space_50"
+        android:background="@drawable/ic_launcher"/>
+    <TextView 
+        android:id="@+id/tv_neirong"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="实物"
+        android:textSize="@dimen/space_20"
+        android:layout_marginTop="@dimen/space_15"
+        android:layout_marginLeft="@dimen/space_10"
+        />
+	<ImageButton 
+	    android:contentDescription="@null"
+	    android:id="@+id/ib_neirong"
+	    android:layout_width="@dimen/space_50"
+	    android:layout_weight="0"
+	    android:layout_height="@dimen/space_50"
+	    android:src="@drawable/selection_box"
+	    />
+</LinearLayout>

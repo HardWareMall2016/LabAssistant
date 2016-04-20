@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="8dp" >
+
+
+    
+     <ImageView 
+            android:id="@+id/iv_avastarBg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/iv_boss_bg"
+            android:visibility="invisible"
+            />
+        
+        <net.oschina.app.v2.activity.tweet.view.CircleImageView
+            android:id="@+id/item_image"
+            android:layout_width="@dimen/list_item_avatar_size"
+            android:layout_height="@dimen/list_item_avatar_size"
+            android:layout_marginRight="@dimen/space_8"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_default_avatar" />
+
+         <ImageView
+            android:id="@+id/iv_sign"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignBottom="@id/item_image"
+            android:layout_alignRight="@id/item_image"
+            android:layout_marginRight="-7dp"
+            android:src="@drawable/user_v_sign" />
+         
+   
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/item_image"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textColor="@color/main_gray"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/item_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/item_name"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+         android:textSize="8sp"
+         android:background="@drawable/level_bg_shape" />
+
+    <TextView
+        android:id="@+id/item_buiness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/item_image"
+        android:layout_toRightOf="@id/item_image"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textColor="@color/main_gray"
+        android:textSize="12sp" />
+
+   
+    <!--
+    <TextView
+        android:id="@+id/item_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_alignParentRight="true"
+        android:background="@color/main_green"
+        android:singleLine="true"
+        android:text="关注1.5K"
+        android:textColor="#fff"
+        android:textSize="14sp"/>
+    -->
+
+    <LinearLayout
+        android:id="@+id/rl_guanzhu"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/zhichi_item_bg_shape"
+        android:orientation="horizontal"
+        >
+        <TextView 
+            android:id="@+id/guanzhu_biaoqian"
+			android:layout_width="48dp"
+			android:layout_height="match_parent"
+			android:gravity="center"
+            android:text="关注"
+            android:textColor="@drawable/zhichi_item_left_selector"
+            android:background="@drawable/zhichi_item_left_shape"
+            android:textSize="12sp"
+            />
+
+        <TextView 
+            android:id="@+id/guanzhu_shenma"
+           	android:layout_width="wrap_content"
+			android:minWidth="32dp"
+            android:layout_height="match_parent"
+            android:text="1.5K"
+            android:singleLine="true"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+             android:background="@drawable/zhichi_item_right_shape"
+            android:layout_alignParentRight="true"
+            android:textSize="12sp"/>
+    </LinearLayout>
+</RelativeLayout>

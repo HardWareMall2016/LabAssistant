@@ -1,0 +1,1 @@
+include ':app', ':viewpagerindicator', ':pulltorefresh', ':umengshare', ':pinnedsection', ':photoview', ':stickylistheaders', ':supportv7'

@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/find_shoushouribao"
+            style="@style/setting_item_container"
+            android:layout_marginTop="@dimen/space_20"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingRight="@dimen/space_10" >
+
+            <ImageView
+                android:id="@+id/find_1_icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="10dp"
+                    android:contentDescription="@null"
+                    android:maxHeight="10dp"
+                    android:maxWidth="10dp"
+                    android:src="@drawable/find_1" />
+            
+         
+
+            <TextView
+                style="@style/setting_item_text"
+                android:text="@string/find_shoushouribao" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10"
+                android:text="@string/find_shoushouribao_discription"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_14" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right" >
+
+                <TextView
+                    android:id="@+id/ribao_tab_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:background="@drawable/ic_item_goto_right_tip"
+                    android:contentDescription="@null"
+                    android:gravity="center"
+                    android:textColor="#fff" />
+               
+            </LinearLayout>
+            
+            
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
+
+        <LinearLayout
+            android:id="@+id/find_shiyanzhoukan"
+            style="@style/setting_item_container"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingRight="@dimen/space_10" >
+
+			
+			 <ImageView
+                android:id="@+id/find_2_icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="10dp"
+                    android:contentDescription="@null"
+                    android:maxHeight="10dp"
+                    android:maxWidth="10dp"
+                    android:src="@drawable/find_2" />
+
+            <TextView
+                style="@style/setting_item_text"
+                android:text="@string/find_shiyanzhoukan" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10"
+                android:text="@string/find_shiyanzhoukan_discription"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_14" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right" >
+
+                <TextView
+                    android:id="@+id/zhoukan_tab_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:background="@drawable/ic_item_goto_right_tip"
+                    android:contentDescription="@null"
+                    android:gravity="center"
+                    android:textColor="#fff" />
+            </LinearLayout>
+			
+		
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
+
+        <LinearLayout
+            android:id="@+id/find_faguiwenxian"
+            style="@style/setting_item_container"
+            android:padding="@dimen/space_10" >
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@null"
+                android:maxHeight="10dp"
+                android:maxWidth="10dp"
+                android:src="@drawable/find_3" />
+
+            <TextView
+                style="@style/setting_item_text"
+                android:text="@string/find_faguiwenxian" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10"
+                android:text="@string/find_faguiwenxian_discription"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_14" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:layout_marginTop="@dimen/space_20"
+            android:background="@color/list_divider_color" />
+
+        
+        <LinearLayout
+            android:id="@+id/find_huodongzhongxin"
+            style="@style/setting_item_container"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingRight="@dimen/space_10" >
+
+			
+			 <ImageView
+                android:id="@+id/find_4_icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="10dp"
+                    android:contentDescription="@null"
+                    android:maxHeight="10dp"
+                    android:maxWidth="10dp"
+                    android:src="@drawable/find_4" />
+            
+
+            <TextView
+                style="@style/setting_item_text"
+                android:text="@string/find_huodongzhongxin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10"
+                android:text="@string/find_huodongzhongxin_discription"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_14" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right" >
+
+                 <TextView
+                    android:id="@+id/huodong_tab_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:background="@drawable/ic_item_goto_right_tip"
+                    android:contentDescription="@null"
+                    android:gravity="center"
+                    android:textColor="#fff" />
+            </LinearLayout>
+			
+		
+        </LinearLayout>
+        
+      
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
+
+        <LinearLayout
+            android:id="@+id/find_pinpaiku"
+            style="@style/setting_item_container"
+            android:padding="@dimen/space_10" >
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@null"
+                android:maxHeight="10dp"
+                android:maxWidth="10dp"
+                android:src="@drawable/find_5" />
+
+            <TextView
+                style="@style/setting_item_text"
+                android:text="@string/find_pinpaiku" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10"
+                android:text="@string/find_pinpaiku_discription"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_14" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
+
+        <LinearLayout
+            android:id="@+id/find_peixunxinxi"
+            style="@style/setting_item_container"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingRight="@dimen/space_10" >
+
+			
+			 <ImageView
+                android:id="@+id/find_6_icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="10dp"
+                    android:contentDescription="@null"
+                    android:maxHeight="10dp"
+                    android:maxWidth="10dp"
+                    android:src="@drawable/find_6" />
+            
+          
+
+            <TextView
+                style="@style/setting_item_text"
+                android:text="@string/find_peixunxinxi" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10"
+                android:text="@string/find_peixunxinxi_discription"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_14" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right" >
+
+                 <TextView
+                    android:id="@+id/peixun_tab_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:background="@drawable/ic_item_goto_right_tip"
+                    android:contentDescription="@null"
+                    android:gravity="center"
+                    android:textColor="#fff" />
+            </LinearLayout>
+			
+		
+        </LinearLayout>
+    
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:layout_marginTop="@dimen/space_20"
+            android:background="@color/list_divider_color" />
+
+        <LinearLayout
+            android:id="@+id/find_jifenshangcheng"
+            style="@style/setting_item_container"
+            android:padding="@dimen/space_10" >
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@null"
+                android:maxHeight="10dp"
+                android:maxWidth="10dp"
+                android:src="@drawable/find_7" />
+
+            <TextView
+                style="@style/setting_item_text"
+                android:text="@string/find_jifenshangcheng" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10"
+                android:text="@string/find_jifenshangcheng_discription"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_14" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
+
+        <LinearLayout
+            android:id="@+id/find_paihangbang"
+            style="@style/setting_item_container"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingRight="@dimen/space_10" >
+
+			
+			 <ImageView
+                android:id="@+id/find_8_icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="10dp"
+                    android:contentDescription="@null"
+                    android:maxHeight="10dp"
+                    android:maxWidth="10dp"
+                    android:src="@drawable/find_8" />
+            
+            <TextView
+                style="@style/setting_item_text"
+                android:text="@string/find_paihangbang" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10"
+                android:text="@string/find_paihangbang_discription"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_14" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right" >
+
+               <TextView
+                    android:id="@+id/paihang_tab_notice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:background="@drawable/ic_item_goto_right_tip"
+                    android:contentDescription="@null"
+                    android:gravity="center"
+                    android:textColor="#fff" />
+            </LinearLayout>
+			
+		
+        </LinearLayout>
+        
+       
+    </LinearLayout>
+
+</ScrollView>

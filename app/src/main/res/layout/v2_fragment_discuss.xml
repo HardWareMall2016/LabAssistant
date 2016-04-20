@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true" >
+
+    <RelativeLayout
+        android:id="@+id/bottom_area_disucss"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/list_divider_color" />
+
+        <Button
+            android:id="@+id/commit_discuss"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/common_btn_selector"
+            android:text="发布"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <!--
+        <EditText
+            android:id="@+id/discuss_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="5dp" 
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:layout_toLeftOf="@id/commit_discuss"
+            android:background="@drawable/module_input_editor"
+            android:minHeight="35dp"
+            android:paddingLeft="3dp"
+            android:singleLine="true"
+            android:textColor="@color/main_black"
+            android:textColorHint="@color/main_gray"
+            android:textSize="@dimen/text_size_16" />        -->
+
+        <net.oschina.app.v2.emoji.EmojiEditText
+            android:id="@+id/discuss_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:layout_marginTop="@dimen/space_5"
+            android:layout_toLeftOf="@id/commit_discuss"
+            android:background="@drawable/comment_edittext_selector"
+            android:gravity="center_vertical"
+            android:minHeight="40dp"
+            android:paddingBottom="@dimen/space_2"
+            android:paddingLeft="10dp"
+            android:paddingRight="@dimen/space_26"
+            android:textColor="@color/main_black"
+            android:textColorHint="#FF0000"
+            android:textSize="@dimen/text_size_16" />
+    </RelativeLayout>
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_area_disucss"
+        android:layout_alignParentTop="true"
+        android:cacheColorHint="#ffffffff"
+        android:descendantFocusability="blocksDescendants"
+        android:divider="@color/list_divider_color"
+        android:dividerHeight="1.0px"
+        android:listSelector="@android:color/transparent"
+        app:ptrDrawable="@drawable/ic_pullrefresh"
+        app:ptrHeaderTextColor="@android:color/darker_gray" />
+
+    <net.oschina.app.v2.ui.empty.EmptyLayout
+        android:id="@+id/error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_area_disucss"
+        android:visibility="gone" />
+
+</RelativeLayout>

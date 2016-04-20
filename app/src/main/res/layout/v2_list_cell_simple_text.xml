@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:paddingTop="10dp" 
+    android:paddingLeft="10dp" 
+    android:paddingRight="10dp" >
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_item_background"
+        android:padding="10dp" >
+
+         <ImageView 
+            android:id="@+id/iv_avastarBg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/iv_boss_bg"
+           android:visibility="gone"
+            />
+         
+        <net.oschina.app.v2.activity.tweet.view.CircleImageView
+            android:id="@+id/item_image"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+             android:layout_marginRight="10dp"
+            android:src="@drawable/ic_default_avatar" />
+        <ImageView
+            android:id="@+id/iv_sign"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignBottom="@id/item_image"
+            android:layout_alignRight="@id/item_image"
+            android:layout_marginRight="-7dp"
+            android:src="@drawable/user_v_sign" />
+       <!--  <net.oschina.app.v2.ui.AvatarView
+            android:id="@+id/item_image"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginRight="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_default_pic" /> -->
+
+        <ImageView
+            android:id="@+id/resolved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/item_image"
+            android:src="@drawable/has_resolved" 
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/item_image" />
+
+        <TextView
+        android:id="@+id/item_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/item_name"
+        android:background="@drawable/level_bg_shape"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp"
+        android:textSize="8sp" />
+        <TextView
+            android:id="@+id/item_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_name"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/item_image" />
+
+        <Button
+            android:id="@+id/item_attention"
+            android:layout_width="72dp"
+            android:layout_height="@dimen/space_30"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_favorite"
+            android:text="取消关注"
+            android:textColor="#fff"
+            android:textSize="13sp" />
+    </RelativeLayout>
+</RelativeLayout>

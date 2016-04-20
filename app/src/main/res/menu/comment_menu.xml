@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/btnok"
+        android:orderInCategory="12"
+        android:showAsAction="always"
+        android:title="采纳意见"
+        android:visible="true"/>
+
+</menu>

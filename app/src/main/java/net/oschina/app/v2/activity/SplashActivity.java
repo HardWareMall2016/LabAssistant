@@ -51,6 +51,7 @@ import com.umeng.update.UpdateStatus;
  */
 public class SplashActivity extends ActionBarActivity {
 
+
 	private static final String KEY_SPLASH_IS_HAVE_SHOWED = "splash_is_have_showed";
 	private static final String SPLASH_SCREEN = "SplashScreen";
 	public static final int MAX_WATTING_TIME = 3000;// 停留时间3秒
@@ -85,6 +86,7 @@ public class SplashActivity extends ActionBarActivity {
 			redirectTo();
 			return;
 		}
+
 
 		AppContext.requestDailyEnglish();
 		checkUpdate();

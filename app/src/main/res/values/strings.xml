@@ -441,4 +441,7 @@
     <string name="again_input_password">再次确认:</string>
     <string name="questiondetail">我的提问</string>
     <string name="newReply">(%s新消息)</string>
+
+    <!--新增资源-->
+    <string name="search_user">搜索用户</string>
 </resources>

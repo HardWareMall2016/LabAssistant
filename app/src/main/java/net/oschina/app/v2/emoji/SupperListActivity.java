@@ -8,6 +8,7 @@ import net.oschina.app.v2.AppContext;
 import net.oschina.app.v2.activity.tweet.model.UserBean;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.BaseActivity;
+import net.oschina.app.v2.utils.TDevice;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -18,8 +19,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.LayoutParams;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -34,8 +38,15 @@ public class SupperListActivity extends BaseActivity {
 	private RelativeLayout mTipLayout;
 	private ImageView mTipClose;
 	private SupperAdapter mAdapter;
+
+	private EditText searchEt;
+	private ImageButton searchBtn;
 	
 	private HashMap<Integer, UserBean> userList;
+
+	private List<UserBean> mAllDataList = new ArrayList<UserBean>();
+
+	private List<UserBean> mFilterDataList = new ArrayList<UserBean>();
 
 	@Override
 	protected void init(Bundle savedInstanceState) {
@@ -46,6 +57,28 @@ public class SupperListActivity extends BaseActivity {
 		mAdapter = new SupperAdapter(this);
 		mAdapter.setUserList(userList);
 		mListView.setAdapter(mAdapter);
+
+		searchEt = (EditText) findViewById(R.id.et_content);
+		searchBtn = (ImageButton) findViewById(R.id.btn_search);
+		searchBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				TDevice.hideSoftKeyboard(searchBtn);
+				mFilterDataList.clear();
+				String searchKeyword=searchEt.getText().toString();
+				if(TextUtils.isEmpty(searchKeyword)){
+					mFilterDataList.addAll(mAllDataList);
+				}else{
+					for(UserBean user:mAllDataList){
+						if(!TextUtils.isEmpty(user.getNickname())&&user.getNickname().contains(searchKeyword)){
+							mFilterDataList.add(user);
+						}
+					}
+				}
+				mAdapter.setItems(mFilterDataList);
+				mAdapter.notifyDataSetChanged();
+			}
+		});
 		
 		mTipLayout = (RelativeLayout) findViewById(R.id.tip_layout);
 		mTipClose = (ImageView) findViewById(R.id.tip_close);
@@ -138,7 +171,9 @@ public class SupperListActivity extends BaseActivity {
 							dataList.add(user);
 						}
 
-						mAdapter.setItems(dataList);
+						mAllDataList=dataList;
+						mFilterDataList.addAll(mAllDataList);
+						mAdapter.setItems(mFilterDataList);
 						mAdapter.notifyDataSetChanged();
 					}
 				} catch (JSONException e) {

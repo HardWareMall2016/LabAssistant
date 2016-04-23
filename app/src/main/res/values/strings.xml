@@ -197,7 +197,7 @@
     <string name="actionbar_title_question">帖子</string>
     <string name="actionbar_title_tweet">动弹</string>
     <string name="actionbar_title_detail">xx的提问</string>
-    <string name="actionbar_title_supperlist">"@问高手"</string>
+    <string name="actionbar_title_supperlist">"@邀请回答"</string>
     <string name="tip_logout_success">注销成功.</string>
     <string name="actionbar_title_sale">收货人资料</string>
     <string name="active_nicheng">昵称</string>

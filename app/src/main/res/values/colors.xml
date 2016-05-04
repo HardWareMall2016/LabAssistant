@@ -164,4 +164,5 @@
     <!-- drawable -->
     <drawable name="transparent">@color/transparent</drawable>
     <drawable name="half_transparent">#d9d9d9</drawable>
+    <color name="popup_background">#eeeeee</color>
 </resources>

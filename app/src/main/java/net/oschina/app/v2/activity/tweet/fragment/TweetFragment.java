@@ -18,6 +18,7 @@ import net.oschina.app.v2.model.event.ClearFilterConditions;
 import net.oschina.app.v2.utils.UIHelper;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 public class TweetFragment extends BaseListFragment implements
 		OnFilterClickListener {

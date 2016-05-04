@@ -1,92 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
-   
-    
+
     <net.oschina.app.v2.ui.pagertab.PagerSlidingTabStrip
         android:id="@+id/tabs"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/pager_sliding_tab_strip_height"
         android:background="@color/white" />
-    
-     <LinearLayout 
-         android:id="@+id/newMessageContainer"
-         android:layout_width="match_parent"
-     	android:layout_height="@dimen/pager_sliding_tab_strip_height"
-        android:orientation="horizontal"
+
+    <LinearLayout
+        android:id="@+id/newMessageContainer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pager_sliding_tab_strip_height"
         android:focusableInTouchMode="false"
-        android:visibility="gone"
-        >
-        <RelativeLayout 
-             android:layout_width="0dp"
-     	android:layout_height="match_parent"
-     	android:layout_weight="1"
-            >
-             <TextView
-            android:id="@+id/tab_myask"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_centerInParent="true"
-            android:textColor="@color/tab_strip_text_unselected"
-            android:textSize="15.0sp"
-            android:text="追问我的"
-            android:visibility="invisible" />
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
             <TextView
-			             android:id="@+id/tab_myask_tip"
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:minWidth="15dp"
-			            android:minHeight="16dp"
-			           android:layout_gravity="top|right"
-			            android:background="@drawable/message_unread_bg"
-			            android:gravity="center"
-			            android:text="99+"
-			            android:textColor="#ffffff"
-			            android:textSize="@dimen/text_size_9"
-			            android:layout_marginTop="3dp"
-			           android:layout_marginRight="-27dp"
-			           	android:layout_alignRight="@+id/tab_myask"
-			           	android:visibility="gone"
-            			/>
-            
+                android:id="@+id/tab_myask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="追问我的"
+                android:textColor="@color/tab_strip_text_unselected"
+                android:textSize="15.0sp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tab_myask_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/tab_myask"
+                android:layout_gravity="top|right"
+                android:layout_marginRight="-27dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/message_unread_bg"
+                android:gravity="center"
+                android:minHeight="16dp"
+                android:minWidth="15dp"
+                android:text="99+"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/text_size_9"
+                android:visibility="gone" />
+
         </RelativeLayout>
-        
-         <RelativeLayout 
-             android:layout_width="0dp"
-     	android:layout_height="match_parent"
-     	android:layout_weight="1"
-            >
-             <TextView
-            android:id="@+id/tab_askme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_centerInParent="true"
-            android:textColor="@color/tab_strip_text_unselected"
-            android:textSize="15.0sp"
-            android:text="追问我的"
-            android:visibility="invisible" />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
             <TextView
-			             android:id="@+id/tab_askme_tip"
-			            android:layout_width="wrap_content"
-			            android:layout_height="wrap_content"
-			            android:maxWidth="21dp"
-			            android:maxHeight="21dp"
-			           android:layout_gravity="top|right"
-			            android:background="@drawable/message_unread_bg"
-			            android:gravity="center"
-			            android:text="99+"
-			            android:textColor="#ffffff"
-			            android:textSize="@dimen/text_size_9"
-			            android:layout_marginTop="3dp"
-			           android:layout_marginRight="-15dp"
-			           	android:layout_alignRight="@+id/tab_askme"
-			           	 android:visibility="gone"
-            			/>
-            
+                android:id="@+id/tab_askme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="追问我的"
+                android:textColor="@color/tab_strip_text_unselected"
+                android:textSize="15.0sp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tab_askme_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/tab_askme"
+                android:layout_gravity="top|right"
+                android:layout_marginRight="-15dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/message_unread_bg"
+                android:gravity="center"
+                android:maxHeight="21dp"
+                android:maxWidth="21dp"
+                android:text="99+"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/text_size_9"
+                android:visibility="gone" />
+
         </RelativeLayout>
     </LinearLayout>
 

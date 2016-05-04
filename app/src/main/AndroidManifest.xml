@@ -289,7 +289,7 @@
         <activity
             android:name="net.oschina.app.v2.activity.tweet.TweetDetailActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name="net.oschina.app.v2.activity.tweet.CommunicatActivity"
             android:configChanges="keyboardHidden|orientation"

@@ -21,7 +21,6 @@ import net.oschina.app.v2.model.Ask;
 import net.oschina.app.v2.model.Comment;
 import net.oschina.app.v2.model.User;
 import net.oschina.app.v2.model.event.AdoptSuccEvent;
-import net.oschina.app.v2.model.event.MessageRefreshTotal;
 import net.oschina.app.v2.ui.dialog.CommonDialog;
 import net.oschina.app.v2.ui.dialog.DialogHelper;
 import net.oschina.app.v2.utils.StringUtils;
@@ -31,10 +30,12 @@ import net.oschina.app.v2.utils.UIHelper;
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,16 +50,20 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,623 +76,733 @@ import de.greenrobot.event.EventBus;
 
 /**
  * 问题详细界面
- * 
+ *
  * @author Johnny
- * 
  */
 public class TweetDetailActivity extends BaseActivity {
 
-	private boolean isFirstComming = true;
+    private boolean isFirstComming = true;
+    private boolean visibility_Flag = false;
 
-	public String mediaUri = "";
-	public String superlist = "";
-	public String url;
+    public String mediaUri = "";
+    public String superlist = "";
+    public String url;
 
-	private ShareHelper shareHelper;
-	private TweetDetailFragment f;
-	private ExtendMediaPicker pickView;
-	private TweetAnswerListFragment answerListFragment;
+    private ShareHelper shareHelper;
+    private TweetDetailFragment f;
+    private ExtendMediaPicker pickView;
+    private TweetAnswerListFragment answerListFragment;
 
-	private View mTextView;
-	private View mBottomView;
-	private Button mButton;
-	private TextView tv_zhuiwen, mTvActionTitle;
-	private EmojiEditText mEtInput;
-	private ImageButton mBtnEmoji, mBtnMore;
-	private Button mBtnSend;
-	private TextView mTvAsk, mTvRank, mTvTime, mTvTitle, mTvCommentCount;
-	private ImageView mIvPic;
-	private RelativeLayout reward_layout;
-	private ImageView pic_reward;
-	private TextView tv_reward;
-	protected View tip_layout;
-	protected View tip_close;
-	private Ask ask;
+    private View mTextView;
+    private View mBottomView;
+    private Button mButton;
+    private TextView tv_zhuiwen, mTvActionTitle;
+    private LinearLayout mMoreLinear;
+    private TextView mEtInput;
+    private ImageView mBtnEmoji, mBtnMore;
+    private ImageView mBtnSend;
+    private TextView mTvAsk, mTvRank, mTvTime, mTvTitle, mTvCommentCount;
+    private ImageView mIvPic;
+    private RelativeLayout reward_layout;
+    private ImageView pic_reward;
+    private TextView tv_reward;
+    protected View tip_layout;
+    protected View tip_close;
+    private Ask ask;
+    private View mPopMenuContent;
+    private PopupWindow mPopupWindow;
+    private InputMethodManager imm ;
 
-	private HashMap<Integer, UserBean> userList;
+    private HashMap<Integer, UserBean> userList;
 
-	@Override
-	protected int getLayoutId() {
-		return R.layout.tweet_detail_layout;
-	}
+    @Override
+    protected int getLayoutId() {
+        return R.layout.tweet_detail_layout;
+    }
 
-	@Override
-	protected boolean hasBackButton() {
-		return true;
-	}
+    @Override
+    protected boolean hasBackButton() {
+        return true;
+    }
 
-	protected void initActionBar(ActionBar actionBar) {
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		View view = inflateView(R.layout.v2_actionbar_custom_back_title_more);
-		View back = view.findViewById(R.id.btn_back);
-		back.setOnClickListener(new OnClickListener() {
+    protected void initActionBar(ActionBar actionBar) {
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        View view = inflateView(R.layout.v2_actionbar_custom_back_title_more);
+        View back = view.findViewById(R.id.btn_back);
+        back.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				onBackPressed();
-			}
-		});
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
-		View tv_back_title = view.findViewById(R.id.tv_back_title);
-		if (null != tv_back_title) {
+        View tv_back_title = view.findViewById(R.id.tv_back_title);
+        if (null != tv_back_title) {
 
-			tv_back_title.setOnClickListener(new OnClickListener() {
+            tv_back_title.setOnClickListener(new OnClickListener() {
 
-				@Override
-				public void onClick(View v) {
-					onBackPressed();
-				}
-			});
-		}
-		mTvActionTitle = (TextView) view.findViewById(R.id.tv_actionbar_title);
-		View moreBtn = view.findViewById(R.id.tv_actionbar_right_more);
-		moreBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				onMore();
-			}
-		});
-		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT);
-		actionBar.setCustomView(view, params);
-	}
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
+        mTvActionTitle = (TextView) view.findViewById(R.id.tv_actionbar_title);
+        View moreBtn = view.findViewById(R.id.tv_actionbar_right_more);
+        moreBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMore();
+            }
+        });
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT);
+        actionBar.setCustomView(view, params);
+    }
 
-	@Override
-	protected void init(Bundle savedInstanceState) {
+    @Override
+    protected void init(Bundle savedInstanceState) {
 
-		shareHelper = new ShareHelper(this);
-		pickView = new ExtendMediaPicker(this);
+        shareHelper = new ShareHelper(this);
+        pickView = new ExtendMediaPicker(this);
 
-		mTvAsk = (TextView) findViewById(R.id.tv_byask);
-		mTvRank = (TextView) findViewById(R.id.tv_byrank);
-		mTvTime = (TextView) findViewById(R.id.tv_time);
-		mTvTitle = (TextView) findViewById(R.id.tv_title);
-		mIvPic = (ImageView) findViewById(R.id.iv_pic);
-		mTvCommentCount = (TextView) findViewById(R.id.tv_comment_count);
+        mTvAsk = (TextView) findViewById(R.id.tv_byask);
+        mTvRank = (TextView) findViewById(R.id.tv_byrank);
+        mTvTime = (TextView) findViewById(R.id.tv_time);
+        mTvTitle = (TextView) findViewById(R.id.tv_title);
+        mIvPic = (ImageView) findViewById(R.id.iv_pic);
+        mTvCommentCount = (TextView) findViewById(R.id.tv_comment_count);
 
-		tv_zhuiwen = (TextView) findViewById(R.id.tv_zhuiwen);
-		mBottomView = findViewById(R.id.bottomview);
-		mButton = (Button) findViewById(R.id.button);
+        tv_zhuiwen = (TextView) findViewById(R.id.tv_zhuiwen);
+        mBottomView = findViewById(R.id.bottomview);
+        mButton = (Button) findViewById(R.id.button);
 
-		mTextView = findViewById(R.id.ly_bottom);
-		mBtnEmoji = (ImageButton) findViewById(R.id.btn_emoji);
-		mBtnSend = (Button) findViewById(R.id.btn_send);
-		mBtnMore = (ImageButton) findViewById(R.id.btn_more);
-		mEtInput = (EmojiEditText) findViewById(R.id.et_input);
-		mEtInput.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				EmojiEditText editText = ((EmojiEditText) v);
-				if (null != editText.getmHeaderUnDelete()) {
-					int index = editText.getmHeaderUnDelete().length();
-					if (index > editText.getSelectionStart()) {
-						editText.setSelection(index);
-					}
-				}
-			}
-		});
 
-		reward_layout = (RelativeLayout) findViewById(R.id.reward_layout);
-		pic_reward = (ImageView) findViewById(R.id.pic_reward);
-		tv_reward = (TextView) findViewById(R.id.tv_reward);
+        intiPopMenu();
 
-		// 填问题数据
-		ask = (Ask) getIntent().getSerializableExtra("ask");
-		NewsApi.getAskById(ask.getId(), new JsonHttpResponseHandler() {
-			@Override
-			public void onSuccess(int statusCode, Header[] headers,
-					JSONObject response) {
-				try {
-					if (response.getString("desc").equals("success")) {
+        mTextView = findViewById(R.id.ly_bottom);
+        mBtnEmoji = (ImageView) findViewById(R.id.btn_emoji);
+        mBtnSend = (ImageView) findViewById(R.id.btn_send);
+        mBtnMore = (ImageView) findViewById(R.id.btn_more);
+        mMoreLinear = (LinearLayout) findViewById(R.id.tweet_detail_more_ll);
+        mEtInput = (TextView) findViewById(R.id.et_input);
+        mEtInput.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(final View v) {
 
-						try {
-							ask = Ask.parse( new JSONObject(response
-									.getString("data")));
-							fillUI();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-		});
+                mPopMenuContent = getLayoutInflater().inflate(R.layout.tweet_detail_editbox_layout, null);
+                mPopupWindow.setContentView(mPopMenuContent);
+                TextView mBack = (TextView) mPopMenuContent.findViewById(R.id.tv_dialog_back);
+                mBack.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        closePopWin();
+                    }
+                });
+
+                final EmojiEditText editText = (EmojiEditText) mPopMenuContent.findViewById(R.id.editbox_input);
+
+                if (null != editText.getmHeaderUnDelete()) {
+                    int index = editText.getmHeaderUnDelete().length();
+                    if (index > editText.getSelectionStart()) {
+                        editText.setSelection(index);
+                    }
+                }
+                TextView mSend = (TextView) mPopMenuContent.findViewById(R.id.tv_dialog_send);
+                mSend.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String text = editText.getText().toString();
+                        editText.getText().clear();
+
+                        if(!TextUtils.isEmpty(toSomeone)){
+                            text=text.replaceAll(toSomeone, "");
+                        }
+                        if (TextUtils.isEmpty(text)) {
+                            AppContext.showToastShort(R.string.tip_comment_content_empty);
+                            return;
+                        }
+                        if (!TDevice.hasInternet()) {
+                            AppContext.showToastShort(R.string.tip_network_error);
+                            return;
+                        }
+                        int id = ask.getId();
+                        int uid = AppContext.instance().getLoginUid();
+                        boolean relation;// 是否@高手
+                        if (TextUtils.isEmpty(superlist)) {
+                            relation = false;
+                        } else {
+                            relation = true;
+                        }
+                        NewsApi.subComment(id, uid, false, text, relation, superlist,
+                                msubHandler);
+
+                        closePopWin();
+                    }
+                });
+                showPopMenu();
+
+                imm = (InputMethodManager) v.getContext().getSystemService(Service.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+
+            }
+        });
+
+        reward_layout = (RelativeLayout) findViewById(R.id.reward_layout);
+        pic_reward = (ImageView) findViewById(R.id.pic_reward);
+        tv_reward = (TextView) findViewById(R.id.tv_reward);
+
+        // 填问题数据
+        ask = (Ask) getIntent().getSerializableExtra("ask");
+        NewsApi.getAskById(ask.getId(), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers,
+                                  JSONObject response) {
+                try {
+                    if (response.getString("desc").equals("success")) {
+
+                        try {
+                            ask = Ask.parse(new JSONObject(response
+                                    .getString("data")));
+                            fillUI();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 //		fillUI();
 
-		tip_layout=findViewById(R.id.tip_layout);
-		tip_close=findViewById(R.id.tip_close);
-		tip_close.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				tip_layout.setVisibility(View.GONE);
-			}
-		});
-		// 如果没有登录的话
-		if (!AppContext.instance().isLogin()) {
-			showLogin();
-		}
+        tip_layout = findViewById(R.id.tip_layout);
+        tip_close = findViewById(R.id.tip_close);
+        tip_close.setOnClickListener(new OnClickListener() {
 
-		FragmentManager fm = getSupportFragmentManager();
-		FragmentTransaction trans = fm.beginTransaction();
+            @Override
+            public void onClick(View arg0) {
+                tip_layout.setVisibility(View.GONE);
+            }
+        });
+        // 如果没有登录的话
+        if (!AppContext.instance().isLogin()) {
+            showLogin();
+        }
 
-		answerListFragment = new TweetAnswerListFragment();
-		answerListFragment.setArguments(getIntent().getExtras());
-		trans.add(R.id.container, answerListFragment);
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction trans = fm.beginTransaction();
 
-		trans.commit();
+        answerListFragment = new TweetAnswerListFragment();
+        answerListFragment.setArguments(getIntent().getExtras());
+        trans.add(R.id.container, answerListFragment);
 
-		mBtnMore.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				pickView.showPickerView();
-			}
-		});
+        trans.commit();
 
-		if (AppContext.instance().isLogin()) {
-			User user = AppContext.instance().getLoginInfo();
-			if (user.getRealname_status() == 1) {// 已认证
-				mBtnEmoji.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Intent intent = new Intent(TweetDetailActivity.this,
-								SupperListActivity.class);
-						intent.putExtra("supperList", userList);
-						startActivityForResult(intent, 1000);
-					}
-				});
-			} else {
-				mBtnEmoji.setImageDrawable(getResources().getDrawable(
-						R.drawable.at_forbid));
-				mBtnEmoji.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						AppContext.showToast("需要认证");
-					}
-				});
-			}
-		} else {
-			mBtnEmoji.setImageDrawable(getResources().getDrawable(
-					R.drawable.at_forbid));
-			mBtnEmoji.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					AppContext.showToast("需要认证");
-				}
-			});
-		}
+        mBtnMore.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickView.showPickerView();
+            }
+        });
 
-		EventBus.getDefault().register(this);
-	}
-	
-	@Override
-	public void onDestroy(){
-		super.onDestroy();
-		EventBus.getDefault().unregister(this);
-	}
-	
-	/**
-	 * 刷新
-	 * @param totalMessage
-	 */
-	public void onEventMainThread(AdoptSuccEvent adoptSuccEvent){
-		if(ask.getId()==adoptSuccEvent.askId){
-			changeAskState();
-		}
-	}
+        if (AppContext.instance().isLogin()) {
+            User user = AppContext.instance().getLoginInfo();
+            if (user.getRealname_status() == 1) {// 已认证
+                mBtnEmoji.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(TweetDetailActivity.this,
+                                SupperListActivity.class);
+                        intent.putExtra("supperList", userList);
+                        startActivityForResult(intent, 1000);
+                    }
+                });
+            } else {
+                mBtnEmoji.setImageDrawable(getResources().getDrawable(
+                        R.drawable.at));
+                mBtnEmoji.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AppContext.showToast("需要认证");
+                    }
+                });
+            }
+        } else {
+            mBtnEmoji.setImageDrawable(getResources().getDrawable(
+                    R.drawable.at));
+            mBtnEmoji.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppContext.showToast("需要认证");
+                }
+            });
+        }
 
-	private JsonHttpResponseHandler msubHandler = new JsonHttpResponseHandler() {
+        EventBus.getDefault().register(this);
+    }
 
-		@Override
-		public void onSuccess(int statusCode, Header[] headers,
-				JSONObject response) {
-			try {
-				if (response.getInt("code") == 88) {
-					reset();
-					answerListFragment.adapter.clear();
-					answerListFragment.sendRequestData();
-					AppContext.showToast("回答成功");
-				} else {
-					AppContext.showToast("回答失败");
-				}
+    private void intiPopMenu() {
+         /* 第一个参数弹出显示view 后两个是窗口大小 */
+        mPopupWindow = new PopupWindow(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        /* 设置背景显示 */
+        int bgColor = getResources().getColor(R.color.popup_background);
+        mPopupWindow.setBackgroundDrawable(new ColorDrawable(bgColor));
+        /* 设置触摸外面时消失 */
+        mPopupWindow.setOutsideTouchable(false);
+        /* 设置系统动画 */
+        mPopupWindow.setAnimationStyle(R.style.pop_menu_animation);
+        mPopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        mPopupWindow.update();
+        mPopupWindow.setTouchable(true);
+        /* 设置点击menu以外其他地方以及返回键退出 */
+        mPopupWindow.setFocusable(true);
+    }
 
-			} catch (JSONException e1) {
-				e1.printStackTrace();
-			}
-		}
-	};
+    public boolean closePopWin() {
+        if (mPopupWindow != null && mPopupWindow.isShowing()) {
+            mPopupWindow.dismiss();
+            return true;
+        }
+        return false;
+    }
 
-	private JsonHttpResponseHandler mCommentAfterHandler = new JsonHttpResponseHandler() {
+    private void showPopMenu() {
+        if (mPopupWindow != null && !mPopupWindow.isShowing()) {
+            /* 最重要的一步：弹出显示 在指定的位置(parent) 最后两个参数 是相对于 x / y 轴的坐标 */
+            mPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+            backgroundAlpha(0.7f);
+            mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    backgroundAlpha(1f);
+                }
+            });
+        }
+    }
 
-		@Override
-		public void onSuccess(int statusCode, Header[] headers,
-				JSONObject response) {
-			try {
-				if (response.getInt("code") == 88) {
-					reset();
-					answerListFragment.adapter.clear();
-					answerListFragment.sendRequestData();
-					AppContext.showToast("追问成功");
-				} else {
-					AppContext.showToast("追问失败");
-				}
+    private void backgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; // 0.0-1.0
+        getWindow().setAttributes(lp);
+    }
 
-			} catch (JSONException e1) {
-				e1.printStackTrace();
-			}
-		}
-	};
 
-	public void showTiWen() {
-		mButton.setTag(2);
-		mButton.setText("继续回答");
-		mBottomView.setVisibility(View.GONE);
-		mTextView.setVisibility(View.VISIBLE);
-	}
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
-	public void showZhuiwen() {
-		mEtInput.setHint("追问");
-		mEtInput.setHintTextColor(getResources().getColor(
-				R.color.font_zhuiwen_back));
-		mBottomView.setVisibility(View.VISIBLE);
-		mTextView.setVisibility(View.VISIBLE);
-	}
+    /**
+     * 刷新
+     *
+     * @param
+     */
+    public void onEventMainThread(AdoptSuccEvent adoptSuccEvent) {
+        if (ask.getId() == adoptSuccEvent.askId) {
+            changeAskState();
+        }
+    }
 
-	public void reset() {
-		TDevice.hideSoftKeyboard(mEtInput);
+    private JsonHttpResponseHandler msubHandler = new JsonHttpResponseHandler() {
 
-		if (mEtInput != null) {
-			mEtInput.getText().clear();
-			mEtInput.clearFocus();
-			// mEtInput.setHint(R.string.publish_comment);
-			mEtInput.setHint(R.string.publish_comment);
-			mEtInput.setHintTextColor(getResources().getColor(
-					R.color.font_zhuiwen_back));
-			// mEtInput.setTextColor();
-		}
-	}
+        @Override
+        public void onSuccess(int statusCode, Header[] headers,
+                              JSONObject response) {
+            try {
+                if (response.getInt("code") == 88) {
+                    reset();
+                    answerListFragment.adapter.clear();
+                    answerListFragment.sendRequestData();
+                    AppContext.showToast("回答成功");
+                } else {
+                    AppContext.showToast("回答失败");
+                }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main_menu, menu);
-		return false;
-	}
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+        }
+    };
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.main_menu_more:
-			onMore();
-			break;
-		}
-		return true;
-	}
+    private JsonHttpResponseHandler mCommentAfterHandler = new JsonHttpResponseHandler() {
 
-	
-	private String toSomeone;
-	@SuppressWarnings("unchecked")
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		if (resultCode == Activity.RESULT_OK && requestCode == 1000) {
-			userList = (HashMap<Integer, UserBean>) intent
-					.getSerializableExtra("supperList");
-			if (userList != null) {
-				StringBuilder builder = new StringBuilder();
-				StringBuilder sb = new StringBuilder();
-				for (Map.Entry<Integer, UserBean> entry : userList.entrySet()) {
-					UserBean user = entry.getValue();
-					builder.append(user.getId() + ",");
-					sb.append("@" + user.getNickname() + ";");
-					
-					
-				}
-				if (builder.length() > 0) {
-					builder = builder.deleteCharAt(builder.length() - 1);
-				}
-				this.superlist = builder.toString();
-				toSomeone=sb.toString();
-				mEtInput.setHeaderUnDelete(sb.toString());
-				
-			}
-		}
-		pickView.onActivityResult(requestCode, resultCode, intent);
-	}
+        @Override
+        public void onSuccess(int statusCode, Header[] headers,
+                              JSONObject response) {
+            try {
+                if (response.getInt("code") == 88) {
+                    reset();
+                    answerListFragment.adapter.clear();
+                    answerListFragment.sendRequestData();
+                    AppContext.showToast("追问成功");
+                } else {
+                    AppContext.showToast("追问失败");
+                }
 
-	boolean isAllowShare=true;
-	
-	protected void onMore() {
-		int item; // 自己提的问题、举报 隐藏不显示
-		if (ask.getUid()==AppContext.instance().getLoginUid()) {
-			item= R.array.app_bar_item;
-		}else {item = R.array.app_bar_items;}
-		
-		final CommonDialog dialog = DialogHelper
-				.getPinterestDialogCancelable(this);
-		dialog.setTitle(R.string.title_more);
-		dialog.setItemsWithoutChk(
-				getResources().getStringArray(item),
-				new OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
-						dialog.dismiss();
-						if (position == 0) {
-							NewsApi.getQuestionShareUrl(ask.getId(),
-									new JsonHttpResponseHandler() {
-										@Override
-										public void onSuccess(int statusCode,
-												Header[] headers,
-												JSONObject response) {
-											try {
-												if (response.getInt("code") == 88) {
-													JSONObject dataObject = new JSONObject(
-															response.getString("data"));
-													url = dataObject
-															.optString("url");
-												} else {
-												}
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+        }
+    };
 
-											} catch (JSONException e1) {
-												e1.printStackTrace();
-											}
-										}
-									});
-						}
-						goToSelectItem(position);
-					}
-				});
-		dialog.show();
-	}
+    public void showTiWen() {
+        mButton.setTag(2);
+        mButton.setText("继续回答");
+        mBottomView.setVisibility(View.GONE);
+        mTextView.setVisibility(View.VISIBLE);
+    }
 
-	private void goToSelectItem(int position) {
+    public void showZhuiwen() {
+        mEtInput.setHint("追问");
+        mEtInput.setHintTextColor(getResources().getColor(
+                R.color.font_zhuiwen_back));
+        mBottomView.setVisibility(View.VISIBLE);
+        mTextView.setVisibility(View.VISIBLE);
+    }
 
-		switch (position) {
-		case 0:
-			final CommonDialog dialogShare = DialogHelper
-					.getPinterestDialogCancelable(this);
-			dialogShare.setTitle(R.string.title_share);
-			dialogShare.setItemsWithoutChk(
+    public void reset() {
+        TDevice.hideSoftKeyboard(mEtInput);
 
-			getResources().getStringArray(R.array.app_share_items),
-					new OnItemClickListener() {
+        if (mEtInput != null) {
+            //mEtInput.getText().clear();
+            mEtInput.clearFocus();
+            mEtInput.setHint(R.string.publish_comment);
+            mEtInput.setHintTextColor(getResources().getColor(
+                    R.color.font_zhuiwen_back));
+            // mEtInput.setTextColor();
+        }
+    }
 
-						@Override
-						public void onItemClick(AdapterView<?> parent,
-								View view, int position, long id) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return false;
+    }
 
-							if (position == 0) {
-								shareHelper.shareToSinaWeibo(
-										"分享问题：" + ask.getContent(),
-										url,
-										"http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
-							} else if (position == 1) {
-								shareHelper.shareToWeiChat(
-										"分享问题",
-										ask.getContent(),
-										url,
-										"");
-							} else if (position == 2) {
-								shareHelper.shareToWeiChatCircle(
-										"分享问题",
-										ask.getContent(),
-										url,
-										R.drawable.share_icon);
-							}else if (position == 3) {
-								
-								NewsApi.shareQuestion(ask.getId(),AppContext.instance().getLoginUid(),new JsonHttpResponseHandler() {
-									@Override
-									public void onSuccess(int statusCode, Header[] headers,
-											JSONObject response) {
-										try {
-											int code=response.getInt("code");
-											if(code==88){
-												Toast.makeText(getApplicationContext(), "分享成功", Toast.LENGTH_SHORT).show();
-											}else{
-												Toast.makeText(getApplicationContext(), "分享失败", Toast.LENGTH_SHORT).show();
-											}
-										} catch (JSONException e) {
-											e.printStackTrace();
-										}
-									}
-								});
-								}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.main_menu_more:
+                onMore();
+                break;
+        }
+        return true;
+    }
 
-							dialogShare.dismiss();
-							// goToSelectItem(position);
-						}
-					});
-			dialogShare.show();
-			break;
-		case 1:
-			if (!AppContext.instance().isLogin()) {
-				Intent intent = new Intent(this, MainActivity.class);
-				intent.putExtra("type", "login");
-				startActivity(intent);
-			} else {
-				doReport();
-			}
-			break;
-		}
-	}
-	
-	protected void doReport() {
-		final AlertDialog dialog = new AlertDialog.Builder(this).create();
-		dialog.show();
-		Window window = dialog.getWindow();
-		window.setContentView(R.layout.zhichi_dialog);
-		TextView titleTv = (TextView) window.findViewById(R.id.tv_title);
-		titleTv.setText("是否举报");
-		// 设置监听
-		Button zhichi = (Button) window.findViewById(R.id.ib_zhichi);
-		zhichi.setText("确定");
-		// 支持
-		zhichi.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (!AppContext.instance().isLogin()) {
-					Intent intent = new Intent(TweetDetailActivity.this,
-							MainActivity.class);
-					intent.putExtra("type", "login");
-					startActivity(intent);
-				} else {
-					int uid = AppContext.instance().getLoginUid();
-					NewsApi.reportQuestion(uid, ask.getId(),
-							new JsonHttpResponseHandler() {
-								@Override
-								public void onSuccess(int statusCode,
-										Header[] headers, JSONObject response) {
-									String str="举报成功";
-									
-									try {
-										int code =response.getInt("code");
-										if(code!=88){
-											str=response.getString("desc");
-										}
-									} catch (JSONException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-									
-									
-									AppContext.showToast(str);
-								}
-							});
-				}
-				dialog.dismiss();
-			}
-		});
-		// 查看支持者
-		Button chakanzhichi = (Button) window
-				.findViewById(R.id.ib_chakanzhichi);
-		chakanzhichi.setText("取消");
-		chakanzhichi.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
-	}
 
-	private void fillUI() {
-		mTvTime.setText(ask.getinputtime());
-		mTvCommentCount
-				.setText(getString(R.string.comment_count, ask.getanum()));
+    private String toSomeone;
 
-		String supper = ask.getsuperlist();
-		if (!TextUtils.isEmpty(supper) && !"null".equals(supper)) {
-			
-			
-			mTvAsk.setText(Html.fromHtml("邀请 <font color=#2FBDE7>" + supper
-					+ "</font> 进行回答"));
-			mTvAsk.setVisibility(View.VISIBLE);
-		} else {
-			mTvAsk.setVisibility(View.GONE);
-		}
-		String label = ask.getLabel();
-		if (TextUtils.isEmpty(label)) {
-			label = "暂无";
-		}
-		mTvRank.setText(Html.fromHtml("标签:<font color=#2FBDE7>" + label
-				+ "</font>"));
-		if (!StringUtils.isEmpty(ask.getImage()) && "null" != ask.getImage()) {
-			mIvPic.setVisibility(View.VISIBLE);
-			ImageLoader.getInstance().displayImage(
-					ApiHttpClient.getImageApiUrl(ask.getImage()), mIvPic);
+    @SuppressWarnings("unchecked")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (resultCode == Activity.RESULT_OK && requestCode == 1000) {
+            userList = (HashMap<Integer, UserBean>) intent
+                    .getSerializableExtra("supperList");
+            if (userList != null) {
+                StringBuilder builder = new StringBuilder();
+                StringBuilder sb = new StringBuilder();
+                for (Map.Entry<Integer, UserBean> entry : userList.entrySet()) {
+                    UserBean user = entry.getValue();
+                    builder.append(user.getId() + ",");
+                    sb.append("@" + user.getNickname() + ";");
 
-			mIvPic.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent intent = new Intent(TweetDetailActivity.this,
-							ImageShowerActivity.class);
-					intent.putExtra("imageUri", ask.getImage());
-					startActivity(intent);
-				}
-			});
 
-		} else {
-			mIvPic.setVisibility(View.GONE);
-		}
-		if (AppContext.instance().isLogin()) {
-			if (ask.getUid() == AppContext.instance().getLoginUid()) {
-				mTvActionTitle.setText("我的提问");
-				tip_layout.setVisibility(View.VISIBLE);
-			} else {
-				mTvActionTitle.setText(ask.getnickname() + "的提问");
-			}
-		} else {
-			mTvActionTitle.setText(ask.getnickname() + "的提问");
-		}
+                }
+                if (builder.length() > 0) {
+                    builder = builder.deleteCharAt(builder.length() - 1);
+                }
+                this.superlist = builder.toString();
+                toSomeone = sb.toString();
+                //	mEtInput.setHeaderUnDelete(sb.toString());
 
-		if (ask.getreward() != 0) {
-			//reward_layout.setVisibility(View.VISIBLE);
-			//tv_reward.setText(String.valueOf(ask.getreward()));
-			//mTvTitle.setText("" + ask.getContent());
-			String content=" "+ask.getreward()+" "+ask.getContent();
-			int length=(""+ask.getreward()).length();
-			SpannableString spanString = new SpannableString(" "+ask.getreward()+ask.getContent());  
-		    Drawable d = getResources().getDrawable(R.drawable.dollar);  
-		    d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());  
-		    ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BASELINE);  
-		    spanString.setSpan(span, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);  
-		    
-		    ForegroundColorSpan forColor = new ForegroundColorSpan(getResources().getColor(R.color.reward));  
-		    spanString.setSpan(forColor, 1, 1+length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);  
-		    mTvTitle.setText(spanString);
-		    
-		} else {
-			reward_layout.setVisibility(View.GONE);
-			mTvTitle.setText("" + ask.getContent());
-		}
+            }
+        }
+        pickView.onActivityResult(requestCode, resultCode, intent);
+    }
 
-		// mContent.loadDataWithBaseURL(null, ask.getContent(), "text/html",
-		// "utf-8", null);
-		// mContent.setWebViewClient(UIHelper.getWebViewClient());
-	}
+    boolean isAllowShare = true;
 
-	public void showTiWenMe() {
-		mButton.setTag(2);
-		mButton.setText("继续回答");
-		mBottomView.setVisibility(View.GONE);
-		mTextView.setVisibility(View.GONE);
-	}
+    protected void onMore() {
+        int item; // 自己提的问题、举报 隐藏不显示
+        if (ask.getUid() == AppContext.instance().getLoginUid()) {
+            item = R.array.app_bar_item;
+        } else {
+            item = R.array.app_bar_items;
+        }
 
-	public void bottomBack() {
-		answerListFragment.handleBottomView();
-	}
+        final CommonDialog dialog = DialogHelper
+                .getPinterestDialogCancelable(this);
+        dialog.setTitle(R.string.title_more);
+        dialog.setItemsWithoutChk(
+                getResources().getStringArray(item),
+                new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+                        dialog.dismiss();
+                        if (position == 0) {
+                            NewsApi.getQuestionShareUrl(ask.getId(),
+                                    new JsonHttpResponseHandler() {
+                                        @Override
+                                        public void onSuccess(int statusCode,
+                                                              Header[] headers,
+                                                              JSONObject response) {
+                                            try {
+                                                if (response.getInt("code") == 88) {
+                                                    JSONObject dataObject = new JSONObject(
+                                                            response.getString("data"));
+                                                    url = dataObject
+                                                            .optString("url");
+                                                } else {
+                                                }
 
-	/**
-	 * 底部显示【回答】界面
-	 */
-	public void showAnswer() {
-		if (ask.getUid() == AppContext.instance().getLoginUid()) {// 自己的提问
-			mTextView.setVisibility(View.GONE);
-			return;
-		}
-		mBtnSend.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				String text = mEtInput.getText().toString();
+                                            } catch (JSONException e1) {
+                                                e1.printStackTrace();
+                                            }
+                                        }
+                                    });
+                        }
+                        goToSelectItem(position);
+                    }
+                });
+        dialog.show();
+    }
+
+    private void goToSelectItem(int position) {
+
+        switch (position) {
+            case 0:
+                final CommonDialog dialogShare = DialogHelper
+                        .getPinterestDialogCancelable(this);
+                dialogShare.setTitle(R.string.title_share);
+                dialogShare.setItemsWithoutChk(
+
+                        getResources().getStringArray(R.array.app_share_items),
+                        new OnItemClickListener() {
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent,
+                                                    View view, int position, long id) {
+
+                                if (position == 0) {
+                                    shareHelper.shareToSinaWeibo(
+                                            "分享问题：" + ask.getContent(),
+                                            url,
+                                            "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
+                                } else if (position == 1) {
+                                    shareHelper.shareToWeiChat(
+                                            "分享问题",
+                                            ask.getContent(),
+                                            url,
+                                            "");
+                                } else if (position == 2) {
+                                    shareHelper.shareToWeiChatCircle(
+                                            "分享问题",
+                                            ask.getContent(),
+                                            url,
+                                            R.drawable.share_icon);
+                                } else if (position == 3) {
+
+                                    NewsApi.shareQuestion(ask.getId(), AppContext.instance().getLoginUid(), new JsonHttpResponseHandler() {
+                                        @Override
+                                        public void onSuccess(int statusCode, Header[] headers,
+                                                              JSONObject response) {
+                                            try {
+                                                int code = response.getInt("code");
+                                                if (code == 88) {
+                                                    Toast.makeText(getApplicationContext(), "分享成功", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Toast.makeText(getApplicationContext(), "分享失败", Toast.LENGTH_SHORT).show();
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    });
+                                }
+
+                                dialogShare.dismiss();
+                                // goToSelectItem(position);
+                            }
+                        });
+                dialogShare.show();
+                break;
+            case 1:
+                if (!AppContext.instance().isLogin()) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra("type", "login");
+                    startActivity(intent);
+                } else {
+                    doReport();
+                }
+                break;
+        }
+    }
+
+    protected void doReport() {
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setContentView(R.layout.zhichi_dialog);
+        TextView titleTv = (TextView) window.findViewById(R.id.tv_title);
+        titleTv.setText("是否举报");
+        // 设置监听
+        Button zhichi = (Button) window.findViewById(R.id.ib_zhichi);
+        zhichi.setText("确定");
+        // 支持
+        zhichi.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!AppContext.instance().isLogin()) {
+                    Intent intent = new Intent(TweetDetailActivity.this,
+                            MainActivity.class);
+                    intent.putExtra("type", "login");
+                    startActivity(intent);
+                } else {
+                    int uid = AppContext.instance().getLoginUid();
+                    NewsApi.reportQuestion(uid, ask.getId(),
+                            new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode,
+                                                      Header[] headers, JSONObject response) {
+                                    String str = "举报成功";
+
+                                    try {
+                                        int code = response.getInt("code");
+                                        if (code != 88) {
+                                            str = response.getString("desc");
+                                        }
+                                    } catch (JSONException e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    }
+
+
+                                    AppContext.showToast(str);
+                                }
+                            });
+                }
+                dialog.dismiss();
+            }
+        });
+        // 查看支持者
+        Button chakanzhichi = (Button) window
+                .findViewById(R.id.ib_chakanzhichi);
+        chakanzhichi.setText("取消");
+        chakanzhichi.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private void fillUI() {
+        mTvTime.setText(ask.getinputtime());
+        mTvCommentCount
+                .setText(getString(R.string.comment_count, ask.getanum()));
+
+        String supper = ask.getsuperlist();
+        if (!TextUtils.isEmpty(supper) && !"null".equals(supper)) {
+
+
+            mTvAsk.setText(Html.fromHtml("邀请 <font color=#2FBDE7>" + supper
+                    + "</font> 进行回答"));
+            mTvAsk.setVisibility(View.VISIBLE);
+        } else {
+            mTvAsk.setVisibility(View.GONE);
+        }
+        String label = ask.getLabel();
+        if (TextUtils.isEmpty(label)) {
+            label = "暂无";
+        }
+        mTvRank.setText(Html.fromHtml("标签:<font color=#2FBDE7>" + label
+                + "</font>"));
+        if (!StringUtils.isEmpty(ask.getImage()) && "null" != ask.getImage()) {
+            mIvPic.setVisibility(View.VISIBLE);
+            ImageLoader.getInstance().displayImage(
+                    ApiHttpClient.getImageApiUrl(ask.getImage()), mIvPic);
+
+            mIvPic.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(TweetDetailActivity.this,
+                            ImageShowerActivity.class);
+                    intent.putExtra("imageUri", ask.getImage());
+                    startActivity(intent);
+                }
+            });
+
+        } else {
+            mIvPic.setVisibility(View.GONE);
+        }
+        if (AppContext.instance().isLogin()) {
+            if (ask.getUid() == AppContext.instance().getLoginUid()) {
+                mTvActionTitle.setText("我的提问");
+                tip_layout.setVisibility(View.VISIBLE);
+            } else {
+                mTvActionTitle.setText(ask.getnickname() + "的提问");
+            }
+        } else {
+            mTvActionTitle.setText(ask.getnickname() + "的提问");
+        }
+
+        if (ask.getreward() != 0) {
+            //reward_layout.setVisibility(View.VISIBLE);
+            //tv_reward.setText(String.valueOf(ask.getreward()));
+            //mTvTitle.setText("" + ask.getContent());
+            String content = " " + ask.getreward() + " " + ask.getContent();
+            int length = ("" + ask.getreward()).length();
+            SpannableString spanString = new SpannableString(" " + ask.getreward() + ask.getContent());
+            Drawable d = getResources().getDrawable(R.drawable.dollar);
+            d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
+            ImageSpan span = new ImageSpan(d, ImageSpan.ALIGN_BASELINE);
+            spanString.setSpan(span, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+            ForegroundColorSpan forColor = new ForegroundColorSpan(getResources().getColor(R.color.reward));
+            spanString.setSpan(forColor, 1, 1 + length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            mTvTitle.setText(spanString);
+
+        } else {
+            reward_layout.setVisibility(View.GONE);
+            mTvTitle.setText("" + ask.getContent());
+        }
+
+    }
+
+    public void showTiWenMe() {
+        mButton.setTag(2);
+        mButton.setText("继续回答");
+        mBottomView.setVisibility(View.GONE);
+        mTextView.setVisibility(View.GONE);
+    }
+
+    public void bottomBack() {
+        answerListFragment.handleBottomView();
+    }
+
+    /**
+     * 底部显示【回答】界面
+     */
+    public void showAnswer() {
+        if (ask.getUid() == AppContext.instance().getLoginUid()) {// 自己的提问
+            mTextView.setVisibility(View.GONE);
+            return;
+        }
+        mBtnSend.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (visibility_Flag) {
+                    mMoreLinear.setVisibility(View.GONE);
+                    visibility_Flag = false;
+                } else {
+                    mMoreLinear.setVisibility(View.VISIBLE);
+                    visibility_Flag = true;
+                }
+                /*String text = mEtInput.getText().toString();
 				mEtInput.getText().clear(); //快速按确定按钮会出现多条回复
 				if(!TextUtils.isEmpty(toSomeone)){
 					text=text.replaceAll(toSomeone, "");
@@ -712,165 +827,167 @@ public class TweetDetailActivity extends BaseActivity {
 				}
 				
 				NewsApi.subComment(id, uid, false, text, relation, superlist,
-						msubHandler);
-			}
-		});
-		pickView.setOnMediaPickerListener(new MyMediaPickerListener(1, null));
-		tv_zhuiwen.setVisibility(View.GONE);
-		mBottomView.setVisibility(View.GONE);
-		mTextView.setVisibility(View.VISIBLE);
-	}
+						msubHandler);*/
 
-	/**
-	 * 底部显示【补充回答】界面
-	 */
-	public void showReAnswer(final Comment comment) {
-		mButton.setText("补充回答");
-		mButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				UIHelper.showReplyCommunicat(TweetDetailActivity.this, ask,
-						comment);
-			}
-		});
-		mBottomView.setVisibility(View.VISIBLE);
-		mTextView.setVisibility(View.GONE);
-	}
+            }
+        });
+        pickView.setOnMediaPickerListener(new MyMediaPickerListener(1, null));
+        tv_zhuiwen.setVisibility(View.GONE);
+        mBottomView.setVisibility(View.GONE);
+        mTextView.setVisibility(View.VISIBLE);
+    }
 
-	/**
-	 * 底部显示【追问】界面
-	 */
-	public void showTraceAsk(final Comment comment) {
-		showReTraceAsk(comment);
+    /**
+     * 底部显示【补充回答】界面
+     */
+    public void showReAnswer(final Comment comment) {
+        mButton.setText("补充回答");
+        mButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.showReplyCommunicat(TweetDetailActivity.this, ask,
+                        comment);
+            }
+        });
+        mBottomView.setVisibility(View.VISIBLE);
+        mTextView.setVisibility(View.GONE);
+    }
 
-		// tv_zhuiwen.setVisibility(View.VISIBLE);
-		// mBtnSend.setOnClickListener(new OnClickListener() {
-		// @Override
-		// public void onClick(View v) {
-		// String text = mEtInput.getText().toString();
-		// if (TextUtils.isEmpty(text)) {
-		// AppContext
-		// .showToastShort(R.string.tip_comment_content_empty);
-		// return;
-		// }
-		// if (!TDevice.hasInternet()) {
-		// AppContext.showToastShort(R.string.tip_network_error);
-		// return;
-		// }
-		// int id = ask.getId();
-		// int uid = AppContext.instance().getLoginUid();
-		// NewsApi.addCommentAfter(id, uid, comment.getId(), text,
-		// mCommentAfterHandler);
-		// }
-		// });
-		// pickView.setOnMediaPickerListener(new MyMediaPickerListener(2,
-		// comment));
-		// mBottomView.setVisibility(View.GONE);
-		// mTextView.setVisibility(View.VISIBLE);
-	}
+    /**
+     * 底部显示【追问】界面
+     */
+    public void showTraceAsk(final Comment comment) {
+        showReTraceAsk(comment);
 
-	/**
-	 * 底部显示【参与讨论】界面
-	 */
-	public void showReTraceAsk(final Comment comment) {
-		mButton.setText("参与讨论");
-		mButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				UIHelper.showReAnswerCommunicat(TweetDetailActivity.this, ask,
-						comment);
-			}
-		});
-		mBottomView.setVisibility(View.VISIBLE);
-		mTextView.setVisibility(View.GONE);
-	}
+        // tv_zhuiwen.setVisibility(View.VISIBLE);
+        // mBtnSend.setOnClickListener(new OnClickListener() {
+        // @Override
+        // public void onClick(View v) {
+        // String text = mEtInput.getText().toString();
+        // if (TextUtils.isEmpty(text)) {
+        // AppContext
+        // .showToastShort(R.string.tip_comment_content_empty);
+        // return;
+        // }
+        // if (!TDevice.hasInternet()) {
+        // AppContext.showToastShort(R.string.tip_network_error);
+        // return;
+        // }
+        // int id = ask.getId();
+        // int uid = AppContext.instance().getLoginUid();
+        // NewsApi.addCommentAfter(id, uid, comment.getId(), text,
+        // mCommentAfterHandler);
+        // }
+        // });
+        // pickView.setOnMediaPickerListener(new MyMediaPickerListener(2,
+        // comment));
+        // mBottomView.setVisibility(View.GONE);
+        // mTextView.setVisibility(View.VISIBLE);
+    }
 
-	/**
-	 * 底部显示【点击登录】界面
-	 */
-	public void showLogin() {
-		mButton.setText("点击登录");
-		mButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				UIHelper.showLoginView(TweetDetailActivity.this);
-			}
-		});
-		mBottomView.setVisibility(View.VISIBLE);
-		mTextView.setVisibility(View.GONE);
-	}
+    /**
+     * 底部显示【参与讨论】界面
+     */
+    public void showReTraceAsk(final Comment comment) {
+        mButton.setText("参与讨论");
+        mButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.showReAnswerCommunicat(TweetDetailActivity.this, ask,
+                        comment);
+            }
+        });
+        mBottomView.setVisibility(View.VISIBLE);
+        mTextView.setVisibility(View.GONE);
+    }
 
-	/**
-	 * 
-	 */
-	public void changeAskState() {
-		ask.setissolveed(1);
-		((TweetAnswerAdapter)answerListFragment.adapter).setAdoptState(1);
-		refreshList();
-	}
+    /**
+     * 底部显示【点击登录】界面
+     */
+    public void showLogin() {
+        mButton.setText("点击登录");
+        mButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.showLoginView(TweetDetailActivity.this);
+            }
+        });
+        mBottomView.setVisibility(View.VISIBLE);
+        mTextView.setVisibility(View.GONE);
+    }
 
-	class MyMediaPickerListener implements OnMediaPickerListener {
-		private int type;// 1:回答,2:追问
-		private Comment comment;
+    /**
+     *
+     */
+    public void changeAskState() {
+        ask.setissolveed(1);
+        ((TweetAnswerAdapter) answerListFragment.adapter).setAdoptState(1);
+        refreshList();
+    }
 
-		public MyMediaPickerListener(int type, Comment comment) {
-			this.type = type;
-			this.comment = comment;
-		}
+    class MyMediaPickerListener implements OnMediaPickerListener {
+        private int type;// 1:回答,2:追问
+        private Comment comment;
 
-		@Override
-		public void onSelectedMediaChanged(String mediaUri) {
-			NewsApi.uploadImage(3, mediaUri, new Handler() {
-				@Override
-				public void handleMessage(Message msg) {
-					try {
-						switch (msg.what) {
-						case 1:
-							String returnStr = msg.getData()
-									.getString("return");
-							JSONObject jsonObject = new JSONObject(returnStr);
-							String imageUrl = jsonObject.getString("url");
-							int id = ask.getId();
-							int uid = AppContext.instance().getLoginUid();
-							if (type == 1) {
-								NewsApi.subComment(id, uid, false, null,
-										imageUrl, false, null, msubHandler);
-							} else if (type == 2) {
-								NewsApi.addCommentAfter(id, uid, 0,
-										comment.getId(), 0,null, imageUrl,
-										mCommentAfterHandler);
-							}
-							break;
-						case 2:
-							AppContext.showToast("发送图像失败");
-							break;
-						default:
-							break;
-						}
-						System.out.println(msg.what);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
-		}
+        public MyMediaPickerListener(int type, Comment comment) {
+            this.type = type;
+            this.comment = comment;
+        }
 
-	}
+        @Override
+        public void onSelectedMediaChanged(String mediaUri) {
+            NewsApi.uploadImage(3, mediaUri, new Handler() {
+                @Override
+                public void handleMessage(Message msg) {
+                    try {
+                        switch (msg.what) {
+                            case 1:
+                                String returnStr = msg.getData()
+                                        .getString("return");
+                                JSONObject jsonObject = new JSONObject(returnStr);
+                                String imageUrl = jsonObject.getString("url");
+                                int id = ask.getId();
+                                int uid = AppContext.instance().getLoginUid();
+                                if (type == 1) {
+                                    NewsApi.subComment(id, uid, false, null,
+                                            imageUrl, false, null, msubHandler);
+                                } else if (type == 2) {
+                                    NewsApi.addCommentAfter(id, uid, 0,
+                                            comment.getId(), 0, null, imageUrl,
+                                            mCommentAfterHandler);
+                                }
+                                break;
+                            case 2:
+                                AppContext.showToast("发送图像失败");
+                                break;
+                            default:
+                                break;
+                        }
+                        System.out.println(msg.what);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if (!isFirstComming) {
-		//	refreshList();
-		}
-		isFirstComming = false;
-	};
-	
-	
+    }
 
-	public void refreshList() {
-		answerListFragment.adapter.clear();
-		
-		answerListFragment.sendRequestData();
-	}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!isFirstComming) {
+            //	refreshList();
+        }
+        isFirstComming = false;
+    }
+
+    ;
+
+
+    public void refreshList() {
+        answerListFragment.adapter.clear();
+
+        answerListFragment.sendRequestData();
+    }
 }

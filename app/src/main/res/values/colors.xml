@@ -159,4 +159,6 @@
 
     <color name="item_text_color">#2b2b2b</color>
     <color name="item_line_color">#c8c7cc</color>
+
+    <color name="popup_background">#eeeeee</color>
 </resources>

@@ -152,10 +152,10 @@ public class TweetViewPagerFragment extends Fragment implements
 				mPopupList.showPopup(v,TweetPopupListView.QUESTION_STATUS);
 				break;
 			case R.id.choose_classify:
-				mPopupList.showPopup(v,TweetPopupListView.QUESTION_STATUS);
+				mPopupList.showPopup(v,TweetPopupListView.CHOOSE_CLASSIFY);
 				break;
 			case R.id.choose_sub_classify:
-				mPopupList.showPopup(v,TweetPopupListView.QUESTION_STATUS);
+				mPopupList.showPopup(v,TweetPopupListView.CHOOSE_SUB_CLASSIFY);
 				break;
 		}
 	}

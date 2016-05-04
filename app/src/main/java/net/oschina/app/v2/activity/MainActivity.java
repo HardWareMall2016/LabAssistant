@@ -6,24 +6,22 @@ import net.oschina.app.v2.activity.find.fragment.FindFragment;
 import net.oschina.app.v2.activity.home.fragment.HomeFragment;
 import net.oschina.app.v2.activity.tweet.fragment.TweetViewPagerFragment;
 import net.oschina.app.v2.activity.user.fragment.LoginFragment;
-import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.BaseActivity;
 import net.oschina.app.v2.base.Constants;
 import net.oschina.app.v2.model.MessageNum;
 import net.oschina.app.v2.model.event.MessageRefreshSingle;
 import net.oschina.app.v2.model.event.MessageRefreshTotal;
+import net.oschina.app.v2.model.event.TweetTabEvent;
 import net.oschina.app.v2.service.NoticeUtils;
 import net.oschina.app.v2.utils.TLog;
 import net.oschina.app.v2.utils.UIHelper;
-
-import org.apache.http.Header;
-import org.json.JSONObject;
 
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,7 +43,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.igexin.sdk.PushManager;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.shiyanzhushou.app.R;
 import com.umeng.analytics.MobclickAgent;
 
@@ -70,6 +67,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	LinearLayout bar_home, bar_question, bar_find, actionbar_login;
 	RelativeLayout bar_me;
 	private EditText et_content;
+	private TextView tvTitleTweetAsk;
+	private TextView tvTitleTweetHelp;
 
 	private FrameLayout contentView;
 
@@ -223,14 +222,19 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
 		ImageButton searchBtn = (ImageButton) view
 				.findViewById(R.id.btn_search);
-		Button shaixuanBtn = (Button) view.findViewById(R.id.btn_shaixuan);
+		//Button shaixuanBtn = (Button) view.findViewById(R.id.btn_shaixuan);
 		Button fankuiBtn = (Button) view.findViewById(R.id.btn_fankui);
 		Button settingBtn = (Button) view.findViewById(R.id.btn_setting);
 		searchBtn.setOnClickListener(this);
-		shaixuanBtn.setOnClickListener(this);
+		//shaixuanBtn.setOnClickListener(this);
 		fankuiBtn.setOnClickListener(this);
 		settingBtn.setOnClickListener(this);
 		et_content.setOnClickListener(this);
+
+		tvTitleTweetAsk=(TextView) view.findViewById(R.id.tv_title_tweet_ask);
+		tvTitleTweetHelp=(TextView) view.findViewById(R.id.tv_title_tweet_help);
+		tvTitleTweetAsk.setOnClickListener(this);
+		tvTitleTweetHelp.setOnClickListener(this);
 
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT);
@@ -296,15 +300,21 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 						.toString());
 			}
 			break;
-		case R.id.btn_shaixuan:
+		/*case R.id.btn_shaixuan:
 			TweetViewPagerFragment fragment = (TweetViewPagerFragment)questionFragment;
 			fragment.filterListData(v);
-			break;
+			break;*/
 		case R.id.btn_fankui:
 			UIHelper.showFeedBack(MainActivity.this);
 			break;
 		case R.id.btn_setting:
 			UIHelper.showSetting(MainActivity.this);
+			break;
+		case  R.id.tv_title_tweet_ask:
+			EventBus.getDefault().post(new TweetTabEvent(0));
+			break;
+		case  R.id.tv_title_tweet_help:
+			EventBus.getDefault().post(new TweetTabEvent(1));
 			break;
 		default:
 			break;
@@ -531,6 +541,21 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	 */
 	public void onEventMainThread(MessageRefreshSingle totalMessage){
 		updateBadge(AppContext.instance().getMessageNum());
+	}
+
+	public void onEventMainThread(TweetTabEvent event){
+		if(event.tabIndex==0){
+			tvTitleTweetAsk.setTextColor(getResources().getColor(R.color.action_bar_bg));
+			tvTitleTweetAsk.setBackgroundResource(R.drawable.bg_left_rounded_selected_selector);
+			tvTitleTweetHelp.setTextColor(Color.WHITE);
+			tvTitleTweetHelp.setBackgroundResource(R.drawable.bg_right_rounded_unselected_selector);
+		}else{
+			tvTitleTweetAsk.setTextColor(Color.WHITE);
+			tvTitleTweetAsk.setBackgroundResource(R.drawable.bg_left_rounded_unselected_selector);
+			tvTitleTweetHelp.setTextColor(getResources().getColor(R.color.action_bar_bg));
+			tvTitleTweetHelp.setBackgroundResource(R.drawable.bg_right_rounded_selected_selector);
+		}
+
 	}
 	
 	private void updateBadge(MessageNum message) {

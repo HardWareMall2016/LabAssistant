@@ -226,11 +226,11 @@ public class MainActivity_bak extends BaseActivity implements OnTabChangeListene
 
 		ImageButton searchBtn = (ImageButton) view
 				.findViewById(R.id.btn_search);
-		Button shaixuanBtn = (Button) view.findViewById(R.id.btn_shaixuan);
+		//Button shaixuanBtn = (Button) view.findViewById(R.id.btn_shaixuan);
 		Button fankuiBtn = (Button) view.findViewById(R.id.btn_fankui);
 		Button settingBtn = (Button) view.findViewById(R.id.btn_setting);
 		searchBtn.setOnClickListener(this);
-		shaixuanBtn.setOnClickListener(this);
+		//shaixuanBtn.setOnClickListener(this);
 		fankuiBtn.setOnClickListener(this);
 		settingBtn.setOnClickListener(this);
 		et_content.setOnClickListener(this);
@@ -260,14 +260,14 @@ public class MainActivity_bak extends BaseActivity implements OnTabChangeListene
 						.toString());
 			}
 			break;
-		case R.id.btn_shaixuan:
+		/*case R.id.btn_shaixuan:
 			// UIHelper.showSearch(MainActivity.this);
 			Fragment f = getFragment();
 			if (f != null) {
 				TweetViewPagerFragment fragment = (TweetViewPagerFragment) f;
 				fragment.filterListData(v);
 			}
-			break;
+			break;*/
 		case R.id.btn_fankui:
 			UIHelper.showFeedBack(MainActivity_bak.this);
 			break;

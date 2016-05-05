@@ -6,7 +6,7 @@ import java.io.Serializable;
 import net.oschina.app.v2.AppContext;
 import net.oschina.app.v2.activity.find.fragment.DailyFragment;
 import net.oschina.app.v2.activity.tweet.adapter.funsForHelperAdapter;
-import net.oschina.app.v2.activity.tweet.view.TweetPopupView.OnFilterClickListener;
+import net.oschina.app.v2.activity.tweet.view.TweetPopupListView;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.BaseListFragment;
 import net.oschina.app.v2.base.ListBaseAdapter;
@@ -17,7 +17,7 @@ import net.oschina.app.v2.utils.UIHelper;
 import android.view.View;
 import android.widget.AdapterView;
 
-public class FansFragment extends BaseListFragment implements OnFilterClickListener {
+public class FansFragment extends BaseListFragment implements TweetPopupListView.OnFilterClickListener {
 
 	protected static final String TAG = DailyFragment.class.getSimpleName();
 	private static final String CACHE_KEY_PREFIX = "fanslist_";

@@ -7,7 +7,7 @@ import de.greenrobot.event.EventBus;
 
 import net.oschina.app.v2.activity.find.fragment.DailyFragment;
 import net.oschina.app.v2.activity.tweet.adapter.TweetAdapter;
-import net.oschina.app.v2.activity.tweet.view.TweetPopupView.OnFilterClickListener;
+import net.oschina.app.v2.activity.tweet.view.TweetPopupListView;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.BaseListFragment;
 import net.oschina.app.v2.base.ListBaseAdapter;
@@ -21,7 +21,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 public class TweetFragment extends BaseListFragment implements
-		OnFilterClickListener {
+		TweetPopupListView.OnFilterClickListener {
 
 	protected static final String TAG = DailyFragment.class.getSimpleName();
 	private static final String CACHE_KEY_PREFIX = "tweetslist_";

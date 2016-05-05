@@ -4,8 +4,6 @@ import net.oschina.app.v2.activity.tweet.adapter.TweetTabPagerAdapter;
 import net.oschina.app.v2.activity.tweet.model.Mulu;
 import net.oschina.app.v2.activity.tweet.model.MuluList;
 import net.oschina.app.v2.activity.tweet.view.TweetPopupListView;
-import net.oschina.app.v2.activity.tweet.view.TweetPopupView;
-import net.oschina.app.v2.activity.tweet.view.TweetPopupView.OnFilterClickListener;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.model.event.TweetTabEvent;
 
@@ -28,13 +26,15 @@ import com.shiyanzhushou.app.R;
 import de.greenrobot.event.EventBus;
 
 public class TweetViewPagerFragment extends Fragment implements
-		OnPageChangeListener, OnFilterClickListener ,View.OnClickListener,PopupWindow.OnDismissListener {
+		OnPageChangeListener, TweetPopupListView.OnFilterClickListener,View.OnClickListener,PopupWindow.OnDismissListener {
 
 	//private PagerSlidingTabStrip mTabStrip;
 	private ViewPager mViewPager;
 	private View mCover;
 	private TweetTabPagerAdapter mTabAdapter;
-	private TweetPopupView mPopup;
+	//private TweetPopupView mPopup;
+	private View mViewTweetTab;
+	private View mViewFansTab;
 
 	private TweetPopupListView mPopupList;
 	
@@ -44,6 +44,8 @@ public class TweetViewPagerFragment extends Fragment implements
 		View view = inflater.inflate(R.layout.v2_fragment_viewpager, container,
 				false);
 		mCover=view.findViewById(R.id.cover);
+		mViewTweetTab=view.findViewById(R.id.tweet_tab);
+		mViewFansTab=view.findViewById(R.id.fans_tab);
 
 		view.findViewById(R.id.question_status).setOnClickListener(this);
 		view.findViewById(R.id.choose_classify).setOnClickListener(this);
@@ -71,16 +73,19 @@ public class TweetViewPagerFragment extends Fragment implements
 
 	public void onDestroy(){
 		super.onDestroy();
-		if(mPopup!=null)
-		mPopup.unregisterEventBus();
+		/*if(mPopup!=null)
+		mPopup.unregisterEventBus();*/
+		if(mPopupList!=null)
+			mPopupList.unregisterEventBus();
 	}
 
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		mPopupList=new TweetPopupListView(getActivity(),this);
-		mPopup = new TweetPopupView(getActivity());
-		mPopup.setOnFilterClickListener(this);
+		mPopupList.setOnFilterClickListener(this);
+		/*mPopup = new TweetPopupView(getActivity());
+		mPopup.setOnFilterClickListener(this);*/
 		sendRequestLanmuData();
 	}
 
@@ -88,6 +93,8 @@ public class TweetViewPagerFragment extends Fragment implements
 		if(event.byUser){
 			mViewPager.setCurrentItem(event.tabIndex);
 		}
+		mViewTweetTab.setVisibility(event.tabIndex==0?View.VISIBLE:View.GONE);
+		mViewFansTab.setVisibility(event.tabIndex==1?View.VISIBLE:View.GONE);
 	}
 	
 	@Override
@@ -105,23 +112,23 @@ public class TweetViewPagerFragment extends Fragment implements
 	public void onPageSelected(int arg0) {
 		//mTabStrip.onPageSelected(arg0);
 		mTabAdapter.onPageSelected(arg0);
-		EventBus.getDefault().post(new TweetTabEvent(arg0,false));
+		EventBus.getDefault().post(new TweetTabEvent(arg0, false));
 	}
 	
 	private void sendRequestLanmuData() {
 		NewsApi.getLanmu(-1, mLanmuHandler);
 	}
 	
-	public void filterListData(View v) {
+	/*public void filterListData(View v) {
 		mPopup.showPopup(v);
-	}
+	}*/
 	
 	@Override
 	public void onFilter(int isreward, int issolveed, String catid) {
 		int item=mViewPager.getCurrentItem();
 		Fragment f=mTabAdapter.getFragmentByPosition(item);
 		if (f != null) {
-			((OnFilterClickListener) f).onFilter(isreward, issolveed, catid);
+			((TweetPopupListView.OnFilterClickListener) f).onFilter(isreward, issolveed, catid);
 		}
 	}
 	
@@ -131,6 +138,10 @@ public class TweetViewPagerFragment extends Fragment implements
 				JSONObject response) {
 			try {
 				MuluList list = MuluList.parse(response.toString());
+				Mulu all=new Mulu();
+				all.setId(-1);
+				all.setcatname("全部");
+				list.getMululist().add(0,all);
 				mPopupList.setMainClassifyList(list.getMululist());
 				/*Mulu all=new Mulu();
 				all.setId(-1);

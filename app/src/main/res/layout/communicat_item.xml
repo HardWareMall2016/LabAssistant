@@ -61,14 +61,26 @@
                 android:lineSpacingExtra="5dp"
                 android:textSize="14sp" />
 
-            <ImageView
-                android:id="@+id/left_chat_conent_image"
-                android:layout_width="72dp"
-                android:layout_height="54dp"
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/left_chat_content_txt"
-                android:contentDescription="@null"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_default_pic" />
+                android:layout_centerVertical="true">
+                <ImageView
+                    android:id="@+id/left_chat_conent_image"
+                    android:layout_width="72dp"
+                    android:layout_height="54dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_default_pic" />
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/left_chat_conent_image_progressbar"
+                    android:layout_gravity="center"
+                    android:visibility="gone"/>
+            </FrameLayout>
+
         </RelativeLayout>
 
         <!--
@@ -80,7 +92,8 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/left_chat_userPhoto"
             android:textColor="@color/main_gray"
-            android:textSize="12sp" />		-->
+            android:textSize="12sp" />
+		-->
     </RelativeLayout>
 
     <!-- 右侧聊天气泡 -->
@@ -141,15 +154,27 @@
                 android:lineSpacingExtra="5dp"
                 android:textSize="14sp" />
 
-            <ImageView
-                android:id="@+id/right_chat_conent_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerVertical="true" 
-                android:layout_below="@id/right_chat_content_txt"
-                android:contentDescription="@null"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_default_pic" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_below="@id/right_chat_content_txt">
+                <ImageView
+                    android:id="@+id/right_chat_conent_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_default_pic" />
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/right_chat_conent_image_progressbar"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    />
+            </FrameLayout>
+
         </RelativeLayout>
 
         <!--
@@ -161,7 +186,8 @@
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/right_chat_userPhoto"
             android:textColor="@color/main_gray"
-            android:textSize="12sp" />        -->
+            android:textSize="12sp" />
+        -->
 
     </RelativeLayout>
 

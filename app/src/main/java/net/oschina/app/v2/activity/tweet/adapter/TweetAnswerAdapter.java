@@ -36,6 +36,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -84,7 +85,7 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 		}
 
 		final Comment item = (Comment) _data.get(position);
-		
+
 		vh.name.setText(item.getnickname());
 		vh.rank.setText(" Lv" + item.getRank());
 		vh.company.setText(item.getInfo());

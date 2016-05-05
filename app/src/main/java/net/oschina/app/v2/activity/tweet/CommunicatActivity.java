@@ -183,12 +183,15 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 		if (comment.getauid()==uid){ //自己的回答、举报 隐藏
 			reportBtn.setVisibility(View.GONE);
 		}
-		
+
 		//回答、追问的标题
-		String	strnickname =comment.getnickname();
-		if (comment.getnickname().length() > 7){
-		strnickname = (new StringBuilder()).append(comment.getnickname().substring(0, 6)).append("...")
-					.toString();
+		String	strnickname = comment.getnickname();
+
+		if(comment.getnickname() != null){
+			if (comment.getnickname().length() > 7){
+				strnickname = (new StringBuilder()).append(comment.getnickname().substring(0, 6)).append("...")
+						.toString();
+			}
 		}
 		
 		if(type==1){

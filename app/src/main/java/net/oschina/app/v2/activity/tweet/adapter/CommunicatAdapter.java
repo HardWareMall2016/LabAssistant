@@ -8,10 +8,12 @@ import net.oschina.app.v2.api.ApiHttpClient;
 import net.oschina.app.v2.base.ListBaseAdapter;
 import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.UIHelper;
+
 import android.annotation.SuppressLint;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.SpannableString;
@@ -27,409 +29,483 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.BufferType;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.shiyanzhushou.app.R;
 
 /**
  * 互动交流Adapter
- * 
+ *
  * @author Johnny
- * 
  */
 public class CommunicatAdapter extends ListBaseAdapter implements
-		OnClickListener {
-	private Context context;
+        OnClickListener {
+    private Context context;
 
-	private static final int LEFT_TYPE = 1;
-	private static final int RIGHT_TYPE = 2;
+    private static final int LEFT_TYPE = 1;
+    private static final int RIGHT_TYPE = 2;
 
-	private int type;
+    private int type;
 
-	public CommunicatAdapter(Context context, int type) {
-		this.context = context;
-		this.type = type;
-	}
+    public CommunicatAdapter(Context context, int type) {
+        this.context = context;
+        this.type = type;
+    }
 
-	public int getViewType(int position) {
-		int uid = AppContext.instance().getLoginUid();
-		CommentReply c = (CommentReply) _data.get(position);
-		if (c != null && c.getAuid() == uid) {
-			return RIGHT_TYPE;
-		}
-		return LEFT_TYPE;
-	}
+    public int getViewType(int position) {
+        int uid = AppContext.instance().getLoginUid();
+        CommentReply c = (CommentReply) _data.get(position);
+        if (c != null && c.getAuid() == uid) {
+            return RIGHT_TYPE;
+        }
+        return LEFT_TYPE;
+    }
 
-	@Override
-	public boolean areAllItemsEnabled() {
-		return false;
-	}
-	
-	@Override
-	public boolean isEnabled(int position) {
-		return false;
-	}
+    @Override
+    public boolean areAllItemsEnabled() {
+        return false;
+    }
 
-	@SuppressLint("InflateParams")
-	@Override
-	protected View getRealView(int position, View convertView,
-			final ViewGroup parent) {
-		ViewHolder viewHolder;
-		int viewType = getViewType(position);
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
 
-		if (convertView != null && convertView.getTag() != null) {
-			viewHolder = (ViewHolder) convertView.getTag();
-		} else {
-			convertView = getLayoutInflater(parent.getContext()).inflate(
-					R.layout.communicat_item, parent, false);
+    @SuppressLint("InflateParams")
+    @Override
+    protected View getRealView(int position, View convertView,
+                               final ViewGroup parent) {
+        final ViewHolder viewHolder;
+        int viewType = getViewType(position);
 
-			viewHolder = new ViewHolder();
+        if (convertView != null && convertView.getTag() != null) {
+            viewHolder = (ViewHolder) convertView.getTag();
+        } else {
+            convertView = getLayoutInflater(parent.getContext()).inflate(
+                    R.layout.communicat_item, parent, false);
 
-			// 左侧气泡
-			viewHolder.LeftChatContentLayout=(RelativeLayout) convertView
-					.findViewById(R.id.left_chat_content_layout);
-			viewHolder.leftChatLayout = (RelativeLayout) convertView
-					.findViewById(R.id.left_chat_layout);
-			viewHolder.leftUserPhoto = (ImageView) convertView
-					.findViewById(R.id.left_chat_userPhoto);
-			viewHolder.leftUserName = (TextView) convertView
-					.findViewById(R.id.left_user_name);
-			viewHolder.leftContentTxt = (TextView) convertView
-					.findViewById(R.id.left_chat_content_txt);
-			viewHolder.leftContentImage = (ImageView) convertView
-					.findViewById(R.id.left_chat_conent_image);
-			viewHolder.leftTime = (TextView) convertView
-					.findViewById(R.id.left_chat_listitem_time);
+            viewHolder = new ViewHolder();
 
-			// 右侧气泡
-			viewHolder.rightChatContentLayout=(RelativeLayout) convertView
-					.findViewById(R.id.right_chat_content_layout);
-			viewHolder.rightChatLayout = (RelativeLayout) convertView
-					.findViewById(R.id.right_chat_layout);
-			viewHolder.rightUserPhoto = (ImageView) convertView
-					.findViewById(R.id.right_chat_userPhoto);
-			viewHolder.rightUserName = (TextView) convertView
-					.findViewById(R.id.right_user_name);
-			viewHolder.rightContentTxt = (TextView) convertView
-					.findViewById(R.id.right_chat_content_txt);
-			viewHolder.rightContentImage = (ImageView) convertView
-					.findViewById(R.id.right_chat_conent_image);
-			viewHolder.rightTime = (TextView) convertView
-					.findViewById(R.id.right_chat_listitem_time);
+            // 左侧气泡
+            viewHolder.LeftChatContentLayout = (RelativeLayout) convertView
+                    .findViewById(R.id.left_chat_content_layout);
+            viewHolder.leftChatLayout = (RelativeLayout) convertView
+                    .findViewById(R.id.left_chat_layout);
+            viewHolder.leftUserPhoto = (ImageView) convertView
+                    .findViewById(R.id.left_chat_userPhoto);
+            viewHolder.leftUserName = (TextView) convertView
+                    .findViewById(R.id.left_user_name);
+            viewHolder.leftContentTxt = (TextView) convertView
+                    .findViewById(R.id.left_chat_content_txt);
+            viewHolder.leftContentImage = (ImageView) convertView
+                    .findViewById(R.id.left_chat_conent_image);
+            viewHolder.leftTime = (TextView) convertView
+                    .findViewById(R.id.left_chat_listitem_time);
+            viewHolder.leftContentImageBar = (ProgressBar) convertView.findViewById(R.id.left_chat_conent_image_progressbar);
 
-			viewHolder.leftUserPhoto.setOnClickListener(this);
-			viewHolder.rightUserPhoto.setOnClickListener(this);
-		
-			convertView.setTag(viewHolder);
+            // 右侧气泡
+            viewHolder.rightChatContentLayout = (RelativeLayout) convertView
+                    .findViewById(R.id.right_chat_content_layout);
+            viewHolder.rightChatLayout = (RelativeLayout) convertView
+                    .findViewById(R.id.right_chat_layout);
+            viewHolder.rightUserPhoto = (ImageView) convertView
+                    .findViewById(R.id.right_chat_userPhoto);
+            viewHolder.rightUserName = (TextView) convertView
+                    .findViewById(R.id.right_user_name);
+            viewHolder.rightContentTxt = (TextView) convertView
+                    .findViewById(R.id.right_chat_content_txt);
+            viewHolder.rightContentImage = (ImageView) convertView
+                    .findViewById(R.id.right_chat_conent_image);
+            viewHolder.rightTime = (TextView) convertView
+                    .findViewById(R.id.right_chat_listitem_time);
+            viewHolder.rightContentImageBar = (ProgressBar) convertView.findViewById(R.id.right_chat_conent_image_progressbar);
 
-		}
+            viewHolder.leftUserPhoto.setOnClickListener(this);
+            viewHolder.rightUserPhoto.setOnClickListener(this);
 
-		viewHolder.leftContentTxt.setOnLongClickListener(new OnLongClickListener() {
-			
-			@Override
-			public boolean onLongClick(View arg0) {
-				showPopUp((TextView)arg0);
-				return true;
-			}
-		});
-		
-		viewHolder.rightContentTxt.setOnLongClickListener(new OnLongClickListener() {
-			
-			@Override
-			public boolean onLongClick(View arg0) {
-				showPopUp((TextView)arg0);
-				return true;
-			}
-		});
-		
-		final CommentReply itemModel = (CommentReply) _data.get(position);
-		
-		if (viewType == LEFT_TYPE) {
-			viewHolder.leftTime.setVisibility(View.VISIBLE);
-			viewHolder.leftChatLayout.setVisibility(View.VISIBLE);
-			viewHolder.rightTime.setVisibility(View.GONE);
-			viewHolder.rightChatLayout.setVisibility(View.GONE);
+            convertView.setTag(viewHolder);
 
-			if (type == 2 && position != 0 && position != 1) {
-				viewHolder.leftContentTxt.setVisibility(View.VISIBLE);
-				viewHolder.leftContentTxt.setText("");
-				viewHolder.leftContentTxt.append("回复");
-				
-				final String name=itemModel.getAskname();
-				SpannableString sb=new SpannableString(name);
-				ForegroundColorSpan colorSpan=new ForegroundColorSpan(Color.BLUE);
-				sb.setSpan(colorSpan, 0, name.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-				viewHolder.leftContentTxt.append(sb);
-				viewHolder.leftContentTxt.append("： "+itemModel.getContent());
-				
+        }
 
-				viewHolder.LeftChatContentLayout.setBackgroundResource(R.drawable.chat_left_green_bg);
-				if (StringUtils.isEmpty(itemModel.getImage())) {
-					viewHolder.leftContentImage.setVisibility(View.GONE);
-				} else {
-					viewHolder.leftContentImage.setVisibility(View.VISIBLE);
-					String contentImg = ApiHttpClient.getImageApiUrl(itemModel
-							.getImage());
-					ImageLoader.getInstance().displayImage(contentImg,
-							viewHolder.leftContentImage);
-		 
-					viewHolder.leftContentImage
-							.setOnClickListener(new OnClickListener() {
-								@Override
-								public void onClick(View v) {
-									Intent intent = new Intent(context,
-											ImageShowerActivity.class);
-									intent.putExtra("imageUri",
-											itemModel.getImage());
-									context.startActivity(intent);
-								}
-							});
-				}
-			} else {
-				viewHolder.leftContentTxt.setVisibility(View.VISIBLE);
+        viewHolder.leftContentTxt.setOnLongClickListener(new OnLongClickListener() {
 
-				if(position==0){
-					viewHolder.leftContentTxt.setText("问题："+itemModel.getContent());
-					viewHolder.LeftChatContentLayout.setBackgroundResource(R.drawable.chat_left_white_bg);
-				}else{
-					if(position==1){
-						viewHolder.leftContentTxt.setText("回答："+itemModel.getContent());
-						viewHolder.LeftChatContentLayout.setBackgroundResource(R.drawable.chat_left_blue_bg);
-					}else{
-						viewHolder.leftContentTxt.setText(itemModel.getContent());
+            @Override
+            public boolean onLongClick(View arg0) {
+                showPopUp((TextView) arg0);
+                return true;
+            }
+        });
 
-						CommentReply c = (CommentReply) _data.get(position);
-						
-						if (itemModel.getSign()==1) {
-							viewHolder.LeftChatContentLayout.setBackgroundResource(R.drawable.chat_left_white_bg);
-						}else if(itemModel.getSign()==2) {
-							viewHolder.LeftChatContentLayout.setBackgroundResource(R.drawable.chat_left_blue_bg);
-						}
-						
-						
-					}	
-				}
-				if (!StringUtils.isEmpty(itemModel.getImage())) {
-					viewHolder.leftContentImage.setVisibility(View.VISIBLE);
-					String contentImg = ApiHttpClient.getImageApiUrl(itemModel
-							.getImage());
-					ImageLoader.getInstance().displayImage(contentImg,
-							viewHolder.leftContentImage);
-					viewHolder.leftContentImage
-							.setOnClickListener(new OnClickListener() {
-								@Override
-								public void onClick(View v) {
-									Intent intent = new Intent(context,
-											ImageShowerActivity.class);
-									intent.putExtra("imageUri",
-											itemModel.getImage());
-									context.startActivity(intent);
-								}
-							});
-				} else {
-					viewHolder.leftContentImage.setVisibility(View.GONE);
-				}
-			}
+        viewHolder.rightContentTxt.setOnLongClickListener(new OnLongClickListener() {
 
-			viewHolder.leftTime.setText(itemModel.getIntputtime());
-			viewHolder.leftUserName.setText(itemModel.getNickname());
-			String imagePath = ApiHttpClient
-					.getImageApiUrl(itemModel.getHead());
-			ImageLoader.getInstance().displayImage(imagePath,
-					viewHolder.leftUserPhoto);
+            @Override
+            public boolean onLongClick(View arg0) {
+                showPopUp((TextView) arg0);
+                return true;
+            }
+        });
 
-			viewHolder.leftUserPhoto.setTag(itemModel);
+        final CommentReply itemModel = (CommentReply) _data.get(position);
 
-			
-			if (type == 2) {
-				if(position==0){
-					viewHolder.leftChatLayout
-					.setOnClickListener(null);
-				}else{
-					//viewHolder.leftChatLayout
-					viewHolder.leftContentTxt
-					.setOnClickListener(new OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							((CommunicatActivity) context).directPerson(
-									itemModel.getNickname(),
-									itemModel.getAuid(),itemModel.getId());
-							
-						}
-					});
-				}
-				
-			}else{
-				viewHolder.leftChatLayout
-				.setOnClickListener(null);
-			}
+        if (viewType == LEFT_TYPE) {
+            viewHolder.leftTime.setVisibility(View.VISIBLE);
+            viewHolder.leftChatLayout.setVisibility(View.VISIBLE);
+            viewHolder.rightTime.setVisibility(View.GONE);
+            viewHolder.rightChatLayout.setVisibility(View.GONE);
 
-		} else if (viewType == RIGHT_TYPE) {
-			viewHolder.leftTime.setVisibility(View.GONE);
-			viewHolder.leftChatLayout.setVisibility(View.GONE);
-			viewHolder.rightTime.setVisibility(View.VISIBLE);
-			viewHolder.rightChatLayout.setVisibility(View.VISIBLE);
+            if (type == 2 && position != 0 && position != 1) {
+                viewHolder.leftContentTxt.setVisibility(View.VISIBLE);
+                viewHolder.leftContentTxt.setText("");
+                viewHolder.leftContentTxt.append("回复");
 
-			if (type == 2 && position != 0 && position != 1 ) {
-				viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_green_bg);
-				viewHolder.rightContentTxt.setVisibility(View.VISIBLE);
-				viewHolder.rightContentTxt.setText("");
-				viewHolder.rightContentTxt.append("回复");
-				final String name=itemModel.getAskname();
-				SpannableString sb=new SpannableString(name);
-				ForegroundColorSpan colorSpan=new ForegroundColorSpan(Color.BLUE);
-				sb.setSpan(colorSpan, 0, name.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-				viewHolder.rightContentTxt.append(sb);
-				viewHolder.rightContentTxt.append("： "+itemModel.getContent());
-				
-				if (StringUtils.isEmpty(itemModel.getImage())) {
-					viewHolder.rightContentImage.setVisibility(View.GONE);
-				} else {
-					viewHolder.rightContentImage.setVisibility(View.VISIBLE);
-					String contentImg = ApiHttpClient.getImageApiUrl(itemModel
-							.getImage());
-					ImageLoader.getInstance().displayImage(contentImg,
-							viewHolder.rightContentImage);
-					viewHolder.rightContentImage
-							.setOnClickListener(new OnClickListener() {
-								@Override
-								public void onClick(View v) {
-									Intent intent = new Intent(context,
-											ImageShowerActivity.class);
-									intent.putExtra("imageUri",
-											itemModel.getImage());
-									context.startActivity(intent);
-								}
-							});
-				}
-			} else {
-				viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_blue_bg);
-				if(!StringUtils.isEmpty(itemModel.getImage())){
-					viewHolder.rightContentImage.setVisibility(View.VISIBLE);
-					String contentImg = ApiHttpClient.getImageApiUrl(itemModel
-							.getImage());
-					ImageLoader.getInstance().displayImage(contentImg,
-							viewHolder.rightContentImage);
-					viewHolder.rightContentImage
-							.setOnClickListener(new OnClickListener() {
-								@Override
-								public void onClick(View v) {
-									Intent intent = new Intent(context,
-											ImageShowerActivity.class);
-									intent.putExtra("imageUri",
-											itemModel.getImage());
-									context.startActivity(intent);
-								}
-							});
-				}
-				if (StringUtils.isEmpty(itemModel.getContent())) {
-					viewHolder.rightContentTxt.setVisibility(View.GONE);
-					
-				} else {
-					viewHolder.rightContentTxt.setVisibility(View.VISIBLE);
-					if (StringUtils.isEmpty(itemModel.getImage())) {
-						viewHolder.rightContentImage.setVisibility(View.GONE);
-					} else {
-						viewHolder.rightContentImage
-								.setVisibility(View.VISIBLE);
-					}
-					
-					
-					if(position==0){
-						viewHolder.rightContentTxt.setText("问题："+itemModel.getContent());
-					}else{
-						if(position==1){
-							viewHolder.rightContentTxt.setText("回答："+itemModel.getContent());
-						}else{
-							viewHolder.rightContentTxt.setText(itemModel.getContent());
-						}
-					}
-				}
-			}
-			if(position==0){
-				viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_white_bg);
-			}
+                final String name = itemModel.getAskname();
+                SpannableString sb = new SpannableString(name);
+                ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.BLUE);
+                sb.setSpan(colorSpan, 0, name.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                viewHolder.leftContentTxt.append(sb);
+                viewHolder.leftContentTxt.append("： " + itemModel.getContent());
 
-			viewHolder.rightTime.setText(itemModel.getIntputtime());
-			viewHolder.rightUserName.setText(itemModel.getNickname());
-			String imagePath = ApiHttpClient
-					.getImageApiUrl(itemModel.getHead());
-			ImageLoader.getInstance().displayImage(imagePath,
-					viewHolder.rightUserPhoto);
-			viewHolder.rightUserPhoto.setTag(itemModel);
-		}
 
-		return convertView;
-	}
-	
-	private void showPopUp(TextView v) {  
-		final String textContent = v.getText().toString();
-        LinearLayout layout = new LinearLayout(v.getContext());  
+                viewHolder.LeftChatContentLayout.setBackgroundResource(R.drawable.chat_left_green_bg);
+                if (StringUtils.isEmpty(itemModel.getImage())) {
+                    viewHolder.leftContentImage.setVisibility(View.GONE);
+                } else {
+                    viewHolder.leftContentImage.setVisibility(View.VISIBLE);
+                    String contentImg = ApiHttpClient.getImageApiUrl(itemModel
+                            .getImage());
+                    ImageLoader.getInstance().displayImage(contentImg,
+                            viewHolder.leftContentImage, new SimpleImageLoadingListener() {
+                                @Override
+                                public void onLoadingStarted(String imageUri, View view) {
+                                    viewHolder.leftContentImageBar.setProgress(0);
+                                    viewHolder.leftContentImageBar.setVisibility(View.VISIBLE);
+                                }
+
+                                @Override
+                                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                    viewHolder.leftContentImageBar.setVisibility(View.GONE);
+                                }
+
+                                @Override
+                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                    viewHolder.leftContentImageBar.setVisibility(View.GONE);
+                                }
+                            }
+                    );
+                    viewHolder.leftContentImage
+                            .setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(context,
+                                            ImageShowerActivity.class);
+                                    intent.putExtra("imageUri",
+                                            itemModel.getImage());
+                                    context.startActivity(intent);
+                                }
+                            });
+                }
+            } else {
+                viewHolder.leftContentTxt.setVisibility(View.VISIBLE);
+
+                if (position == 0) {
+                    viewHolder.leftContentTxt.setText("问题：" + itemModel.getContent());
+                    viewHolder.LeftChatContentLayout.setBackgroundResource(R.drawable.chat_left_white_bg);
+                } else {
+                    if (position == 1) {
+                        viewHolder.leftContentTxt.setText("回答：" + itemModel.getContent());
+                        viewHolder.LeftChatContentLayout.setBackgroundResource(R.drawable.chat_left_blue_bg);
+                    } else {
+                        viewHolder.leftContentTxt.setText(itemModel.getContent());
+
+                        CommentReply c = (CommentReply) _data.get(position);
+
+                        if (itemModel.getSign() == 1) {
+                            viewHolder.LeftChatContentLayout.setBackgroundResource(R.drawable.chat_left_white_bg);
+                        } else if (itemModel.getSign() == 2) {
+                            viewHolder.LeftChatContentLayout.setBackgroundResource(R.drawable.chat_left_blue_bg);
+                        }
+
+
+                    }
+                }
+                if (!StringUtils.isEmpty(itemModel.getImage())) {
+                    viewHolder.leftContentImage.setVisibility(View.VISIBLE);
+                    String contentImg = ApiHttpClient.getImageApiUrl(itemModel
+                            .getImage());
+                    ImageLoader.getInstance().displayImage(contentImg,
+                            viewHolder.leftContentImage, new SimpleImageLoadingListener() {
+                                @Override
+                                public void onLoadingStarted(String imageUri, View view) {
+                                    viewHolder.leftContentImageBar.setProgress(0);
+                                    viewHolder.leftContentImageBar.setVisibility(View.VISIBLE);
+                                }
+
+                                @Override
+                                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                    viewHolder.leftContentImageBar.setVisibility(View.GONE);
+                                }
+
+                                @Override
+                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                    viewHolder.leftContentImageBar.setVisibility(View.GONE);
+                                }
+                            }
+                    );
+                    viewHolder.leftContentImage
+                            .setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(context,
+                                            ImageShowerActivity.class);
+                                    intent.putExtra("imageUri",
+                                            itemModel.getImage());
+                                    context.startActivity(intent);
+                                }
+                            });
+                } else {
+                    viewHolder.leftContentImage.setVisibility(View.GONE);
+                }
+            }
+
+            viewHolder.leftTime.setText(itemModel.getIntputtime());
+            viewHolder.leftUserName.setText(itemModel.getNickname());
+            String imagePath = ApiHttpClient
+                    .getImageApiUrl(itemModel.getHead());
+            ImageLoader.getInstance().displayImage(imagePath,
+                    viewHolder.leftUserPhoto);
+
+            viewHolder.leftUserPhoto.setTag(itemModel);
+
+
+            if (type == 2) {
+                if (position == 0) {
+                    viewHolder.leftChatLayout
+                            .setOnClickListener(null);
+                } else {
+                    //viewHolder.leftChatLayout
+                    viewHolder.leftContentTxt
+                            .setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    ((CommunicatActivity) context).directPerson(
+                                            itemModel.getNickname(),
+                                            itemModel.getAuid(), itemModel.getId());
+
+                                }
+                            });
+                }
+
+            } else {
+                viewHolder.leftChatLayout
+                        .setOnClickListener(null);
+            }
+
+        } else if (viewType == RIGHT_TYPE) {
+            viewHolder.leftTime.setVisibility(View.GONE);
+            viewHolder.leftChatLayout.setVisibility(View.GONE);
+            viewHolder.rightTime.setVisibility(View.VISIBLE);
+            viewHolder.rightChatLayout.setVisibility(View.VISIBLE);
+
+
+            if (type == 2 && position != 0 && position != 1) {
+                viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_green_bg);
+                viewHolder.rightContentTxt.setVisibility(View.VISIBLE);
+                viewHolder.rightContentTxt.setText("");
+                viewHolder.rightContentTxt.append("回复");
+                final String name = itemModel.getAskname();
+                SpannableString sb = new SpannableString(name);
+                ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.BLUE);
+                sb.setSpan(colorSpan, 0, name.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                viewHolder.rightContentTxt.append(sb);
+                viewHolder.rightContentTxt.append("： " + itemModel.getContent());
+
+                if (StringUtils.isEmpty(itemModel.getImage())) {
+                    viewHolder.rightContentImage.setVisibility(View.GONE);
+                } else {
+                    viewHolder.rightContentImage.setVisibility(View.VISIBLE);
+
+                    String contentImg = ApiHttpClient.getImageApiUrl(itemModel
+                            .getImage());
+                    ImageLoader.getInstance().displayImage(contentImg,
+                            viewHolder.rightContentImage, new SimpleImageLoadingListener() {
+                                @Override
+                                public void onLoadingStarted(String imageUri, View view) {
+                                    viewHolder.rightContentImageBar.setProgress(0);
+                                    viewHolder.rightContentImageBar.setVisibility(View.VISIBLE);
+                                }
+
+                                @Override
+                                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                    viewHolder.rightContentImageBar.setVisibility(View.GONE);
+                                }
+
+                                @Override
+                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                    viewHolder.rightContentImageBar.setVisibility(View.GONE);
+                                }
+                            }
+                    );
+                    viewHolder.rightContentImage
+                            .setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(context,
+                                            ImageShowerActivity.class);
+                                    intent.putExtra("imageUri",
+                                            itemModel.getImage());
+                                    context.startActivity(intent);
+                                }
+                            });
+                }
+            } else {
+                viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_blue_bg);
+                if (!StringUtils.isEmpty(itemModel.getImage())) {
+                    viewHolder.rightContentImage.setVisibility(View.VISIBLE);
+                    String contentImg = ApiHttpClient.getImageApiUrl(itemModel
+                            .getImage());
+                    ImageLoader.getInstance().displayImage(contentImg,
+                            viewHolder.rightContentImage, new SimpleImageLoadingListener() {
+                                @Override
+                                public void onLoadingStarted(String imageUri, View view) {
+                                    viewHolder.rightContentImageBar.setProgress(0);
+                                    viewHolder.rightContentImageBar.setVisibility(View.VISIBLE);
+                                }
+
+                                @Override
+                                public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+                                    viewHolder.rightContentImageBar.setVisibility(View.GONE);
+                                }
+
+                                @Override
+                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                    viewHolder.rightContentImageBar.setVisibility(View.GONE);
+                                }
+                            }
+                    );
+                    viewHolder.rightContentImage
+                            .setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(context,
+                                            ImageShowerActivity.class);
+                                    intent.putExtra("imageUri",
+                                            itemModel.getImage());
+                                    context.startActivity(intent);
+                                }
+                            });
+                }
+                if (StringUtils.isEmpty(itemModel.getContent())) {
+                    viewHolder.rightContentTxt.setVisibility(View.GONE);
+
+                } else {
+                    viewHolder.rightContentTxt.setVisibility(View.VISIBLE);
+                    if (StringUtils.isEmpty(itemModel.getImage())) {
+                        viewHolder.rightContentImage.setVisibility(View.GONE);
+                    } else {
+                        viewHolder.rightContentImage.setVisibility(View.VISIBLE);
+                    }
+
+
+                    if (position == 0) {
+                        viewHolder.rightContentTxt.setText("问题：" + itemModel.getContent());
+                    } else {
+                        if (position == 1) {
+                            viewHolder.rightContentTxt.setText("回答：" + itemModel.getContent());
+                        } else {
+                            viewHolder.rightContentTxt.setText(itemModel.getContent());
+                        }
+                    }
+                }
+            }
+            if (position == 0) {
+                viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_white_bg);
+            }
+
+            viewHolder.rightTime.setText(itemModel.getIntputtime());
+            viewHolder.rightUserName.setText(itemModel.getNickname());
+            String imagePath = ApiHttpClient
+                    .getImageApiUrl(itemModel.getHead());
+            ImageLoader.getInstance().displayImage(imagePath,
+                    viewHolder.rightUserPhoto);
+            viewHolder.rightUserPhoto.setTag(itemModel);
+        }
+
+        return convertView;
+    }
+
+    private void showPopUp(TextView v) {
+        final String textContent = v.getText().toString();
+        LinearLayout layout = new LinearLayout(v.getContext());
         layout.setBackgroundResource(R.drawable.popbackground);
         layout.setGravity(Gravity.CENTER_HORIZONTAL);
         layout.setPadding(0, 20, 0, 0);
-        TextView tv = new TextView(v.getContext());  
-        tv.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));  
-        tv.setText("复制");  
-        tv.setTextColor(Color.WHITE); 
-        layout.addView(tv);  
-        
-       
-  
-        final PopupWindow popupWindow = new PopupWindow(layout,120,100);  
-          
+        TextView tv = new TextView(v.getContext());
+        tv.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        tv.setText("复制");
+        tv.setTextColor(Color.WHITE);
+        layout.addView(tv);
+
+
+        final PopupWindow popupWindow = new PopupWindow(layout, 120, 100);
+
         tv.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				ClipboardManager cm =(ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-				//将文本数据复制到剪贴板
-				cm.setText(textContent);
-				
-				Toast.makeText(arg0.getContext(), "复制成功！", Toast.LENGTH_LONG).show();
-				popupWindow.dismiss();
-			}
-		});
- 
-        popupWindow.setFocusable(true);  
-        popupWindow.setOutsideTouchable(true);  
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());  
-          
-        int[] location = new int[2];  
-        v.getLocationOnScreen(location);  
-          
-        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0]+(v.getWidth()>>1), location[1]-popupWindow.getHeight());  
-    } 
 
-	static class ViewHolder {
-		RelativeLayout leftChatLayout, rightChatLayout,LeftChatContentLayout,rightChatContentLayout;
-		ImageView leftUserPhoto, rightUserPhoto;
-		TextView  leftUserName,  rightUserName,leftContentTxt,  rightContentTxt;
-		ImageView leftContentImage, rightContentImage;
-		TextView leftTime, rightTime;
-	}
+            @Override
+            public void onClick(View arg0) {
+                ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                //将文本数据复制到剪贴板
+                cm.setText(textContent);
 
-	@Override
-	public void onClick(View v) {
-		CommentReply c = (CommentReply) v.getTag();
-		UIHelper.showUserCenter(context, c.getAuid(), c.getNickname());
-	}
-	
-	/**
-	 * 设置可复制状态
-	 */
-	public void setSelected(TextView textView){
-		textView.setFocusableInTouchMode(true);
-		textView.setFocusable(true);
-		textView.setClickable(true);
-		textView.setLongClickable(true);
-		textView.setMovementMethod( ArrowKeyMovementMethod.getInstance());
-		textView.setText(textView.getText(),BufferType.SPANNABLE );
-	}
+                Toast.makeText(arg0.getContext(), "复制成功！", Toast.LENGTH_LONG).show();
+                popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+
+        int[] location = new int[2];
+        v.getLocationOnScreen(location);
+
+        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0] + (v.getWidth() >> 1), location[1] - popupWindow.getHeight());
+    }
+
+    static class ViewHolder {
+        RelativeLayout leftChatLayout, rightChatLayout, LeftChatContentLayout, rightChatContentLayout;
+        ImageView leftUserPhoto, rightUserPhoto;
+        TextView leftUserName, rightUserName, leftContentTxt, rightContentTxt;
+        ImageView leftContentImage, rightContentImage;
+        TextView leftTime, rightTime;
+        ProgressBar rightContentImageBar;
+        ProgressBar leftContentImageBar;
+    }
+
+    @Override
+    public void onClick(View v) {
+        CommentReply c = (CommentReply) v.getTag();
+        UIHelper.showUserCenter(context, c.getAuid(), c.getNickname());
+    }
+
+    /**
+     * 设置可复制状态
+     */
+    public void setSelected(TextView textView) {
+        textView.setFocusableInTouchMode(true);
+        textView.setFocusable(true);
+        textView.setClickable(true);
+        textView.setLongClickable(true);
+        textView.setMovementMethod(ArrowKeyMovementMethod.getInstance());
+        textView.setText(textView.getText(), BufferType.SPANNABLE);
+    }
 
 }
 

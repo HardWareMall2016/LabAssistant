@@ -192,7 +192,6 @@ public class ExtendMediaPicker {
 							String path = getFilePathByContentResolver(
 									mActivity, Uri.parse(otherFilePath));
 							File tempFile = new File(path);
-							;
 							Uri uri2 = Uri.fromFile(tempFile);
 							Intent localIntent = new Intent(
 									Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);

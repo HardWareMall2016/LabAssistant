@@ -25,9 +25,14 @@ public class ApiHttpClient {
 	public static String ATTRIB_ASSET_URL = "http://ws.shiyanzhushou.com/%s";
 	public static String DEFAULT_API_URL;
 	public static final String DELETE = "DELETE";
-	public static String DEV_API_IMAGE_URL = "http://ws.shiyanzhushou.com/%s";
+
+	//测试环境
 	public static String DEV_API_URL = "http://ws.shiyanzhushou.com:8888/%s";
-	
+	public static String DEV_API_IMAGE_URL = "http://ws.shiyanzhushou.com:8888/%s";
+	//生产环境
+	//public static String DEV_API_URL = "http://ws.shiyanzhushou.com/%s";
+	//public static String DEV_API_IMAGE_URL = "http://ws.shiyanzhushou.com/%s";
+
 	public static final String GET = "GET";
 	public static final String POST = "POST";
 	public static final String PUT = "PUT";

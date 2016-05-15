@@ -5,11 +5,13 @@ import net.oschina.app.v2.activity.tweet.model.Mulu;
 import net.oschina.app.v2.activity.tweet.model.MuluList;
 import net.oschina.app.v2.activity.tweet.view.TweetPopupListView;
 import net.oschina.app.v2.api.remote.NewsApi;
+import net.oschina.app.v2.model.event.FansTabEvent;
 import net.oschina.app.v2.model.event.TweetTabEvent;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.shiyanzhushou.app.R;
@@ -36,6 +39,12 @@ public class TweetViewPagerFragment extends Fragment implements
 	private View mViewTweetTab;
 	private View mViewFansTab;
 
+	//Tab fans views
+	private TextView mViewAllQuestion;
+	private TextView mViewAnsweredQuestion;
+	private TextView mViewUnansweredQuestion;
+
+
 	private TweetPopupListView mPopupList;
 	
 	@Override
@@ -50,6 +59,14 @@ public class TweetViewPagerFragment extends Fragment implements
 		view.findViewById(R.id.question_status).setOnClickListener(this);
 		view.findViewById(R.id.choose_classify).setOnClickListener(this);
 		view.findViewById(R.id.choose_sub_classify).setOnClickListener(this);
+
+		mViewAllQuestion=(TextView)view.findViewById(R.id.all_question);
+		mViewAnsweredQuestion=(TextView)view.findViewById(R.id.answered_question);
+		mViewUnansweredQuestion=(TextView)view.findViewById(R.id.unanswered_question);
+		mViewAllQuestion.setOnClickListener(mFansTabClickListener);
+		mViewAnsweredQuestion.setOnClickListener(mFansTabClickListener);
+		mViewUnansweredQuestion.setOnClickListener(mFansTabClickListener);
+
 		//mTabStrip = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
 		mViewPager = (ViewPager) view.findViewById(R.id.main_tab_pager);
 
@@ -170,6 +187,36 @@ public class TweetViewPagerFragment extends Fragment implements
 				break;
 		}
 	}
+
+	private View.OnClickListener mFansTabClickListener=new View.OnClickListener(){
+		@Override
+		public void onClick(View v) {
+			mViewAllQuestion.setTextColor(getResources().getColor(R.color.text_dark));
+			mViewAllQuestion.setBackgroundResource(R.drawable.default_bg);
+			mViewAnsweredQuestion.setTextColor(getResources().getColor(R.color.text_dark));
+			mViewAnsweredQuestion.setBackgroundResource(R.drawable.default_bg);
+			mViewUnansweredQuestion.setTextColor(getResources().getColor(R.color.text_dark));
+			mViewUnansweredQuestion.setBackgroundResource(R.drawable.default_bg);
+
+			switch (v.getId()){
+				case R.id.all_question:
+					mViewAllQuestion.setTextColor(getResources().getColor(R.color.text_dark));
+					mViewAllQuestion.setBackgroundResource(R.drawable.bg_blue_underline);
+					EventBus.getDefault().post(new FansTabEvent(0));
+					break;
+				case R.id.answered_question:
+					mViewAnsweredQuestion.setTextColor(getResources().getColor(R.color.text_dark));
+					mViewAnsweredQuestion.setBackgroundResource(R.drawable.bg_blue_underline);
+					EventBus.getDefault().post(new FansTabEvent(1));
+					break;
+				case R.id.unanswered_question:
+					mViewUnansweredQuestion.setTextColor(getResources().getColor(R.color.text_dark));
+					mViewUnansweredQuestion.setBackgroundResource(R.drawable.bg_blue_underline);
+					EventBus.getDefault().post(new FansTabEvent(2));
+					break;
+			}
+		}
+	};
 
 	@Override
 	public void onDismiss() {

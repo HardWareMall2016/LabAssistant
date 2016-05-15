@@ -13,15 +13,39 @@ import net.oschina.app.v2.base.ListBaseAdapter;
 import net.oschina.app.v2.model.Ask;
 import net.oschina.app.v2.model.AskList;
 import net.oschina.app.v2.model.ListEntity;
+import net.oschina.app.v2.model.event.FansTabEvent;
+import net.oschina.app.v2.model.event.TweetTabEvent;
 import net.oschina.app.v2.utils.UIHelper;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+
+import com.shiyanzhushou.app.R;
+
+import de.greenrobot.event.EventBus;
 
 public class FansFragment extends BaseListFragment implements TweetPopupListView.OnFilterClickListener {
 
 	protected static final String TAG = DailyFragment.class.getSimpleName();
 	private static final String CACHE_KEY_PREFIX = "fanslist_";
 
+	@Override
+	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		EventBus.getDefault().register(this);
+		return super.onCreateView(inflater, container, savedInstanceState);
+	}
+
+	@Override
+	public void onDestroyView() {
+		EventBus.getDefault().unregister(this);
+		super.onDestroyView();
+	}
 	@Override
 	protected ListBaseAdapter getListAdapter() {
 		return new funsForHelperAdapter(getActivity(),false);
@@ -61,9 +85,20 @@ public class FansFragment extends BaseListFragment implements TweetPopupListView
 
 	@Override
 	public void onFilter(int isreward, int issolveed, String catid) {
-		mState=STATE_REFRESH;
+		/*mState=STATE_REFRESH;
 		mCurrentPage=mCurrentPage==0 ? 1 : mCurrentPage;
-		NewsApi.getFilterList(1, catid, isreward, issolveed, 1, mJsonHandler);
+		NewsApi.getFilterList(1, catid, isreward, issolveed, 1, mJsonHandler);*/
+	}
+
+	public void onEventMainThread(FansTabEvent event){
+		mState=STATE_REFRESH;
+		mCurrentPage=1;
+		NewsApi.getFansAskList(AppContext.instance().getLoginUid(), mCurrentPage, mJsonHandler);
+		/*if(event.tabIndex==0){
+
+		}else{
+
+		}*/
 	}
 }
 

@@ -41,6 +41,8 @@ public class SupperListActivity extends BaseActivity {
 
 	private EditText searchEt;
 	private ImageButton searchBtn;
+
+	//private String keyword="";
 	
 	private HashMap<Integer, UserBean> userList;
 

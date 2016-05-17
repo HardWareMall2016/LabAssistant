@@ -7,6 +7,7 @@ import android.content.Context;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.widget.EditText;
@@ -98,8 +99,34 @@ public class EmojiEditText extends EditText {
 	}
 
 	public void setHeader(String text) {
+		//old
+		/*mHeader = text;
+		this.setText(Html.fromHtml("<font color=#2FBDE7>" + text + "</font>"));*/
+
+		//new by wuyue
+		boolean insertHeader=false;
+		boolean replaceHeader=false;
+		if(TextUtils.isEmpty(mHeader)){
+			insertHeader=true;
+		}else{
+			if(mHeader.equals(text)){
+				return;
+			}else{
+				replaceHeader=true;
+			}
+		}
+		String originalText=getText().toString();
+		if(insertHeader){
+			this.setText(Html.fromHtml("<font color=#2FBDE7>" + text + "</font>"));
+			this.append(originalText);
+		}else{
+			originalText=originalText.substring(mHeader.length());
+			this.setText(Html.fromHtml("<font color=#2FBDE7>" + text + "</font>"));
+			this.append(originalText);
+		}
+
 		mHeader = text;
-		this.setText(Html.fromHtml("<font color=#2FBDE7>" + text + "</font>"));
+		//this.setText(Html.fromHtml("<font color=#2FBDE7>" + text + "</font>"));
 	}
 	
 	public void setAskUid(int askUid) {

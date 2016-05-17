@@ -169,10 +169,11 @@ public class NewsApi extends BaseApi {
 	 * @param uid
 	 * @param handler
 	 */
-	public static void getSupperlist(int uid, JsonHttpResponseHandler handler) {
+	public static void getSupperlist(int uid,JsonHttpResponseHandler handler) {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			jsonObject.put("uid", uid);
+			//jsonObject.put("keyword", keyword);
 		} catch (Exception e) {
 		}
 		ApiHttpClient.post("index.php/Api/Question/supperlist.html",
@@ -907,12 +908,13 @@ public class NewsApi extends BaseApi {
 	 *            第几页
 	 * @param handler
 	 */
-	public static void getFansAskList(int uid, int page,
+	public static void getFansAskList(int uid, int page,int status,
 			JsonHttpResponseHandler handler) {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			jsonObject.put("uid", uid);
-			jsonObject.put("pid", 1);
+			jsonObject.put("pid", page);
+			jsonObject.put("status", status);
 			jsonObject.put("num", 20);
 		} catch (JSONException e) {
 			e.printStackTrace();

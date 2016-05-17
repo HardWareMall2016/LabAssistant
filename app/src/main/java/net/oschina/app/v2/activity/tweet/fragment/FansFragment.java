@@ -14,19 +14,14 @@ import net.oschina.app.v2.model.Ask;
 import net.oschina.app.v2.model.AskList;
 import net.oschina.app.v2.model.ListEntity;
 import net.oschina.app.v2.model.event.FansTabEvent;
-import net.oschina.app.v2.model.event.TweetTabEvent;
 import net.oschina.app.v2.utils.UIHelper;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-
-import com.shiyanzhushou.app.R;
 
 import de.greenrobot.event.EventBus;
 
@@ -34,6 +29,7 @@ public class FansFragment extends BaseListFragment implements TweetPopupListView
 
 	protected static final String TAG = DailyFragment.class.getSimpleName();
 	private static final String CACHE_KEY_PREFIX = "fanslist_";
+	private int mStatus =1;//1 全部  2 已回答 3 未回答
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -72,7 +68,7 @@ public class FansFragment extends BaseListFragment implements TweetPopupListView
 	@Override
 	protected void sendRequestData() {
 		mCurrentPage=mCurrentPage==0 ? 1 : mCurrentPage;
-		NewsApi.getFansAskList(AppContext.instance().getLoginUid(), mCurrentPage, mJsonHandler);
+		NewsApi.getFansAskList(AppContext.instance().getLoginUid(), mCurrentPage, mStatus, mJsonHandler);
 	}
 
 	@Override
@@ -91,14 +87,19 @@ public class FansFragment extends BaseListFragment implements TweetPopupListView
 	}
 
 	public void onEventMainThread(FansTabEvent event){
-		mState=STATE_REFRESH;
-		mCurrentPage=1;
-		NewsApi.getFansAskList(AppContext.instance().getLoginUid(), mCurrentPage, mJsonHandler);
-		/*if(event.tabIndex==0){
-
+		if(event.tabIndex==0){
+			mStatus=1;
+		}else if(event.tabIndex==1){
+			mStatus=3;
 		}else{
+			mStatus=2;
+		}
 
-		}*/
+		/*mCurrentPage = 1;
+		mState = STATE_REFRESH;
+		requestData(true);*/
+		setRefresh();
+		//NewsApi.getFansAskList(AppContext.instance().getLoginUid(), mCurrentPage,mStarus, mJsonHandler);
 	}
 }
 

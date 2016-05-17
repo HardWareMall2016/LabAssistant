@@ -25,6 +25,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -158,6 +159,12 @@ public abstract class BaseListFragment extends BaseTabFragment implements
 		mCurrentPage = 1;
 		mState = STATE_REFRESH;
 		requestData(true);
+	}
+
+	public void setRefresh(){
+		mCurrentPage = 1;
+		mState = STATE_REFRESH;
+		mListView.setRefreshing();
 	}
 
 	@Override
@@ -313,7 +320,6 @@ public abstract class BaseListFragment extends BaseTabFragment implements
 		public void onSuccess(int statusCode, Header[] headers,
 				JSONObject response) {
 			//显示主要分类
-			
 			if (isAdded()) {
 				//显示主要分类
 				String responseStr = response.toString();

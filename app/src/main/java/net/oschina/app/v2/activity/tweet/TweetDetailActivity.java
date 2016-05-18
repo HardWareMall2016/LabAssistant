@@ -15,6 +15,7 @@ import net.oschina.app.v2.activity.tweet.view.ExtendMediaPicker.OnMediaPickerLis
 import net.oschina.app.v2.api.ApiHttpClient;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.BaseActivity;
+import net.oschina.app.v2.base.Constants;
 import net.oschina.app.v2.emoji.EmojiEditText;
 import net.oschina.app.v2.emoji.SupperListActivity;
 import net.oschina.app.v2.model.Ask;
@@ -35,6 +36,7 @@ import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -71,6 +73,12 @@ import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shiyanzhushou.app.R;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners;
+import com.umeng.socialize.sso.UMQQSsoHandler;
 
 import de.greenrobot.event.EventBus;
 
@@ -604,7 +612,22 @@ public class TweetDetailActivity extends BaseActivity {
                                             ask.getContent(),
                                             url,
                                             R.drawable.share_icon);
-                                } else if (position == 3) {
+                                } else if(position == 3){
+                                    shareHelper.shareToQQ(
+                                            "分享问题",
+                                            ask.getContent(),
+                                            url,
+                                            "",
+                                            TweetDetailActivity.this);
+                                }else if(position == 4){
+                                    shareHelper.shareToQZone(
+                                            "分享问题",
+                                            ask.getContent(),
+                                            url,
+                                            "",
+                                            TweetDetailActivity.this);
+
+                                }else if (position == 5) {
 
                                     NewsApi.shareQuestion(ask.getId(), AppContext.instance().getLoginUid(), new JsonHttpResponseHandler() {
                                         @Override
@@ -636,10 +659,102 @@ public class TweetDetailActivity extends BaseActivity {
                     intent.putExtra("type", "login");
                     startActivity(intent);
                 } else {
-                    doReport();
+                    if (ask.getUid() == AppContext.instance().getLoginUid()) {
+                        SharedPreferences sharedPreferences= getSharedPreferences("test",
+                                Activity.MODE_PRIVATE);
+                        //String name =sharedPreferences.getString("name", "");
+                        //if("0".equals(name)){
+                            dodelect();//直接删除
+                       // }/*else{
+                          //  commitPlayDelect();// 申请删除
+                       // }*/
+
+                    }else {
+                        doReport();
+                    }
+
                 }
                 break;
         }
+    }
+
+
+    protected void commitPlayDelect(){
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setContentView(R.layout.play_delect_dialog);
+        TextView titleTv = (TextView) window.findViewById(R.id.tv_title);
+        titleTv.setText("申请删除");
+        // 设置监听
+        Button zhichi = (Button) window.findViewById(R.id.ib_zhichi);
+        zhichi.setText("提交");
+        // 支持
+        zhichi.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        // 查看支持者
+        Button chakanzhichi = (Button) window
+                .findViewById(R.id.ib_chakanzhichi);
+        chakanzhichi.setText("取消");
+        chakanzhichi.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+
+    protected void dodelect() {
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setContentView(R.layout.zhichi_dialog);
+        TextView titleTv = (TextView) window.findViewById(R.id.tv_title);
+        titleTv.setText("是否直接删除");
+        // 设置监听
+        Button zhichi = (Button) window.findViewById(R.id.ib_zhichi);
+        zhichi.setText("确定");
+        // 支持
+        zhichi.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int uid = AppContext.instance().getLoginUid();
+                int qid = ask.getId();
+                NewsApi.delectQuestion(uid, qid,
+                        new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode,
+                                                  Header[] headers, JSONObject response) {
+                                String str = "删除成功！";
+                                try {
+                                    int code = response.getInt("code");
+                                    if (code != 88) {
+                                        str = response.getString("desc");
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                AppContext.showToast(str);
+                            }
+                        });
+                dialog.dismiss();
+            }
+        });
+        // 查看支持者
+        Button chakanzhichi = (Button) window
+                .findViewById(R.id.ib_chakanzhichi);
+        chakanzhichi.setText("取消");
+        chakanzhichi.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
     protected void doReport() {

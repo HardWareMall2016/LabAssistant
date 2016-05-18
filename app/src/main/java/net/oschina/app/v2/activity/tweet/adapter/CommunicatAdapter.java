@@ -5,6 +5,7 @@ import net.oschina.app.v2.activity.ImageShowerActivity;
 import net.oschina.app.v2.activity.comment.model.CommentReply;
 import net.oschina.app.v2.activity.tweet.CommunicatActivity;
 import net.oschina.app.v2.api.ApiHttpClient;
+import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.ListBaseAdapter;
 import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.UIHelper;
@@ -16,11 +17,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.text.Layout;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.ArrowKeyMovementMethod;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -35,11 +39,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TextView.BufferType;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.shiyanzhushou.app.R;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 互动交流Adapter
@@ -54,10 +63,12 @@ public class CommunicatAdapter extends ListBaseAdapter implements
     private static final int RIGHT_TYPE = 2;
 
     private int type;
+    private int aid ;
 
     public CommunicatAdapter(Context context, int type) {
         this.context = context;
         this.type = type;
+//        this.aid = aid ;
     }
 
     public int getViewType(int position) {
@@ -155,6 +166,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
         final CommentReply itemModel = (CommentReply) _data.get(position);
 
+        aid = itemModel.getId();
         if (viewType == LEFT_TYPE) {
             viewHolder.leftTime.setVisibility(View.VISIBLE);
             viewHolder.leftChatLayout.setVisibility(View.VISIBLE);
@@ -446,18 +458,20 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         LinearLayout layout = new LinearLayout(v.getContext());
         layout.setBackgroundResource(R.drawable.popbackground);
         layout.setGravity(Gravity.CENTER_HORIZONTAL);
+        layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(0, 20, 0, 0);
-        TextView tv = new TextView(v.getContext());
-        tv.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        tv.setText("复制");
-        tv.setTextColor(Color.WHITE);
-        layout.addView(tv);
+
+        View view = LayoutInflater.from(v.getContext()).inflate(R.layout.v2_activity_communicat_popup, null);
+        layout.addView(view);
+
+        TextView tv = (TextView) view.findViewById(R.id.pop_layout_copy);
+        TextView mdelect = (TextView) view.findViewById(R.id.pop_layout_delet);
+        /*TextView modify = (TextView) view.findViewById(R.id.pop_layout_modify);*/
 
 
-        final PopupWindow popupWindow = new PopupWindow(layout, 120, 100);
+        final PopupWindow popupWindow = new PopupWindow(layout, 120, 240);
 
         tv.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View arg0) {
                 ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
@@ -468,6 +482,38 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                 popupWindow.dismiss();
             }
         });
+
+        mdelect.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int uid = AppContext.instance().getLoginUid();
+                Log.e("--->aid<",aid+"");
+                NewsApi.delectAnswer(uid, aid,
+                        new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode,
+                                                  Header[] headers, JSONObject response) {
+                                String str = "删除成功！";
+                                try {
+                                    int code = response.getInt("code");
+                                    if (code != 88) {
+                                        str = response.getString("desc");
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                AppContext.showToast(str);
+                            }
+                        });
+                popupWindow.dismiss();
+            }
+        });
+      /*  modify.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/
 
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);

@@ -1080,6 +1080,44 @@ public class NewsApi extends BaseApi {
 	}
 
 	/**
+	 * 删除答复列表问题
+	 *
+	 * @param id
+	 * @param handler
+	 */
+	public static void delectAnswer(int uid, int aid,
+									JsonHttpResponseHandler handler) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("uid", uid);
+			jsonObject.put("aid", aid);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		ApiHttpClient.post("/index.php/Api/Answer/answerdel.html", jsonObject,
+				handler);
+	}
+	/**
+	 * 删除自己提问的问题
+	 *
+	 * @param id
+	 * @param handler
+	 */
+	public static void delectQuestion(int uid, int qid,
+									JsonHttpResponseHandler handler) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("uid", uid);
+			jsonObject.put("qid", qid);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		ApiHttpClient.post("/index.php/Api/Question/questiondel.html", jsonObject,
+				handler);
+	}
+
+
+	/**
 	 * 获取用户信息
 	 * 
 	 * @param uid

@@ -134,7 +134,7 @@ public class ShareHelper {
 		dialog.show();
 	}
 	
-	private void shareToQQ(String shareTitle, String shareContent,
+	public void shareToQQ(String shareTitle, String shareContent,
 			String shareUrl, String shareImg,Activity activity) { 
 
 		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(activity,
@@ -166,9 +166,9 @@ public class ShareHelper {
 		});
 		
 	}
-	
 
-		private void shareToQZone(String shareTitle, String shareContent,
+
+	public void shareToQZone(String shareTitle, String shareContent,
 			String shareUrl, String shareImg,Activity activity) {
 	
 		QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(activity,

@@ -16,11 +16,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.text.Layout;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.ArrowKeyMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
@@ -446,18 +448,20 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         LinearLayout layout = new LinearLayout(v.getContext());
         layout.setBackgroundResource(R.drawable.popbackground);
         layout.setGravity(Gravity.CENTER_HORIZONTAL);
+        layout.setOrientation(LinearLayout.VERTICAL);
         layout.setPadding(0, 20, 0, 0);
-        TextView tv = new TextView(v.getContext());
-        tv.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        tv.setText("复制");
-        tv.setTextColor(Color.WHITE);
-        layout.addView(tv);
+
+        View view = LayoutInflater.from(v.getContext()).inflate(R.layout.v2_activity_communicat_popup, null);
+        layout.addView(view);
+
+        TextView tv = (TextView) view.findViewById(R.id.pop_layout_copy);
+        TextView mdelect = (TextView) view.findViewById(R.id.pop_layout_delet);
+        TextView modify = (TextView) view.findViewById(R.id.pop_layout_modify);
 
 
-        final PopupWindow popupWindow = new PopupWindow(layout, 120, 100);
+        final PopupWindow popupWindow = new PopupWindow(layout, 120, 300);
 
         tv.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View arg0) {
                 ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
@@ -466,6 +470,19 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
                 Toast.makeText(arg0.getContext(), "复制成功！", Toast.LENGTH_LONG).show();
                 popupWindow.dismiss();
+            }
+        });
+
+        mdelect.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        modify.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

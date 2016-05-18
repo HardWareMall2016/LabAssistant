@@ -47,6 +47,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ZoomButtonsController;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -156,10 +157,11 @@ public class TweetDetailFragment extends BaseFragment implements OnClickListener
 				container, false);
 		//mTweetId = getActivity().getIntent().getIntExtra("tweet_id", 0);
 		ask=(Ask)getActivity().getIntent().getSerializableExtra("ask");
-		mActivity.setActionBarTitle(ask.getnickname()+"的提问");
+		mActivity.setActionBarTitle(ask.getnickname() + "的提问");
 		
 		initViews(view);
 		executeOnLoadDataSuccess();
+
 		
 		return view;
 	}

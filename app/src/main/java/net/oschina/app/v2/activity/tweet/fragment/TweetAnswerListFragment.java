@@ -22,6 +22,7 @@ import net.oschina.app.v2.utils.UIHelper;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -96,10 +97,21 @@ public class TweetAnswerListFragment extends BaseListFragment implements
 		
 		mAdapter.addData(data);
 		mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+
+		SharedPreferences mySharedPreferences= getActivity().getSharedPreferences("test", Activity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = mySharedPreferences.edit();
+
 		if (data.size() == 0 && mState == STATE_REFRESH) 
 		{
+
 			if(mAdapter.getCount() == 0)
 			{
+				if(ask.getUid() == AppContext.instance().getLoginUid()){
+
+					editor.putString("name", "0");
+					editor.commit();
+				}
+
 				if (isShowEmpty()) {
 					mErrorLayout.setErrorType(EmptyLayout.NODATA_ENABLE_CLICK,"还没有人回答~\n快点帮帮TA吧 ");
 				}
@@ -109,6 +121,10 @@ public class TweetAnswerListFragment extends BaseListFragment implements
 			}
 		} else if (data.size() < TDevice.getPageSize()) 
 		{
+			if(ask.getUid() == AppContext.instance().getLoginUid()){
+				editor.putString("name", "1");
+				editor.commit();
+			}
 			if (mState == STATE_REFRESH)
 				mAdapter.setState(ListBaseAdapter.STATE_NO_MORE);
 			else

@@ -1080,6 +1080,24 @@ public class NewsApi extends BaseApi {
 	}
 
 	/**
+	 * 删除问题
+	 *
+	 * @param id
+	 * @param handler
+	 */
+	public static void delectAnswer(int uid, int aid,
+									JsonHttpResponseHandler handler) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("uid", uid);
+			jsonObject.put("aid", aid);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		ApiHttpClient.post("/index.php/Api/Answer/answeredel.html", jsonObject,
+				handler);
+	}
+	/**
 	 * 获取用户信息
 	 * 
 	 * @param uid

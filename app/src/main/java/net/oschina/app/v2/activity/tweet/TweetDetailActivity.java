@@ -662,12 +662,12 @@ public class TweetDetailActivity extends BaseActivity {
                     if (ask.getUid() == AppContext.instance().getLoginUid()) {
                         SharedPreferences sharedPreferences= getSharedPreferences("test",
                                 Activity.MODE_PRIVATE);
-                        String name =sharedPreferences.getString("name", "");
-                        if("0".equals(name)){
+                        //String name =sharedPreferences.getString("name", "");
+                        //if("0".equals(name)){
                             dodelect();//直接删除
-                        }else{
-                            commitPlayDelect();// 申请删除
-                        }
+                       // }/*else{
+                          //  commitPlayDelect();// 申请删除
+                       // }*/
 
                     }else {
                         doReport();
@@ -723,7 +723,24 @@ public class TweetDetailActivity extends BaseActivity {
         zhichi.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                /*NewsApi.delectQuestion(uid, aid,
+                        new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode,
+                                                  Header[] headers, JSONObject response) {
+                                String str = "删除成功！";
+                                try {
+                                    int code = response.getInt("code");
+                                    if (code != 88) {
+                                        str = response.getString("desc");
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                AppContext.showToast(str);
+                            }
+                        });*/
+                AppContext.showToast("TweetDetailActivity");
                 dialog.dismiss();
             }
         });

@@ -166,7 +166,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
         final CommentReply itemModel = (CommentReply) _data.get(position);
 
-        aid = itemModel.getAid();
+        aid = itemModel.getId();
         if (viewType == LEFT_TYPE) {
             viewHolder.leftTime.setVisibility(View.VISIBLE);
             viewHolder.leftChatLayout.setVisibility(View.VISIBLE);
@@ -487,8 +487,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
             @Override
             public void onClick(View v) {
                 int uid = AppContext.instance().getLoginUid();
-
-                Log.e("---mAid>>>",aid+"");
+                Log.e("--->aid<",aid+"");
                 NewsApi.delectAnswer(uid, aid,
                         new JsonHttpResponseHandler() {
                             @Override

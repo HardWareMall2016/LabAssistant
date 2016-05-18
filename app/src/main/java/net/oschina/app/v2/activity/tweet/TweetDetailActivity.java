@@ -723,7 +723,9 @@ public class TweetDetailActivity extends BaseActivity {
         zhichi.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*NewsApi.delectQuestion(uid, aid,
+                int uid = AppContext.instance().getLoginUid();
+                int qid = ask.getId();
+                NewsApi.delectQuestion(uid, qid,
                         new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode,
@@ -739,8 +741,7 @@ public class TweetDetailActivity extends BaseActivity {
                                 }
                                 AppContext.showToast(str);
                             }
-                        });*/
-                AppContext.showToast("TweetDetailActivity");
+                        });
                 dialog.dismiss();
             }
         });

@@ -3,8 +3,6 @@ package net.oschina.app.v2.activity.tweet.fragment;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import de.greenrobot.event.EventBus;
-
 import net.oschina.app.v2.activity.find.fragment.DailyFragment;
 import net.oschina.app.v2.activity.tweet.adapter.TweetAdapter;
 import net.oschina.app.v2.activity.tweet.view.TweetPopupListView;
@@ -14,17 +12,22 @@ import net.oschina.app.v2.base.ListBaseAdapter;
 import net.oschina.app.v2.model.Ask;
 import net.oschina.app.v2.model.AskList;
 import net.oschina.app.v2.model.ListEntity;
-import net.oschina.app.v2.model.event.ClearFilterConditions;
+import net.oschina.app.v2.utils.ShareUtil;
 import net.oschina.app.v2.utils.UIHelper;
+
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 public class TweetFragment extends BaseListFragment implements
 		TweetPopupListView.OnFilterClickListener {
 
 	protected static final String TAG = DailyFragment.class.getSimpleName();
 	private static final String CACHE_KEY_PREFIX = "tweetslist_";
+
+	private int isreward=0, issolveed=0;//悬赏、未解决
+	private int mSelMainFilterId=-1;
+	private String selectedCatIds;
 
 	@Override
 	protected ListBaseAdapter getListAdapter() {
@@ -50,12 +53,23 @@ public class TweetFragment extends BaseListFragment implements
 	}
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		isreward= ShareUtil.getIntValue(ShareUtil.IS_REWARD, 0);
+		issolveed= ShareUtil.getIntValue(ShareUtil.IS_SOLVEED,0);
+		mSelMainFilterId= ShareUtil.getIntValue(ShareUtil.MAIN_FILTER_ID, -1);
+		selectedCatIds=ShareUtil.getStringValue(ShareUtil.SELECTED_CAT_IDS, "");
+	}
+
+	@Override
 	protected void sendRequestData() {
-		if(STATE_REFRESH==mState){//下拉刷新清空筛选条件
+		/*if(STATE_REFRESH==mState){//下拉刷新清空筛选条件
 			EventBus.getDefault().post(new ClearFilterConditions());
 		}
 		mCurrentPage=mCurrentPage==0 ? 1 : mCurrentPage;
-		NewsApi.getAskList(mCurrentPage, mJsonHandler);
+		NewsApi.getAskList(mCurrentPage, mJsonHandler);*/
+		mCurrentPage=mCurrentPage==0 ? 1 : mCurrentPage;
+		NewsApi.getFilterList(mCurrentPage, selectedCatIds, isreward, issolveed, 2, mJsonHandler);
 	}
 
 	@Override
@@ -68,8 +82,20 @@ public class TweetFragment extends BaseListFragment implements
 
 	@Override
 	public void onFilter(int isreward, int issolveed, String catid) {
-		mState=STATE_REFRESH;
+		/*mState=STATE_REFRESH;
 		mCurrentPage=mCurrentPage==0 ? 1 : mCurrentPage;
-		NewsApi.getFilterList(mCurrentPage, catid, isreward, issolveed, 2, mJsonHandler);
+		NewsApi.getFilterList(mCurrentPage, catid, isreward, issolveed, 2, mJsonHandler);*/
+
+		mState=STATE_REFRESH;
+
+		this.isreward=isreward;
+		this.issolveed=issolveed;
+		selectedCatIds=catid;
+
+		ShareUtil.setIntValue(ShareUtil.IS_REWARD, isreward);
+		ShareUtil.setIntValue(ShareUtil.IS_SOLVEED, issolveed);
+		ShareUtil.setValue(ShareUtil.SELECTED_CAT_IDS, selectedCatIds);
+
+		setRefresh();
 	}
 }

@@ -1,9 +1,12 @@
 package net.oschina.app.v2.activity.tweet.view;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -20,6 +23,7 @@ import net.oschina.app.v2.activity.tweet.model.MuluList;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.model.event.ClearFilterConditions;
 import net.oschina.app.v2.utils.DeviceUtils;
+import net.oschina.app.v2.utils.ShareUtil;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -72,8 +76,12 @@ public class TweetPopupListView implements View.OnClickListener {
             if(mCurFilterType==QUESTION_STATUS){
                 isreward=mQuestionStatus.get(0).checked?1:0;
                 issolveed=mQuestionStatus.get(1).checked?1:0;
+                mOnClickListener.onFilter(isreward, issolveed, getSelectedCatids());
             } else if(mCurFilterType==CHOOSE_CLASSIFY){
-                mSelSubFilterIds.clear();
+                if(mSelMainFilterId==-1){
+                    mOnClickListener.onFilter(isreward, issolveed, "-1");
+                }
+                ShareUtil.setIntValue(ShareUtil.MAIN_FILTER_ID, mSelMainFilterId);
             }else{
                 mSelSubFilterIds.clear();
                 for (FilterItem item : mSubClassifyList) {
@@ -81,20 +89,25 @@ public class TweetPopupListView implements View.OnClickListener {
                         mSelSubFilterIds.add(item.id);
                     }
                 }
+                mOnClickListener.onFilter(isreward, issolveed, getSelectedCatids());
             }
-
-            StringBuilder sb=new StringBuilder();
-            for(Integer id:mSelSubFilterIds){
-                sb.append(id+",");
-            }
-            if (sb.length() > 0) {
-                sb = sb.deleteCharAt(sb.length()-1);
-            }
-
-            mOnClickListener.onFilter(isreward, issolveed, sb.toString());
         }
 
         mPopupView.dismiss();
+    }
+
+    private String getSelectedCatids(){
+        if(mSelMainFilterId==-1){
+            return "-1";
+        }
+        StringBuilder sb=new StringBuilder();
+        for(Integer id:mSelSubFilterIds){
+            sb.append(id+",");
+        }
+        if (sb.length() > 0) {
+            sb = sb.deleteCharAt(sb.length()-1);
+        }
+        return sb.toString();
     }
 
     private class FilterItem{
@@ -104,6 +117,23 @@ public class TweetPopupListView implements View.OnClickListener {
     }
 
     public TweetPopupListView(Context context,PopupWindow.OnDismissListener onDismissListener) {
+
+        isreward= ShareUtil.getIntValue(ShareUtil.IS_REWARD,0);
+        issolveed= ShareUtil.getIntValue(ShareUtil.IS_SOLVEED,0);
+        mSelMainFilterId= ShareUtil.getIntValue(ShareUtil.MAIN_FILTER_ID, -1);
+        String selectedCatIds=ShareUtil.getStringValue(ShareUtil.SELECTED_CAT_IDS, "");
+        String [] subFilterList=selectedCatIds.split(",");
+        mSelSubFilterIds.clear();
+        if(subFilterList!=null&&subFilterList.length>0){
+            for(String id:subFilterList){
+                try {
+                    int catId=Integer.parseInt(id);
+                    mSelSubFilterIds.add(catId);
+                } catch (NumberFormatException e) {
+                }
+            }
+        }
+
         mContext=context;
         View contentView = View.inflate(context, R.layout.tweet_popup_list_layout, null);
         mFilterList=(ListView)contentView.findViewById(R.id.filter_list);
@@ -189,6 +219,7 @@ public class TweetPopupListView implements View.OnClickListener {
 
     public void showPopup(View anchor,int filterType) {
         mCurFilterType=filterType;
+        mFilterList.setOnItemClickListener(null);
         switch (filterType){
             case QUESTION_STATUS:
                 mShowList=mQuestionStatus;
@@ -199,18 +230,28 @@ public class TweetPopupListView implements View.OnClickListener {
             case CHOOSE_CLASSIFY:
                 mShowList=mMainClassifyList;
                 //初始化
-                for(FilterItem item:mMainClassifyList){
+                /*for(FilterItem item:mMainClassifyList){
                     item.checked=item.id==mSelMainFilterId;
-                }
+                }*/
+                mFilterList.setOnItemClickListener(onItemClickListener);
                 break;
             case CHOOSE_SUB_CLASSIFY:
-                //初始化
-                for (FilterItem subItem:mSubClassifyList){
-                    subItem.checked=false;
-                    for(Integer id:mSelSubFilterIds) {
-                        if(id==subItem.id){
-                            subItem.checked=true;
-                            break;
+                if(mSelMainFilterId==-1){
+                    mSubClassifyList.clear();
+                    FilterItem all=new FilterItem();
+                    all.id=-1;
+                    all.name="全部";
+                    all.checked=true;
+                    mSubClassifyList.add(all);
+                }else{
+                    //初始化
+                    for (FilterItem subItem:mSubClassifyList){
+                        subItem.checked=false;
+                        for(Integer id:mSelSubFilterIds) {
+                            if(id==subItem.id){
+                                subItem.checked=true;
+                                break;
+                            }
                         }
                     }
                 }
@@ -240,8 +281,24 @@ public class TweetPopupListView implements View.OnClickListener {
         }*/
     }
 
+    private AdapterView.OnItemClickListener onItemClickListener=new AdapterView.OnItemClickListener(){
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            FilterItem data = mShowList.get(position);
+            if(!(data.id==mSelMainFilterId)){
+                mSelMainFilterId=data.id;
+                sendRequestLanmuChildData(data.id);
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+    };
+
     private void sendRequestLanmuChildData(int id) {
-        NewsApi.getLanmu(id, mLanmuChildHandler);
+        if(id==-1){
+            mSubClassifyList.clear();
+        }else {
+            NewsApi.getLanmu(id, mLanmuChildHandler);
+        }
     }
 
     private JsonHttpResponseHandler mLanmuChildHandler = new JsonHttpResponseHandler() {
@@ -258,7 +315,7 @@ public class TweetPopupListView implements View.OnClickListener {
 
     private class FilterAdapter extends BaseAdapter{
         private class ViewHolder{
-            RadioButton rbSelector;
+            //RadioButton rbSelector;
             CheckBox ckSelector;
             TextView name;
         }
@@ -286,7 +343,7 @@ public class TweetPopupListView implements View.OnClickListener {
                 holder=new ViewHolder();
                 holder.name=(TextView)convertView.findViewById(R.id.name);
                 holder.ckSelector =(CheckBox)convertView.findViewById(R.id.ck_selector);
-                holder.rbSelector =(RadioButton)convertView.findViewById(R.id.rb_selector);
+                //holder.rbSelector =(RadioButton)convertView.findViewById(R.id.rb_selector);
                 convertView.setTag(holder);
             }else{
                 holder=(ViewHolder)convertView.getTag();
@@ -294,32 +351,17 @@ public class TweetPopupListView implements View.OnClickListener {
 
             final FilterItem data=mShowList.get(position);
 
+            convertView.setBackgroundColor(Color.TRANSPARENT);
+            holder.name.setTextColor(0xaf000000);
+
             if(mCurFilterType==CHOOSE_CLASSIFY){
                 holder.ckSelector.setVisibility(View.GONE);
-                holder.rbSelector.setVisibility(View.VISIBLE);
-
-                holder.rbSelector.setChecked(data.checked);
-                holder.rbSelector.setTag(position);
-                holder.rbSelector.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int pos=(Integer)v.getTag();
-                        for (int i = 0; i < getCount(); i++) {
-                            FilterItem tempData = mShowList.get(i);
-                            if (i != pos) {
-                                tempData.checked = false;
-                            } else {
-                                tempData.checked = true;
-                                mSelMainFilterId=tempData.id;
-                                sendRequestLanmuChildData(tempData.id);
-                            }
-                        }
-                        mAdapter.notifyDataSetChanged();
-                    }
-                });
+                if(data.id==mSelMainFilterId){
+                    convertView.setBackgroundResource(R.drawable.bg_filter_selected_rounded_corner);
+                    holder.name.setTextColor(Color.WHITE);
+                }
             }else{
                 holder.ckSelector.setVisibility(View.VISIBLE);
-                holder.rbSelector.setVisibility(View.GONE);
 
                 holder.ckSelector.setTag(position);
                 holder.ckSelector.setOnCheckedChangeListener(null);

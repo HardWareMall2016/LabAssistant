@@ -1026,7 +1026,7 @@ public class NewsApi extends BaseApi {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			jsonObject.put("pid", page);
-			jsonObject.put("num", 300);
+			jsonObject.put("num", 20);//300
 			if(!catid.contains("-1")&&!TextUtils.isEmpty(catid)){
 				jsonObject.put("catid", catid);
 			}

@@ -481,7 +481,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
         CommentReply itemModel=(CommentReply)v.getTag();
         mdelect.setTag(itemModel);
-     
+
 
         final PopupWindow popupWindow = new PopupWindow(layout, 120, itemModel==null?140:240);
 

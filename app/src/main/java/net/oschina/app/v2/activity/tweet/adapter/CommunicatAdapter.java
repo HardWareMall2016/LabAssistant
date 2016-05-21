@@ -63,7 +63,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
     private static final int RIGHT_TYPE = 2;
 
     private int type;
-    private int aid ;
+    //private int aid ;
 
     public CommunicatAdapter(Context context, int type) {
         this.context = context;
@@ -164,10 +164,19 @@ public class CommunicatAdapter extends ListBaseAdapter implements
             }
         });
 
+        viewHolder.rightContentImage.setOnLongClickListener(new OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View arg0) {
+                showPopUpImageView((ImageView) arg0);
+                return true;
+            }
+        });
+
         final CommentReply itemModel = (CommentReply) _data.get(position);
 
-        aid = itemModel.getId();
-
+        viewHolder.rightContentTxt.setTag(itemModel);
+        //aid = itemModel.getId();
         if (viewType == LEFT_TYPE) {
             viewHolder.leftTime.setVisibility(View.VISIBLE);
             viewHolder.leftChatLayout.setVisibility(View.VISIBLE);
@@ -377,15 +386,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                                     context.startActivity(intent);
                                 }
                             });
-                   
-                    viewHolder.rightContentImage.setOnLongClickListener(new OnLongClickListener() {
 
-                        @Override
-                        public boolean onLongClick(View arg0) {
-                            showPopUp((TextView) arg0);
-                            return true;
-                        }
-                    });
 
                 }
             } else {
@@ -464,6 +465,66 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         return convertView;
     }
 
+    private void showPopUpImageView(ImageView v){
+        LinearLayout layout = new LinearLayout(v.getContext());
+        layout.setBackgroundResource(R.drawable.popbackground);
+        layout.setGravity(Gravity.CENTER_HORIZONTAL);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(0, 20, 0, 0);
+
+        View view = LayoutInflater.from(v.getContext()).inflate(R.layout.v2_activity_communicat_popup, null);
+        layout.addView(view);
+
+        TextView tv = (TextView) view.findViewById(R.id.pop_layout_copy);
+        tv.setVisibility(View.GONE);
+        TextView mdelect = (TextView) view.findViewById(R.id.pop_layout_delet);
+
+        CommentReply itemModel=(CommentReply)v.getTag();
+        mdelect.setTag(itemModel);
+     
+
+        final PopupWindow popupWindow = new PopupWindow(layout, 120, itemModel==null?140:240);
+
+        mdelect.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int uid = AppContext.instance().getLoginUid();
+                final CommentReply itemModel=(CommentReply)v.getTag();
+                Log.e("----->>><<<",itemModel.getId()+"");
+                NewsApi.delectAnswer(uid, itemModel.getId(),
+                        new JsonHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode,
+                                                  Header[] headers, JSONObject response) {
+                                String str = "删除成功！";
+                                try {
+                                    int code = response.getInt("code");
+                                    if (code != 88) {
+                                        str = response.getString("desc");
+                                    }else{
+                                        removeDescItem(itemModel.getId());
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                AppContext.showToast(str);
+                            }
+                        });
+                popupWindow.dismiss();
+            }
+        });
+
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+
+        int[] location = new int[2];
+        v.getLocationOnScreen(location);
+
+        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0] + (v.getWidth() >> 1), location[1] - popupWindow.getHeight());
+    }
+
     private void showPopUp(TextView v) {
         final String textContent = v.getText().toString();
         LinearLayout layout = new LinearLayout(v.getContext());
@@ -479,8 +540,15 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         TextView mdelect = (TextView) view.findViewById(R.id.pop_layout_delet);
         /*TextView modify = (TextView) view.findViewById(R.id.pop_layout_modify);*/
 
+        CommentReply itemModel=(CommentReply)v.getTag();
+        if(itemModel==null){
+            mdelect.setVisibility(View.GONE);
+        }else{
+            mdelect.setVisibility(View.VISIBLE);
+            mdelect.setTag(itemModel);
+        }
 
-        final PopupWindow popupWindow = new PopupWindow(layout, 120, 240);
+        final PopupWindow popupWindow = new PopupWindow(layout, 120, itemModel==null?140:240);
 
         tv.setOnClickListener(new OnClickListener() {
             @Override
@@ -498,7 +566,9 @@ public class CommunicatAdapter extends ListBaseAdapter implements
             @Override
             public void onClick(View v) {
                 int uid = AppContext.instance().getLoginUid();
-                NewsApi.delectAnswer(uid, aid,
+                /*NewsApi.delectAnswer(uid, aid,*/
+                final CommentReply itemModel=(CommentReply)v.getTag();
+                NewsApi.delectAnswer(uid, itemModel.getId(),
                         new JsonHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode,
@@ -508,28 +578,15 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                                     int code = response.getInt("code");
                                     if (code != 88) {
                                         str = response.getString("desc");
-                                        removeDescItem(aid);
+                                        //removeDescItem(aid);
+                                    }else{
+                                        removeDescItem(itemModel.getId());
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
 
                                 AppContext.showToast(str);
-                            }
-
-                            private void removeDescItem(int aid) {
-                                CommentReply removeItem = null;
-                                for(int i=0;i<_data.size();i++){
-                                    CommentReply itemModel = (CommentReply) _data.get(i);
-                                    if(itemModel.getId()==aid){
-                                        removeItem=itemModel;
-                                        break;
-                                    }
-                                }
-                                if(removeItem!=null){
-                                    _data.remove(removeItem);
-                                }
-                                notifyDataSetChanged();
                             }
                         });
                 popupWindow.dismiss();
@@ -551,6 +608,22 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
         popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0] + (v.getWidth() >> 1), location[1] - popupWindow.getHeight());
     }
+
+    private void removeDescItem(int aid){
+        CommentReply removeItem = null;
+        for(int i=0;i<_data.size();i++){
+            CommentReply itemModel = (CommentReply) _data.get(i);
+            if(itemModel.getId()==aid){
+                removeItem=itemModel;
+                break;
+            }
+        }
+        if(removeItem!=null){
+            _data.remove(removeItem);
+        }
+        notifyDataSetChanged();
+    }
+
 
     static class ViewHolder {
         RelativeLayout leftChatLayout, rightChatLayout, LeftChatContentLayout, rightChatContentLayout;

@@ -740,6 +740,8 @@ public class TweetDetailActivity extends BaseActivity {
                                     e.printStackTrace();
                                 }
                                 AppContext.showToast(str);
+                                finish();
+
                             }
                         });
                 dialog.dismiss();

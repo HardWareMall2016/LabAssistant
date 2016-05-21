@@ -167,6 +167,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         final CommentReply itemModel = (CommentReply) _data.get(position);
 
         aid = itemModel.getId();
+
         if (viewType == LEFT_TYPE) {
             viewHolder.leftTime.setVisibility(View.VISIBLE);
             viewHolder.leftChatLayout.setVisibility(View.VISIBLE);
@@ -376,6 +377,16 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                                     context.startActivity(intent);
                                 }
                             });
+                   
+                    viewHolder.rightContentImage.setOnLongClickListener(new OnLongClickListener() {
+
+                        @Override
+                        public boolean onLongClick(View arg0) {
+                            showPopUp((TextView) arg0);
+                            return true;
+                        }
+                    });
+
                 }
             } else {
                 viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_blue_bg);
@@ -487,7 +498,6 @@ public class CommunicatAdapter extends ListBaseAdapter implements
             @Override
             public void onClick(View v) {
                 int uid = AppContext.instance().getLoginUid();
-                Log.e("--->aid<",aid+"");
                 NewsApi.delectAnswer(uid, aid,
                         new JsonHttpResponseHandler() {
                             @Override
@@ -498,11 +508,28 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                                     int code = response.getInt("code");
                                     if (code != 88) {
                                         str = response.getString("desc");
+                                        removeDescItem(aid);
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+
                                 AppContext.showToast(str);
+                            }
+
+                            private void removeDescItem(int aid) {
+                                CommentReply removeItem = null;
+                                for(int i=0;i<_data.size();i++){
+                                    CommentReply itemModel = (CommentReply) _data.get(i);
+                                    if(itemModel.getId()==aid){
+                                        removeItem=itemModel;
+                                        break;
+                                    }
+                                }
+                                if(removeItem!=null){
+                                    _data.remove(removeItem);
+                                }
+                                notifyDataSetChanged();
                             }
                         });
                 popupWindow.dismiss();

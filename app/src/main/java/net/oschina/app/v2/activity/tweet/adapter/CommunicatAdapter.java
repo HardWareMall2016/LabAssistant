@@ -176,6 +176,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         final CommentReply itemModel = (CommentReply) _data.get(position);
 
         viewHolder.rightContentTxt.setTag(itemModel);
+        viewHolder.rightContentImage.setTag(itemModel);
         //aid = itemModel.getId();
         if (viewType == LEFT_TYPE) {
             viewHolder.leftTime.setVisibility(View.VISIBLE);
@@ -483,7 +484,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         mdelect.setTag(itemModel);
 
 
-        final PopupWindow popupWindow = new PopupWindow(layout, 120, itemModel==null?140:240);
+        final PopupWindow popupWindow = new PopupWindow(layout, 120, 140);
 
         mdelect.setOnClickListener(new OnClickListener() {
             @Override

@@ -44,9 +44,8 @@ public class MyAnswerFragment extends BaseListFragment {
 	public MyAnswerFragment(){
 		
 	}
-	public MyAnswerFragment(int uid){
-		mUid = uid;
-	}
+
+
 	//适配器
 	@Override
 	protected ListBaseAdapter getListAdapter() {
@@ -80,6 +79,7 @@ public class MyAnswerFragment extends BaseListFragment {
 	//发送请求的数据。
 	@Override
 	protected void sendRequestData() {
+		mUid=getArguments().getInt("uid");
 		int uid = 0;
 		if(mUid!=0){
 			uid = mUid; 

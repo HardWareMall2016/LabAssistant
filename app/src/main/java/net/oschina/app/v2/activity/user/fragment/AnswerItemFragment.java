@@ -31,7 +31,7 @@ public class AnswerItemFragment extends BaseListFragment {
 	private static final String CACHE_KEY_PREFIX_2 = "answeritemfragment_";
 
 	private TextView tv_detail_question;
-	private ImageView iv_detail_isResolved;
+	private TextView iv_detail_isResolved;
 	private TextView tv_detail_times;
 	private TextView tv_detail_invite_who;
 	private TextView tv_detail_mark;
@@ -96,8 +96,7 @@ public class AnswerItemFragment extends BaseListFragment {
 			tv_detail_question.setText(answer.getTitle());
 		}
 		
-		iv_detail_isResolved = (ImageView) view
-				.findViewById(R.id.iv_isResolved);
+		iv_detail_isResolved = (TextView) view.findViewById(R.id.iv_isResolved);
 		if (answer.getIsadopt() == 0) {
 			iv_detail_isResolved.setVisibility(View.GONE);
 		} else {

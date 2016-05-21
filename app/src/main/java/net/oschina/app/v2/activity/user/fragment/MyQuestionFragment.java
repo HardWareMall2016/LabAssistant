@@ -61,11 +61,7 @@ public class MyQuestionFragment extends BaseListFragment{
 	public void setPersonalInfo(boolean isPersonalInfo) {
 		this.isPersonalInfo = isPersonalInfo;
 	}
-	public MyQuestionFragment(int uid){
-		mUid = uid;
-	}
 
-	
 
 @Override
 public void onDestroy(){
@@ -109,6 +105,7 @@ public void onEventMainThread(AdoptSuccEvent adoptSuccEvent){
 	//发送请求的数据。
 	@Override
 	protected void sendRequestData() {
+		mUid=getArguments().getInt("uid");
 		int uid = 0;
 		if(mUid!=0){
 			uid = mUid; 

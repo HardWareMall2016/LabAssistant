@@ -74,7 +74,8 @@ public class MainActivity_bak extends BaseActivity implements OnTabChangeListene
 
 	private View mBvNotice1, mBvNotice2;
 	LinearLayout bar_ask;
-	LinearLayout bar_home, bar_find, bar_me, actionbar_login;
+	LinearLayout bar_home, bar_find,actionbar_login;
+	View bar_me;
 	private EditText et_content;
 
 	private BroadcastReceiver mNoticeReceiver = new BroadcastReceiver() {
@@ -219,7 +220,7 @@ public class MainActivity_bak extends BaseActivity implements OnTabChangeListene
 		bar_home = (LinearLayout) view.findViewById(R.id.actionbar_home);
 		bar_ask = (LinearLayout) view.findViewById(R.id.actionbar_question);
 		bar_find = (LinearLayout) view.findViewById(R.id.actionbar_find);
-		bar_me = (LinearLayout) view.findViewById(R.id.actionbar_me);
+		bar_me =  view.findViewById(R.id.actionbar_me);
 		actionbar_login = (LinearLayout) view
 				.findViewById(R.id.actionbar_login);
 		et_content = (EditText) view.findViewById(R.id.et_content);

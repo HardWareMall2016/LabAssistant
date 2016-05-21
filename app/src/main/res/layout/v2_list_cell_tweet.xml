@@ -6,22 +6,29 @@
     android:paddingBottom="2dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="8dp" >
+    android:paddingTop="8dp">
 
     <RelativeLayout
         android:id="@+id/question_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/common_list_item_bg"
-        android:padding="10dp" >
+        android:padding="10dp">
 
-        <ImageView 
+        <ImageView
+            android:id="@+id/recommend_quetion"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/recommend_quetion" />
+
+        <ImageView
             android:id="@+id/iv_avastarBg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/iv_boss_bg"
-           	android:visibility="invisible"
-            />
+            android:visibility="invisible" />
+
         <net.oschina.app.v2.activity.tweet.view.CircleImageView
             android:id="@+id/iv_avatar"
             android:layout_width="@dimen/list_item_avatar_size"
@@ -29,8 +36,7 @@
             android:layout_marginRight="@dimen/space_8"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_default_avatar"
-             />
+            android:src="@drawable/ic_default_avatar" />
 
         <ImageView
             android:id="@+id/iv_sign"
@@ -55,14 +61,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
-            android:layout_toRightOf="@id/tv_name"
             android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/tv_name"
             android:background="@drawable/level_bg_shape"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:singleLine="true"
-        android:textColor="@color/white"
-        android:textSize="8sp" />
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="8sp" />
 
         <TextView
             android:id="@+id/iv_solved"
@@ -85,7 +91,7 @@
             android:background="@drawable/reward_bg_shape"
             android:gravity="center_vertical"
             android:paddingLeft="4dp"
-            android:paddingRight="4dp" >
+            android:paddingRight="4dp">
 
             <ImageView
                 android:id="@+id/pic_reward"
@@ -129,10 +135,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/iv_avatar"
             android:layout_marginTop="4dp"
-            android:lineSpacingExtra="5dp"
             android:layout_toRightOf="@id/iv_avatar"
             android:focusable="false"
             android:focusableInTouchMode="false"
+            android:lineSpacingExtra="5dp"
             android:text="这里是问题!!!"
             android:textColor="@color/question_text_color"
             android:textSize="@dimen/question_text_size" />
@@ -174,7 +180,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_super"
             android:layout_marginTop="6dp"
-            android:gravity="center_vertical" >
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/tv_from"

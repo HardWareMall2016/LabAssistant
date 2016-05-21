@@ -15,6 +15,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -65,6 +66,12 @@ public class funsForHelperAdapter extends ListBaseAdapter {
 		}
 
 		final Ask item = (Ask) _data.get(position);
+
+		if(item.getFrom()==2){
+			vh.recommendQuetion.setVisibility(View.VISIBLE);
+		}else{
+			vh.recommendQuetion.setVisibility(View.GONE);
+		}
 
 		int answernum = item.getanum();
 		vh.name.setText(item.getnickname());// 用户昵称
@@ -163,6 +170,7 @@ public class funsForHelperAdapter extends ListBaseAdapter {
 		public TweetTextView title;
 		public ImageView picIcon,pic, iv_answered, iv_sign;
 		public ImageView avatar,avstarBg;
+		public ImageView recommendQuetion;
 		public String commentNum;
 
 		public ViewHolder(View view) {
@@ -184,6 +192,7 @@ public class funsForHelperAdapter extends ListBaseAdapter {
 			iv_sign = (ImageView) view.findViewById(R.id.iv_sign);
 			reward = (TextView) view.findViewById(R.id.tv_reward);
 			tv_company= (TextView) view.findViewById(R.id.tv_company);
+			recommendQuetion= (ImageView) view.findViewById(R.id.recommend_quetion);
 		}
 	}
 }

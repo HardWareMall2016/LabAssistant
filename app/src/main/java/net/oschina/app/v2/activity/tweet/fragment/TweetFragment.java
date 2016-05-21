@@ -16,6 +16,7 @@ import net.oschina.app.v2.utils.ShareUtil;
 import net.oschina.app.v2.utils.UIHelper;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -69,7 +70,11 @@ public class TweetFragment extends BaseListFragment implements
 		mCurrentPage=mCurrentPage==0 ? 1 : mCurrentPage;
 		NewsApi.getAskList(mCurrentPage, mJsonHandler);*/
 		mCurrentPage=mCurrentPage==0 ? 1 : mCurrentPage;
-		NewsApi.getFilterList(mCurrentPage, selectedCatIds, isreward, issolveed, 2, mJsonHandler);
+		if(isreward==0&&issolveed==0&&(TextUtils.isEmpty(selectedCatIds)||selectedCatIds.contains("-1"))){
+			NewsApi.getAskList(mCurrentPage, mJsonHandler);
+		}else{
+			NewsApi.getFilterList(mCurrentPage, selectedCatIds, isreward, issolveed, 2, mJsonHandler);
+		}
 	}
 
 	@Override

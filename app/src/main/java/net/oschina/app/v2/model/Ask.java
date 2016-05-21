@@ -34,6 +34,7 @@ public class Ask extends Entity {
 	private int istop;
 	private String company;
 	private int isanswer;
+	private int from;
 
 	public Ask() {
 
@@ -182,10 +183,15 @@ public class Ask extends Entity {
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	
-	
 
-	
+
+	public int getFrom() {
+		return from;
+	}
+
+	public void setFrom(int from) {
+		this.from = from;
+	}
 
 	public int getIsanswer() {
 		return isanswer;
@@ -217,6 +223,7 @@ public class Ask extends Entity {
 		ask.setIstop(response.optInt("istop"));
 		ask.setCompany(response.optString("company"));
 		ask.setIsanswer(response.optInt("isanswer"));
+		ask.setFrom(response.optInt("from"));
 		return ask;
 	}
 }

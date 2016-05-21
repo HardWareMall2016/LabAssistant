@@ -308,7 +308,7 @@
                 android:layout_marginRight="20dp"
                 android:visibility="gone">
 
-                <RelativeLayout
+                <!--<RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -329,7 +329,7 @@
                         android:layout_marginTop="4dp"
                         android:textColor="@color/main_gray"
                         android:gravity="center"/>
-                </RelativeLayout>
+                </RelativeLayout>-->
 
 
                 <RelativeLayout
@@ -383,7 +383,7 @@
                 </RelativeLayout>
 
 
-                <RelativeLayout
+                <!--<RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -407,7 +407,7 @@
                         android:textColor="@color/main_gray"
                         android:gravity="center"
                         />
-                </RelativeLayout>
+                </RelativeLayout>-->
 
             </LinearLayout>
         </RelativeLayout>

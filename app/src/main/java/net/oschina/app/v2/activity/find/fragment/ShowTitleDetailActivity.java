@@ -318,7 +318,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 				title = obj.getString("title");
 				// description = obj.getString("description");
 				content = obj.getString("url");
-				url = content;
+				url = content+"?rn=1";
 				// inputtime = obj.getInt("inputtime");
 				// tv_td_time.setText(DateUtil.getFormatTime(inputtime));
 				tv_td_title.setText(title);

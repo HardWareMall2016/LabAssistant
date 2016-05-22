@@ -126,9 +126,10 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 			vh.pic_icon.setVisibility(View.VISIBLE);*/
 		}
 		
-		IvSignUtils.displayIvSignByType(item.gettype(), vh.iv_sign,vh.avstarBg);
+		IvSignUtils.displayIvSignByType(item.gettype(), vh.iv_sign, vh.avstarBg);
 		vh.time.setText(item.getinputtime());
 		vh.commentCount.setText(String.valueOf(item.getAnswerNum()));
+		vh.readNum.setText(item.getHits()+"");
 		ImageLoader.getInstance().displayImage(
 				ApiHttpClient.getImageApiUrl(item.gethead()), vh.avatar);
 		vh.avatar.setOnClickListener(new OnClickListener() {
@@ -383,7 +384,7 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 	};
 
 	static class ViewHolder implements Serializable{
-		public TextView name, company, time, commentCount, rank;
+		public TextView name, company, time, commentCount, rank,readNum;
 		public TweetTextView title,tv_ansupperlist;
 		public CircleImageView avatar;
 		public ImageView pic_icon;
@@ -403,6 +404,7 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 			tv_ansupperlist= (TweetTextView) view.findViewById(R.id.tv_ansupperlist);
 			time = (TextView) view.findViewById(R.id.tv_time);
 			commentCount = (TextView) view.findViewById(R.id.tv_comment_count);
+			readNum = (TextView) view.findViewById(R.id.tv_read_count);
 			avatar = (CircleImageView) view.findViewById(R.id.iv_avatar);
 			avatar.setBorderColor(Color.BLACK);
 			avatar.setBorderWidth(1);

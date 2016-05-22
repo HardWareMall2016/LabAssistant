@@ -51,6 +51,8 @@ public class Comment extends Entity {
 	protected String nickname;
 	protected String head;
 	protected String image;
+	protected int hits;
+
 	
 	protected int aid;
 	protected String title;
@@ -81,9 +83,16 @@ public class Comment extends Entity {
 	
 	public Comment(){
 	
-	}	
-	
-	
+	}
+
+	public int getHits() {
+		return hits;
+	}
+
+	public void setHits(int hits) {
+		this.hits = hits;
+	}
+
 	public int getCount() {
 		return count;
 	}
@@ -330,6 +339,7 @@ public class Comment extends Entity {
 			comment.setAid(response.optInt("aid"));
 			comment.setRank(response.optInt("rank"));
 			comment.setImage(response.optString("image"));
+			comment.setHits(response.optInt("hits"));
 		
 			try{
 				comment.setInfo(response.optString("info"));

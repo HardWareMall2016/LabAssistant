@@ -114,38 +114,55 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/time_comment"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/answer_content"
             android:layout_marginTop="4dp"
-            android:layout_toRightOf="@id/iv_avatar"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
+            android:layout_toRightOf="@id/iv_avatar">
             <TextView
                 android:id="@+id/tv_time"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/space_10"
-                android:layout_weight="1"
                 android:drawableLeft="@drawable/time"
                 android:textColor="@color/main_gray"
                 android:textSize="@dimen/text_size_12" />
-
-            <TextView
-                android:id="@+id/tv_comment_count"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="12dp"
-                android:drawableLeft="@drawable/myquestion_question"
-                android:drawablePadding="@dimen/space_2"
                 android:gravity="center_vertical"
-                android:textColor="@color/main_gray"
-                android:textSize="@dimen/text_size_12" />
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:id="@+id/tv_comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="12dp"
+                    android:drawableLeft="@drawable/myquestion_question"
+                    android:drawablePadding="@dimen/space_2"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/main_gray"
+                    android:textSize="@dimen/text_size_12" />
+                <TextView
+                    android:id="@+id/tv_read_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="12dp"
+                    android:drawableLeft="@drawable/myquestion_question"
+                    android:drawablePadding="@dimen/space_2"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/main_gray"
+                    android:textSize="@dimen/text_size_12"
+                    android:text="阅读数"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
 
         <View
             android:id="@+id/bt"

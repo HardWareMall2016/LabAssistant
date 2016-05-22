@@ -108,27 +108,47 @@
                     android:textSize="@dimen/text_size_12" />
 
                 <TextView
-                    android:id="@+id/tv_comment_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:drawableLeft="@drawable/wsnum"
-                    android:drawablePadding="@dimen/space_2"
-                    android:gravity="center_vertical"
-                    android:text="@string/comment_count"
-                    android:textColor="@color/main_gray"
-                    android:textSize="@dimen/text_size_12" />
-
-                <TextView
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/space_10"
-                    android:layout_toLeftOf="@id/tv_comment_count"
                     android:drawableLeft="@drawable/time"
+                    android:layout_toLeftOf="@+id/ll_comment_count"
                     android:text="时间"
                     android:textColor="@color/main_gray"
                     android:textSize="@dimen/text_size_12" />
+
+                <LinearLayout
+                    android:id="@+id/ll_comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tv_comment_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/wsnum"
+                        android:drawablePadding="@dimen/space_2"
+                        android:gravity="center_vertical"
+                        android:text="@string/comment_count"
+                        android:textColor="@color/main_gray"
+                        android:textSize="@dimen/text_size_12" />
+                    <TextView
+                        android:id="@+id/tv_readnum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/wsnum"
+                        android:drawablePadding="@dimen/space_2"
+                        android:gravity="center_vertical"
+                        android:layout_marginLeft="@dimen/space_10"
+                        android:text="阅读数"
+                        android:textColor="@color/main_gray"
+                        android:textSize="@dimen/text_size_12" />
+                </LinearLayout>
+
+
+
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

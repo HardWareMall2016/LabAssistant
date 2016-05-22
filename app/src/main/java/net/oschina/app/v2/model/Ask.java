@@ -35,6 +35,7 @@ public class Ask extends Entity {
 	private String company;
 	private int isanswer;
 	private int from;
+	private int hits;
 
 	public Ask() {
 
@@ -200,6 +201,13 @@ public class Ask extends Entity {
 	public void setIsanswer(int isanswer) {
 		this.isanswer = isanswer;
 	}
+	public int getHits() {
+		return hits;
+	}
+
+	public void setHits(int hits) {
+		this.hits = hits;
+	}
 
 	public static Ask parse(JSONObject response) throws IOException,
 			AppException {
@@ -224,6 +232,8 @@ public class Ask extends Entity {
 		ask.setCompany(response.optString("company"));
 		ask.setIsanswer(response.optInt("isanswer"));
 		ask.setFrom(response.optInt("from"));
+		ask.setHits(response.optInt("hits"));
 		return ask;
 	}
+
 }

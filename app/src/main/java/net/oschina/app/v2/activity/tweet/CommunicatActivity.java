@@ -260,7 +260,7 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 				new OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
+											int position, long id) {
 						dialog.dismiss();
 						goToSelectItem(position);
 					}
@@ -394,7 +394,13 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 							} else if (position == 1) {
 								shareHelper.shareToWeiChatCircle("实验助手",
 										"实验助手", "实验助手");
-							}
+							}/*else if(position ==2){
+								AppContext.showToast("2");
+							}else if(position ==3){
+								AppContext.showToast("3");
+							}else if(position ==4){
+								AppContext.showToast("4");
+							}*/
 							dialogShare.dismiss();
 						}
 					});

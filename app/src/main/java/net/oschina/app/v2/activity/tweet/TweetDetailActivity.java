@@ -52,6 +52,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -109,7 +110,7 @@ public class TweetDetailActivity extends BaseActivity {
     private TextView mEtInput;
     private ImageView mBtnEmoji, mBtnMore;
     private ImageView mBtnSend;
-    private TextView mTvAsk, mTvRank, mTvTime, mTvTitle, mTvCommentCount;
+    private TextView mTvAsk, mTvRank, mTvTime, mTvTitle, mTvCommentCount,mTvHits;
     private ImageView mIvPic;
     private RelativeLayout reward_layout;
     private ImageView pic_reward;
@@ -181,6 +182,7 @@ public class TweetDetailActivity extends BaseActivity {
         mTvTitle = (TextView) findViewById(R.id.tv_title);
         mIvPic = (ImageView) findViewById(R.id.iv_pic);
         mTvCommentCount = (TextView) findViewById(R.id.tv_comment_count);
+        mTvHits = (TextView)findViewById(R.id.tv_readnum);
 
         tv_zhuiwen = (TextView) findViewById(R.id.tv_zhuiwen);
         mBottomView = findViewById(R.id.bottomview);
@@ -564,6 +566,7 @@ public class TweetDetailActivity extends BaseActivity {
                                                             response.getString("data"));
                                                     url = dataObject
                                                             .optString("url");
+
                                                 } else {
                                                 }
 
@@ -605,7 +608,7 @@ public class TweetDetailActivity extends BaseActivity {
                                             "分享问题",
                                             ask.getContent(),
                                             url,
-                                            "");
+                                            "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
                                 } else if (position == 2) {
                                     shareHelper.shareToWeiChatCircle(
                                             "分享问题",
@@ -617,14 +620,14 @@ public class TweetDetailActivity extends BaseActivity {
                                             "分享问题",
                                             ask.getContent(),
                                             url,
-                                            "",
+                                            "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png",
                                             TweetDetailActivity.this);
                                 }else if(position == 4){
                                     shareHelper.shareToQZone(
                                             "分享问题",
                                             ask.getContent(),
                                             url,
-                                            "",
+                                            "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png",
                                             TweetDetailActivity.this);
 
                                 }else if (position == 5) {
@@ -821,6 +824,7 @@ public class TweetDetailActivity extends BaseActivity {
         mTvTime.setText(ask.getinputtime());
         mTvCommentCount
                 .setText(getString(R.string.comment_count, ask.getanum()));
+        mTvHits.setText(ask.getHits()+"");
 
         String supper = ask.getsuperlist();
         if (!TextUtils.isEmpty(supper) && !"null".equals(supper)) {

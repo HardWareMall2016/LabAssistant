@@ -7,6 +7,7 @@ import net.oschina.app.v2.AppContext;
 import net.oschina.app.v2.activity.user.fragment.MyAnswerFragment;
 import net.oschina.app.v2.activity.user.fragment.MyQuestionFragment;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -37,11 +38,17 @@ public class UserCenterPagerAdapter extends FragmentStatePagerAdapter {
 	@Override
 	public Fragment getItem(int position) {
 		if (position == 0) {
-			MyQuestionFragment q=new MyQuestionFragment(mUid);
+			MyQuestionFragment q=new MyQuestionFragment();
+			Bundle bundle = new Bundle();
+			bundle.putInt("uid", mUid);
+			q.setArguments(bundle);
 			q.setPersonalInfo(true);
 			return q;
 		}
-		MyAnswerFragment answerFragment=new MyAnswerFragment(mUid);
+		MyAnswerFragment answerFragment=new MyAnswerFragment();
+		Bundle bundle = new Bundle();
+		bundle.putInt("uid", mUid);
+		answerFragment.setArguments(bundle);
 		answerFragment.setCurrentUser(mUid==AppContext.instance().getLoginUid());
 		answerFragment.setPersonalPage(true);
 		return answerFragment;

@@ -65,7 +65,7 @@ public class FunsForHelpAdapter extends ListBaseAdapter {
 	static class ViewHolder {
 		private AvatarView iv_head_default;
 		private TextView tv_name;
-		private ImageView iv_isresolved;
+		private TextView iv_isresolved;
 		private TextView tv_time_before;
 		private TextView tv_question_default;
 		private TextView tv_funs_invite;
@@ -80,7 +80,7 @@ public class FunsForHelpAdapter extends ListBaseAdapter {
 			// 提问者的名字
 			tv_name = (TextView) view.findViewById(R.id.tv_name);
 			// 是否已经解决的图片提示
-			iv_isresolved = (ImageView) view.findViewById(R.id.iv_isresolved);
+			iv_isresolved = (TextView) view.findViewById(R.id.iv_isresolved);
 			// 解决的时间
 			tv_time_before = (TextView) view.findViewById(R.id.tv_time_before);
 			// 默认粉丝求助的问题

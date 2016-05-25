@@ -84,8 +84,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -98,7 +98,7 @@
                 android:paddingRight="16dp"
                 android:text="@string/frame_title_tweet_ask"
                 android:textColor="@color/action_bar_bg"
-                android:textSize="@dimen/text_size_18" />
+                android:textSize="@dimen/text_size_15" />
 
             <TextView
                 android:id="@+id/tv_title_tweet_help"
@@ -110,7 +110,7 @@
                 android:paddingRight="16dp"
                 android:text="@string/frame_title_tweet_help"
                 android:textColor="@color/action_bar_title"
-                android:textSize="@dimen/text_size_18" />
+                android:textSize="@dimen/text_size_15" />
         </LinearLayout>
 
         <!--

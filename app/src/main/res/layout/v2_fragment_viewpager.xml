@@ -9,108 +9,6 @@
         android:layout_height="@dimen/pager_sliding_tab_strip_height"
         android:background="@color/white" />-->
 
-    <FrameLayout
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <LinearLayout
-            android:id="@+id/tweet_tab"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/question_status"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/default_bg"
-                android:gravity="center"
-                android:text="问题状态"
-                android:textColor="@color/text_dark"
-                android:textSize="@dimen/text_size_18" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="20dp"
-                android:background="@color/divider" />
-
-            <TextView
-                android:id="@+id/choose_classify"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/default_bg"
-                android:gravity="center"
-                android:text="选择分类"
-                android:textColor="@color/text_dark"
-                android:textSize="@dimen/text_size_18" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="20dp"
-                android:background="@color/divider" />
-
-            <TextView
-                android:id="@+id/choose_sub_classify"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/default_bg"
-                android:gravity="center"
-                android:text="选择子类"
-                android:textColor="@color/text_dark"
-                android:textSize="@dimen/text_size_18" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/fans_tab"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/all_question"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_blue_underline"
-                android:gravity="center"
-                android:text="全部"
-                android:textColor="@color/text_dark"
-                android:textSize="@dimen/text_size_18" />
-
-            <TextView
-                android:id="@+id/answered_question"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/default_bg"
-                android:gravity="center"
-                android:text="未回答"
-                android:textColor="@color/text_dark"
-                android:textSize="@dimen/text_size_18" />
-
-            <TextView
-                android:id="@+id/unanswered_question"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/default_bg"
-                android:gravity="center"
-                android:text="已回答"
-                android:textColor="@color/text_dark"
-                android:textSize="@dimen/text_size_18" />
-
-        </LinearLayout>
-    </FrameLayout>
-
     <LinearLayout
         android:id="@+id/newMessageContainer"
         android:layout_width="match_parent"
@@ -194,7 +92,115 @@
         android:id="@+id/main_tab_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tabs" />
+        android:clipChildren="false"
+        android:clipToPadding="false" />
+    <!--android:layout_below="@id/tabs"-->
+
+    <FrameLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <LinearLayout
+            android:id="@+id/tweet_tab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/question_status"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/default_bg"
+                android:singleLine="true"
+                android:gravity="center"
+                android:text="问题状态"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/text_size_15" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:background="@color/divider" />
+
+            <TextView
+                android:id="@+id/choose_classify"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/default_bg"
+                android:gravity="center"
+                android:text="选择分类"
+                android:singleLine="true"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/text_size_15" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:background="@color/divider" />
+
+            <TextView
+                android:id="@+id/choose_sub_classify"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/default_bg"
+                android:gravity="center"
+                android:text="选择子类"
+                android:singleLine="true"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/text_size_15" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fans_tab"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/all_question"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_blue_underline"
+                android:gravity="center"
+                android:text="全部"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/answered_question"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/default_bg"
+                android:gravity="center"
+                android:text="未回答"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/text_size_15" />
+
+            <TextView
+                android:id="@+id/unanswered_question"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/default_bg"
+                android:gravity="center"
+                android:text="已回答"
+                android:textColor="@color/text_dark"
+                android:textSize="@dimen/text_size_15" />
+
+        </LinearLayout>
+    </FrameLayout>
+
 
     <View
         android:id="@+id/cover"

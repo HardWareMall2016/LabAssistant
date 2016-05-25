@@ -26,6 +26,7 @@ import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.model.event.ClearFilterConditions;
 import net.oschina.app.v2.utils.DeviceUtils;
 import net.oschina.app.v2.utils.ShareUtil;
+import net.oschina.app.v2.utils.TDevice;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
@@ -62,6 +63,12 @@ public class TweetPopupListView implements View.OnClickListener {
     private FilterAdapter mAdapter;
     private PopupWindow mPopupView;
 
+    //Tab tweet views
+    private TextView mViewQuestionStatus;
+    private TextView mViewChooseClassify;
+    private TextView mViewChooseSubClassify;
+
+    private View mCover;
 
     //问题状态
     private List<FilterItem> mQuestionStatus=new ArrayList<FilterItem>();
@@ -79,19 +86,35 @@ public class TweetPopupListView implements View.OnClickListener {
             if(mCurFilterType==QUESTION_STATUS){
                 isreward=mQuestionStatus.get(0).checked?1:0;
                 issolveed=mQuestionStatus.get(1).checked?1:0;
+                if(mSelMainFilterId==-1){
+                    ShareUtil.setValue(ShareUtil.SELECTED_CAT_STRS, "全部");
+                }
                 mOnClickListener.onFilter(isreward, issolveed, getSelectedCatids());
             } else{
                 mSelSubFilterIds.clear();
+                String subclassStr="";
                 for (FilterItem item : mSubClassifyList) {
                     if(item.checked){
                         mSelSubFilterIds.add(item.id);
+                        if(TextUtils.isEmpty(subclassStr)){
+                            subclassStr=item.name;
+                        }else{
+                            subclassStr+="/"+item.name;
+                        }
                     }
+                }
+                if(mSelMainFilterId==-1){
+                    ShareUtil.setValue(ShareUtil.SELECTED_CAT_STRS, "全部");
+                }else{
+                    ShareUtil.setValue(ShareUtil.SELECTED_CAT_STRS, subclassStr);
                 }
                 mOnClickListener.onFilter(isreward, issolveed, getSelectedCatids());
             }
         }
 
         mPopupView.dismiss();
+
+        refreshFilterViews();
     }
 
     private String getSelectedCatids(){
@@ -114,7 +137,7 @@ public class TweetPopupListView implements View.OnClickListener {
         String name;
     }
 
-    public TweetPopupListView(Context context,PopupWindow.OnDismissListener onDismissListener) {
+    public TweetPopupListView(Context context) {
 
         isreward= ShareUtil.getIntValue(ShareUtil.IS_REWARD,0);
         issolveed= ShareUtil.getIntValue(ShareUtil.IS_SOLVEED,0);
@@ -143,11 +166,68 @@ public class TweetPopupListView implements View.OnClickListener {
         mPopupView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.bg_popmenu));
         mAdapter= new FilterAdapter();
         mFilterList.setAdapter(mAdapter);
-        mPopupView.setOnDismissListener(onDismissListener);
+        mPopupView.setOnDismissListener(mOnDismissListener);
 
         populateQuestionStatus();
 
         EventBus.getDefault().register(this);
+    }
+
+    public void setViewQuestionStatus(TextView viewQuestionStatus) {
+        this.mViewQuestionStatus = viewQuestionStatus;
+    }
+
+    public void setViewChooseClassify(TextView viewChooseClassify) {
+        this.mViewChooseClassify = viewChooseClassify;
+    }
+
+    public void setViewChooseSubClassify(TextView viewChooseSubClassify) {
+        this.mViewChooseSubClassify = viewChooseSubClassify;
+    }
+
+    public void setViewCover(View viewCover) {
+        this.mCover = viewCover;
+    }
+
+    private PopupWindow.OnDismissListener mOnDismissListener=new PopupWindow.OnDismissListener(){
+        @Override
+        public void onDismiss() {
+            mCover.setVisibility(View.GONE);
+        }
+    };
+
+
+    public void refreshFilterViews(){
+        //问题状态
+        String questionStatus;
+        questionStatus=ShareUtil.getIntValue(ShareUtil.IS_REWARD, 0)==0?"":"悬赏";
+        if(TextUtils.isEmpty(questionStatus)){
+            questionStatus=ShareUtil.getIntValue(ShareUtil.IS_SOLVEED,0)==0?"":"未解决";
+        }else{
+            questionStatus+=ShareUtil.getIntValue(ShareUtil.IS_SOLVEED,0)==0?"":"/未解决";
+        }
+
+        if(TextUtils.isEmpty(questionStatus)){
+            mViewQuestionStatus.setText("问题状态");
+        }else{
+            mViewQuestionStatus.setText(questionStatus);
+        }
+
+        //选择分类
+        String chooseClassify=ShareUtil.getStringValue(ShareUtil.MAIN_FILTER_STR);
+        if(TextUtils.isEmpty(chooseClassify)){
+            chooseClassify="选择分类";
+        }
+        mViewChooseClassify.setText(chooseClassify);
+
+        //选择子类
+        //SELECTED_CAT_STRS
+        String chooseSubClassify=ShareUtil.getStringValue(ShareUtil.SELECTED_CAT_STRS);
+        if(TextUtils.isEmpty(chooseSubClassify)){
+            chooseSubClassify="选择子类";
+        }
+        mViewChooseSubClassify.setText(chooseSubClassify);
+
     }
 
     public void onEventMainThread(ClearFilterConditions clearFilterConditions){
@@ -217,6 +297,8 @@ public class TweetPopupListView implements View.OnClickListener {
     }
 
     public void showPopup(View anchor,int filterType) {
+        mCover.setVisibility(View.VISIBLE);
+        mPopupView.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.bg_popmenu));
         mCurFilterType=filterType;
         mFilterList.setOnItemClickListener(onItemClickListener);
         mViewConfirmBtn.setVisibility(View.VISIBLE);
@@ -245,6 +327,7 @@ public class TweetPopupListView implements View.OnClickListener {
                     mSubClassifyList.add(all);
                 }else{
                     //初始化
+                    mPopupView.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.bg_popmenu_right));
                     for (FilterItem subItem:mSubClassifyList){
                         subItem.checked=false;
                         for(Integer id:mSelSubFilterIds) {
@@ -258,7 +341,7 @@ public class TweetPopupListView implements View.OnClickListener {
                 mShowList=mSubClassifyList;
                 break;
         }
-        int maxWidth=0;
+        int maxWidth= 0;
         for (int i=0;i<mAdapter.getCount();i++){
             View item = mAdapter.getView(i, null, mFilterList);
             item.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
@@ -267,6 +350,9 @@ public class TweetPopupListView implements View.OnClickListener {
             if(maxWidth<width){
                 maxWidth=width;
             }
+        }
+        if(maxWidth<(TDevice.getScreenWidth()/5)){
+            maxWidth=(int) (TDevice.getScreenWidth()/3);
         }
         mPopupView.setWidth(DeviceUtils.dip2px(mContext,30)+maxWidth);
         mPopupView.showAsDropDown(anchor);
@@ -286,7 +372,10 @@ public class TweetPopupListView implements View.OnClickListener {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             FilterItem data = mShowList.get(position);
             if(mCurFilterType==CHOOSE_CLASSIFY){
-                if(!(data.id==mSelMainFilterId)){
+
+                mPopupView.dismiss();
+
+                if(data.id!=mSelMainFilterId){
                     mSelMainFilterId=data.id;
                     sendRequestLanmuChildData(data.id);
                 }
@@ -294,7 +383,10 @@ public class TweetPopupListView implements View.OnClickListener {
                     mOnClickListener.onFilter(isreward, issolveed, "-1");
                 }
                 ShareUtil.setIntValue(ShareUtil.MAIN_FILTER_ID, mSelMainFilterId);
-                mPopupView.dismiss();
+                ShareUtil.setValue(ShareUtil.MAIN_FILTER_STR, data.name);
+                ShareUtil.setValue(ShareUtil.SELECTED_CAT_STRS, null);
+
+                refreshFilterViews();
             }else{
                 data.checked=!data.checked;
                 mAdapter.notifyDataSetChanged();
@@ -316,6 +408,9 @@ public class TweetPopupListView implements View.OnClickListener {
             try {
                 MuluList list = MuluList.parse(response.toString());
                 setSubClassifyList(list.getMululist());
+                if(mCurFilterType==CHOOSE_CLASSIFY){
+                    showPopup(mViewChooseSubClassify, TweetPopupListView.CHOOSE_SUB_CLASSIFY);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

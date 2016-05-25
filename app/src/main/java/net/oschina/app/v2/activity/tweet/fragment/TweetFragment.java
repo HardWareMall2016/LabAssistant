@@ -193,6 +193,10 @@ public class TweetFragment extends BaseListFragment implements
 
 		mState=STATE_REFRESH;
 
+		//mListView.getLoadingLayoutProxy(true, false).setPullLabel("下拉刷新...");
+		mListView.getLoadingLayoutProxy(true, false).setRefreshingLabel("正在筛选...");
+		//mListView.getLoadingLayoutProxy(true, false).setReleaseLabel("松开刷新...");
+
 		this.isreward=isreward;
 		this.issolveed=issolveed;
 		selectedCatIds=catid;

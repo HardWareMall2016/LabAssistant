@@ -11,10 +11,14 @@ public class ShareUtil {
     public static final String IS_REWARD = "isreward";
     //未解决
     public static final String IS_SOLVEED = "issolveed";
-    //分类
+    //分类id
     public static final String MAIN_FILTER_ID = "MainFilterId";
-    //子类
+    //分类str
+    public static final String MAIN_FILTER_STR = "MainFilterStr";
+    //子类IDs
     public static final String SELECTED_CAT_IDS = "SelectedCatIds";
+    //子类Strs
+    public static final String SELECTED_CAT_STRS = "SelectedCatStrs";
 
     //boolean 开关
     public static final String VALUE_TURN_OFF ="0";

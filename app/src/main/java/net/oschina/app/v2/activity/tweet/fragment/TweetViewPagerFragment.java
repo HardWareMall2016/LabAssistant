@@ -6,12 +6,14 @@ import net.oschina.app.v2.activity.tweet.model.MuluList;
 import net.oschina.app.v2.activity.tweet.view.TweetPopupListView;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.model.event.FansTabEvent;
+import net.oschina.app.v2.model.event.ToggleFilterbarEvent;
 import net.oschina.app.v2.model.event.TweetTabEvent;
 
 import org.apache.http.Header;
 import org.json.JSONObject;
 
-import android.graphics.Color;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -38,6 +40,7 @@ public class TweetViewPagerFragment extends Fragment implements
 	//private TweetPopupView mPopup;
 	private View mViewTweetTab;
 	private View mViewFansTab;
+	private View mFilerLayout;
 
 	//Tab fans views
 	private TextView mViewAllQuestion;
@@ -55,6 +58,7 @@ public class TweetViewPagerFragment extends Fragment implements
 		mCover=view.findViewById(R.id.cover);
 		mViewTweetTab=view.findViewById(R.id.tweet_tab);
 		mViewFansTab=view.findViewById(R.id.fans_tab);
+		mFilerLayout=view.findViewById(R.id.tabs);
 
 		view.findViewById(R.id.question_status).setOnClickListener(this);
 		view.findViewById(R.id.choose_classify).setOnClickListener(this);
@@ -130,6 +134,7 @@ public class TweetViewPagerFragment extends Fragment implements
 		//mTabStrip.onPageSelected(arg0);
 		mTabAdapter.onPageSelected(arg0);
 		EventBus.getDefault().post(new TweetTabEvent(arg0, false));
+		showFilterbar();
 	}
 	
 	private void sendRequestLanmuData() {
@@ -221,5 +226,55 @@ public class TweetViewPagerFragment extends Fragment implements
 	@Override
 	public void onDismiss() {
 		mCover.setVisibility(View.GONE);
+	}
+
+	//筛选栏显示/隐藏
+	public void onEventMainThread(ToggleFilterbarEvent event){
+		if(event.showFilterBar){
+			showFilterbar();
+		}else{
+			hideFilterbar();
+		}
+	}
+
+	/*Tool bar is show */
+	private boolean isFilterbarShown() {
+		return mFilerLayout.getTranslationY() >= 0;
+	}
+
+	public void hideFilterbar() {
+		if (isFilterbarShown()) {
+			toggleFilterbarShown(false);
+		}
+	}
+
+	public void showFilterbar() {
+		if (!isFilterbarShown()) {
+			toggleFilterbarShown(true);
+		}
+	}
+
+	private ObjectAnimator filterBarObjectAnim;
+
+	public void toggleFilterbarShown(boolean shown) {
+
+		if (filterBarObjectAnim != null && filterBarObjectAnim.isRunning())
+			return;
+
+		if (isFilterbarShown() && shown)
+			return;
+		else if (!isFilterbarShown() && !shown)
+			return;
+
+		PropertyValuesHolder filterHolder = null;
+		if (shown) {
+			filterHolder = PropertyValuesHolder.ofFloat("translationY", -1 * mFilerLayout.getHeight(), 0);
+		} else {
+			filterHolder = PropertyValuesHolder.ofFloat("translationY", 0, -1 * mFilerLayout.getHeight());
+		}
+		filterBarObjectAnim = ObjectAnimator.ofPropertyValuesHolder(mFilerLayout, filterHolder);
+		filterBarObjectAnim.setDuration(150);
+
+		filterBarObjectAnim.start();
 	}
 }

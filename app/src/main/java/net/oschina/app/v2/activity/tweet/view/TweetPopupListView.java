@@ -4,12 +4,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -50,6 +52,7 @@ public class TweetPopupListView implements View.OnClickListener {
 
     //Views
     private ListView mFilterList;
+    private View mViewConfirmBtn;
 
     //params
     private OnFilterClickListener mOnClickListener;
@@ -77,12 +80,7 @@ public class TweetPopupListView implements View.OnClickListener {
                 isreward=mQuestionStatus.get(0).checked?1:0;
                 issolveed=mQuestionStatus.get(1).checked?1:0;
                 mOnClickListener.onFilter(isreward, issolveed, getSelectedCatids());
-            } else if(mCurFilterType==CHOOSE_CLASSIFY){
-                if(mSelMainFilterId==-1){
-                    mOnClickListener.onFilter(isreward, issolveed, "-1");
-                }
-                ShareUtil.setIntValue(ShareUtil.MAIN_FILTER_ID, mSelMainFilterId);
-            }else{
+            } else{
                 mSelSubFilterIds.clear();
                 for (FilterItem item : mSubClassifyList) {
                     if(item.checked){
@@ -137,7 +135,8 @@ public class TweetPopupListView implements View.OnClickListener {
         mContext=context;
         View contentView = View.inflate(context, R.layout.tweet_popup_list_layout, null);
         mFilterList=(ListView)contentView.findViewById(R.id.filter_list);
-        contentView.findViewById(R.id.btn_confirm).setOnClickListener(this);
+        mViewConfirmBtn=contentView.findViewById(R.id.btn_confirm);
+        mViewConfirmBtn.setOnClickListener(this);
         mPopupView = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mPopupView.setFocusable(true);
         mPopupView.setOutsideTouchable(true);
@@ -219,7 +218,8 @@ public class TweetPopupListView implements View.OnClickListener {
 
     public void showPopup(View anchor,int filterType) {
         mCurFilterType=filterType;
-        mFilterList.setOnItemClickListener(null);
+        mFilterList.setOnItemClickListener(onItemClickListener);
+        mViewConfirmBtn.setVisibility(View.VISIBLE);
         switch (filterType){
             case QUESTION_STATUS:
                 mShowList=mQuestionStatus;
@@ -228,12 +228,12 @@ public class TweetPopupListView implements View.OnClickListener {
                 mQuestionStatus.get(1).checked= issolveed == 1;
                 break;
             case CHOOSE_CLASSIFY:
+                mViewConfirmBtn.setVisibility(View.GONE);
                 mShowList=mMainClassifyList;
                 //初始化
                 /*for(FilterItem item:mMainClassifyList){
                     item.checked=item.id==mSelMainFilterId;
                 }*/
-                mFilterList.setOnItemClickListener(onItemClickListener);
                 break;
             case CHOOSE_SUB_CLASSIFY:
                 if(mSelMainFilterId==-1){
@@ -268,7 +268,7 @@ public class TweetPopupListView implements View.OnClickListener {
                 maxWidth=width;
             }
         }
-        mPopupView.setWidth(DeviceUtils.dip2px(mContext,40)+maxWidth);
+        mPopupView.setWidth(DeviceUtils.dip2px(mContext,30)+maxWidth);
         mPopupView.showAsDropDown(anchor);
         /*if (!mPopupView.isShowing()) {
             mLanMuView.updateList(lanItems);
@@ -285,11 +285,20 @@ public class TweetPopupListView implements View.OnClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             FilterItem data = mShowList.get(position);
-            if(!(data.id==mSelMainFilterId)){
-                mSelMainFilterId=data.id;
-                sendRequestLanmuChildData(data.id);
+            if(mCurFilterType==CHOOSE_CLASSIFY){
+                if(!(data.id==mSelMainFilterId)){
+                    mSelMainFilterId=data.id;
+                    sendRequestLanmuChildData(data.id);
+                }
+                if(mSelMainFilterId==-1){
+                    mOnClickListener.onFilter(isreward, issolveed, "-1");
+                }
+                ShareUtil.setIntValue(ShareUtil.MAIN_FILTER_ID, mSelMainFilterId);
+                mPopupView.dismiss();
+            }else{
+                data.checked=!data.checked;
+                mAdapter.notifyDataSetChanged();
             }
-            mAdapter.notifyDataSetChanged();
         }
     };
 
@@ -343,35 +352,28 @@ public class TweetPopupListView implements View.OnClickListener {
                 holder=new ViewHolder();
                 holder.name=(TextView)convertView.findViewById(R.id.name);
                 holder.ckSelector =(CheckBox)convertView.findViewById(R.id.ck_selector);
-                //holder.rbSelector =(RadioButton)convertView.findViewById(R.id.rb_selector);
                 convertView.setTag(holder);
             }else{
                 holder=(ViewHolder)convertView.getTag();
             }
-
             final FilterItem data=mShowList.get(position);
 
-            convertView.setBackgroundColor(Color.TRANSPARENT);
+            //convertView.setBackgroundColor(Color.TRANSPARENT);
             holder.name.setTextColor(0xaf000000);
+            holder.name.setBackgroundColor(Color.TRANSPARENT);
 
             if(mCurFilterType==CHOOSE_CLASSIFY){
+                holder.name.setGravity(Gravity.CENTER);
                 holder.ckSelector.setVisibility(View.GONE);
                 if(data.id==mSelMainFilterId){
-                    convertView.setBackgroundResource(R.drawable.bg_filter_selected_rounded_corner);
+                    //convertView.setBackgroundResource(R.drawable.bg_filter_selected_rounded_corner);
                     holder.name.setTextColor(Color.WHITE);
+                    holder.name.setBackgroundResource(R.drawable.bg_filter_selected_rounded_corner);
                 }
-            }else{
+            } else {
+                holder.name.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);
                 holder.ckSelector.setVisibility(View.VISIBLE);
-
-                holder.ckSelector.setTag(position);
-                holder.ckSelector.setOnCheckedChangeListener(null);
                 holder.ckSelector.setChecked(data.checked);
-                holder.ckSelector.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        data.checked = isChecked;
-                    }
-                });
             }
 
             holder.name.setText(data.name);

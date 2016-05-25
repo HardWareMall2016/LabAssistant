@@ -153,7 +153,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="12dp"
-                    android:drawableLeft="@drawable/myquestion_question"
+                    android:drawableLeft="@drawable/read_bg"
                     android:drawablePadding="@dimen/space_2"
                     android:gravity="center_vertical"
                     android:textColor="@color/main_gray"

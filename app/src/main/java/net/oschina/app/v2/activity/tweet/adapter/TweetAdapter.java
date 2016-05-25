@@ -120,11 +120,34 @@ public class TweetAdapter extends ListBaseAdapter {
 		String label = item.getLabel();
 		if (TextUtils.isEmpty(label)) {
 			vh.from.setVisibility(View.GONE);// 标签
+			vh.fromContent.setVisibility(View.GONE);
 		} else {
 			// vh.from.setText("标签："+label);//Html.fromHtml("出发地点<font color=#2FBDE7>*</font>")
-			vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>" + label
-					+ "</font>"));
+			/*vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>" + label
+					+ "</font>"));*/
+			vh.fromContent.setText(label);
+
+			String []strings=label.split(" ");
+			if(strings!=null&&strings.length>1){
+				String classStr=strings[0];
+				if("食品".equals(classStr)){
+					vh.fromContent.setBackgroundResource(R.drawable.bg_label_1);
+				}else if("药品".equals(classStr)){
+					vh.fromContent.setBackgroundResource(R.drawable.bg_label_2);
+				} else if("医疗器械".equals(classStr)){
+					vh.fromContent.setBackgroundResource(R.drawable.bg_label_3);
+				} else if("仪器试剂耗材".equals(classStr)){
+					vh.fromContent.setBackgroundResource(R.drawable.bg_label_4);
+				} else if("职场与生活".equals(classStr)){
+					vh.fromContent.setBackgroundResource(R.drawable.bg_label_5);
+				} else{
+					vh.fromContent.setBackgroundResource(R.drawable.bg_label_other);
+				}
+			}else{
+				vh.fromContent.setBackgroundResource(R.drawable.bg_label_other);
+			}
 			vh.from.setVisibility(View.VISIBLE);
+			vh.fromContent.setVisibility(View.VISIBLE);
 		}
 
 		String supper = item.getsuperlist();
@@ -189,7 +212,7 @@ public class TweetAdapter extends ListBaseAdapter {
 
 	static class ViewHolder {
 		public RelativeLayout reward_layout,question_layout;
-		public TextView name,company, from, time, commentCount, rank, superMan, reward;
+		public TextView name,company, from,fromContent, time, commentCount, rank, superMan, reward;
 		public TweetTextView title;
 		public ImageView picIcon, pic, iv_answered, iv_sign;
 		public TextView iv_solved;
@@ -204,6 +227,7 @@ public class TweetAdapter extends ListBaseAdapter {
 			company = (TextView) view.findViewById(R.id.tv_company);
 			title = (TweetTextView) view.findViewById(R.id.tv_title);
 			from = (TextView) view.findViewById(R.id.tv_from); // 标签
+			fromContent= (TextView) view.findViewById(R.id.tv_from_content); // 标签内容
 			time = (TextView) view.findViewById(R.id.tv_time);
 			commentCount = (TextView) view.findViewById(R.id.tv_comment_count);
 			avatar = (ImageView) view.findViewById(R.id.iv_avatar);

@@ -181,6 +181,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_super"
             android:layout_marginTop="6dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -188,8 +190,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/space_10"
-                android:text="标签"
+                android:text="标签:"
                 android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_12" />
+
+            <TextView
+                android:id="@+id/tv_from_content"
+                android:layout_toRightOf="@id/tv_from"
+                android:layout_alignBottom="@id/tv_from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:textColor="@color/white"
+                android:visibility="gone"
                 android:textSize="@dimen/text_size_12" />
 
             <TextView

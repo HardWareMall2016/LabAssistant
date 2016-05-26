@@ -146,23 +146,47 @@
                     android:id="@+id/tv_mark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/space_10"
-                    android:text="@string/rank_detail"
+                    android:layout_marginRight="@dimen/space_4"
+                    android:text="标签:"
                     android:textColor="@color/main_gray"
                     android:textSize="@dimen/text_size_12"/>
+
+                <TextView
+                    android:id="@+id/tv_from_content"
+                    android:layout_toRightOf="@id/tv_mark"
+                    android:layout_alignBottom="@id/tv_mark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    android:textSize="@dimen/text_size_12" />
+
+                <TextView
+                    android:id="@+id/tv_readnum"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/read_bg"
+                    android:drawablePadding="@dimen/space_2"
+                    android:layout_marginRight="@dimen/space_4"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/main_gray"
+                    android:textSize="@dimen/text_size_12" />
 
                 <TextView
                     android:id="@+id/tv_answernumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_toLeftOf="@id/tv_readnum"
                     android:drawableLeft="@drawable/wsnum"
                     android:drawablePadding="@dimen/space_2"
                     android:gravity="center_vertical"
                     android:text="@string/comment_count"
                     android:textColor="@color/main_gray"
                     android:textSize="@dimen/text_size_12"
-                    android:layout_marginRight="@dimen/space_3"/>
+                    android:layout_marginRight="@dimen/space_4"/>
                 
                 <TextView
                     android:id="@+id/tv_newreply"
@@ -190,7 +214,7 @@
                     android:id="@+id/tv_times"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/space_16"
+                    android:layout_marginRight="@dimen/space_4"
                     android:layout_toLeftOf="@id/tv_answernumber"
                     android:drawableLeft="@drawable/time"
                     android:text="时间"

@@ -30,6 +30,15 @@ public class Question implements Serializable {
 	private int newreply;//新回答数
 	private String newtime;//回答时间
 	private String image;
+	private int hits;
+
+	public int getHits() {
+		return hits;
+	}
+
+	public void setHits(int hits) {
+		this.hits = hits;
+	}
 	
 	public String getImage() {
 		return image;
@@ -221,6 +230,7 @@ public class Question implements Serializable {
 		question.setNewreply(response.optInt("newreply"));
 		question.setNewtime(response.optString("newtime"));
 		question.setImage(response.optString("image"));
+		question.setHits(response.optInt("hits"));
         return question;       
 	}
 

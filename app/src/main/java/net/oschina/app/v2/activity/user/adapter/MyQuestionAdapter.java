@@ -2,6 +2,7 @@ package net.oschina.app.v2.activity.user.adapter;
 
 import net.oschina.app.v2.activity.model.Question;
 import net.oschina.app.v2.base.ListBaseAdapter;
+import net.oschina.app.v2.utils.LabelUtils;
 import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.TDevice;
 import android.text.Html;
@@ -72,12 +73,20 @@ public class MyQuestionAdapter extends ListBaseAdapter {
 		}
 
 		if (!TextUtils.isEmpty(question.getLable())) {
-			vh.tv_mark.setVisibility(View.VISIBLE);
+			/*vh.tv_mark.setVisibility(View.VISIBLE);
 			vh.tv_mark.setText(Html.fromHtml("标签:<font color=#2FBDE7>"
-					+ question.getLable() + "</font>"));
+					+ question.getLable() + "</font>"));*/
+			vh.fromContent.setText(question.getLable());
+			int labelBackgroundId= LabelUtils.getBgResIdByLabel(question.getLable());
+			vh.fromContent.setBackgroundResource(labelBackgroundId);
+			vh.tv_mark.setVisibility(View.VISIBLE);
+			vh.fromContent.setVisibility(View.VISIBLE);
 		} else {
 			vh.tv_mark.setVisibility(View.INVISIBLE);
+			vh.fromContent.setVisibility(View.INVISIBLE);
 		}
+
+		vh.readNum.setText(String.valueOf(question.getHits()));
 
 		vh.tv_times.setText(question.getIntputtime());
 		final int count=question.getNewreply();
@@ -101,6 +110,8 @@ public class MyQuestionAdapter extends ListBaseAdapter {
 		private TextView tv_times;
 		private TextView tv_invite_who;
 		private TextView tv_mark;
+		private TextView fromContent;
+		private TextView readNum;
 		private TextView tv_answernumber;
 		private TextView tv_newreply;
 		private TextView tv_newreplyTime;
@@ -128,6 +139,8 @@ public class MyQuestionAdapter extends ListBaseAdapter {
 			tv_newreply = (TextView) view.findViewById(R.id.tv_newreply);
 			tv_newreplyTime = (TextView) view.findViewById(R.id.tv_newreplyTime);
 			picIcon = (ImageView) view.findViewById(R.id.pic_icon3);
+			fromContent= (TextView) view.findViewById(R.id.tv_from_content); // 标签内容
+			readNum = (TextView) view.findViewById(R.id.tv_readnum); // 阅读次数
 		}
 	}
 }

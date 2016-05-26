@@ -15,6 +15,7 @@ import net.oschina.app.v2.model.AskList;
 import net.oschina.app.v2.model.ListEntity;
 import net.oschina.app.v2.model.event.FansTabEvent;
 import net.oschina.app.v2.model.event.ToggleFilterbarEvent;
+import net.oschina.app.v2.model.event.TweetTabEvent;
 import net.oschina.app.v2.utils.DeviceUtils;
 import net.oschina.app.v2.utils.UIHelper;
 
@@ -132,6 +133,12 @@ public class FansFragment extends BaseListFragment implements TweetPopupListView
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		EventBus.getDefault().register(this);
 		return super.onCreateView(inflater, container, savedInstanceState);
+	}
+
+	public void onEventMainThread(TweetTabEvent event){
+		if(event.tabIndex==1){
+			setRefresh();
+		}
 	}
 
 	@Override

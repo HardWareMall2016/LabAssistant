@@ -133,6 +133,8 @@ public class TweetAdapter extends ListBaseAdapter {
 			vh.fromContent.setVisibility(View.VISIBLE);
 		}
 
+		vh.readNum.setText(String.valueOf(item.getHits()));
+
 		String supper = item.getsuperlist();
 		if (!TextUtils.isEmpty(supper) && !"null".equals(supper)) {
 			vh.superMan.setText("邀请" + supper + "进行回答");
@@ -195,7 +197,7 @@ public class TweetAdapter extends ListBaseAdapter {
 
 	static class ViewHolder {
 		public RelativeLayout reward_layout,question_layout;
-		public TextView name,company, from,fromContent, time, commentCount, rank, superMan, reward;
+		public TextView name,company, from,fromContent, readNum, time, commentCount, rank, superMan, reward;
 		public TweetTextView title;
 		public ImageView picIcon, pic, iv_answered, iv_sign;
 		public TextView iv_solved;
@@ -211,6 +213,7 @@ public class TweetAdapter extends ListBaseAdapter {
 			title = (TweetTextView) view.findViewById(R.id.tv_title);
 			from = (TextView) view.findViewById(R.id.tv_from); // 标签
 			fromContent= (TextView) view.findViewById(R.id.tv_from_content); // 标签内容
+			readNum = (TextView) view.findViewById(R.id.tv_readnum); // 阅读次数
 			time = (TextView) view.findViewById(R.id.tv_time);
 			commentCount = (TextView) view.findViewById(R.id.tv_comment_count);
 			avatar = (ImageView) view.findViewById(R.id.iv_avatar);

@@ -13,12 +13,15 @@ import net.oschina.app.v2.model.Ask;
 import net.oschina.app.v2.model.AskList;
 import net.oschina.app.v2.model.ListEntity;
 import net.oschina.app.v2.model.event.ToggleFilterbarEvent;
+import net.oschina.app.v2.model.event.TweetTabEvent;
 import net.oschina.app.v2.utils.DeviceUtils;
 import net.oschina.app.v2.utils.ShareUtil;
 import net.oschina.app.v2.utils.UIHelper;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -160,6 +163,24 @@ public class TweetFragment extends BaseListFragment implements
 		issolveed= ShareUtil.getIntValue(ShareUtil.IS_SOLVEED,0);
 		mSelMainFilterId= ShareUtil.getIntValue(ShareUtil.MAIN_FILTER_ID, -1);
 		selectedCatIds=ShareUtil.getStringValue(ShareUtil.SELECTED_CAT_IDS, "");
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		EventBus.getDefault().register(this);
+		return super.onCreateView(inflater, container, savedInstanceState);
+	}
+
+	public void onEventMainThread(TweetTabEvent event){
+		if(event.tabIndex==0){
+			setRefresh();
+		}
+	}
+
+	@Override
+	public void onDestroyView() {
+		EventBus.getDefault().unregister(this);
+		super.onDestroyView();
 	}
 
 	@Override

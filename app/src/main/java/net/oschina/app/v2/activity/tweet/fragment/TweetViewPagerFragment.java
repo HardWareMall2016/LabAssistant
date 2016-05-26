@@ -58,7 +58,7 @@ public class TweetViewPagerFragment extends Fragment implements
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.v2_fragment_viewpager, container,
+		View view = inflater.inflate(R.layout.tweet_fragment_viewpager, container,
 				false);
 		mCover=view.findViewById(R.id.cover);
 		mViewTweetTab=view.findViewById(R.id.tweet_tab);

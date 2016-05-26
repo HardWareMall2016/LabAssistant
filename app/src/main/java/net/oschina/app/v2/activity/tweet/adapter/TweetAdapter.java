@@ -8,6 +8,7 @@ import net.oschina.app.v2.model.Ask;
 import net.oschina.app.v2.ui.text.MyLinkMovementMethod;
 import net.oschina.app.v2.ui.text.TweetTextView;
 import net.oschina.app.v2.utils.BitmapLoaderUtil;
+import net.oschina.app.v2.utils.LabelUtils;
 import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.TDevice;
 import net.oschina.app.v2.utils.UIHelper;
@@ -126,26 +127,8 @@ public class TweetAdapter extends ListBaseAdapter {
 			/*vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>" + label
 					+ "</font>"));*/
 			vh.fromContent.setText(label);
-
-			String []strings=label.split(" ");
-			if(strings!=null&&strings.length>1){
-				String classStr=strings[0];
-				if("食品".equals(classStr)){
-					vh.fromContent.setBackgroundResource(R.drawable.bg_label_1);
-				}else if("药品".equals(classStr)){
-					vh.fromContent.setBackgroundResource(R.drawable.bg_label_2);
-				} else if("医疗器械".equals(classStr)){
-					vh.fromContent.setBackgroundResource(R.drawable.bg_label_3);
-				} else if("仪器试剂耗材".equals(classStr)){
-					vh.fromContent.setBackgroundResource(R.drawable.bg_label_4);
-				} else if("职场与生活".equals(classStr)){
-					vh.fromContent.setBackgroundResource(R.drawable.bg_label_5);
-				} else{
-					vh.fromContent.setBackgroundResource(R.drawable.bg_label_other);
-				}
-			}else{
-				vh.fromContent.setBackgroundResource(R.drawable.bg_label_other);
-			}
+			int labelBackgroundId= LabelUtils.getBgResIdByLabel(label);
+			vh.fromContent.setBackgroundResource(labelBackgroundId);
 			vh.from.setVisibility(View.VISIBLE);
 			vh.fromContent.setVisibility(View.VISIBLE);
 		}

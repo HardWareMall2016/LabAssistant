@@ -7,6 +7,7 @@ import net.oschina.app.v2.model.Ask;
 import net.oschina.app.v2.ui.text.MyLinkMovementMethod;
 import net.oschina.app.v2.ui.text.TweetTextView;
 import net.oschina.app.v2.utils.BitmapLoaderUtil;
+import net.oschina.app.v2.utils.LabelUtils;
 import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.TDevice;
 import net.oschina.app.v2.utils.UIHelper;
@@ -112,10 +113,16 @@ public class funsForHelperAdapter extends ListBaseAdapter {
 		String label = item.getLabel();
 		if (TextUtils.isEmpty(label)) {
 			vh.from.setVisibility(View.GONE);// 标签
+			vh.fromContent.setVisibility(View.GONE);
 		} else {
-			vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>" + label
+			/*vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>" + label
 					+ "</font>"));
+			vh.from.setVisibility(View.VISIBLE);*/
+			vh.fromContent.setText(label);
+			int labelBackgroundId=LabelUtils.getBgResIdByLabel(label);
+			vh.fromContent.setBackgroundResource(labelBackgroundId);
 			vh.from.setVisibility(View.VISIBLE);
+			vh.fromContent.setVisibility(View.VISIBLE);
 		}
 
 		String supper = item.getsuperlist();
@@ -166,7 +173,7 @@ public class funsForHelperAdapter extends ListBaseAdapter {
 
 	static class ViewHolder {
 		public RelativeLayout reward_layout;
-		public TextView name, from, time, commentCount, rank, superMan,reward,iv_solved,tv_company;
+		public TextView name, from,fromContent, time, commentCount, rank, superMan,reward,iv_solved,tv_company;
 		public TweetTextView title;
 		public ImageView picIcon,pic, iv_answered, iv_sign;
 		public ImageView avatar,avstarBg;
@@ -179,6 +186,7 @@ public class funsForHelperAdapter extends ListBaseAdapter {
 			rank = (TextView) view.findViewById(R.id.tv_rank);
 			title = (TweetTextView) view.findViewById(R.id.tv_title);
 			from = (TextView) view.findViewById(R.id.tv_from); // 标签
+			fromContent= (TextView) view.findViewById(R.id.tv_from_content); // 标签内容
 			time = (TextView) view.findViewById(R.id.tv_time);
 			commentCount = (TextView) view.findViewById(R.id.tv_comment_count);
 			avatar = (ImageView) view.findViewById(R.id.iv_avatar);

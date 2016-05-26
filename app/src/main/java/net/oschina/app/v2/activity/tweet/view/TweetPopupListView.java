@@ -79,6 +79,7 @@ public class TweetPopupListView implements View.OnClickListener {
     //当前显示
     private List<FilterItem> mShowList=mQuestionStatus;
 
+    private boolean mIsActivityAlive=false;
 
     @Override
     public void onClick(View v) {
@@ -138,6 +139,8 @@ public class TweetPopupListView implements View.OnClickListener {
     }
 
     public TweetPopupListView(Context context) {
+
+        mIsActivityAlive=true;
 
         isreward= ShareUtil.getIntValue(ShareUtil.IS_REWARD,0);
         issolveed= ShareUtil.getIntValue(ShareUtil.IS_SOLVEED,0);
@@ -241,6 +244,7 @@ public class TweetPopupListView implements View.OnClickListener {
 
     public void unregisterEventBus(){
         EventBus.getDefault().unregister(this);
+        mIsActivityAlive=false;
     }
 
     private void populateQuestionStatus(){
@@ -297,6 +301,15 @@ public class TweetPopupListView implements View.OnClickListener {
     }
 
     public void showPopup(View anchor,int filterType) {
+        if(!mIsActivityAlive){
+            if(mPopupView!=null&&mPopupView.isShowing()){
+                mPopupView.dismiss();
+            }
+            return;
+        }
+        if(mPopupView!=null&&mPopupView.isShowing()){
+            return;
+        }
         mCover.setVisibility(View.VISIBLE);
         mPopupView.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.bg_popmenu));
         mCurFilterType=filterType;

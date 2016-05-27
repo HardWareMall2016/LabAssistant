@@ -100,70 +100,100 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="50dp">
+
         <LinearLayout
             android:id="@+id/tweet_tab"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/question_status"
+            <LinearLayout
+                android:id="@+id/question_status_content"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/default_bg"
-                android:singleLine="true"
-                android:gravity="center"
-                android:text="问题状态"
-                android:textColor="@color/text_dark"
-                android:textSize="@dimen/text_size_15" />
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/question_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="4dp"
+                    android:drawableRight="@drawable/icon_arrow_down"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="问题状态"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/text_size_15" />
+            </LinearLayout>
+
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="20dp"
                 android:background="@color/divider" />
 
-            <TextView
-                android:id="@+id/choose_classify"
+            <LinearLayout
+                android:id="@+id/choose_classify_content"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/default_bg"
-                android:gravity="center"
-                android:text="选择分类"
-                android:singleLine="true"
-                android:textColor="@color/text_dark"
-                android:textSize="@dimen/text_size_15" />
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/choose_classify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="4dp"
+                    android:drawableRight="@drawable/icon_arrow_down"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="选择分类"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/text_size_15" />
+            </LinearLayout>
+
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="20dp"
                 android:background="@color/divider" />
 
-            <TextView
-                android:id="@+id/choose_sub_classify"
+            <LinearLayout
+                android:id="@+id/choose_sub_classify_content"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@drawable/default_bg"
-                android:gravity="center"
-                android:text="选择子类"
-                android:singleLine="true"
-                android:textColor="@color/text_dark"
-                android:textSize="@dimen/text_size_15" />
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/choose_sub_classify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="4dp"
+                    android:drawableRight="@drawable/icon_arrow_down"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="选择子类"
+                    android:textColor="@color/text_dark"
+                    android:textSize="@dimen/text_size_15" />
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/fans_tab"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/all_question"

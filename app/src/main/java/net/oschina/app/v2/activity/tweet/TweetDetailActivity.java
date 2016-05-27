@@ -24,6 +24,7 @@ import net.oschina.app.v2.model.User;
 import net.oschina.app.v2.model.event.AdoptSuccEvent;
 import net.oschina.app.v2.ui.dialog.CommonDialog;
 import net.oschina.app.v2.ui.dialog.DialogHelper;
+import net.oschina.app.v2.utils.LabelUtils;
 import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.TDevice;
 import net.oschina.app.v2.utils.UIHelper;
@@ -33,8 +34,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -54,12 +57,14 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -106,11 +111,11 @@ public class TweetDetailActivity extends BaseActivity {
     private View mBottomView;
     private Button mButton;
     private TextView tv_zhuiwen, mTvActionTitle;
-    private LinearLayout mMoreLinear;
+    private LinearLayout mMoreLinear,ll_tweet_detail;
     private TextView mEtInput;
     private ImageView mBtnEmoji, mBtnMore;
     private ImageView mBtnSend;
-    private TextView mTvAsk, mTvRank, mTvTime, mTvTitle, mTvCommentCount,mTvHits;
+    private TextView mTvAsk, mTvRank, mTvTime, mTvTitle, mTvCommentCount,mTvHits,mTvFromContent;
     private ImageView mIvPic;
     private RelativeLayout reward_layout;
     private ImageView pic_reward;
@@ -121,8 +126,10 @@ public class TweetDetailActivity extends BaseActivity {
     private View mPopMenuContent;
     private PopupWindow mPopupWindow;
     private InputMethodManager imm ;
+    private boolean isOpen ;
 
     private HashMap<Integer, UserBean> userList;
+
 
     @Override
     protected int getLayoutId() {
@@ -183,11 +190,23 @@ public class TweetDetailActivity extends BaseActivity {
         mIvPic = (ImageView) findViewById(R.id.iv_pic);
         mTvCommentCount = (TextView) findViewById(R.id.tv_comment_count);
         mTvHits = (TextView)findViewById(R.id.tv_readnum);
+        mTvFromContent = (TextView)findViewById(R.id.tv_from_content);
 
         tv_zhuiwen = (TextView) findViewById(R.id.tv_zhuiwen);
         mBottomView = findViewById(R.id.bottomview);
         mButton = (Button) findViewById(R.id.button);
-
+     /*   ll_tweet_detail = (LinearLayout) findViewById(R.id.ll_tweet_detail);
+        ll_tweet_detail.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                mHandler.sendMessageDelayed(mHandler.obtainMessage(1), 2000);
+               *//* imm = (InputMethodManager) v.getContext().getSystemService(Service.INPUT_METHOD_SERVICE);
+                boolean isOpen = imm.isActive();
+                if(!isOpen){
+                    closePopWin();
+                }*//*
+            }
+        });*/
 
         intiPopMenu();
 
@@ -203,7 +222,10 @@ public class TweetDetailActivity extends BaseActivity {
 
                 mPopMenuContent = getLayoutInflater().inflate(R.layout.tweet_detail_editbox_layout, null);
                 mPopupWindow.setContentView(mPopMenuContent);
+                final EmojiEditText editText = (EmojiEditText) mPopMenuContent.findViewById(R.id.editbox_input);
+                TextView mSend = (TextView) mPopMenuContent.findViewById(R.id.tv_dialog_send);
                 TextView mBack = (TextView) mPopMenuContent.findViewById(R.id.tv_dialog_back);
+
                 mBack.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -211,23 +233,14 @@ public class TweetDetailActivity extends BaseActivity {
                     }
                 });
 
-                final EmojiEditText editText = (EmojiEditText) mPopMenuContent.findViewById(R.id.editbox_input);
-
-                if (null != editText.getmHeaderUnDelete()) {
-                    int index = editText.getmHeaderUnDelete().length();
-                    if (index > editText.getSelectionStart()) {
-                        editText.setSelection(index);
-                    }
-                }
-                TextView mSend = (TextView) mPopMenuContent.findViewById(R.id.tv_dialog_send);
                 mSend.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String text = editText.getText().toString();
-                        editText.getText().clear();
+                        //editText.getText().clear();
 
-                        if(!TextUtils.isEmpty(toSomeone)){
-                            text=text.replaceAll(toSomeone, "");
+                        if (!TextUtils.isEmpty(toSomeone)) {
+                            text = text.replaceAll(toSomeone, "");
                         }
                         if (TextUtils.isEmpty(text)) {
                             AppContext.showToastShort(R.string.tip_comment_content_empty);
@@ -247,15 +260,14 @@ public class TweetDetailActivity extends BaseActivity {
                         }
                         NewsApi.subComment(id, uid, false, text, relation, superlist,
                                 msubHandler);
-
                         closePopWin();
                     }
                 });
                 showPopMenu();
 
+                editText.requestFocus();
                 imm = (InputMethodManager) v.getContext().getSystemService(Service.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-
             }
         });
 
@@ -381,7 +393,7 @@ public class TweetDetailActivity extends BaseActivity {
     private void showPopMenu() {
         if (mPopupWindow != null && !mPopupWindow.isShowing()) {
             /* 最重要的一步：弹出显示 在指定的位置(parent) 最后两个参数 是相对于 x / y 轴的坐标 */
-            mPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+            mPopupWindow.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
             backgroundAlpha(0.7f);
             mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
@@ -600,7 +612,7 @@ public class TweetDetailActivity extends BaseActivity {
 
                                 if (position == 0) {
                                     shareHelper.shareToSinaWeibo(
-                                            "分享问题：" + ask.getContent(),
+                                            "问题分享" + ask.getContent(),
                                             url,
                                             "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
                                 } else if (position == 1) {
@@ -630,7 +642,7 @@ public class TweetDetailActivity extends BaseActivity {
                                             "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png",
                                             TweetDetailActivity.this);
 
-                                }else if (position == 5) {
+                                }/*else if (position == 5) {
 
                                     NewsApi.shareQuestion(ask.getId(), AppContext.instance().getLoginUid(), new JsonHttpResponseHandler() {
                                         @Override
@@ -648,7 +660,7 @@ public class TweetDetailActivity extends BaseActivity {
                                             }
                                         }
                                     });
-                                }
+                                }*/
 
                                 dialogShare.dismiss();
                                 // goToSelectItem(position);
@@ -718,7 +730,7 @@ public class TweetDetailActivity extends BaseActivity {
         Window window = dialog.getWindow();
         window.setContentView(R.layout.zhichi_dialog);
         TextView titleTv = (TextView) window.findViewById(R.id.tv_title);
-        titleTv.setText("是否直接删除");
+        titleTv.setText("删除后将无法恢复，是否确定删除");
         // 设置监听
         Button zhichi = (Button) window.findViewById(R.id.ib_zhichi);
         zhichi.setText("确定");
@@ -831,7 +843,7 @@ public class TweetDetailActivity extends BaseActivity {
 
 
             mTvAsk.setText(Html.fromHtml("邀请 <font color=#2FBDE7>" + supper
-                    + "</font> 进行回答"));
+                    + "</font> 回答"));
             mTvAsk.setVisibility(View.VISIBLE);
         } else {
             mTvAsk.setVisibility(View.GONE);
@@ -839,9 +851,15 @@ public class TweetDetailActivity extends BaseActivity {
         String label = ask.getLabel();
         if (TextUtils.isEmpty(label)) {
             label = "暂无";
+            mTvFromContent.setText(Html.fromHtml(":<font color=#2FBDE7>" + label
+                    + "</font>"));
+        }else{
+            mTvFromContent.setText(label);
+            int labelBackgroundId= LabelUtils.getBgResIdByLabel(label);
+            mTvFromContent.setBackgroundResource(labelBackgroundId);
         }
-        mTvRank.setText(Html.fromHtml("标签:<font color=#2FBDE7>" + label
-                + "</font>"));
+       /* mTvRank.setText(Html.fromHtml("标签:<font color=#2FBDE7>" + label
+                + "</font>"));*/
         if (!StringUtils.isEmpty(ask.getImage()) && "null" != ask.getImage()) {
             mIvPic.setVisibility(View.VISIBLE);
             ImageLoader.getInstance().displayImage(

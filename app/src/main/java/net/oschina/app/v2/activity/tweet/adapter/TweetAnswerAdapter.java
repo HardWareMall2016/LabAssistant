@@ -389,7 +389,7 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 		public CircleImageView avatar;
 		public ImageView pic_icon;
 		public String commentNum, zhichiNum, zhuiwenNum;
-		public Button supportBt, reAnswerBt;
+		public TextView supportBt, reAnswerBt;
 		public ImageView sign_huida, sign_caina,avstarBg,iv_sign;
 		public View moreView;
 		public MoreCommentView commentView;
@@ -408,8 +408,8 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 			avatar = (CircleImageView) view.findViewById(R.id.iv_avatar);
 			avatar.setBorderColor(Color.BLACK);
 			avatar.setBorderWidth(1);
-			supportBt = (Button) view.findViewById(R.id.bt_zhichi);
-			reAnswerBt = (Button) view.findViewById(R.id.bt_zhuiwen);
+			supportBt = (TextView) view.findViewById(R.id.bt_zhichi);
+			reAnswerBt = (TextView) view.findViewById(R.id.bt_zhuiwen);
 			zhichiNum = view.getResources().getString(R.string.lb_zhichi);
 			zhuiwenNum = view.getResources().getString(R.string.lb_zhuiwen);
 			sign_huida = (ImageView) view.findViewById(R.id.sign_huida);

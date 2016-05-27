@@ -16,7 +16,6 @@
         <item>朋友圈</item>
         <item>QQ</item>
         <item>QQ空间</item>
-        <item>我的实验圈</item>
     </string-array>
      <string-array name="app_report_items">
         <item>虚假广告</item>

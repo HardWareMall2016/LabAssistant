@@ -145,7 +145,7 @@ public class ShareHelper {
 		//设置分享文字
 		qqShareContent.setShareContent(shareContent);
 		//设置分享title
-		qqShareContent.setTitle(shareContent);
+		qqShareContent.setTitle(shareTitle);
 		//设置分享图片
 		qqShareContent.setShareImage(new UMImage(context, shareImg));
 		//设置点击分享内容的跳转链接

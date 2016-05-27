@@ -69,9 +69,9 @@ public class TweetViewPagerFragment extends Fragment implements
 		mViewChooseClassify=(TextView)view.findViewById(R.id.choose_classify);
 		mViewChooseSubClassify=(TextView)view.findViewById(R.id.choose_sub_classify);
 
-		view.findViewById(R.id.question_status).setOnClickListener(this);
-		view.findViewById(R.id.choose_classify).setOnClickListener(this);
-		view.findViewById(R.id.choose_sub_classify).setOnClickListener(this);
+		view.findViewById(R.id.question_status_content).setOnClickListener(this);
+		view.findViewById(R.id.choose_classify_content).setOnClickListener(this);
+		view.findViewById(R.id.choose_sub_classify_content).setOnClickListener(this);
 
 		mViewAllQuestion=(TextView)view.findViewById(R.id.all_question);
 		mViewAnsweredQuestion=(TextView)view.findViewById(R.id.answered_question);
@@ -194,13 +194,13 @@ public class TweetViewPagerFragment extends Fragment implements
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()){
-			case R.id.question_status:
+			case R.id.question_status_content:
 				mPopupList.showPopup(v,TweetPopupListView.QUESTION_STATUS);
 				break;
-			case R.id.choose_classify:
+			case R.id.choose_classify_content:
 				mPopupList.showPopup(v,TweetPopupListView.CHOOSE_CLASSIFY);
 				break;
-			case R.id.choose_sub_classify:
+			case R.id.choose_sub_classify_content:
 				mPopupList.showPopup(v,TweetPopupListView.CHOOSE_SUB_CLASSIFY);
 				break;
 		}

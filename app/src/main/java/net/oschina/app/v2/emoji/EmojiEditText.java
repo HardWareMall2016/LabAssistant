@@ -118,7 +118,6 @@ public class EmojiEditText extends EditText {
 				return;
 			}
 		}
-
 		if(insertHeader){
 			this.setText(Html.fromHtml("<font color=#2FBDE7>" + text + "</font>"));
 			this.append(originalText);

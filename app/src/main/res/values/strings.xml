@@ -304,7 +304,7 @@
     <string name="actionbar_title_question_tag">%s相关</string>
     <string name="comment_count">%s人回答</string>
     <string name="answer_count">回复:%s</string>
-    <string name="by_ask">邀请 %s 进行回答</string>
+    <string name="by_ask">邀请 %s 回答</string>
     <string name="rank_detail">标签:%s</string>
     <string name="post_answer">回复</string>
     <string name="comment_reply_count">共有%s条评论</string>

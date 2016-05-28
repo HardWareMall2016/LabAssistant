@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/lightblue"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,16 +18,16 @@
             android:id="@+id/tv_dialog_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:textColor="@color/lightblue"
-            android:text="返回"
+            android:text="取消"
             />
         <TextView
             android:id="@+id/tv_dialog_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:text="回答"
             />
 
@@ -33,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textSize="14dp"
+            android:textSize="16dp"
             android:textColor="@color/lightblue"
             android:text="发送"
             />
@@ -44,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@drawable/comment_edittext_selector"
-        android:gravity="center_vertical"
+        android:gravity="top|left"
         android:maxLines="4"
         android:minHeight="40dp"
         android:paddingBottom="@dimen/space_2"

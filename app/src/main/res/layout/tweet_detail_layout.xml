@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/ll_tweet_detail"
+    >
 
     <!-- 问题部分 -->
 
@@ -89,12 +91,19 @@
                 android:text="@string/by_ask"
                 android:textColor="@color/main_gray"
                 android:textSize="@dimen/text_size_12" />
+            <View
+                android:id="@+id/view_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/tv_byask"
+                android:layout_marginTop="5dp"
+                android:background="@color/list_divider_color" />
 
             <RelativeLayout
                 android:id="@+id/tv_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_byask"
+                android:layout_below="@id/view_line"
                 android:layout_marginTop="6dp"
                 android:gravity="center_vertical">
 
@@ -105,6 +114,15 @@
                     android:layout_marginRight="@dimen/space_10"
                     android:text="标签"
                     android:textColor="@color/main_gray"
+                    android:textSize="@dimen/text_size_12" />
+                <TextView
+                    android:id="@+id/tv_from_content"
+                    android:layout_toRightOf="@id/tv_byrank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/text_size_12" />
 
                 <TextView
@@ -294,6 +312,8 @@
                     android:paddingRight="@dimen/space_26"
                     android:paddingTop="@dimen/space_2"
                     android:background="@drawable/bg_gray_border"
+                    android:text="点此回答"
+                    android:textColor="#b2b2b2"
                     />
 
                 <TextView

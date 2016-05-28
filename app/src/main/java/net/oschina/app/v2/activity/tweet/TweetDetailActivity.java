@@ -24,6 +24,7 @@ import net.oschina.app.v2.model.User;
 import net.oschina.app.v2.model.event.AdoptSuccEvent;
 import net.oschina.app.v2.ui.dialog.CommonDialog;
 import net.oschina.app.v2.ui.dialog.DialogHelper;
+import net.oschina.app.v2.utils.DeviceUtils;
 import net.oschina.app.v2.utils.LabelUtils;
 import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.TDevice;
@@ -61,6 +62,7 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -123,10 +125,12 @@ public class TweetDetailActivity extends BaseActivity {
     protected View tip_layout;
     protected View tip_close;
     private Ask ask;
-    private View mPopMenuContent;
+    private LinearLayout mPopMenuContent;
     private PopupWindow mPopupWindow;
     private InputMethodManager imm ;
     private boolean isOpen ;
+
+    private EmojiEditText editText;
 
     private HashMap<Integer, UserBean> userList;
 
@@ -210,6 +214,25 @@ public class TweetDetailActivity extends BaseActivity {
 
         intiPopMenu();
 
+        LinearLayout contentView=(LinearLayout)findViewById(R.id.ll_tweet_detail);
+        contentView.addOnLayoutChangeListener(new View.OnLayoutChangeListener(){
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                //如果弹框还在，判断在底部的view是否底部确定输入法是否关闭
+                if(mPopupWindow!=null&&mPopupWindow.isShowing()){
+                    int[] location = new int[2];
+                    mTextView.getLocationOnScreen(location);
+                    int y = location[1];
+                    int bottomLocation=y+mTextView.getHeight();
+                    if(DeviceUtils.getScreenHeight(getApplication())==bottomLocation){
+                        closePopWin();
+                    }
+                }
+            }
+        });
+
+        imm = (InputMethodManager)getSystemService(Service.INPUT_METHOD_SERVICE);
+
         mTextView = findViewById(R.id.ly_bottom);
         mBtnEmoji = (ImageView) findViewById(R.id.btn_emoji);
         mBtnSend = (ImageView) findViewById(R.id.btn_send);
@@ -220,9 +243,10 @@ public class TweetDetailActivity extends BaseActivity {
             @Override
             public void onClick(final View v) {
 
-                mPopMenuContent = getLayoutInflater().inflate(R.layout.tweet_detail_editbox_layout, null);
+                mPopMenuContent = (LinearLayout)getLayoutInflater().inflate(R.layout.tweet_detail_editbox_layout, null);
                 mPopupWindow.setContentView(mPopMenuContent);
-                final EmojiEditText editText = (EmojiEditText) mPopMenuContent.findViewById(R.id.editbox_input);
+
+                editText = (EmojiEditText) mPopMenuContent.findViewById(R.id.editbox_input);
                 TextView mSend = (TextView) mPopMenuContent.findViewById(R.id.tv_dialog_send);
                 TextView mBack = (TextView) mPopMenuContent.findViewById(R.id.tv_dialog_back);
 
@@ -263,11 +287,12 @@ public class TweetDetailActivity extends BaseActivity {
                         closePopWin();
                     }
                 });
+
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+
                 showPopMenu();
 
                 editText.requestFocus();
-                imm = (InputMethodManager) v.getContext().getSystemService(Service.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
 

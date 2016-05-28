@@ -39,15 +39,23 @@
                 android:textSize="@dimen/text_size_12"
                 android:layout_below="@id/question_title_tv"
                   />
-          
+            <TextView
+                android:id="@+id/question_category_biaoqian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/question_title_tv"
+                android:text="标签"
+                android:textColor="@color/main_gray"
+                android:textSize="@dimen/text_size_12" />
 
             <TextView
                 android:id="@+id/question_category_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/question_title_tv"
-               
-                android:textColor="@color/main_gray"
+                android:layout_toRightOf="@+id/question_category_biaoqian"
+                android:layout_marginLeft="@dimen/space_10"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_size_12" />
             
            

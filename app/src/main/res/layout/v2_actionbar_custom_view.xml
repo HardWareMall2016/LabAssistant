@@ -44,6 +44,6 @@
         android:paddingLeft="@dimen/space_8"
         android:paddingRight="@dimen/space_8"
         android:src="@drawable/share_header" 
-        android:visibility="visible"/>
+        android:visibility="gone"/>
 
 </RelativeLayout>

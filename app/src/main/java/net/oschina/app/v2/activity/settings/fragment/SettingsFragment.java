@@ -148,8 +148,8 @@ public class SettingsFragment extends BaseFragment {
 
     private void shareToWeiChatCircle() {
         sp.shareToWeiChatCircle(getShareContent(), getShareContent(), getShareUrl(), "");
-    /*	// 支持微信朋友圈
-		UMWXHandler wxCircleHandler = new UMWXHandler(getActivity(),
+    	// 支持微信朋友圈
+	/*	UMWXHandler wxCircleHandler = new UMWXHandler(getActivity(),
 				Constants.WEICHAT_APPID, Constants.WEICHAT_SECRET);
 		wxCircleHandler.setToCircle(true);
 		wxCircleHandler.addToSocialSDK();

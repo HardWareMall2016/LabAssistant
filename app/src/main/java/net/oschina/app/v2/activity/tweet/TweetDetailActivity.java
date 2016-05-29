@@ -257,9 +257,14 @@ public class TweetDetailActivity extends BaseActivity {
                     }
                 });
 
+
                 mSend.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (isFastClick()) {
+                            return ;
+                        }
+
                         String text = editText.getText().toString();
                         //editText.getText().clear();
 
@@ -282,9 +287,11 @@ public class TweetDetailActivity extends BaseActivity {
                         } else {
                             relation = true;
                         }
+                        showWaitDialog();
                         NewsApi.subComment(id, uid, false, text, relation, superlist,
                                 msubHandler);
                         closePopWin();
+                        hideWaitDialog();
                     }
                 });
 
@@ -388,6 +395,17 @@ public class TweetDetailActivity extends BaseActivity {
         }
 
         EventBus.getDefault().register(this);
+    }
+
+    private static long lastClickTime;
+
+    private boolean isFastClick() {
+        long time = System.currentTimeMillis();
+        if ( time - lastClickTime < 500) {
+            return true;
+        }
+        lastClickTime = time;
+        return false;
     }
 
     private void intiPopMenu() {

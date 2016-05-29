@@ -98,24 +98,26 @@ public class EmojiEditText extends EditText {
 		dispatchKeyEvent(event);
 	}
 
+	public void clearHeader(){
+		mHeader=null;
+	}
+
 	public void setHeader(String text) {
 		//old
 		/*mHeader = text;
 		this.setText(Html.fromHtml("<font color=#2FBDE7>" + text + "</font>"));*/
 
+		String originalText=getText().toString();
+
 		//new by wuyue
 		boolean insertHeader=false;
-		boolean replaceHeader=false;
 		if(TextUtils.isEmpty(mHeader)){
 			insertHeader=true;
 		}else{
 			if(mHeader.equals(text)){
 				return;
-			}else{
-				replaceHeader=true;
 			}
 		}
-		String originalText=getText().toString();
 		if(insertHeader){
 			this.setText(Html.fromHtml("<font color=#2FBDE7>" + text + "</font>"));
 			this.append(originalText);

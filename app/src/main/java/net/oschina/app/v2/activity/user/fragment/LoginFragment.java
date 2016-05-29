@@ -219,11 +219,16 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
 		mIvClearPassword.setOnClickListener(this);
 		mBtnLogin.setOnClickListener(this);
 		mCkRemenber = (CheckBox) view.findViewById(R.id.ck_remenber_login);
+		mCkRemenber.setChecked(true);
 
 		String userName = AppContext.getPersistPreferences().getString(
 				AppContext.LAST_INPUT_USER_NAME, "");
 		mEtUserName.setText(userName);
-		
+		User user=AppContext.instance().getLoginInfo();
+		if(user!=null){
+			mEtPassword.setText(user.getPassword());
+		}
+
 	}
 
 	@Override

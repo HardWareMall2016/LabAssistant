@@ -445,32 +445,32 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 			public void handleMessage(Message msg) {
 				try {
 					switch (msg.what) {
-					case 1:
-						String returnStr = msg.getData().getString("return");
-						JSONObject jsonObject = new JSONObject(returnStr);
-						String imageUrl = jsonObject.getString("url");
-						int id = ask.getId();
-						int uid = AppContext.instance().getLoginUid();
-						if (type == 1) {
-							NewsApi.subComment(id, uid, false, comment.getId(),null,imageUrl,
-									false, null, msubHandler);
-						} else if (type == 2) {
-							if (TextUtils.isEmpty(emojiEditText.getHeader())) {
-								AppContext
-										.showToastShort(R.string.tip_null_direct_person_empty);
-								return;
+						case 1:
+							String returnStr = msg.getData().getString("return");
+							JSONObject jsonObject = new JSONObject(returnStr);
+							String imageUrl = jsonObject.getString("url");
+							int id = ask.getId();
+							int uid = AppContext.instance().getLoginUid();
+							if (type == 1) {
+								NewsApi.subComment(id, uid, false, comment.getId(), null, imageUrl,
+										false, null, msubHandler);
+							} else if (type == 2) {
+								if (TextUtils.isEmpty(emojiEditText.getHeader())) {
+									AppContext
+											.showToastShort(R.string.tip_null_direct_person_empty);
+									return;
+								}
+								NewsApi.addCommentAfter(id,
+										emojiEditText.getAskUid(), uid,
+										comment.getId(), emojiEditText.getId(), "", imageUrl,
+										mCommentAfterHandler);
 							}
-							NewsApi.addCommentAfter(id,
-									emojiEditText.getAskUid(), uid,
-									comment.getId(), emojiEditText.getId(),"", imageUrl,
-									mCommentAfterHandler);
-						}
-						break;
-					case 2:
-						AppContext.showToast("发送图像失败");
-						break;
-					default:
-						break;
+							break;
+						case 2:
+							AppContext.showToast("发送图像失败");
+							break;
+						default:
+							break;
 					}
 					System.out.println(msg.what);
 				} catch (Exception e) {
@@ -489,7 +489,7 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 			public void onClick(View v) {
 				String text = emojiEditText.getText().toString();
 				emojiEditText.getText().clear();  //快速按确定按钮会出现多条回复
-				
+				emojiEditText.clearHeader();
 				if (TextUtils.isEmpty(text)) {
 					AppContext
 							.showToastShort(R.string.tip_comment_content_empty);
@@ -502,7 +502,7 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 				reset();//2015-02-28，添加，隐藏输入法
 				int id = ask.getId();
 				int uid = AppContext.instance().getLoginUid();
-				NewsApi.subComment(id, uid, false,comment.getId(), text, false, null,
+				NewsApi.subComment(id, uid, false, comment.getId(), text, false, null,
 						msubHandler);
 			}
 		});
@@ -523,6 +523,7 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 				String text = emojiEditText.getText().toString();
 				emojiEditText.getText().clear();  //快速按确定按钮会出现多条回复
 				text = text.substring(emojiEditText.getHeader().length());
+				emojiEditText.clearHeader();
 				int askUid = emojiEditText.getAskUid();
 				if (TextUtils.isEmpty(text)) {
 					AppContext
@@ -538,7 +539,7 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 				int uid = AppContext.instance().getLoginUid();
 
 				NewsApi.addCommentAfter(id, askUid, uid, comment.getId(), emojiEditText.getId(),
-						text,mCommentAfterHandler);
+						text, mCommentAfterHandler);
 			}
 		});
 
@@ -611,6 +612,7 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 		if (emojiEditText != null) {
 			emojiEditText.getText().clear();
 			emojiEditText.clearFocus();
+			emojiEditText.clearHeader();
 		}
 	}
 

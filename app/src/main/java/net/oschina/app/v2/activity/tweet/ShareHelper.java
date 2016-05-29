@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.shiyanzhushou.app.R;
@@ -286,13 +287,13 @@ public class ShareHelper {
 
 					@Override
 					public void onStart() {
-						// AppContext.showToastShort(R.string.tip_start_share);
+						 AppContext.showToastShort(R.string.tip_start_share);
 					}
 
 					@Override
 					public void onComplete(SHARE_MEDIA arg0, int arg1,
 							SocializeEntity arg2) {
-						// AppContext.showToastShort(R.string.tip_share_done);
+						 AppContext.showToastShort(R.string.tip_share_done);
 					}
 				});
 	}
@@ -314,20 +315,43 @@ public class ShareHelper {
 		// 设置分享图片
 		weixinContent.setShareImage(new UMImage(context, shareImg));
 		mController.setShareMedia(weixinContent);
-		mController.postShare(context, SHARE_MEDIA.WEIXIN,
+		/*mController.postShare(context, SHARE_MEDIA.WEIXIN,
 				new SnsPostListener() {
 
 					@Override
 					public void onStart() {
-						// AppContext.showToastShort(R.string.tip_start_share);
+						AppContext.showToastShort(R.string.tip_start_share);
 					}
+
 
 					@Override
 					public void onComplete(SHARE_MEDIA arg0, int arg1,
-							SocializeEntity arg2) {
-						// AppContext.showToastShort(R.string.tip_share_done);
+										   SocializeEntity arg2) {
+						AppContext.showToastShort(R.string.tip_share_done);
+					}
+				});*/
+		mController.doOauthVerify(context, SHARE_MEDIA.WEIXIN,
+				new UMAuthListener() {
+
+					@Override
+					public void onStart(SHARE_MEDIA arg0) {
+					}
+
+					@Override
+					public void onError(SocializeException arg0,
+										SHARE_MEDIA arg1) {
+					}
+
+					@Override
+					public void onComplete(Bundle arg0, SHARE_MEDIA arg1) {
+						//shareContent(SHARE_MEDIA.SINA, content, url, img);
+					}
+
+					@Override
+					public void onCancel(SHARE_MEDIA arg0) {
 					}
 				});
+
 	}
 
 	public void shareToWeiChatCircle(String shareTitle, String shareContent,

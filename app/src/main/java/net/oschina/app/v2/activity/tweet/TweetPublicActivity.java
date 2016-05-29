@@ -421,8 +421,9 @@ public class TweetPublicActivity extends BaseActivity implements
 					// startActivity(intent);
 					return;
 				}
-
+				showWaitDialog();
 				handleSubmit();
+
 			}
 		});
 
@@ -482,6 +483,7 @@ public class TweetPublicActivity extends BaseActivity implements
 			@Override
 			public void handleMessage(Message msg) {
 				try {
+					hideWaitDialog();
 					switch (msg.what) {
 					case 1:
 						String returnStr = msg.getData().getString("return");
@@ -524,6 +526,7 @@ public class TweetPublicActivity extends BaseActivity implements
 		public void onSuccess(int statusCode, Header[] headers,
 				JSONObject response) {
 			try {
+				hideWaitDialog();
 				if (response.getInt("code") == 88) {
 					//AppContext.showToast("提问成功！");
 					String string = response.getString("data");

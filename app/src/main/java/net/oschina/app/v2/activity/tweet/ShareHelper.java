@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.shiyanzhushou.app.R;
@@ -287,13 +286,13 @@ public class ShareHelper {
 
 					@Override
 					public void onStart() {
-						 AppContext.showToastShort(R.string.tip_start_share);
+						 //AppContext.showToastShort(R.string.tip_start_share);
 					}
 
 					@Override
 					public void onComplete(SHARE_MEDIA arg0, int arg1,
 							SocializeEntity arg2) {
-						 AppContext.showToastShort(R.string.tip_share_done);
+						 //AppContext.showToastShort(R.string.tip_share_done);
 					}
 				});
 	}
@@ -320,14 +319,14 @@ public class ShareHelper {
 
 					@Override
 					public void onStart() {
-						AppContext.showToastShort(R.string.tip_start_share);
+						//AppContext.showToastShort(R.string.tip_start_share);
 					}
 
 
 					@Override
 					public void onComplete(SHARE_MEDIA arg0, int arg1,
 										   SocializeEntity arg2) {
-						AppContext.showToastShort(R.string.tip_share_done);
+						//AppContext.showToastShort(R.string.tip_share_done);
 					}
 				});
 

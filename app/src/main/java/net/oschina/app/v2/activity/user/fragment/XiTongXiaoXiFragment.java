@@ -10,6 +10,8 @@ import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.BaseListFragment;
 import net.oschina.app.v2.base.ListBaseAdapter;
 import net.oschina.app.v2.model.ListEntity;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 

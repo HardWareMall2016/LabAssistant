@@ -1,6 +1,7 @@
 package net.oschina.app.v2.activity.user.fragment;
 
 import net.oschina.app.v2.AppContext;
+import net.oschina.app.v2.activity.news.view.ShareDialog;
 import net.oschina.app.v2.activity.tweet.ShareHelper;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.BaseFragment;
@@ -28,6 +29,14 @@ import android.widget.TextView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.shiyanzhushou.app.R;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners;
+import com.umeng.socialize.exception.SocializeException;
+import com.umeng.socialize.sso.SinaSsoHandler;
+import com.umeng.socialize.utils.OauthHelper;
 
 public class MyZhuShouIDFragment extends BaseFragment implements
 SoftKeyboardStateListener, OnClickEmojiListener {
@@ -39,6 +48,8 @@ SoftKeyboardStateListener, OnClickEmojiListener {
 
 	String zhuShouId = "";
 	ShareHelper sp = null;
+	final UMSocialService mController = UMServiceFactory
+			.getUMSocialService("com.umeng.share");
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater,
@@ -72,12 +83,129 @@ SoftKeyboardStateListener, OnClickEmojiListener {
 			User u = AppContext.instance().getLoginInfo();
 			if(null != u)
 			{
-				sp.handleShare("实验助手，实验室从业人员的专属社区，邀请码"+ u.getInvitation()+"，赶快来加入我们吧！","实验助手，实验室从业人员的专属社区，邀请码"+ u.getInvitation()+"，赶快来加入我们吧！",
-						"http://a.app.qq.com/o/simple.jsp?pkgname=com.shiyanzhushou.app&g_f=991653",getActivity());
-				//sp.shareToWeiChat("","实验助手，实验室从业人员的专属社区，邀请码"+ u.getInvitation()+"，赶快来加入我们吧！","http://a.app.qq.com/o/simple.jsp?pkgname=com.shiyanzhushou.app&g_f=991653","");
+				//sp.handleShare("实验助手，实验室从业人员的专属社区，邀请码"+ u.getInvitation()+"，赶快来加入我们吧！","实验助手，实验室从业人员的专属社区，邀请码"+ u.getInvitation()+"，赶快来加入我们吧！",
+				//		"http://a.app.qq.com/o/simple.jsp?pkgname=com.shiyanzhushou.app&g_f=991653",getActivity());
+				handleShare();
 			}
 		}
 	}
+
+	private void handleShare() {
+		final ShareDialog dialog = new ShareDialog(getActivity());
+		dialog.setCancelable(true);
+		dialog.setCanceledOnTouchOutside(true);
+		dialog.setTitle(R.string.share_to);
+		dialog.setOnPlatformClickListener(new ShareDialog.OnSharePlatformClick() {
+
+			@Override
+			public void onPlatformClick(SHARE_MEDIA media) {
+				switch (media) {
+					case SINA:
+						shareToSinaWeibo();
+						break;
+					case WEIXIN:
+						shareToWeiChat();
+						break;
+					case WEIXIN_CIRCLE:
+						shareToWeiChatCircle();
+						break;
+					case QQ:
+						shareQQ();
+						break;
+					case QZONE:
+						shareQZONE();
+						break;
+					default:
+						break;
+				}
+				dialog.dismiss();
+			}
+		});
+		dialog.show();
+	}
+
+	protected String getShareUrl() {
+		return "http://a.app.qq.com/o/simple.jsp?pkgname=com.shiyanzhushou.app&g_f=991653";
+	}
+
+	protected String getShareTitle() {
+		return getString(R.string.share_title);
+	}
+
+	protected String getShareContent() {
+		User u = AppContext.instance().getLoginInfo();
+		if (null != u) {
+			//sp.shareToWeiChat("", "我的助手ID号：" + u.getInvitation(), "");
+			return "实验助手，实验室从业人员的专属社区，邀请码" + u.getInvitation() + "，赶快来加入我们吧！";
+		}
+		return "";
+	}
+
+	private void shareContent(SHARE_MEDIA media) {
+		mController.setShareContent(getShareContent());
+		mController.directShare(getActivity(), media, new SocializeListeners.SnsPostListener() {
+
+			@Override
+			public void onStart() {
+				AppContext.showToastShort(R.string.tip_start_share);
+			}
+
+			@Override
+			public void onComplete(SHARE_MEDIA arg0, int arg1,
+								   SocializeEntity arg2) {
+				AppContext.showToastShort(R.string.tip_share_done);
+			}
+		});
+	}
+
+	private void shareToWeiChatCircle() {
+		sp.shareToWeiChatCircle(getShareContent(), getShareContent(), getShareUrl(), "");
+	}
+
+	private void shareToWeiChat() {
+		sp.shareToWeiChat("实验助手", getShareContent(), getShareUrl(), "");
+	}
+
+	private void shareToSinaWeibo() {
+		// 设置腾讯微博SSO handler
+		mController.getConfig().setSsoHandler(new SinaSsoHandler());
+		if (OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.SINA)) {
+			shareContent(SHARE_MEDIA.SINA);
+		} else {
+			mController.doOauthVerify(getActivity(), SHARE_MEDIA.SINA,
+					new SocializeListeners.UMAuthListener() {
+
+						@Override
+						public void onStart(SHARE_MEDIA arg0) {
+						}
+
+						@Override
+						public void onError(SocializeException arg0,
+											SHARE_MEDIA arg1) {
+						}
+
+						@Override
+						public void onComplete(Bundle arg0, SHARE_MEDIA arg1) {
+							shareContent(SHARE_MEDIA.SINA);
+						}
+
+						@Override
+						public void onCancel(SHARE_MEDIA arg0) {
+						}
+					});
+		}
+	}
+
+	private void shareQQ() {
+		sp.shareToQQ("实验助手", getShareContent(), getShareUrl(),
+				"http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png", getActivity());
+	}
+
+	private void shareQZONE(){
+		sp.shareToQZone("实验助手", getShareContent(), getShareUrl(),
+				"http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png", getActivity());
+	}
+
 	@Override
 	public void onDestroyView() {
 		//UmengUpdateAgent.setUpdateListener(null);

@@ -262,8 +262,79 @@
             android:background="@color/list_item_background_normal"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:visibility="gone">
-            <RelativeLayout
+            android:visibility="gone"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:paddingRight="@dimen/space_8">
+
+            <ImageButton
+                android:id="@+id/btn_more"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/space_8"
+                android:background="@null"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/takephoto" />
+            <ImageButton
+                android:id="@+id/btn_emoji"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_toRightOf="@id/btn_more"
+                android:background="@null"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/at" />
+
+            <Button
+                android:id="@+id/btn_send"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/space_4"
+                android:background="@drawable/common_btn_selector"
+                android:contentDescription="@null"
+                android:gravity="center"
+                android:text="回答"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <net.oschina.app.v2.emoji.EmojiEditText
+                android:id="@+id/et_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/btn_send"
+                android:layout_toRightOf="@id/btn_emoji"
+                android:background="@drawable/comment_edittext_selector"
+                android:gravity="center_vertical"
+                android:minHeight="40dp"
+                android:paddingBottom="@dimen/space_2"
+                android:paddingLeft="10dp"
+                android:paddingRight="@dimen/space_26"
+                android:paddingTop="@dimen/space_2"
+                android:textColor="@color/black"
+                android:textColorHint="#FF0000"
+                android:maxLines="4"
+                android:textSize="@dimen/text_size_16" />
+
+            <TextView
+                android:id="@+id/tv_zhuiwen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@id/btn_send"
+                android:layout_toRightOf="@id/btn_emoji"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:text="追问:"
+                android:textColor="@color/main_green"
+                android:textSize="@dimen/text_size_16"
+                android:visibility="gone" />
+
+            <!--<RelativeLayout
                 android:id="@+id/tweet_rl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -284,7 +355,7 @@
                     android:src="@drawable/tweet_detail_more"
                     />
 
-                <!--<net.oschina.app.v2.emoji.EmojiEditText
+                &lt;!&ndash;<net.oschina.app.v2.emoji.EmojiEditText
                     android:id="@+id/et_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -299,7 +370,7 @@
                     android:paddingTop="@dimen/space_2"
                     android:textColor="@color/black"
                     android:textColorHint="#FF0000"
-                    android:textSize="@dimen/text_size_16" />-->
+                    android:textSize="@dimen/text_size_16" />&ndash;&gt;
                 <TextView
                     android:id="@+id/et_input"
                     android:layout_width="match_parent"
@@ -348,7 +419,7 @@
                 android:layout_marginRight="20dp"
                 android:visibility="gone">
 
-                <!--<RelativeLayout
+                &lt;!&ndash;<RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -369,7 +440,7 @@
                         android:layout_marginTop="4dp"
                         android:textColor="@color/main_gray"
                         android:gravity="center"/>
-                </RelativeLayout>-->
+                </RelativeLayout>&ndash;&gt;
 
 
                 <RelativeLayout
@@ -423,7 +494,7 @@
                 </RelativeLayout>
 
 
-                <!--<RelativeLayout
+                &lt;!&ndash;<RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -447,9 +518,9 @@
                         android:textColor="@color/main_gray"
                         android:gravity="center"
                         />
-                </RelativeLayout>-->
+                </RelativeLayout>&ndash;&gt;
 
-            </LinearLayout>
+            </LinearLayout>-->
         </RelativeLayout>
     </LinearLayout>
 

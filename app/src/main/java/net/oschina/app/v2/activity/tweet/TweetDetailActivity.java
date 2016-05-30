@@ -71,6 +71,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -113,10 +114,10 @@ public class TweetDetailActivity extends BaseActivity {
     private View mBottomView;
     private Button mButton;
     private TextView tv_zhuiwen, mTvActionTitle;
-    private LinearLayout mMoreLinear,ll_tweet_detail;
-    private TextView mEtInput;
-    private ImageView mBtnEmoji, mBtnMore;
-    private ImageView mBtnSend;
+    private LinearLayout ll_tweet_detail;
+    private EmojiEditText mEtInput;
+    private ImageButton mBtnEmoji, mBtnMore;
+    private Button mBtnSend;
     private TextView mTvAsk, mTvRank, mTvTime, mTvTitle, mTvCommentCount,mTvHits,mTvFromContent;
     private ImageView mIvPic;
     private RelativeLayout reward_layout;
@@ -199,18 +200,6 @@ public class TweetDetailActivity extends BaseActivity {
         tv_zhuiwen = (TextView) findViewById(R.id.tv_zhuiwen);
         mBottomView = findViewById(R.id.bottomview);
         mButton = (Button) findViewById(R.id.button);
-     /*   ll_tweet_detail = (LinearLayout) findViewById(R.id.ll_tweet_detail);
-        ll_tweet_detail.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                mHandler.sendMessageDelayed(mHandler.obtainMessage(1), 2000);
-               *//* imm = (InputMethodManager) v.getContext().getSystemService(Service.INPUT_METHOD_SERVICE);
-                boolean isOpen = imm.isActive();
-                if(!isOpen){
-                    closePopWin();
-                }*//*
-            }
-        });*/
 
         intiPopMenu();
 
@@ -234,16 +223,24 @@ public class TweetDetailActivity extends BaseActivity {
         imm = (InputMethodManager)getSystemService(Service.INPUT_METHOD_SERVICE);
 
         mTextView = findViewById(R.id.ly_bottom);
-        mBtnEmoji = (ImageView) findViewById(R.id.btn_emoji);
-        mBtnSend = (ImageView) findViewById(R.id.btn_send);
-        mBtnMore = (ImageView) findViewById(R.id.btn_more);
-        mMoreLinear = (LinearLayout) findViewById(R.id.tweet_detail_more_ll);
-        mEtInput = (TextView) findViewById(R.id.et_input);
+        mBtnEmoji = (ImageButton) findViewById(R.id.btn_emoji);
+        mBtnSend = (Button) findViewById(R.id.btn_send);
+        mBtnMore = (ImageButton) findViewById(R.id.btn_more);
+        mEtInput = (EmojiEditText) findViewById(R.id.et_input);
         mEtInput.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
 
-                mPopMenuContent = (LinearLayout)getLayoutInflater().inflate(R.layout.tweet_detail_editbox_layout, null);
+                EmojiEditText editText = ((EmojiEditText) v);
+                if (null != editText.getmHeaderUnDelete()) {
+                    int index = editText.getmHeaderUnDelete().length();
+                    if (index > editText.getSelectionStart()) {
+                        editText.setSelection(index);
+                    }
+                }
+            }
+
+                /*mPopMenuContent = (LinearLayout)getLayoutInflater().inflate(R.layout.tweet_detail_editbox_layout, null);
                 mPopupWindow.setContentView(mPopMenuContent);
 
                 editText = (EmojiEditText) mPopMenuContent.findViewById(R.id.editbox_input);
@@ -299,8 +296,7 @@ public class TweetDetailActivity extends BaseActivity {
 
                 showPopMenu();
 
-                editText.requestFocus();
-            }
+                editText.requestFocus();*/
         });
 
         reward_layout = (RelativeLayout) findViewById(R.id.reward_layout);
@@ -375,7 +371,7 @@ public class TweetDetailActivity extends BaseActivity {
                 });
             } else {
                 mBtnEmoji.setImageDrawable(getResources().getDrawable(
-                        R.drawable.at));
+                        R.drawable.at_forbid));
                 mBtnEmoji.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -385,7 +381,7 @@ public class TweetDetailActivity extends BaseActivity {
             }
         } else {
             mBtnEmoji.setImageDrawable(getResources().getDrawable(
-                    R.drawable.at));
+                    R.drawable.at_forbid));
             mBtnEmoji.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -977,14 +973,14 @@ public class TweetDetailActivity extends BaseActivity {
         mBtnSend.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (visibility_Flag) {
+                /*if (visibility_Flag) {
                     mMoreLinear.setVisibility(View.GONE);
                     visibility_Flag = false;
                 } else {
                     mMoreLinear.setVisibility(View.VISIBLE);
                     visibility_Flag = true;
-                }
-                /*String text = mEtInput.getText().toString();
+                }*/
+                String text = mEtInput.getText().toString();
 				mEtInput.getText().clear(); //快速按确定按钮会出现多条回复
 				if(!TextUtils.isEmpty(toSomeone)){
 					text=text.replaceAll(toSomeone, "");
@@ -1009,8 +1005,7 @@ public class TweetDetailActivity extends BaseActivity {
 				}
 				
 				NewsApi.subComment(id, uid, false, text, relation, superlist,
-						msubHandler);*/
-
+						msubHandler);
             }
         });
         pickView.setOnMediaPickerListener(new MyMediaPickerListener(1, null));

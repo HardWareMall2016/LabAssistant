@@ -344,7 +344,11 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
 
             if (type == 2 && position != 0 && position != 1) {
-                viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_green_bg);
+                if(itemModel.getAuid() == AppContext.instance().getLoginUid()){
+                    viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_white_bg);
+                }else{
+                    viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_green_bg);
+                }
                 viewHolder.rightContentTxt.setVisibility(View.VISIBLE);
                 viewHolder.rightContentTxt.setText("");
                 viewHolder.rightContentTxt.append("回复");
@@ -395,7 +399,11 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
                 }
             } else {
-                viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_blue_bg);
+                if(itemModel.getAuid() == AppContext.instance().getLoginUid()){
+                    viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_green_bg);
+                }else{
+                    viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_blue_bg);
+                }
                 if (!StringUtils.isEmpty(itemModel.getImage())) {
                     viewHolder.rightContentImage.setVisibility(View.VISIBLE);
                     String contentImg = ApiHttpClient.getImageApiUrl(itemModel

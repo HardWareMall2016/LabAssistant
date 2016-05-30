@@ -68,8 +68,8 @@
                 android:layout_centerVertical="true">
                 <ImageView
                     android:id="@+id/left_chat_conent_image"
-                    android:layout_width="72dp"
-                    android:layout_height="54dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:contentDescription="@null"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_default_pic" />

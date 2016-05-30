@@ -219,7 +219,7 @@
                     android:background="@color/transparent"
                     android:focusable="false"
                     android:text="@string/lb_zhuiwen"
-                    android:drawableLeft="@drawable/read_bg"
+                    android:drawableLeft="@drawable/wsnum"
                     android:textColor="@color/main_black"
                     android:textSize="@dimen/text_size_14"
                     android:gravity="center"/>

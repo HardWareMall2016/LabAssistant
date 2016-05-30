@@ -7,7 +7,6 @@ import net.oschina.app.v2.activity.tweet.CommunicatActivity;
 import net.oschina.app.v2.api.ApiHttpClient;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.ListBaseAdapter;
-import net.oschina.app.v2.utils.ImageLoderOptionUtil;
 import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.UIHelper;
 
@@ -41,7 +40,6 @@ import android.widget.Toast;
 import android.widget.TextView.BufferType;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
@@ -64,7 +62,6 @@ public class CommunicatAdapter extends ListBaseAdapter implements
     private static final int LEFT_TYPE = 1;
     private static final int RIGHT_TYPE = 2;
 
-    private DisplayImageOptions options;
     private int type;
     //private int aid ;
 
@@ -97,8 +94,6 @@ public class CommunicatAdapter extends ListBaseAdapter implements
     @Override
     protected View getRealView(int position, View convertView,
                                final ViewGroup parent) {
-
-        options= ImageLoderOptionUtil.buldDisplayImageOptionsForAvatar();
         final ViewHolder viewHolder;
         int viewType = getViewType(position);
 
@@ -210,7 +205,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                     String contentImg = ApiHttpClient.getImageApiUrl(itemModel
                             .getImage());
                     ImageLoader.getInstance().displayImage(contentImg,
-                            viewHolder.leftContentImage, options,new SimpleImageLoadingListener() {
+                            viewHolder.leftContentImage, new SimpleImageLoadingListener() {
                                 @Override
                                 public void onLoadingStarted(String imageUri, View view) {
                                     viewHolder.leftContentImageBar.setProgress(0);
@@ -269,7 +264,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                     String contentImg = ApiHttpClient.getImageApiUrl(itemModel
                             .getImage());
                     ImageLoader.getInstance().displayImage(contentImg,
-                            viewHolder.leftContentImage, options,new SimpleImageLoadingListener() {
+                            viewHolder.leftContentImage, new SimpleImageLoadingListener() {
                                 @Override
                                 public void onLoadingStarted(String imageUri, View view) {
                                     viewHolder.leftContentImageBar.setProgress(0);
@@ -344,11 +339,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
 
             if (type == 2 && position != 0 && position != 1) {
-                if(itemModel.getAuid() == AppContext.instance().getLoginUid()){
-                    viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_white_bg);
-                }else{
-                    viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_green_bg);
-                }
+                viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_green_bg);
                 viewHolder.rightContentTxt.setVisibility(View.VISIBLE);
                 viewHolder.rightContentTxt.setText("");
                 viewHolder.rightContentTxt.append("回复");
@@ -364,12 +355,13 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                 } else {
                     viewHolder.rightContentImage.setVisibility(View.VISIBLE);
 
-                    String contentImg = ApiHttpClient.getImageApiUrl(itemModel.getImage());
+                    String contentImg = ApiHttpClient.getImageApiUrl(itemModel
+                            .getImage());
                     ImageLoader.getInstance().displayImage(contentImg,
-                            viewHolder.rightContentImage,options, new SimpleImageLoadingListener() {
+                            viewHolder.rightContentImage, new SimpleImageLoadingListener() {
                                 @Override
                                 public void onLoadingStarted(String imageUri, View view) {
-                                   // viewHolder.rightContentImageBar.setProgress(0);
+                                    viewHolder.rightContentImageBar.setProgress(0);
                                     viewHolder.rightContentImageBar.setVisibility(View.VISIBLE);
                                 }
 
@@ -399,17 +391,13 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
                 }
             } else {
-                if(itemModel.getAuid() == AppContext.instance().getLoginUid()){
-                    viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_green_bg);
-                }else{
-                    viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_blue_bg);
-                }
+                viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_blue_bg);
                 if (!StringUtils.isEmpty(itemModel.getImage())) {
                     viewHolder.rightContentImage.setVisibility(View.VISIBLE);
                     String contentImg = ApiHttpClient.getImageApiUrl(itemModel
                             .getImage());
                     ImageLoader.getInstance().displayImage(contentImg,
-                            viewHolder.rightContentImage, options,new SimpleImageLoadingListener() {
+                            viewHolder.rightContentImage, new SimpleImageLoadingListener() {
                                 @Override
                                 public void onLoadingStarted(String imageUri, View view) {
                                     viewHolder.rightContentImageBar.setProgress(0);

@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.shiyanzhushou.app.R;
@@ -40,7 +41,7 @@ public class ShareHelper {
 
 	public ShareHelper(Context context) {
 		this.context = context;
-		mController = UMServiceFactory.getUMSocialService("myshare");
+		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 		mController.getConfig().closeToast();
 	}
 
@@ -286,13 +287,17 @@ public class ShareHelper {
 
 					@Override
 					public void onStart() {
-						 //AppContext.showToastShort(R.string.tip_start_share);
+						 AppContext.showToastShort(R.string.tip_start_share);
 					}
 
 					@Override
 					public void onComplete(SHARE_MEDIA arg0, int arg1,
 							SocializeEntity arg2) {
-						 //AppContext.showToastShort(R.string.tip_share_done);
+						if (arg1 == 200) {
+							AppContext.showToastShort(R.string.tip_share_done);
+						} else {
+							Toast.makeText(context,"分享失败 : error code : " + arg1, Toast.LENGTH_SHORT).show();
+						}
 					}
 				});
 	}
@@ -319,14 +324,19 @@ public class ShareHelper {
 
 					@Override
 					public void onStart() {
-						//AppContext.showToastShort(R.string.tip_start_share);
+						AppContext.showToastShort(R.string.tip_start_share);
 					}
 
 
 					@Override
 					public void onComplete(SHARE_MEDIA arg0, int arg1,
 										   SocializeEntity arg2) {
-						//AppContext.showToastShort(R.string.tip_share_done);
+						Log.e("------->>>>",arg1+"");
+						if (arg1 == 200) {
+							AppContext.showToastShort(R.string.tip_share_done);
+						} else {
+							Toast.makeText(context,"分享失败 : error code : " + arg1, Toast.LENGTH_SHORT).show();
+						}
 					}
 				});
 

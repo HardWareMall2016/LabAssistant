@@ -436,10 +436,16 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="54a90bc9fd98c597700008de"></meta-data>
+            android:value="54b9aefefd98c5f227000907"></meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="channel_beta"></meta-data>
+       <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
         <activity
             android:name="net.oschina.app.wxapi.WXEntryActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"

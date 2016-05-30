@@ -19,7 +19,7 @@ public class Constants {
 	public static final String WEICHAT_SECRET = "06e10550a54e0500e89ac7460b933926";*/
 	
 	public static final String WEICHAT_APPID = "wxaea6f7ec5263cd4e";
-	public static final String WEICHAT_SECRET = "3f9f860892bac13cb326640fa06355a2";
+	public static final String WEICHAT_SECRET = "54b9aefefd98c5f227000907";
 	
 	//public static final String QQ_APPID = "100424468";
 	//public static final String QQ_APPKEY = "c7394704798a158208a74ab60104f0ba";

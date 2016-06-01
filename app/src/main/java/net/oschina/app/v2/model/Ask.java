@@ -35,7 +35,7 @@ public class Ask extends Entity {
 	private String company;
 	private int isanswer;
 	private int from;
-	private int hits;
+	private String hits;
 
 	public Ask() {
 
@@ -201,11 +201,11 @@ public class Ask extends Entity {
 	public void setIsanswer(int isanswer) {
 		this.isanswer = isanswer;
 	}
-	public int getHits() {
+	public String getHits() {
 		return hits;
 	}
 
-	public void setHits(int hits) {
+	public void setHits(String hits) {
 		this.hits = hits;
 	}
 
@@ -232,7 +232,7 @@ public class Ask extends Entity {
 		ask.setCompany(response.optString("company"));
 		ask.setIsanswer(response.optInt("isanswer"));
 		ask.setFrom(response.optInt("from"));
-		ask.setHits(response.optInt("hits"));
+		ask.setHits(response.optString("hits"));
 		return ask;
 	}
 

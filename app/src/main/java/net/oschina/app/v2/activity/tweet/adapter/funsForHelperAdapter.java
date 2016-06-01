@@ -125,7 +125,7 @@ public class funsForHelperAdapter extends ListBaseAdapter {
 			vh.fromContent.setVisibility(View.VISIBLE);
 		}
 
-		vh.readNum.setText(String.valueOf(item.getHits()));
+		vh.readNum.setText(item.getHits());
 
 		String supper = item.getsuperlist();
 		if (!TextUtils.isEmpty(supper) && !"null".equals(supper)) {

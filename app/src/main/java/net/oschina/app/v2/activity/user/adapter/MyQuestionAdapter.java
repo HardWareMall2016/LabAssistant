@@ -86,7 +86,7 @@ public class MyQuestionAdapter extends ListBaseAdapter {
 			vh.fromContent.setVisibility(View.INVISIBLE);
 		}
 
-		vh.readNum.setText(String.valueOf(question.getHits()));
+		vh.readNum.setText(question.getHits());
 
 		vh.tv_times.setText(question.getIntputtime());
 		final int count=question.getNewreply();

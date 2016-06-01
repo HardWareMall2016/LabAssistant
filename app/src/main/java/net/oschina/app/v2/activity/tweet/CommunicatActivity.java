@@ -13,6 +13,7 @@ import net.oschina.app.v2.model.Comment;
 import net.oschina.app.v2.model.event.AdoptSuccEvent;
 import net.oschina.app.v2.ui.dialog.CommonDialog;
 import net.oschina.app.v2.ui.dialog.DialogHelper;
+import net.oschina.app.v2.ui.dialog.WaitDialog;
 import net.oschina.app.v2.utils.TDevice;
 import net.oschina.app.v2.utils.UIHelper;
 
@@ -217,6 +218,11 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 		btnTakePhoto.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if (type != 1&&TextUtils.isEmpty(emojiEditText.getHeader())) {
+					AppContext.showToastShort(R.string.tip_null_direct_person_empty);
+					return;
+				}
+
 				pickView.setOnMediaPickerListener(new OnMediaPickerListener() {
 					@Override
 					public void onSelectedMediaChanged(String imageUrl) {
@@ -452,6 +458,7 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 							int id = ask.getId();
 							int uid = AppContext.instance().getLoginUid();
 							if (type == 1) {
+								showSendWaitDialog();
 								NewsApi.subComment(id, uid, false, comment.getId(), null, imageUrl,
 										false, null, msubHandler);
 							} else if (type == 2) {
@@ -502,6 +509,7 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 				reset();//2015-02-28，添加，隐藏输入法
 				int id = ask.getId();
 				int uid = AppContext.instance().getLoginUid();
+				showSendWaitDialog();
 				NewsApi.subComment(id, uid, false, comment.getId(), text, false, null,
 						msubHandler);
 			}
@@ -584,6 +592,24 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 				e1.printStackTrace();
 			}
 		}
+
+		@Override
+		public void onFinish() {
+			closeSendWaitDialog();
+			super.onFinish();
+		}
+
+		@Override
+		public void onSuccess(int statusCode, Header[] headers, String responseString) {
+			closeSendWaitDialog();
+			super.onSuccess(statusCode, headers, responseString);
+		}
+
+		@Override
+		public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+			closeSendWaitDialog();
+			super.onFailure(statusCode, headers, responseString, throwable);
+		}
 	};
 
 	private JsonHttpResponseHandler mCommentAfterHandler = new JsonHttpResponseHandler() {
@@ -619,5 +645,19 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		pickView.onActivityResult(requestCode, resultCode, data);
+	}
+	private WaitDialog mWaitDialog;
+
+	private void showSendWaitDialog(){
+		closeSendWaitDialog();
+		mWaitDialog=DialogHelper.getWaitDialog(this,"正在发送中...");
+		mWaitDialog.show();
+	}
+
+	private void closeSendWaitDialog(){
+		if(mWaitDialog!=null&&mWaitDialog.isShowing()){
+			mWaitDialog.dismiss();
+			mWaitDialog=null;
+		}
 	}
 }

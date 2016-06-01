@@ -595,7 +595,7 @@ public class TweetDetailActivity extends BaseActivity {
                 }
                 this.superlist = builder.toString();
                 toSomeone = sb.toString();
-                //	mEtInput.setHeaderUnDelete(sb.toString());
+                mEtInput.setHeaderUnDelete(sb.toString());
 
             }
         }
@@ -1036,7 +1036,7 @@ public class TweetDetailActivity extends BaseActivity {
 
     private void showSendWaitDialog(){
         closeSendWaitDialog();
-        mWaitDialog=DialogHelper.getWaitDialog(this,"正在发生中...");
+        mWaitDialog=DialogHelper.getWaitDialog(this,"正在发送中...");
         mWaitDialog.show();
     }
 

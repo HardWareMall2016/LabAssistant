@@ -1235,7 +1235,6 @@ public class NewsApi extends BaseApi {
 			String content, boolean relation, String superlist,
 			JsonHttpResponseHandler handler) {
 		JSONObject jsonObject = new JSONObject();
-		Log.d("wuyue",Log.getStackTraceString(new Throwable()));
 		try {
 			int type = isZhuiwen ? 1 : 0;
 			int isaskhigh = relation ? 1 : 2;

@@ -218,6 +218,11 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 		btnTakePhoto.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if (type != 1&&TextUtils.isEmpty(emojiEditText.getHeader())) {
+					AppContext.showToastShort(R.string.tip_null_direct_person_empty);
+					return;
+				}
+
 				pickView.setOnMediaPickerListener(new OnMediaPickerListener() {
 					@Override
 					public void onSelectedMediaChanged(String imageUrl) {

@@ -156,13 +156,13 @@ public class ShareHelper {
 		mController.postShare(context, SHARE_MEDIA.QQ, new SnsPostListener() {
 			@Override
 			public void onStart() {
-				AppContext.showToastShort(R.string.tip_start_share);
+				//AppContext.showToastShort(R.string.tip_start_share);
 			}
 
 			@Override
 			public void onComplete(SHARE_MEDIA arg0, int arg1,
 					SocializeEntity arg2) {
-				AppContext.showToastShort(R.string.tip_share_done);
+				//AppContext.showToastShort(R.string.tip_share_done);
 			}
 		});
 		
@@ -192,13 +192,13 @@ public class ShareHelper {
 
 					@Override
 					public void onStart() {
-						AppContext.showToastShort(R.string.tip_start_share);
+						//AppContext.showToastShort(R.string.tip_start_share);
 					}
 
 					@Override
 					public void onComplete(SHARE_MEDIA arg0, int arg1,
 							SocializeEntity arg2) {
-						AppContext.showToastShort(R.string.tip_share_done);
+						//AppContext.showToastShort(R.string.tip_share_done);
 					}
 				});
 				
@@ -287,16 +287,16 @@ public class ShareHelper {
 
 					@Override
 					public void onStart() {
-						 AppContext.showToastShort(R.string.tip_start_share);
+						 //AppContext.showToastShort(R.string.tip_start_share);
 					}
 
 					@Override
 					public void onComplete(SHARE_MEDIA arg0, int arg1,
 							SocializeEntity arg2) {
 						if (arg1 == 200) {
-							AppContext.showToastShort(R.string.tip_share_done);
+							//AppContext.showToastShort(R.string.tip_share_done);
 						} else {
-							Toast.makeText(context,"分享失败 : error code : " + arg1, Toast.LENGTH_SHORT).show();
+							AppContext.showToastShort("分享失败");
 						}
 					}
 				});
@@ -324,18 +324,17 @@ public class ShareHelper {
 
 					@Override
 					public void onStart() {
-						AppContext.showToastShort(R.string.tip_start_share);
+						//AppContext.showToastShort(R.string.tip_start_share);
 					}
 
 
 					@Override
 					public void onComplete(SHARE_MEDIA arg0, int arg1,
 										   SocializeEntity arg2) {
-						Log.e("------->>>>",arg1+"");
 						if (arg1 == 200) {
-							AppContext.showToastShort(R.string.tip_share_done);
+							//AppContext.showToastShort(R.string.tip_share_done);
 						} else {
-							Toast.makeText(context,"分享失败 : error code : " + arg1, Toast.LENGTH_SHORT).show();
+							AppContext.showToastShort("分享失败");
 						}
 					}
 				});

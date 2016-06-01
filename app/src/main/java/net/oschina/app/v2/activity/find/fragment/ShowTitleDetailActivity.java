@@ -116,6 +116,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 	}
 
 	private TextView textTitle;
+	private ImageView shareBtn ;
 
 	protected void initActionBar(ActionBar actionBar) {
 		if (actionBar == null)
@@ -128,7 +129,8 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 
 		View btn_back = view.findViewById(R.id.btn_back);
 
-		ImageView shareBtn = (ImageView) view.findViewById(R.id.btn_share);
+		shareBtn = (ImageView) view.findViewById(R.id.btn_share);
+
 		TextView tv_back = (TextView) view.findViewById(R.id.tv_back);
 
 		tv_back.setOnClickListener(new View.OnClickListener() {
@@ -223,6 +225,9 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 		fromSource = intent.getIntExtra("fromSource", 0);
 		fromTitle = intent.getIntExtra("fromTitle", R.string.app_name);
 		textTitle.setText(getText(fromTitle));
+		if(("培训信息").equals(getText(fromTitle))){
+			shareBtn.setVisibility(View.VISIBLE);
+		}
 
 		tv_td_title = (TextView) findViewById(R.id.tv_title);
 		tv_td_time = (TextView) findViewById(R.id.tv_time);
@@ -432,8 +437,14 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 					ShareCount(3);
 					break;
 			    case QQ:
-			    	shareToQQ(title, title, url,
-							ApiHttpClient.getImageApiUrl(thumb));
+			    	/*shareToQQ(title, title, url,
+							ApiHttpClient.getImageApiUrl(thumb));*/
+					shareHelper.shareToQQ(
+							title,
+							title,
+							url,
+							ApiHttpClient.getImageApiUrl(thumb),
+							ShowTitleDetailActivity.this);
 					ShareCount(4);
 					break;
 				case QZONE:
@@ -467,13 +478,13 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 
 			@Override
 			public void onStart() {
-				AppContext.showToastShort(R.string.tip_start_share);
+				//AppContext.showToastShort(R.string.tip_start_share);
 			}
 
 			@Override
 			public void onComplete(SHARE_MEDIA arg0, int arg1,
 					SocializeEntity arg2) {
-				AppContext.showToastShort(R.string.tip_share_done);
+				//AppContext.showToastShort(R.string.tip_share_done);
 			}
 		});
 	}
@@ -502,13 +513,13 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 
 					@Override
 					public void onStart() {
-						AppContext.showToastShort(R.string.tip_start_share);
+						//AppContext.showToastShort(R.string.tip_start_share);
 					}
 
 					@Override
 					public void onComplete(SHARE_MEDIA arg0, int arg1,
 							SocializeEntity arg2) {
-						AppContext.showToastShort(R.string.tip_share_done);
+						//AppContext.showToastShort(R.string.tip_share_done);
 					}
 				});
 	}

@@ -68,12 +68,12 @@ public class MyAnswerAdapter extends ListBaseAdapter{
 		
 		vh.question_title_tv.setText(answer.getTitle());
 		vh.question_time_tv.setText(answer.getInputtime());
-/*
-		vh.question_category_tv.setText(Html.fromHtml("标签:<font color=#2FBDE7>" + answer.getLabel()
-				+ "</font>"));
-*/
 
-		String label = answer.getLabel();
+		vh.question_category_tv.setText(Html.fromHtml("<font color=#2FBDE7>" + answer.getLabel()
+				+ "</font>"));
+
+
+		/*String label = answer.getLabel();
 		if (TextUtils.isEmpty(label)) {
 			label = "暂无";
 			vh.question_category_tv.setText(Html.fromHtml("<font color=#2FBDE7>" + label
@@ -82,7 +82,7 @@ public class MyAnswerAdapter extends ListBaseAdapter{
 			vh.question_category_tv.setText(label);
 			int labelBackgroundId= LabelUtils.getBgResIdByLabel(label);
 			vh.question_category_tv.setBackgroundResource(labelBackgroundId);
-		}
+		}*/
 		
 		
 		if(!StringUtils.isEmpty(answer.getContent())&&!"null".equals(answer.getContent())){

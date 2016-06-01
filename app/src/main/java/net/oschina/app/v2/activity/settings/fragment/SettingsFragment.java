@@ -147,7 +147,7 @@ public class SettingsFragment extends BaseFragment {
     }
 
     private void shareToWeiChatCircle() {
-        sp.shareToWeiChatCircle(getShareContent(), getShareContent(), getShareUrl(), "");
+        sp.shareToWeiChatCircle(getShareContent(), getShareContent(), getShareUrl(), "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
     	// 支持微信朋友圈
 	/*	UMWXHandler wxCircleHandler = new UMWXHandler(getActivity(),
 				Constants.WEICHAT_APPID, Constants.WEICHAT_SECRET);
@@ -178,7 +178,7 @@ public class SettingsFragment extends BaseFragment {
     }
 
     private void shareToWeiChat() {
-        sp.shareToWeiChat("实验助手", getShareContent(), getShareUrl(), "");
+        sp.shareToWeiChat("实验助手", getShareContent(), getShareUrl(), "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
     }
 
     private void shareToSinaWeibo() {

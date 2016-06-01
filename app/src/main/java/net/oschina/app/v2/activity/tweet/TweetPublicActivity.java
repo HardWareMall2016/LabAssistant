@@ -32,6 +32,7 @@ import net.oschina.app.v2.model.popupbuttonlibrary.PopupButton;
 import net.oschina.app.v2.model.popupbuttonlibrary.adapter.PopupAdapter;
 import net.oschina.app.v2.ui.dialog.CommonDialog;
 import net.oschina.app.v2.ui.dialog.DialogHelper;
+import net.oschina.app.v2.ui.dialog.WaitDialog;
 import net.oschina.app.v2.utils.DeviceUtils;
 import net.oschina.app.v2.utils.ImageUtils;
 import net.oschina.app.v2.utils.SimpleTextWatcher;
@@ -421,7 +422,6 @@ public class TweetPublicActivity extends BaseActivity implements
 					// startActivity(intent);
 					return;
 				}
-				showWaitDialog();
 				handleSubmit();
 
 			}
@@ -465,6 +465,7 @@ public class TweetPublicActivity extends BaseActivity implements
 			return;
 		}
 
+		showSendWaitDialog();
 		if (imgFile != null && imgFile.exists()) {
 			uploadImage(content, imgFile.getAbsolutePath());
 		} else {
@@ -483,7 +484,7 @@ public class TweetPublicActivity extends BaseActivity implements
 			@Override
 			public void handleMessage(Message msg) {
 				try {
-					hideWaitDialog();
+					closeSendWaitDialog();
 					switch (msg.what) {
 					case 1:
 						String returnStr = msg.getData().getString("return");
@@ -526,7 +527,6 @@ public class TweetPublicActivity extends BaseActivity implements
 		public void onSuccess(int statusCode, Header[] headers,
 				JSONObject response) {
 			try {
-				hideWaitDialog();
 				if (response.getInt("code") == 88) {
 					//AppContext.showToast("提问成功！");
 					String string = response.getString("data");
@@ -554,7 +554,22 @@ public class TweetPublicActivity extends BaseActivity implements
 
 		public void onFinish() {
 			mState = STATE_NONE;
+			closeSendWaitDialog();
 		}
+
+		@Override
+		public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+			closeSendWaitDialog();
+			super.onFailure(statusCode, headers, responseString, throwable);
+		}
+
+		@Override
+		public void onSuccess(int statusCode, Header[] headers, String responseString) {
+			closeSendWaitDialog();
+			super.onSuccess(statusCode, headers, responseString);
+		}
+
+
 	};
 	
 	private JsonHttpResponseHandler mRefreshScoreHandler = new JsonHttpResponseHandler() {
@@ -973,4 +988,18 @@ public class TweetPublicActivity extends BaseActivity implements
 		mEtInput.delete();
 	}
 
+	private WaitDialog mWaitDialog;
+
+	private void showSendWaitDialog(){
+		closeSendWaitDialog();
+		mWaitDialog=DialogHelper.getWaitDialog(this,"正在发生中...");
+		mWaitDialog.show();
+	}
+
+	private void closeSendWaitDialog(){
+		if(mWaitDialog!=null&&mWaitDialog.isShowing()){
+			mWaitDialog.dismiss();
+			mWaitDialog=null;
+		}
+	}
 }

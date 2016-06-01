@@ -619,7 +619,7 @@ public class NewsApi extends BaseApi {
 		JSONObject jsonObject = new JSONObject();
 
 		try {
-			jsonObject.put("uid", 1);
+			jsonObject.put("uid", uid);
 			jsonObject.put("type", 1);
 		} catch (Exception e) {
 		}
@@ -652,7 +652,7 @@ public class NewsApi extends BaseApi {
 		JSONObject jsonObject = new JSONObject();
 
 		try {
-			jsonObject.put("uid", 1);
+			jsonObject.put("uid", uid);
 			jsonObject.put("type", 0);
 
 		} catch (Exception e) {

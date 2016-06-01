@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.List;
 
+import net.oschina.app.v2.AppContext;
 import net.oschina.app.v2.activity.RankActivity;
 import net.oschina.app.v2.activity.find.adapter.WeekRankListAdapter;
 import net.oschina.app.v2.api.remote.NewsApi;
@@ -133,7 +134,7 @@ public class TotalRankFragment extends BaseListFragment {
 			mErrorLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
 		}
 		
-		NewsApi.getTotalRankList(1, mCurrentPage, RankActivity.categoryType,mJsonHandler);
+		NewsApi.getTotalRankList(AppContext.instance().getLoginUid(), mCurrentPage, RankActivity.categoryType,mJsonHandler);
 	}
 	
 	@Override

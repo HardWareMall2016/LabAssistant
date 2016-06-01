@@ -669,7 +669,7 @@ public class TweetDetailActivity extends BaseActivity {
 
                                 if (position == 0) {
                                     shareHelper.shareToSinaWeibo(
-                                            "问题分享" + ask.getContent(),
+                                            "分享问题" + ask.getContent(),
                                             url,
                                             "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
                                 } else if (position == 1) {

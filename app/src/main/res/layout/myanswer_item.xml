@@ -54,7 +54,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/question_title_tv"
                 android:layout_toRightOf="@+id/question_category_biaoqian"
-                android:layout_marginLeft="@dimen/space_10"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_12"
                 android:paddingLeft="4dp"

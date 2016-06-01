@@ -379,9 +379,18 @@ public class UIHelper {
 	 * @param newsId
 	 */
 	public static void showQuestionCase(Context context, Daily daily) {
-		Intent intent = new Intent(context, QuestionPageActivity.class);
+
+		//changeb by wuyue
+
+		/*Intent intent = new Intent(context, QuestionPageActivity.class);
 		intent.putExtra("catid", daily.getId());
 		intent.putExtra("type", daily.getArticalType());
+		context.startActivity(intent);*/
+
+		Intent intent = new Intent(context, ShowTitleDetailActivity.class);
+		intent.putExtra("id", daily.getId());
+		intent.putExtra("fromTitle", R.string.find_shoushouribao);
+		intent.putExtra("img", daily.getThumb());
 		context.startActivity(intent);
 	}
 	

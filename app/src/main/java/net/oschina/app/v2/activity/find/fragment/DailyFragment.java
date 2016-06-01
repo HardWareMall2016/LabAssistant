@@ -157,6 +157,7 @@ public class DailyFragment extends BaseListFragment {
 			titleDaily.setWenJuan(daily.isWenJuan());
 			titleDaily.setNotice(daily.getNotice());
 			titleDaily.setAllowShare(daily.getAllowShare());
+			titleDaily.setArticalType(daily.getArticalType());
 			dailyList.add(0, titleDaily);
 			dailyList.remove(2);
 			dailyList.remove(1);

@@ -12,6 +12,7 @@ import net.oschina.app.v2.model.Home;
 import net.oschina.app.v2.ui.text.MyLinkMovementMethod;
 import net.oschina.app.v2.ui.text.TweetTextView;
 import net.oschina.app.v2.utils.BitmapLoaderUtil;
+import net.oschina.app.v2.utils.LabelUtils;
 import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.UIHelper;
 import android.content.Context;
@@ -124,12 +125,24 @@ public class HomeAdapter extends ListBaseAdapter {
 				vh.tv_byask.setText("");
 			}
 
-			if (!StringUtils.isEmpty(item.getLable())
+			/*if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
 				vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>"
 						+ item.getLable() + "</font>"));
 			} else {
 				vh.from.setText("");
+			}*/
+			if (!StringUtils.isEmpty(item.getLable())
+					&& !"null".equals(item.getLable())) {
+				vh.fromContent.setText(item.getLable());
+				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
+				vh.fromContent.setBackgroundResource(labelBackgroundId);
+				vh.from.setVisibility(View.VISIBLE);
+				vh.fromContent.setVisibility(View.VISIBLE);
+			} else {
+				vh.from.setText("");
+				vh.from.setVisibility(View.GONE);// 标签
+				vh.fromContent.setVisibility(View.GONE);
 			}
 
 			vh.commentCount.setVisibility(View.VISIBLE);
@@ -170,12 +183,24 @@ public class HomeAdapter extends ListBaseAdapter {
 				vh.tv_byask.setText("");
 			}
 
-			if (!StringUtils.isEmpty(item.getLable())
+			/*if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
 				vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>"
 						+ item.getLable() + "</font>"));
 			} else {
 				vh.from.setText("");
+			}*/
+			if (!StringUtils.isEmpty(item.getLable())
+					&& !"null".equals(item.getLable())) {
+				vh.fromContent.setText(item.getLable());
+				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
+				vh.fromContent.setBackgroundResource(labelBackgroundId);
+				vh.from.setVisibility(View.VISIBLE);
+				vh.fromContent.setVisibility(View.VISIBLE);
+			} else {
+				vh.from.setText("");
+				vh.from.setVisibility(View.GONE);// 标签
+				vh.fromContent.setVisibility(View.GONE);
 			}
 
 			vh.ta_ans_label.setText(Html
@@ -222,12 +247,24 @@ public class HomeAdapter extends ListBaseAdapter {
 				vh.tv_byask.setText("");
 			}
 
-			if (!StringUtils.isEmpty(item.getLable())
+			/*if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
 				vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>"
 						+ item.getLable() + "</font>"));
 			} else {
 				vh.from.setText("");
+			}*/
+			if (!StringUtils.isEmpty(item.getLable())
+					&& !"null".equals(item.getLable())) {
+				vh.fromContent.setText(item.getLable());
+				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
+				vh.fromContent.setBackgroundResource(labelBackgroundId);
+				vh.from.setVisibility(View.VISIBLE);
+				vh.fromContent.setVisibility(View.VISIBLE);
+			} else {
+				vh.from.setText("");
+				vh.from.setVisibility(View.GONE);// 标签
+				vh.fromContent.setVisibility(View.GONE);
 			}
 
 			vh.commentCount.setVisibility(View.VISIBLE);
@@ -259,10 +296,17 @@ public class HomeAdapter extends ListBaseAdapter {
 
 			if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
-				vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>"
-						+ item.getLable() + "</font>"));
+				/*vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>"
+						+ item.getLable() + "</font>"));*/
+				vh.fromContent.setText(item.getLable());
+				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
+				vh.fromContent.setBackgroundResource(labelBackgroundId);
+				vh.from.setVisibility(View.VISIBLE);
+				vh.fromContent.setVisibility(View.VISIBLE);
 			} else {
 				vh.from.setText("");
+				vh.from.setVisibility(View.GONE);// 标签
+				vh.fromContent.setVisibility(View.GONE);
 			}
 			if (StringUtils.isEmpty(item.getContent())) {
 				vh.comment_pic.setVisibility(View.VISIBLE);
@@ -306,12 +350,24 @@ public class HomeAdapter extends ListBaseAdapter {
 
 			vh.tv_byask.setText("");
 
-			if (!StringUtils.isEmpty(item.getLable())
+			/*if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
 				vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>"
 						+ item.getLable() + "</font>"));
 			} else {
 				vh.from.setText("");
+			}*/
+			if (!StringUtils.isEmpty(item.getLable())
+					&& !"null".equals(item.getLable())) {
+				vh.fromContent.setText(item.getLable());
+				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
+				vh.fromContent.setBackgroundResource(labelBackgroundId);
+				vh.from.setVisibility(View.VISIBLE);
+				vh.fromContent.setVisibility(View.VISIBLE);
+			} else {
+				vh.from.setText("");
+				vh.from.setVisibility(View.GONE);// 标签
+				vh.fromContent.setVisibility(View.GONE);
 			}
 
 			vh.commentCount.setVisibility(View.GONE);
@@ -359,12 +415,24 @@ public class HomeAdapter extends ListBaseAdapter {
 
 			vh.tv_byask.setText("");
 
-			if (!StringUtils.isEmpty(item.getLable())
+			/*if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
 				vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>"
 						+ item.getLable() + "</font>"));
 			} else {
 				vh.from.setText("");
+			}*/
+			if (!StringUtils.isEmpty(item.getLable())
+					&& !"null".equals(item.getLable())) {
+				vh.fromContent.setText(item.getLable());
+				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
+				vh.fromContent.setBackgroundResource(labelBackgroundId);
+				vh.from.setVisibility(View.VISIBLE);
+				vh.fromContent.setVisibility(View.VISIBLE);
+			} else {
+				vh.from.setText("");
+				vh.from.setVisibility(View.GONE);// 标签
+				vh.fromContent.setVisibility(View.GONE);
 			}
 
 			vh.commentCount.setVisibility(View.GONE);
@@ -424,12 +492,24 @@ public class HomeAdapter extends ListBaseAdapter {
 				vh.tv_byask.setText("");
 			}
 
-			if (!StringUtils.isEmpty(item.getLable())
+			/*if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
 				vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>"
 						+ item.getLable() + "</font>"));
 			} else {
 				vh.from.setText("");
+			}*/
+			if (!StringUtils.isEmpty(item.getLable())
+					&& !"null".equals(item.getLable())) {
+				vh.fromContent.setText(item.getLable());
+				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
+				vh.fromContent.setBackgroundResource(labelBackgroundId);
+				vh.from.setVisibility(View.VISIBLE);
+				vh.fromContent.setVisibility(View.VISIBLE);
+			} else {
+				vh.from.setText("");
+				vh.from.setVisibility(View.GONE);// 标签
+				vh.fromContent.setVisibility(View.GONE);
 			}
 
 			vh.commentCount.setVisibility(View.VISIBLE);
@@ -459,13 +539,26 @@ public class HomeAdapter extends ListBaseAdapter {
 
 			vh.tv_byask.setText("");
 
-			if (!StringUtils.isEmpty(item.getLable())
+			/*if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
 				vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>"
 						+ item.getLable() + "</font>"));
 			} else {
 				vh.from.setText("");
+			}*/
+			if (!StringUtils.isEmpty(item.getLable())
+					&& !"null".equals(item.getLable())) {
+				vh.fromContent.setText(item.getLable());
+				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
+				vh.fromContent.setBackgroundResource(labelBackgroundId);
+				vh.from.setVisibility(View.VISIBLE);
+				vh.fromContent.setVisibility(View.VISIBLE);
+			} else {
+				vh.from.setText("");
+				vh.from.setVisibility(View.GONE);// 标签
+				vh.fromContent.setVisibility(View.GONE);
 			}
+
 			if (StringUtils.isEmpty(item.getContent())) {
 				vh.comment_pic.setVisibility(View.VISIBLE);
 			} else {
@@ -742,7 +835,7 @@ public class HomeAdapter extends ListBaseAdapter {
 	}
 
 	static class ViewHolder {
-		public TextView name, tv_byask, from, time, commentCount, ta_ans_label,
+		public TextView name, tv_byask, from,fromContent, time, commentCount, ta_ans_label,
 				mark, push_tv, comment_status,comment_pic;
 		public TweetTextView title;
 		public CircleImageView avatar;
@@ -755,6 +848,7 @@ public class HomeAdapter extends ListBaseAdapter {
 		public ViewHolder(View view) {
 			name = (TextView) view.findViewById(R.id.tv_name);
 			from = (TextView) view.findViewById(R.id.tv_from);
+			fromContent= (TextView) view.findViewById(R.id.tv_from_content); // 标签内容
 			tv_byask = (TextView) view.findViewById(R.id.tv_byask);
 			time = (TextView) view.findViewById(R.id.tv_time);
 			commentCount = (TextView) view.findViewById(R.id.tv_comment_count);

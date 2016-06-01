@@ -126,7 +126,7 @@
                         android:textColor="@color/main_gray"
                         android:textSize="@dimen/text_size_12" />
 
-                    <FrameLayout
+                    <RelativeLayout
                         android:id="@+id/group_fisrt"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/space_15"
@@ -136,23 +136,37 @@
 
                         <TextView
                             android:id="@+id/tv_from"
+                            android:layout_alignParentLeft="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
+                            android:text="标签:"
                             android:textColor="@color/main_gray"
+                            android:textSize="@dimen/text_size_12" />
+
+                        <TextView
+                            android:id="@+id/tv_from_content"
+                            android:layout_toRightOf="@id/tv_from"
+                            android:layout_alignBottom="@id/tv_from"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="4dp"
+                            android:paddingRight="4dp"
+                            android:layout_marginLeft="4dp"
+                            android:textColor="@color/white"
+                            android:visibility="gone"
                             android:textSize="@dimen/text_size_12" />
 
                         <TextView
                             android:id="@+id/tv_comment_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="right"
+                            android:layout_alignParentRight="true"
                             android:drawableLeft="@drawable/myquestion_question"
                             android:drawablePadding="@dimen/space_5"
                             android:text="@string/comment_count"
                             android:textColor="@color/main_gray"
                             android:textSize="@dimen/text_size_12" />
-                    </FrameLayout>
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <View

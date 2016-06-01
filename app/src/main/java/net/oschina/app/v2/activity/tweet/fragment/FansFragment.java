@@ -61,7 +61,7 @@ public class FansFragment extends BaseListFragment implements TweetPopupListView
 		mMainListView.setClipToPadding(false);
 		mMainListView.setPadding(0, DeviceUtils.dip2px(getActivity(), 50), 0, 0);
 
-		mMainListView.setOnScrollListener(new AbsListView.OnScrollListener(){
+		mListView.setOnScrollListener(new AbsListView.OnScrollListener(){
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				//scrollState = scrollState;

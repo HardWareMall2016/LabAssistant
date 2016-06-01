@@ -339,7 +339,11 @@ public class Comment extends Entity {
 			comment.setAid(response.optInt("aid"));
 			comment.setRank(response.optInt("rank"));
 			comment.setImage(response.optString("image"));
-			comment.setHits(response.optString("hits"));
+			String hits=response.optString("hits");
+			if(TextUtils.isEmpty(hits)){
+				hits="0";
+			}
+			comment.setHits(hits);
 		
 			try{
 				comment.setInfo(response.optString("info"));

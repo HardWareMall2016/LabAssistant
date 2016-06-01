@@ -153,7 +153,9 @@ public class MyAnswerAdapter extends ListBaseAdapter{
 		if(newreply<=0){
 			vh.newreplyContent.setVisibility(View.GONE);
 		}else{
-			vh.newreplyContent.setVisibility(View.VISIBLE);
+			//changed by wuyue no need to show
+			vh.newreplyContent.setVisibility(View.GONE);
+			//vh.newreplyContent.setVisibility(View.VISIBLE);
 			vh.newreply.setText(String.format(newReplyStr, newreply));
 			vh.newreplyTime.setText(answer.getNewtime());
 		}

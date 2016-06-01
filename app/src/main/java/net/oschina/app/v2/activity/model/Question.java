@@ -1,5 +1,7 @@
 package net.oschina.app.v2.activity.model;
 
+import android.text.TextUtils;
+
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -230,7 +232,11 @@ public class Question implements Serializable {
 		question.setNewreply(response.optInt("newreply"));
 		question.setNewtime(response.optString("newtime"));
 		question.setImage(response.optString("image"));
-		question.setHits(response.optString("hits"));
+		String hits=response.optString("hits");
+		if(TextUtils.isEmpty(hits)){
+			hits="0";
+		}
+		question.setHits(hits);
         return question;       
 	}
 

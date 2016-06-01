@@ -1033,6 +1033,9 @@ public class NewsApi extends BaseApi {
 			jsonObject.put("isreward", isreward);
 			jsonObject.put("issolveed", issolveed);
 			jsonObject.put("type", type);
+			if(type==2){
+				jsonObject.put("istop", 1);
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

@@ -97,8 +97,11 @@ public class MyQuestionAdapter extends ListBaseAdapter {
 		}
 		
 		vh.tv_newreplyTime.setText(question.getNewtime());
+		//add by wuyue remove news info
+		vh.tv_newreply.setVisibility(View.GONE);
+		vh.tv_newreplyTime.setVisibility(View.GONE);
 
-		vh.tv_answernumber.setText(question.getAnum() + "人回答");
+		vh.tv_answernumber.setText(question.getAnum() + "");//wuyue remove 人回答
 		return convertView;
 	}
 

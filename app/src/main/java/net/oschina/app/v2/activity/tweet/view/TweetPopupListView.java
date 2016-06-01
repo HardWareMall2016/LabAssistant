@@ -16,10 +16,12 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.shiyanzhushou.app.R;
 
+import net.oschina.app.v2.AppContext;
 import net.oschina.app.v2.activity.tweet.model.Mulu;
 import net.oschina.app.v2.activity.tweet.model.MuluList;
 import net.oschina.app.v2.api.remote.NewsApi;
@@ -92,11 +94,11 @@ public class TweetPopupListView implements View.OnClickListener {
                 }
                 mOnClickListener.onFilter(isreward, issolveed, getSelectedCatids());
             } else{
-                mSelSubFilterIds.clear();
+                ArrayList<Integer> selSubFilterIds=new ArrayList<Integer>();
                 String subclassStr="";
                 for (FilterItem item : mSubClassifyList) {
                     if(item.checked){
-                        mSelSubFilterIds.add(item.id);
+                        selSubFilterIds.add(item.id);
                         if(TextUtils.isEmpty(subclassStr)){
                             subclassStr=item.name;
                         }else{
@@ -107,8 +109,13 @@ public class TweetPopupListView implements View.OnClickListener {
                 if(mSelMainFilterId==-1){
                     ShareUtil.setValue(ShareUtil.SELECTED_CAT_STRS, "全部");
                 }else{
+                    if(selSubFilterIds.size()==0){
+                        AppContext.showToast("您未选择子类");
+                        return;
+                    }
                     ShareUtil.setValue(ShareUtil.SELECTED_CAT_STRS, subclassStr);
                 }
+                mSelSubFilterIds=selSubFilterIds;
                 mOnClickListener.onFilter(isreward, issolveed, getSelectedCatids());
             }
         }
@@ -310,6 +317,12 @@ public class TweetPopupListView implements View.OnClickListener {
         if(mPopupView!=null&&mPopupView.isShowing()){
             return;
         }
+
+        //如果是全部，就不用显示第三个
+        if(filterType==CHOOSE_SUB_CLASSIFY&&mSelMainFilterId==-1){
+            return;
+        }
+
         mCover.setVisibility(View.VISIBLE);
         mPopupView.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.bg_popmenu));
         mCurFilterType=filterType;
@@ -331,23 +344,13 @@ public class TweetPopupListView implements View.OnClickListener {
                 }*/
                 break;
             case CHOOSE_SUB_CLASSIFY:
-                if(mSelMainFilterId==-1){
-                    mSubClassifyList.clear();
-                    FilterItem all=new FilterItem();
-                    all.id=-1;
-                    all.name="全部";
-                    all.checked=true;
-                    mSubClassifyList.add(all);
-                }else{
-                    //初始化
-                    mPopupView.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.bg_popmenu_right));
-                    for (FilterItem subItem:mSubClassifyList){
-                        subItem.checked=false;
-                        for(Integer id:mSelSubFilterIds) {
-                            if(id==subItem.id){
-                                subItem.checked=true;
-                                break;
-                            }
+                mPopupView.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.bg_popmenu_right));
+                for (FilterItem subItem : mSubClassifyList) {
+                    subItem.checked = false;
+                    for (Integer id : mSelSubFilterIds) {
+                        if (id == subItem.id) {
+                            subItem.checked = true;
+                            break;
                         }
                     }
                 }
@@ -385,19 +388,24 @@ public class TweetPopupListView implements View.OnClickListener {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             FilterItem data = mShowList.get(position);
             if(mCurFilterType==CHOOSE_CLASSIFY){
+                if(data.id==mSelMainFilterId){
+                    mPopupView.dismiss();
+                    showPopup(mViewChooseSubClassify, TweetPopupListView.CHOOSE_SUB_CLASSIFY);
+                    return;
+                }
 
                 mPopupView.dismiss();
 
-                if(data.id!=mSelMainFilterId){
-                    mSelMainFilterId=data.id;
-                    sendRequestLanmuChildData(data.id);
-                }
-                if(mSelMainFilterId==-1){
-                    mOnClickListener.onFilter(isreward, issolveed, "-1");
-                }
+                mSelMainFilterId=data.id;
+                sendRequestLanmuChildData(data.id);
+
                 ShareUtil.setIntValue(ShareUtil.MAIN_FILTER_ID, mSelMainFilterId);
                 ShareUtil.setValue(ShareUtil.MAIN_FILTER_STR, data.name);
                 ShareUtil.setValue(ShareUtil.SELECTED_CAT_STRS, null);
+                if(mSelMainFilterId==-1){//如果大类是全部，小类也显示全部
+                    mOnClickListener.onFilter(isreward, issolveed, "-1");
+                    ShareUtil.setValue(ShareUtil.SELECTED_CAT_STRS, data.name);
+                }
 
                 refreshFilterViews();
             }else{

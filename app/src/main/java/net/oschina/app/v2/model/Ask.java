@@ -1,5 +1,7 @@
 package net.oschina.app.v2.model;
 
+import android.text.TextUtils;
+
 import java.io.IOException;
 
 import net.oschina.app.v2.AppException;
@@ -232,7 +234,11 @@ public class Ask extends Entity {
 		ask.setCompany(response.optString("company"));
 		ask.setIsanswer(response.optInt("isanswer"));
 		ask.setFrom(response.optInt("from"));
-		ask.setHits(response.optString("hits"));
+		String hits=response.optString("hits");
+		if(TextUtils.isEmpty(hits)){
+			hits="0";
+		}
+		ask.setHits(hits);
 		return ask;
 	}
 

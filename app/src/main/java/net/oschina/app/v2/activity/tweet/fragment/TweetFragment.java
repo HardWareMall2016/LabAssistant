@@ -64,7 +64,7 @@ public class TweetFragment extends BaseListFragment implements
 		mMainListView.setClipToPadding(false);
 		mMainListView.setPadding(0, DeviceUtils.dip2px(getActivity(), 50), 0, 0);
 
-		mMainListView.setOnScrollListener(new AbsListView.OnScrollListener(){
+		mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				//scrollState = scrollState;
@@ -85,20 +85,16 @@ public class TweetFragment extends BaseListFragment implements
 
 					if (firstVisibleItem == 0) {
 						toggleFilterbarShown(true);
-					}
-					else if (firstVisibleItem > lastFirstVisibleItem) {
+					} else if (firstVisibleItem > lastFirstVisibleItem) {
 						toggleFilterbarShown(false);
-					}
-					else if (firstVisibleItem < lastFirstVisibleItem) {
+					} else if (firstVisibleItem < lastFirstVisibleItem) {
 						toggleFilterbarShown(true);
-					}
-					else {
+					} else {
 						int height = firstChild.getHeight();
 						if (height > DeviceUtils.dip2px(getActivity(), 200)) {
 							if (lastTop == 0) {
 								lastTop = firstChild.getTop();
-							}
-							else {
+							} else {
 								int diffTop = firstChild.getTop() - lastTop;
 								if (Math.abs(diffTop) >= DeviceUtils.dip2px(getActivity(), 150)) {
 									toggleFilterbarShown(diffTop > 0);
@@ -112,15 +108,13 @@ public class TweetFragment extends BaseListFragment implements
 			}
 		});
 
-		mMainListView.setOnTouchListener(new View.OnTouchListener(){
+		mMainListView.setOnTouchListener(new View.OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-				}
-				else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+				} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
 					isMoving = true;
-				}
-				else if (event.getAction() == MotionEvent.ACTION_UP) {
+				} else if (event.getAction() == MotionEvent.ACTION_UP) {
 				}
 				return false;
 			}

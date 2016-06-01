@@ -24,6 +24,7 @@ import net.oschina.app.v2.model.User;
 import net.oschina.app.v2.model.event.AdoptSuccEvent;
 import net.oschina.app.v2.ui.dialog.CommonDialog;
 import net.oschina.app.v2.ui.dialog.DialogHelper;
+import net.oschina.app.v2.ui.dialog.WaitDialog;
 import net.oschina.app.v2.utils.DeviceUtils;
 import net.oschina.app.v2.utils.LabelUtils;
 import net.oschina.app.v2.utils.StringUtils;
@@ -485,6 +486,23 @@ public class TweetDetailActivity extends BaseActivity {
             } catch (JSONException e1) {
                 e1.printStackTrace();
             }
+        }
+        @Override
+        public void onFinish() {
+            closeSendWaitDialog();
+            super.onFinish();
+        }
+
+        @Override
+        public void onSuccess(int statusCode, Header[] headers, String responseString) {
+            closeSendWaitDialog();
+            super.onSuccess(statusCode, headers, responseString);
+        }
+
+        @Override
+        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+            closeSendWaitDialog();
+            super.onFailure(statusCode, headers, responseString, throwable);
         }
     };
 
@@ -1003,7 +1021,7 @@ public class TweetDetailActivity extends BaseActivity {
 				} else {
 					relation = true;
 				}
-				
+                showSendWaitDialog();
 				NewsApi.subComment(id, uid, false, text, relation, superlist,
 						msubHandler);
             }
@@ -1012,6 +1030,21 @@ public class TweetDetailActivity extends BaseActivity {
         tv_zhuiwen.setVisibility(View.GONE);
         mBottomView.setVisibility(View.GONE);
         mTextView.setVisibility(View.VISIBLE);
+    }
+
+    private WaitDialog mWaitDialog;
+
+    private void showSendWaitDialog(){
+        closeSendWaitDialog();
+        mWaitDialog=DialogHelper.getWaitDialog(this,"正在发生中...");
+        mWaitDialog.show();
+    }
+
+    private void closeSendWaitDialog(){
+        if(mWaitDialog!=null&&mWaitDialog.isShowing()){
+            mWaitDialog.dismiss();
+            mWaitDialog=null;
+        }
     }
 
     /**

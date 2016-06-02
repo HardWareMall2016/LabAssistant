@@ -353,7 +353,6 @@ public class ShareHelper {
 		circleMedia.setShareContent(shareContent);
 		// 设置朋友圈title
 		circleMedia.setTitle(shareTitle);
-		// circleMedia.setShareImage(localImage);
 		circleMedia.setTargetUrl(shareUrl);
 		mController.setShareMedia(circleMedia);
 		mController.postShare(context, SHARE_MEDIA.WEIXIN_CIRCLE,

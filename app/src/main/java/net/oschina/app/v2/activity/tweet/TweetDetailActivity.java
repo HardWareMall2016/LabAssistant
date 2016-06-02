@@ -680,10 +680,10 @@ public class TweetDetailActivity extends BaseActivity {
                                             "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
                                 } else if (position == 2) {
                                     shareHelper.shareToWeiChatCircle(
-                                            "分享问题",
+                                            "分享问题\n"+ask.getContent(),
                                             ask.getContent(),
                                             url,
-                                            R.drawable.share_icon);
+                                            "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
                                 } else if(position == 3){
                                     shareHelper.shareToQQ(
                                             "分享问题",

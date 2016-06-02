@@ -222,6 +222,10 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 					AppContext.showToastShort(R.string.tip_null_direct_person_empty);
 					return;
 				}
+				if (type != 1&&!checkHeader()) {
+					AppContext.showToastShort(R.string.tip_null_direct_person_empty);
+					return;
+				}
 
 				pickView.setOnMediaPickerListener(new OnMediaPickerListener() {
 					@Override
@@ -293,7 +297,7 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 						new JsonHttpResponseHandler() {
 							@Override
 							public void onSuccess(int statusCode,
-									Header[] headers, JSONObject response) {
+												  Header[] headers, JSONObject response) {
 								if (response.optInt("code") == 88) {
 									AppContext.showToast("采纳成功");
 									EventBus.getDefault().post(new AdoptSuccEvent(ask.getId()));
@@ -446,6 +450,7 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 	}
 
 	private void uploadImage(String imagePath) {
+		showSendWaitDialog();
 		NewsApi.uploadImage(3, imagePath, new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
@@ -463,10 +468,16 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 										false, null, msubHandler);
 							} else if (type == 2) {
 								if (TextUtils.isEmpty(emojiEditText.getHeader())) {
-									AppContext
-											.showToastShort(R.string.tip_null_direct_person_empty);
+									closeSendWaitDialog();
+									AppContext.showToastShort(R.string.tip_null_direct_person_empty);
 									return;
 								}
+								if(!checkHeader()){
+									closeSendWaitDialog();
+									AppContext.showToastShort(R.string.tip_null_direct_person_empty);
+									return;
+								}
+								showSendWaitDialog();
 								NewsApi.addCommentAfter(id,
 										emojiEditText.getAskUid(), uid,
 										comment.getId(), emojiEditText.getId(), "", imageUrl,
@@ -474,9 +485,11 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 							}
 							break;
 						case 2:
+							closeSendWaitDialog();
 							AppContext.showToast("发送图像失败");
 							break;
 						default:
+							closeSendWaitDialog();
 							break;
 					}
 					System.out.println(msg.what);
@@ -524,8 +537,11 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 			@Override
 			public void onClick(View v) {
 				if (TextUtils.isEmpty(emojiEditText.getHeader())) {
-					AppContext
-							.showToastShort(R.string.tip_null_direct_person_empty);
+					AppContext.showToastShort(R.string.tip_null_direct_person_empty);
+					return;
+				}
+				if(!checkHeader()){
+					AppContext.showToastShort(R.string.tip_null_direct_person_empty);
 					return;
 				}
 				String text = emojiEditText.getText().toString();
@@ -534,8 +550,7 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 				emojiEditText.clearHeader();
 				int askUid = emojiEditText.getAskUid();
 				if (TextUtils.isEmpty(text)) {
-					AppContext
-							.showToastShort(R.string.tip_comment_content_empty);
+					AppContext.showToastShort(R.string.tip_comment_content_empty);
 					return;
 				}
 				if (!TDevice.hasInternet()) {
@@ -545,13 +560,25 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 				int id = ask.getId();
 
 				int uid = AppContext.instance().getLoginUid();
-
+				showSendWaitDialog();
 				NewsApi.addCommentAfter(id, askUid, uid, comment.getId(), emojiEditText.getId(),
 						text, mCommentAfterHandler);
 			}
 		});
 
 	}
+
+	private boolean checkHeader(){
+		String text = emojiEditText.getText().toString();
+		if(!TextUtils.isEmpty(emojiEditText.getHeader())
+				&& !TextUtils.isEmpty(text)
+				&& text.contains(emojiEditText.getHeader())){
+			return true;
+		}
+		emojiEditText.clearHeader();
+		return false;
+	}
+
 
 	public void directPerson(String nickname, int askUid, int id) {
 		emojiEditText.setHeader("回复" + nickname + "：");
@@ -630,6 +657,24 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 			} catch (JSONException e1) {
 				e1.printStackTrace();
 			}
+		}
+
+		@Override
+		public void onFinish() {
+			closeSendWaitDialog();
+			super.onFinish();
+		}
+
+		@Override
+		public void onSuccess(int statusCode, Header[] headers, String responseString) {
+			super.onSuccess(statusCode, headers, responseString);
+			closeSendWaitDialog();
+		}
+
+		@Override
+		public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+			super.onFailure(statusCode, headers, responseString, throwable);
+			closeSendWaitDialog();
 		}
 	};
 

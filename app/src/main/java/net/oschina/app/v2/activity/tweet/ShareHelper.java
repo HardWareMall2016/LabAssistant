@@ -296,7 +296,7 @@ public class ShareHelper {
 						if (arg1 == 200) {
 							//AppContext.showToastShort(R.string.tip_share_done);
 						} else {
-							AppContext.showToastShort("分享失败");
+							//AppContext.showToastShort("分享失败");
 						}
 					}
 				});
@@ -334,7 +334,7 @@ public class ShareHelper {
 						if (arg1 == 200) {
 							//AppContext.showToastShort(R.string.tip_share_done);
 						} else {
-							AppContext.showToastShort("分享失败");
+							//AppContext.showToastShort("分享失败");
 						}
 					}
 				});

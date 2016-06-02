@@ -671,32 +671,32 @@ public class TweetDetailActivity extends BaseActivity {
                                     shareHelper.shareToSinaWeibo(
                                             "分享问题" + ask.getContent(),
                                             url,
-                                            "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
+                                            "http://ws.shiyanzhushou.com/Uploads/share_icon.png");
                                 } else if (position == 1) {
                                     shareHelper.shareToWeiChat(
                                             "分享问题",
                                             ask.getContent(),
                                             url,
-                                            "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
+                                            "http://ws.shiyanzhushou.com/Uploads/share_icon.png");
                                 } else if (position == 2) {
                                     shareHelper.shareToWeiChatCircle(
                                             "分享问题\n"+ask.getContent(),
                                             ask.getContent(),
                                             url,
-                                            "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
+                                            "http://ws.shiyanzhushou.com/Uploads/share_icon.png");
                                 } else if(position == 3){
                                     shareHelper.shareToQQ(
                                             "分享问题",
                                             ask.getContent(),
                                             url,
-                                            "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png",
+                                            "http://ws.shiyanzhushou.com/Uploads/share_icon.png",
                                             TweetDetailActivity.this);
                                 }else if(position == 4){
                                     shareHelper.shareToQZone(
                                             "分享问题",
                                             ask.getContent(),
                                             url,
-                                            "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png",
+                                            "http://ws.shiyanzhushou.com/Uploads/share_icon.png",
                                             TweetDetailActivity.this);
 
                                 }/*else if (position == 5) {

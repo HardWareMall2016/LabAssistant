@@ -159,11 +159,11 @@ SoftKeyboardStateListener, OnClickEmojiListener {
 	}
 
 	private void shareToWeiChatCircle() {
-		sp.shareToWeiChatCircle(getShareContent(), getShareContent(), getShareUrl(), "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
+		sp.shareToWeiChatCircle(getShareContent(), getShareContent(), getShareUrl(), "http://ws.shiyanzhushou.com/Uploads/share_icon.png");
 	}
 
 	private void shareToWeiChat() {
-		sp.shareToWeiChat("实验助手", getShareContent(), getShareUrl(), "http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png");
+		sp.shareToWeiChat("实验助手", getShareContent(), getShareUrl(), "http://ws.shiyanzhushou.com/Uploads/share_icon.png");
 	}
 
 	private void shareToSinaWeibo() {
@@ -198,12 +198,12 @@ SoftKeyboardStateListener, OnClickEmojiListener {
 
 	private void shareQQ() {
 		sp.shareToQQ("实验助手", getShareContent(), getShareUrl(),
-				"http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png", getActivity());
+				"http://ws.shiyanzhushou.com/Uploads/share_icon.png", getActivity());
 	}
 
 	private void shareQZONE(){
 		sp.shareToQZone("实验助手", getShareContent(), getShareUrl(),
-				"http://dl.iteye.com/upload/picture/pic/133287/9b6f8a1d-fe2f-3858-9423-484447c41908.png", getActivity());
+				"http://ws.shiyanzhushou.com/Uploads/share_icon.png", getActivity());
 	}
 
 	@Override

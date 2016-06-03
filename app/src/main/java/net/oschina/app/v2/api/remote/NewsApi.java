@@ -169,11 +169,11 @@ public class NewsApi extends BaseApi {
 	 * @param uid
 	 * @param handler
 	 */
-	public static void getSupperlist(int uid,JsonHttpResponseHandler handler) {
+	public static void getSupperlist(int uid,String keyword,JsonHttpResponseHandler handler) {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			jsonObject.put("uid", uid);
-			//jsonObject.put("keyword", keyword);
+			jsonObject.put("keyword", keyword);
 		} catch (Exception e) {
 		}
 		ApiHttpClient.post("index.php/Api/Question/supperlist.html",

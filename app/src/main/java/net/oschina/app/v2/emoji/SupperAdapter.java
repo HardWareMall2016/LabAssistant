@@ -98,7 +98,7 @@ public class SupperAdapter extends BaseAdapter {
 					if (isChecked) {
 						if (!userList.containsKey(key)) {
 							if(userList.size()==3){
-								AppContext.showToast("@高手不能超过3人");
+								AppContext.showToast("@邀请回答不能超过3人");
 								buttonView.setChecked(false);
 								return;
 							}

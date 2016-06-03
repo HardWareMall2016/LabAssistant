@@ -41,13 +41,15 @@ public class EmojiEditText extends EditText {
 		super.onTextChanged(text, start, lengthBefore, lengthAfter);
 		Spannable sp = getText();
 		String str = getText().toString();
-		if (mHeader != null) {
+		/*if (mHeader != null) {*/
+		if (!TextUtils.isEmpty(mHeader)) {
 			if (mHeader.subSequence(0, mHeader.length() - 1).equals(str)) {
 				setText("");
 				mHeader = null;
 			}
 		}
-		if(mHeaderUnDelete!=null){
+		/*if(mHeaderUnDelete!=null){*/
+		if (!TextUtils.isEmpty(mHeaderUnDelete)) {
 			if (mHeaderUnDelete.subSequence(0, mHeaderUnDelete.length() - 1).equals(str)) {
 				setText(Html.fromHtml("<font color=#2FBDE7>" + mHeaderUnDelete + "</font>"));
 				setSelection(mHeaderUnDelete.length());

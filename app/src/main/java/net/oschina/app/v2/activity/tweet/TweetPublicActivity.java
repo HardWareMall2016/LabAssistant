@@ -992,7 +992,7 @@ public class TweetPublicActivity extends BaseActivity implements
 
 	private void showSendWaitDialog(){
 		closeSendWaitDialog();
-		mWaitDialog=DialogHelper.getWaitDialog(this,"正在发生中...");
+		mWaitDialog=DialogHelper.getWaitDialog(this,"正在发送中...");
 		mWaitDialog.show();
 	}
 

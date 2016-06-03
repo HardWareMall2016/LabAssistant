@@ -42,14 +42,11 @@ public class SupperListActivity extends BaseActivity {
 	private EditText searchEt;
 	private ImageButton searchBtn;
 
-	//private String keyword="";
+	private String keyword="";
 	
 	private HashMap<Integer, UserBean> userList;
 
 	private List<UserBean> mAllDataList = new ArrayList<UserBean>();
-
-	private List<UserBean> mFilterDataList = new ArrayList<UserBean>();
-
 	@Override
 	protected void init(Bundle savedInstanceState) {
 		userList = (HashMap<Integer, UserBean>) getIntent()
@@ -66,19 +63,8 @@ public class SupperListActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				TDevice.hideSoftKeyboard(searchBtn);
-				mFilterDataList.clear();
-				String searchKeyword=searchEt.getText().toString();
-				if(TextUtils.isEmpty(searchKeyword)){
-					mFilterDataList.addAll(mAllDataList);
-				}else{
-					for(UserBean user:mAllDataList){
-						if(!TextUtils.isEmpty(user.getNickname())&&user.getNickname().contains(searchKeyword)){
-							mFilterDataList.add(user);
-						}
-					}
-				}
-				mAdapter.setItems(mFilterDataList);
-				mAdapter.notifyDataSetChanged();
+				keyword=searchEt.getText().toString();
+				sendRequest();
 			}
 		});
 		
@@ -158,7 +144,7 @@ public class SupperListActivity extends BaseActivity {
 
 	private void sendRequest() {
 		int uid = AppContext.instance().getLoginUid();
-		NewsApi.getSupperlist(uid, new JsonHttpResponseHandler() {
+		NewsApi.getSupperlist(uid,keyword,new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
@@ -174,9 +160,10 @@ public class SupperListActivity extends BaseActivity {
 						}
 
 						mAllDataList=dataList;
-						mFilterDataList.addAll(mAllDataList);
-						mAdapter.setItems(mFilterDataList);
+						mAdapter.setItems(mAllDataList);
 						mAdapter.notifyDataSetChanged();
+					}else if(!TextUtils.isEmpty(response.optString("desc"))){
+						AppContext.showToast(response.optString("desc"));
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();

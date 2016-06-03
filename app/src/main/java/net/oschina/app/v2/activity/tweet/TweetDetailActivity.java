@@ -204,7 +204,7 @@ public class TweetDetailActivity extends BaseActivity {
 
         intiPopMenu();
 
-        LinearLayout contentView=(LinearLayout)findViewById(R.id.ll_tweet_detail);
+        /*LinearLayout contentView=(LinearLayout)findViewById(R.id.ll_tweet_detail);
         contentView.addOnLayoutChangeListener(new View.OnLayoutChangeListener(){
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -219,7 +219,7 @@ public class TweetDetailActivity extends BaseActivity {
                     }
                 }
             }
-        });
+        });*/
 
         imm = (InputMethodManager)getSystemService(Service.INPUT_METHOD_SERVICE);
 
@@ -233,9 +233,11 @@ public class TweetDetailActivity extends BaseActivity {
             public void onClick(final View v) {
 
                 EmojiEditText editText = ((EmojiEditText) v);
-                if (null != editText.getmHeaderUnDelete()) {
+                //if (null != editText.getmHeaderUnDelete()) {
+                if (!TextUtils.isEmpty(editText.getmHeaderUnDelete())) {
                     int index = editText.getmHeaderUnDelete().length();
-                    if (index > editText.getSelectionStart()) {
+                    String text=editText.getText().toString();
+                    if (index > editText.getSelectionStart()&&index<text.length()) {
                         editText.setSelection(index);
                     }
                 }
@@ -999,7 +1001,6 @@ public class TweetDetailActivity extends BaseActivity {
                     visibility_Flag = true;
                 }*/
                 String text = mEtInput.getText().toString();
-				mEtInput.getText().clear(); //快速按确定按钮会出现多条回复
 				if(!TextUtils.isEmpty(toSomeone)){
 					text=text.replaceAll(toSomeone, "");
 				}
@@ -1013,6 +1014,9 @@ public class TweetDetailActivity extends BaseActivity {
 					AppContext.showToastShort(R.string.tip_network_error);
 					return;
 				}
+
+                mEtInput.getText().clear(); //快速按确定按钮会出现多条回复
+
 				int id = ask.getId();
 				int uid = AppContext.instance().getLoginUid();
 				boolean relation;// 是否@高手

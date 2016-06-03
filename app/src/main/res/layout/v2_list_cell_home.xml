@@ -129,7 +129,7 @@
                     <RelativeLayout
                         android:id="@+id/group_fisrt"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/space_15"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal" >
@@ -138,6 +138,7 @@
                             android:id="@+id/tv_from"
                             android:layout_alignParentLeft="true"
                             android:layout_width="wrap_content"
+                            android:layout_centerVertical="true"
                             android:layout_height="wrap_content"
                             android:text="标签:"
                             android:textColor="@color/main_gray"
@@ -146,9 +147,10 @@
                         <TextView
                             android:id="@+id/tv_from_content"
                             android:layout_toRightOf="@id/tv_from"
-                            android:layout_alignBottom="@id/tv_from"
+                            android:layout_centerVertical="true"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
                             android:paddingLeft="4dp"
                             android:paddingRight="4dp"
                             android:layout_marginLeft="4dp"
@@ -161,6 +163,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
                             android:drawableLeft="@drawable/myquestion_question"
                             android:drawablePadding="@dimen/space_5"
                             android:text="@string/comment_count"

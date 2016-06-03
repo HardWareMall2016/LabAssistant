@@ -148,33 +148,6 @@ public class SettingsFragment extends BaseFragment {
 
     private void shareToWeiChatCircle() {
         sp.shareToWeiChatCircle(getShareContent(), getShareContent(), getShareUrl(), "http://ws.shiyanzhushou.com/Uploads/share_icon.png");
-    	// 支持微信朋友圈
-	/*	UMWXHandler wxCircleHandler = new UMWXHandler(getActivity(),
-				Constants.WEICHAT_APPID, Constants.WEICHAT_SECRET);
-		wxCircleHandler.setToCircle(true);
-		wxCircleHandler.addToSocialSDK();
-		// 设置微信朋友圈分享内容
-		CircleShareContent circleMedia = new CircleShareContent();
-		circleMedia.setShareContent(getShareContent());
-		// 设置朋友圈title
-		circleMedia.setTitle(getShareTitle());
-		// circleMedia.setShareImage(localImage);
-		circleMedia.setTargetUrl(getShareUrl());
-		mController.setShareMedia(circleMedia);
-		mController.postShare(getActivity(), SHARE_MEDIA.WEIXIN_CIRCLE,
-				new SnsPostListener() {
-
-					@Override
-					public void onStart() {
-						AppContext.showToastShort(R.string.tip_start_share);
-					}
-
-					@Override
-					public void onComplete(SHARE_MEDIA arg0, int arg1,
-							SocializeEntity arg2) {
-						AppContext.showToastShort(R.string.tip_share_done);
-					}
-				});*/
     }
 
     private void shareToWeiChat() {
@@ -257,8 +230,6 @@ public class SettingsFragment extends BaseFragment {
         });
         dialog.show();
     }
-
-
 
     @Override
     public void onClick(View v) {

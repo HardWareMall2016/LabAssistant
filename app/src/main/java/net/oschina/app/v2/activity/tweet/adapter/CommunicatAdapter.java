@@ -12,6 +12,7 @@ import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.UIHelper;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,8 @@ import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -150,20 +153,22 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
         }
 
+
         viewHolder.leftContentTxt.setOnLongClickListener(new OnLongClickListener() {
 
             @Override
             public boolean onLongClick(View arg0) {
-                showPopUp((TextView) arg0);
+                showPopUp((TextView) arg0, 1);
                 return true;
             }
         });
 
+        //0 为第一条。1不是第一条
         viewHolder.rightContentTxt.setOnLongClickListener(new OnLongClickListener() {
 
             @Override
             public boolean onLongClick(View arg0) {
-                showPopUp((TextView) arg0);
+                showPopUp((TextView) arg0, viewHolder.flag);
                 return true;
             }
         });
@@ -343,6 +348,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
 
             if (type == 2 && position != 0 && position != 1) {
+                viewHolder.flag = 1 ;
                 viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_green_bg);
                 viewHolder.rightContentTxt.setVisibility(View.VISIBLE);
                 viewHolder.rightContentTxt.setText("");
@@ -445,11 +451,14 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
                     if (position == 0) {
                         viewHolder.rightContentTxt.setText("问题：" + itemModel.getContent());
+                        viewHolder.flag = 1 ;
                     } else {
                         if (position == 1) {
                             viewHolder.rightContentTxt.setText("回答：" + itemModel.getContent());
+                            viewHolder.flag = 0 ;
                         } else {
                             viewHolder.rightContentTxt.setText(itemModel.getContent());
+                            viewHolder.flag = 1 ;
                         }
                     }
                 }
@@ -495,7 +504,6 @@ public class CommunicatAdapter extends ListBaseAdapter implements
             public void onClick(View v) {
                 int uid = AppContext.instance().getLoginUid();
                 final CommentReply itemModel=(CommentReply)v.getTag();
-                Log.e("----->>><<<",itemModel.getId()+"");
                 NewsApi.delectAnswer(uid, itemModel.getId(),
                         new JsonHttpResponseHandler() {
                             @Override
@@ -530,7 +538,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0] + (v.getWidth() >> 1), location[1] - popupWindow.getHeight());
     }
 
-    private void showPopUp(TextView v) {
+    private void showPopUp(TextView v, final int flag) {
         final String textContent = v.getText().toString();
         LinearLayout layout = new LinearLayout(v.getContext());
         layout.setBackgroundResource(R.drawable.popbackground);
@@ -569,33 +577,83 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
         mdelect.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
-                int uid = AppContext.instance().getLoginUid();
-                /*NewsApi.delectAnswer(uid, aid,*/
-                final CommentReply itemModel=(CommentReply)v.getTag();
-                NewsApi.delectAnswer(uid, itemModel.getId(),
-                        new JsonHttpResponseHandler() {
+            public void onClick(final View v) {
+                    if(flag == 0){
+                        final AlertDialog dialog = new AlertDialog.Builder(context).create();
+                        dialog.show();
+                        Window window = dialog.getWindow();
+                        window.setContentView(R.layout.play_delect_dialog);
+                        TextView titleTv = (TextView) window.findViewById(R.id.tv_title);
+                        titleTv.setText("是否确认删除所有回答内容");
+                        // 设置监听
+                        Button zhichi = (Button) window.findViewById(R.id.ib_zhichi);
+                        zhichi.setText("确定");
+                        zhichi.setOnClickListener(new OnClickListener() {
                             @Override
-                            public void onSuccess(int statusCode,
-                                                  Header[] headers, JSONObject response) {
-                                String str = "删除成功！";
-                                try {
-                                    int code = response.getInt("code");
-                                    if (code != 88) {
-                                        str = response.getString("desc");
-                                        //removeDescItem(aid);
-                                    }else{
-                                        removeDescItem(itemModel.getId());
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                                AppContext.showToast(str);
+                            public void onClick(View view_zhichi) {
+                                int uid = AppContext.instance().getLoginUid();
+                                final CommentReply itemModel=(CommentReply)v.getTag();
+                                NewsApi.delectAnswer(uid, itemModel.getId(),
+                                        new JsonHttpResponseHandler() {
+                                            @Override
+                                            public void onSuccess(int statusCode,
+                                                                  Header[] headers, JSONObject response) {
+                                                String str = "删除成功！";
+                                                try {
+                                                    int code = response.getInt("code");
+                                                    if (code != 88) {
+                                                        str = response.getString("desc");
+                                                    }else{
+                                                        removeDescItem(itemModel.getId());
+                                                    }
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                AppContext.showToast(str);
+                                            }
+                                        });
+                                dialog.dismiss();
                             }
                         });
-                popupWindow.dismiss();
-            }
+                        Button chakanzhichi = (Button) window
+                                .findViewById(R.id.ib_chakanzhichi);
+                        chakanzhichi.setText("取消");
+                        chakanzhichi.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        popupWindow.dismiss();
+                    }else{
+
+                        int uid = AppContext.instance().getLoginUid();
+                        final CommentReply itemModel=(CommentReply)v.getTag();
+                        NewsApi.delectAnswer(uid, itemModel.getId(),
+                                new JsonHttpResponseHandler() {
+                                    @Override
+                                    public void onSuccess(int statusCode,
+                                                          Header[] headers, JSONObject response) {
+                                        String str = "删除成功！";
+                                        try {
+                                            int code = response.getInt("code");
+                                            if (code != 88) {
+                                                str = response.getString("desc");
+                                                //removeDescItem(aid);
+                                            }else{
+                                                removeDescItem(itemModel.getId());
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        AppContext.showToast(str);
+                                    }
+                                });
+                        popupWindow.dismiss();
+                    }
+                }
         });
       /*  modify.setOnClickListener(new OnClickListener() {
             @Override
@@ -638,6 +696,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         TextView leftTime, rightTime;
         ProgressBar rightContentImageBar;
         ProgressBar leftContentImageBar;
+        int flag;
     }
 
     @Override

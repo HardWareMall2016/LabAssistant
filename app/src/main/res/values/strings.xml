@@ -302,7 +302,7 @@
     <string name="actionbar_title_ossoftware">开源软件</string>
     <string name="actionbar_title_comment">评论</string>
     <string name="actionbar_title_question_tag">%s相关</string>
-    <string name="comment_count">%s</string>
+    <string name="comment_count">%s人回答</string>
     <string name="answer_count">回复:%s</string>
     <string name="by_ask">邀请 %s 回答</string>
     <string name="rank_detail">标签:%s</string>

@@ -158,7 +158,8 @@
                     android:gravity="center_vertical"
                     android:textColor="@color/main_gray"
                     android:textSize="@dimen/text_size_12"
-                    android:text="阅读数"/>
+                    android:text="阅读数"
+                    android:visibility="gone"/>
             </LinearLayout>
 
         </RelativeLayout>
@@ -192,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
                     android:focusable="false"
-                    android:drawableLeft="@drawable/read_bg"
+                    android:drawableLeft="@drawable/red_heart"
                     android:text="@string/lb_zhichi"
                     android:textColor="@color/main_black"
                     android:textSize="@dimen/text_size_14"

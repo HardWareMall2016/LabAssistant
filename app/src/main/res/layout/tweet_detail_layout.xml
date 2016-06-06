@@ -162,7 +162,8 @@
                         android:layout_marginLeft="@dimen/space_10"
                         android:text="阅读数"
                         android:textColor="@color/main_gray"
-                        android:textSize="@dimen/text_size_12" />
+                        android:textSize="@dimen/text_size_12"
+                        android:visibility="gone"/>
                 </LinearLayout>
 
 

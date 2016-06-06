@@ -104,14 +104,12 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	protected int getLayoutId() {
 		return R.layout.v2_activity_main;
 	}
-
 	@Override
 	protected void onResume() {
 		super.onResume();
 		MobclickAgent.onPageStart(MAIN_SCREEN);
 		MobclickAgent.onResume(this);
 	}
-
 	@Override
 	protected void onPause() {
 		super.onPause();

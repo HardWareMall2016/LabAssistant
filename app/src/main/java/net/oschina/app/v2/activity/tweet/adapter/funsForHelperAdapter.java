@@ -118,7 +118,7 @@ public class funsForHelperAdapter extends ListBaseAdapter {
 			/*vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>" + label
 					+ "</font>"));
 			vh.from.setVisibility(View.VISIBLE);*/
-			vh.fromContent.setText(label);
+			vh.fromContent.setText(LabelUtils.parseLable(label));
 			int labelBackgroundId=LabelUtils.getBgResIdByLabel(label);
 			vh.fromContent.setBackgroundResource(labelBackgroundId);
 			vh.from.setVisibility(View.VISIBLE);

@@ -76,7 +76,7 @@ public class MyQuestionAdapter extends ListBaseAdapter {
 			/*vh.tv_mark.setVisibility(View.VISIBLE);
 			vh.tv_mark.setText(Html.fromHtml("标签:<font color=#2FBDE7>"
 					+ question.getLable() + "</font>"));*/
-			vh.fromContent.setText(question.getLable());
+			vh.fromContent.setText(LabelUtils.parseLable(question.getLable()));
 			int labelBackgroundId= LabelUtils.getBgResIdByLabel(question.getLable());
 			vh.fromContent.setBackgroundResource(labelBackgroundId);
 			vh.tv_mark.setVisibility(View.VISIBLE);

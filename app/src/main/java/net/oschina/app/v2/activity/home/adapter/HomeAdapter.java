@@ -134,7 +134,7 @@ public class HomeAdapter extends ListBaseAdapter {
 			}*/
 			if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
-				vh.fromContent.setText(item.getLable());
+				vh.fromContent.setText(LabelUtils.parseLable(item.getLable()));
 				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
 				vh.fromContent.setBackgroundResource(labelBackgroundId);
 				vh.from.setVisibility(View.VISIBLE);
@@ -192,7 +192,7 @@ public class HomeAdapter extends ListBaseAdapter {
 			}*/
 			if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
-				vh.fromContent.setText(item.getLable());
+				vh.fromContent.setText(LabelUtils.parseLable(item.getLable()));
 				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
 				vh.fromContent.setBackgroundResource(labelBackgroundId);
 				vh.from.setVisibility(View.VISIBLE);
@@ -256,7 +256,7 @@ public class HomeAdapter extends ListBaseAdapter {
 			}*/
 			if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
-				vh.fromContent.setText(item.getLable());
+				vh.fromContent.setText(LabelUtils.parseLable(item.getLable()));
 				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
 				vh.fromContent.setBackgroundResource(labelBackgroundId);
 				vh.from.setVisibility(View.VISIBLE);
@@ -298,7 +298,7 @@ public class HomeAdapter extends ListBaseAdapter {
 					&& !"null".equals(item.getLable())) {
 				/*vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>"
 						+ item.getLable() + "</font>"));*/
-				vh.fromContent.setText(item.getLable());
+				vh.fromContent.setText(LabelUtils.parseLable(item.getLable()));
 				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
 				vh.fromContent.setBackgroundResource(labelBackgroundId);
 				vh.from.setVisibility(View.VISIBLE);
@@ -359,7 +359,7 @@ public class HomeAdapter extends ListBaseAdapter {
 			}*/
 			if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
-				vh.fromContent.setText(item.getLable());
+				vh.fromContent.setText(LabelUtils.parseLable(item.getLable()));
 				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
 				vh.fromContent.setBackgroundResource(labelBackgroundId);
 				vh.from.setVisibility(View.VISIBLE);
@@ -424,7 +424,7 @@ public class HomeAdapter extends ListBaseAdapter {
 			}*/
 			if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
-				vh.fromContent.setText(item.getLable());
+				vh.fromContent.setText(LabelUtils.parseLable(item.getLable()));
 				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
 				vh.fromContent.setBackgroundResource(labelBackgroundId);
 				vh.from.setVisibility(View.VISIBLE);
@@ -501,7 +501,7 @@ public class HomeAdapter extends ListBaseAdapter {
 			}*/
 			if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
-				vh.fromContent.setText(item.getLable());
+				vh.fromContent.setText(LabelUtils.parseLable(item.getLable()));
 				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
 				vh.fromContent.setBackgroundResource(labelBackgroundId);
 				vh.from.setVisibility(View.VISIBLE);
@@ -548,7 +548,7 @@ public class HomeAdapter extends ListBaseAdapter {
 			}*/
 			if (!StringUtils.isEmpty(item.getLable())
 					&& !"null".equals(item.getLable())) {
-				vh.fromContent.setText(item.getLable());
+				vh.fromContent.setText(LabelUtils.parseLable(item.getLable()));
 				int labelBackgroundId= LabelUtils.getBgResIdByLabel(item.getLable());
 				vh.fromContent.setBackgroundResource(labelBackgroundId);
 				vh.from.setVisibility(View.VISIBLE);

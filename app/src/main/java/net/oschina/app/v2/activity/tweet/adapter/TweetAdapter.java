@@ -126,7 +126,7 @@ public class TweetAdapter extends ListBaseAdapter {
 			// vh.from.setText("标签："+label);//Html.fromHtml("出发地点<font color=#2FBDE7>*</font>")
 			/*vh.from.setText(Html.fromHtml("标签:<font color=#2FBDE7>" + label
 					+ "</font>"));*/
-			vh.fromContent.setText(label);
+			vh.fromContent.setText(LabelUtils.parseLable(label));
 			int labelBackgroundId= LabelUtils.getBgResIdByLabel(label);
 			vh.fromContent.setBackgroundResource(labelBackgroundId);
 			vh.from.setVisibility(View.VISIBLE);

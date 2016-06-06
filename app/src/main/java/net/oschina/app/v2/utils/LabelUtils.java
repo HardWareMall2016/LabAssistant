@@ -1,5 +1,7 @@
 package net.oschina.app.v2.utils;
 
+import android.text.TextUtils;
+
 import com.shiyanzhushou.app.R;
 
 /**
@@ -25,6 +27,14 @@ public class LabelUtils {
             }
         }else{
             return R.drawable.bg_label_other;
+        }
+    }
+
+    public static String parseLable(String label){
+        if(TextUtils.isEmpty(label)){
+            return "";
+        }else{
+            return label.replace(" ","/");
         }
     }
 }

@@ -913,7 +913,7 @@ public class TweetDetailActivity extends BaseActivity {
             mTvFromContent.setText(Html.fromHtml(":<font color=#2FBDE7>" + label
                     + "</font>"));
         }else{
-            mTvFromContent.setText(label);
+            mTvFromContent.setText(LabelUtils.parseLable(label));
             int labelBackgroundId= LabelUtils.getBgResIdByLabel(label);
             mTvFromContent.setBackgroundResource(labelBackgroundId);
         }

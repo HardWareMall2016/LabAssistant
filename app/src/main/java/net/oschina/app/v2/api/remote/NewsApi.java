@@ -890,12 +890,13 @@ public class NewsApi extends BaseApi {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			jsonObject.put("id", qid);
-			jsonObject.put("pid", 1);
-			jsonObject.put("num", 30);
+			/*jsonObject.put("pid", 1);
+			jsonObject.put("num", 30);*/
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		ApiHttpClient.post("index.php/Api/Question/questionlist.html",
+		//questionlist.html
+		ApiHttpClient.post("index.php/Api/Question/getquestionbyid.html",
 				jsonObject, handler);
 	}
 

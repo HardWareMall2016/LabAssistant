@@ -1150,6 +1150,7 @@ public class TweetDetailActivity extends BaseActivity {
 
         @Override
         public void onSelectedMediaChanged(String mediaUri) {
+            showSendWaitDialog();
             NewsApi.uploadImage(3, mediaUri, new Handler() {
                 @Override
                 public void handleMessage(Message msg) {
@@ -1177,9 +1178,11 @@ public class TweetDetailActivity extends BaseActivity {
                             default:
                                 break;
                         }
+                        closeSendWaitDialog();
                         System.out.println(msg.what);
                     } catch (Exception e) {
                         e.printStackTrace();
+                        closeSendWaitDialog();
                     }
                 }
             });

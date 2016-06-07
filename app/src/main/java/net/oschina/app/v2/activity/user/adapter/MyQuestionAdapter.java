@@ -7,6 +7,7 @@ import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.TDevice;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,6 +19,11 @@ import com.shiyanzhushou.app.R;
 public class MyQuestionAdapter extends ListBaseAdapter {
 	
 	private String newReplyStr;
+	private boolean mShowNews=false;
+
+	public MyQuestionAdapter(boolean show){
+		mShowNews=show;
+	}
 	
 	@Override
 	protected View getRealView(int position, View convertView, ViewGroup parent) {
@@ -98,8 +104,14 @@ public class MyQuestionAdapter extends ListBaseAdapter {
 		
 		vh.tv_newreplyTime.setText(question.getNewtime());
 		//add by wuyue remove news info
-		vh.tv_newreply.setVisibility(View.GONE);
-		vh.tv_newreplyTime.setVisibility(View.GONE);
+		if(mShowNews){
+			vh.tv_newreply.setVisibility(View.VISIBLE);
+			vh.tv_newreplyTime.setVisibility(View.VISIBLE);
+		}else{
+			vh.tv_newreply.setVisibility(View.GONE);
+			vh.tv_newreplyTime.setVisibility(View.GONE);
+		}
+
 
 		vh.tv_answernumber.setText(question.getAnum() + "");//wuyue remove 人回答
 		return convertView;

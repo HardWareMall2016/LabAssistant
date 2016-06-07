@@ -49,7 +49,7 @@ public class MyAnswerFragment extends BaseListFragment {
 	//适配器
 	@Override
 	protected ListBaseAdapter getListAdapter() {
-		return new MyAnswerAdapter(getActivity(),isCurrentUser);
+		return new MyAnswerAdapter(getActivity(),isCurrentUser,getArguments().getInt("uid")==0);
 	}
 	//缓存前缀
 	@Override

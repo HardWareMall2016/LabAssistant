@@ -11,6 +11,7 @@ import net.oschina.app.v2.utils.UIHelper;
 import android.content.Context;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ import com.shiyanzhushou.app.R;
 public class MyAnswerAdapter extends ListBaseAdapter{
 	private Context mContext;
 	
-	
+	private boolean mShowNews=false;
 	
 	private String contentTip="<font color=#FBB4A7>我的回答：</font>";
 
@@ -39,7 +40,7 @@ public class MyAnswerAdapter extends ListBaseAdapter{
 	}
 	
 	
-	public MyAnswerAdapter(Context context,boolean isCurrent){
+	public MyAnswerAdapter(Context context,boolean isCurrent,boolean showNews){
 		mContext = context;
 		if(isCurrent==false){
 			contentTip="<font color=#FBB4A7>TA的回答：</font>";
@@ -48,7 +49,7 @@ public class MyAnswerAdapter extends ListBaseAdapter{
 		if(newReplyStr==null){
 			newReplyStr=context.getResources().getString(R.string.newReply);
 		}
-		
+		mShowNews=showNews;
 	}
 	
 	@Override
@@ -154,8 +155,12 @@ public class MyAnswerAdapter extends ListBaseAdapter{
 			vh.newreplyContent.setVisibility(View.GONE);
 		}else{
 			//changed by wuyue no need to show
-			vh.newreplyContent.setVisibility(View.GONE);
-			//vh.newreplyContent.setVisibility(View.VISIBLE);
+			if(mShowNews){
+				vh.newreplyContent.setVisibility(View.VISIBLE);
+			}else{
+				vh.newreplyContent.setVisibility(View.GONE);
+			}
+
 			vh.newreply.setText(String.format(newReplyStr, newreply));
 			vh.newreplyTime.setText(answer.getNewtime());
 		}

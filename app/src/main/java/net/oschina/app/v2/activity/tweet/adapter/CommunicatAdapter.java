@@ -70,11 +70,12 @@ public class CommunicatAdapter extends ListBaseAdapter implements
     private DisplayImageOptions options;
     private int type;
     //private int aid ;
+    private int mIsadopt ;
 
-    public CommunicatAdapter(Context context, int type) {
+    public CommunicatAdapter(Context context, int type,int isadopt) {
         this.context = context;
         this.type = type;
-//        this.aid = aid ;
+        this.mIsadopt = isadopt ;
     }
 
     public int getViewType(int position) {
@@ -502,28 +503,33 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         mdelect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                int uid = AppContext.instance().getLoginUid();
-                final CommentReply itemModel=(CommentReply)v.getTag();
-                NewsApi.delectAnswer(uid, itemModel.getId(),
-                        new JsonHttpResponseHandler() {
-                            @Override
-                            public void onSuccess(int statusCode,
-                                                  Header[] headers, JSONObject response) {
-                                String str = "删除成功！";
-                                try {
-                                    int code = response.getInt("code");
-                                    if (code != 88) {
-                                        str = response.getString("desc");
-                                    }else{
-                                        removeDescItem(itemModel.getId());
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                if(mIsadopt == 1){
+                    AppContext.showToast("被采纳回答无法删除");
+                }else{
+                    int uid = AppContext.instance().getLoginUid();
+                    final CommentReply itemModel=(CommentReply)v.getTag();
+                    NewsApi.delectAnswer(uid, itemModel.getId(),
+                            new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode,
+                                                      Header[] headers, JSONObject response) {
+                                    String str = "删除成功！";
 
-                                AppContext.showToast(str);
-                            }
-                        });
+                                    try {
+                                        int code = response.getInt("code");
+                                        if (code != 88) {
+                                            str = response.getString("desc");
+                                        } else {
+                                            removeDescItem(itemModel.getId());
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    AppContext.showToast(str);
+                                }
+                            });
+                }
                 popupWindow.dismiss();
             }
         });
@@ -578,6 +584,9 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         mdelect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
+                if(mIsadopt == 1){
+                    AppContext.showToast("被采纳回答无法删除");
+                }else{
                     if(flag == 0){
                         final AlertDialog dialog = new AlertDialog.Builder(context).create();
                         dialog.show();
@@ -641,7 +650,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                                             if (code != 88) {
                                                 str = response.getString("desc");
                                                 //removeDescItem(aid);
-                                            }else{
+                                            } else {
                                                 removeDescItem(itemModel.getId());
                                             }
                                         } catch (JSONException e) {
@@ -651,8 +660,9 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                                         AppContext.showToast(str);
                                     }
                                 });
-                        popupWindow.dismiss();
                     }
+                }
+                popupWindow.dismiss();
                 }
         });
       /*  modify.setOnClickListener(new OnClickListener() {

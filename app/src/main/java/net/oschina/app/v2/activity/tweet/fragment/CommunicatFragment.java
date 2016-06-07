@@ -40,6 +40,7 @@ public class CommunicatFragment extends BaseListFragment {
 
 	public ListBaseAdapter adapter;
 	private int type;
+	private int mIsadopt ;
 	private Ask ask;
 	private Comment comment;
 
@@ -56,6 +57,7 @@ public class CommunicatFragment extends BaseListFragment {
 		comment = (Comment) getActivity().getIntent().getSerializableExtra(
 				"comment");
 		ask = (Ask) getActivity().getIntent().getSerializableExtra("ask");
+		mIsadopt = comment.getisadopt();
 		NewsApi.getAskById(ask.getId(), new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
@@ -98,7 +100,7 @@ public class CommunicatFragment extends BaseListFragment {
 
 	@Override
 	protected ListBaseAdapter getListAdapter() {
-		adapter = new CommunicatAdapter(getActivity(), type);
+		adapter = new CommunicatAdapter(getActivity(), type,mIsadopt);
 		return adapter;
 	}
 

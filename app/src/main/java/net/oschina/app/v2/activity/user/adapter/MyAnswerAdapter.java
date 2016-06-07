@@ -69,20 +69,21 @@ public class MyAnswerAdapter extends ListBaseAdapter{
 		vh.question_title_tv.setText(answer.getTitle());
 		vh.question_time_tv.setText(answer.getInputtime());
 
-		vh.question_category_tv.setText(Html.fromHtml("<font color=#2FBDE7>" + answer.getLabel()
-				+ "</font>"));
+		/*vh.question_category_tv.setText(Html.fromHtml("<font color=#2FBDE7>" + answer.getLabel()
+				+ "</font>"));*/
 
 
-		/*String label = answer.getLabel();
+		String label = answer.getLabel();
 		if (TextUtils.isEmpty(label)) {
 			label = "暂无";
 			vh.question_category_tv.setText(Html.fromHtml("<font color=#2FBDE7>" + label
 					+ "</font>"));
 		}else{
-			vh.question_category_tv.setText(label);
+			//vh.question_category_tv.setText(label);
+			vh.question_category_tv.setText(LabelUtils.parseLable(label));
 			int labelBackgroundId= LabelUtils.getBgResIdByLabel(label);
 			vh.question_category_tv.setBackgroundResource(labelBackgroundId);
-		}*/
+		}
 		
 		
 		if(!StringUtils.isEmpty(answer.getContent())&&!"null".equals(answer.getContent())){
@@ -107,10 +108,9 @@ public class MyAnswerAdapter extends ListBaseAdapter{
 		
 		if(answer.getIsadopt()==1){
 			vh.comment_status_iv.setText("被采纳");
-			//vh.comment_status_iv.setVisibility(View.VISIBLE);
 		}else{
-			vh.comment_status_iv.setText("待采纳");
-			//vh.comment_status_iv.setVisibility(View.GONE);
+			//vh.comment_status_iv.setText("待采纳");
+			vh.comment_status_iv.setVisibility(View.GONE);
 		}
 		
 		final Ask ask = new Ask();

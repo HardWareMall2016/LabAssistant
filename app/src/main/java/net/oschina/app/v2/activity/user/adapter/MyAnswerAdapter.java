@@ -109,6 +109,7 @@ public class MyAnswerAdapter extends ListBaseAdapter{
 		
 		if(answer.getIsadopt()==1){
 			vh.comment_status_iv.setText("被采纳");
+			vh.comment_status_iv.setVisibility(View.VISIBLE);
 		}else{
 			//vh.comment_status_iv.setText("待采纳");
 			vh.comment_status_iv.setVisibility(View.GONE);

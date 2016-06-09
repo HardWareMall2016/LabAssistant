@@ -22,6 +22,7 @@ import net.oschina.app.v2.model.User;
 import net.oschina.app.v2.model.event.AdoptSuccEvent;
 import net.oschina.app.v2.ui.text.MyLinkMovementMethod;
 import net.oschina.app.v2.ui.text.TweetTextView;
+import net.oschina.app.v2.utils.BitmapLoaderUtil;
 import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.UIHelper;
 
@@ -48,6 +49,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shiyanzhushou.app.R;
 
@@ -59,10 +61,11 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 	private Ask ask;
 
 	public View currentExpandView;
-
+	private DisplayImageOptions options;
 	public TweetAnswerAdapter(Context context,Ask ask) {
 		this.context = context;
 		this.ask=ask;
+		options = BitmapLoaderUtil.loadDisplayImageOptions(R.drawable.ic_default_avatar);
 	}
 	
 	public void setAdoptState(int adopt){
@@ -131,7 +134,7 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 		vh.commentCount.setText(String.valueOf(item.getAnswerNum()));
 		vh.readNum.setText(item.getHits()+"");
 		ImageLoader.getInstance().displayImage(
-				ApiHttpClient.getImageApiUrl(item.gethead()), vh.avatar);
+				ApiHttpClient.getImageApiUrl(item.gethead()), vh.avatar,options);
 		vh.avatar.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

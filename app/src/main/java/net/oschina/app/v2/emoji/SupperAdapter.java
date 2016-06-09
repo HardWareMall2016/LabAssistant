@@ -8,6 +8,7 @@ import net.oschina.app.v2.AppContext;
 import net.oschina.app.v2.activity.image.IvSignUtils;
 import net.oschina.app.v2.activity.tweet.model.UserBean;
 import net.oschina.app.v2.api.ApiHttpClient;
+import net.oschina.app.v2.utils.BitmapLoaderUtil;
 import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.UIHelper;
 import android.content.Context;
@@ -22,6 +23,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shiyanzhushou.app.R;
 
@@ -30,9 +32,11 @@ public class SupperAdapter extends BaseAdapter {
 	private Context context;
 	private List<UserBean> dataList = new ArrayList<UserBean>();
 	private HashMap<Integer, UserBean> userList;
+	private DisplayImageOptions options;
 
 	public SupperAdapter(Context context) {
 		this.context = context;
+		options = BitmapLoaderUtil.loadDisplayImageOptions(R.drawable.ic_default_avatar);
 	}
 	
 	public void setUserList(HashMap<Integer, UserBean> userList) {
@@ -144,7 +148,7 @@ public class SupperAdapter extends BaseAdapter {
 
 		ImageLoader.getInstance().displayImage(
 				ApiHttpClient.getImageApiUrl(item.getHead()),
-				viewHolder.itemImage);
+				viewHolder.itemImage,options);
 		viewHolder.itemImage.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

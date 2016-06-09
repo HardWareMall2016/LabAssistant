@@ -138,8 +138,9 @@ public class TweetAnswerListFragment extends BaseListFragment implements
 
 	@Override
 	public void sendRequestData() {
-		mCurrentPage = mCurrentPage == 0 ? 1 : mCurrentPage;
-		NewsApi.getCommentList(ask.getId(), mCurrentPage, mJsonHandler);
+		/*mCurrentPage = mCurrentPage == 0 ? 1 : mCurrentPage;
+		NewsApi.getCommentList(ask.getId(), mCurrentPage, mJsonHandler);*/
+		NewsApi.getCommentList(ask.getId(), mCurrentPage1, mJsonHandler);
 	}
 
 	@Override

@@ -52,6 +52,7 @@ public abstract class BaseListFragment extends BaseTabFragment implements
 
 	protected int mStoreEmptyState = -1;
 	protected int mCurrentPage = 1;
+	protected int mCurrentPage1 = 0;
 	protected int mCatalog = NewsList.CATALOG_ALL;
 	private AsyncTask<String, Void, ListEntity> mCacheTask;
 	private ParserTask mParserTask;
@@ -81,6 +82,7 @@ public abstract class BaseListFragment extends BaseTabFragment implements
 			@Override
 			public void onClick(View v) {
 				mCurrentPage = 1;
+				mCurrentPage1 = 0;
 				mState = STATE_REFRESH;
 				mErrorLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
 				requestData(true);
@@ -102,6 +104,7 @@ public abstract class BaseListFragment extends BaseTabFragment implements
 
 			if (requestDataIfViewCreated()) {
 				mCurrentPage = 1;
+				mCurrentPage1 = 0;
 				mState = STATE_REFRESH;
 				mErrorLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
 				requestData(false);
@@ -157,12 +160,14 @@ public abstract class BaseListFragment extends BaseTabFragment implements
 	@Override
 	public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 		mCurrentPage = 1;
+		mCurrentPage1 = 0;
 		mState = STATE_REFRESH;
 		requestData(true);
 	}
 
 	public void setRefresh(){
 		mCurrentPage = 1;
+		mCurrentPage1 = 0;
 		mState = STATE_REFRESH;
 		mListView.setRefreshing();
 	}
@@ -172,6 +177,7 @@ public abstract class BaseListFragment extends BaseTabFragment implements
 		if (mState == STATE_NONE) {
 			if (mAdapter.getState() == ListBaseAdapter.STATE_LOAD_MORE) {
 				mCurrentPage++;
+				mCurrentPage1++;
 				mState = STATE_LOADMORE;
 				requestData(false);
 			}

@@ -687,7 +687,7 @@ public class NewsApi extends BaseApi {
 		JSONObject jsonObject = new JSONObject();
 
 		try {
-			jsonObject.put("pid", 1);
+			jsonObject.put("pid", page);
 			jsonObject.put("num", 30);
 			/* jsonObject.put("uid", 1); */
 		} catch (Exception e) {
@@ -712,7 +712,7 @@ public class NewsApi extends BaseApi {
 		JSONObject jsonObject = new JSONObject();
 
 		try {
-			jsonObject.put("pid", 1);
+			jsonObject.put("pid", page);
 			jsonObject.put("num", 30);
 			/* jsonObject.put("uid", 1); */
 		} catch (Exception e) {
@@ -738,7 +738,7 @@ public class NewsApi extends BaseApi {
 
 		try {
 			jsonObject.put("uid", uid);
-			jsonObject.put("pid", 1);
+			jsonObject.put("pid", page);
 			jsonObject.put("num", 20);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -801,7 +801,7 @@ public class NewsApi extends BaseApi {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			jsonObject.put("uid", uid);
-			jsonObject.put("pid", 1);
+			jsonObject.put("pid", page);
 			jsonObject.put("num", 30);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -814,7 +814,7 @@ public class NewsApi extends BaseApi {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			jsonObject.put("uid", uid);
-			jsonObject.put("pid", 1);
+			jsonObject.put("pid", page);
 			jsonObject.put("num", 30);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -939,7 +939,7 @@ public class NewsApi extends BaseApi {
 			JsonHttpResponseHandler handler) {
 		JSONObject jsonObject = new JSONObject();
 		try {
-			jsonObject.put("pid", 0);
+			jsonObject.put("pid", page);
 			jsonObject.put("qid", qid);
 			jsonObject.put("num", 20);
 		} catch (JSONException e) {
@@ -1964,7 +1964,7 @@ public class NewsApi extends BaseApi {
 			// 请求的参数
 			// jsonObject.put("cid", "58f8643d1093fd2c75544d8c4589f6bb");
 			jsonObject.put("uid", uid);
-			jsonObject.put("pid", 1);
+			jsonObject.put("pid", page);
 			jsonObject.put("num", 20);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1981,7 +1981,7 @@ public class NewsApi extends BaseApi {
 				// 请求的参数
 				// jsonObject.put("cid", "58f8643d1093fd2c75544d8c4589f6bb");
 				jsonObject.put("uid", uid);
-				jsonObject.put("pid", 1);
+				jsonObject.put("pid", page);
 				jsonObject.put("num", 20);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -2052,7 +2052,7 @@ public class NewsApi extends BaseApi {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			jsonObject.put("uid", uid);
-			jsonObject.put("pid", 1);
+			jsonObject.put("pid", mCurrentPage);
 			jsonObject.put("num", 20);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2112,7 +2112,7 @@ public class NewsApi extends BaseApi {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			jsonObject.put("uid", uid);
-			jsonObject.put("pid", 1);
+			jsonObject.put("pid", mCurrentPage);
 			jsonObject.put("num", 100);
 		} catch (Exception e) {
 			e.printStackTrace();

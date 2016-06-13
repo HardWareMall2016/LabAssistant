@@ -98,9 +98,16 @@ public class CommunicatFragment extends BaseListFragment {
 		}
 	}
 
+	public void refreshCommunicat(){
+		mCurrentPage = 1;
+		mCurrentPage1 = 0;
+		mState = STATE_REFRESH;
+		requestData(true);
+	}
+
 	@Override
 	protected ListBaseAdapter getListAdapter() {
-		adapter = new CommunicatAdapter(getActivity(), type,mIsadopt);
+		adapter = new CommunicatAdapter(getActivity(),this, type,mIsadopt);
 		return adapter;
 	}
 

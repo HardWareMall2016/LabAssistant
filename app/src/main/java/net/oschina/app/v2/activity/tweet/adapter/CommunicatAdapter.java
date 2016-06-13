@@ -4,6 +4,7 @@ import net.oschina.app.v2.AppContext;
 import net.oschina.app.v2.activity.ImageShowerActivity;
 import net.oschina.app.v2.activity.comment.model.CommentReply;
 import net.oschina.app.v2.activity.tweet.CommunicatActivity;
+import net.oschina.app.v2.activity.tweet.fragment.CommunicatFragment;
 import net.oschina.app.v2.api.ApiHttpClient;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.ListBaseAdapter;
@@ -63,6 +64,7 @@ import org.json.JSONObject;
 public class CommunicatAdapter extends ListBaseAdapter implements
         OnClickListener {
     private Context context;
+    private CommunicatFragment mFrag;
 
     private static final int LEFT_TYPE = 1;
     private static final int RIGHT_TYPE = 2;
@@ -72,10 +74,11 @@ public class CommunicatAdapter extends ListBaseAdapter implements
     //private int aid ;
     private int mIsadopt ;
 
-    public CommunicatAdapter(Context context, int type,int isadopt) {
+    public CommunicatAdapter(Context context,CommunicatFragment frag, int type,int isadopt) {
         this.context = context;
         this.type = type;
         this.mIsadopt = isadopt ;
+        mFrag=frag;
     }
 
     public int getViewType(int position) {
@@ -613,7 +616,8 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                                                     if (code != 88) {
                                                         str = response.getString("desc");
                                                     }else{
-                                                        removeDescItem(itemModel.getId());
+                                                        //removeDescItem(itemModel.getId());
+                                                        mFrag.refreshCommunicat();
                                                     }
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();

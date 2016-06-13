@@ -18,6 +18,7 @@ import net.oschina.app.v2.utils.TDevice;
 import net.oschina.app.v2.utils.UIHelper;
 
 import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -607,6 +608,11 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 				JSONObject response) {
 			try {
 				if (response.getInt("code") == 88) {
+					//更换ID
+					JSONObject userinfo = new JSONObject(response.getString("data"));
+					int parentid=userinfo.optInt("parentid");
+					comment.setId(parentid);
+
 					reset();
 					communicatFragment.adapter.clear();
 					communicatFragment.sendRequestData();

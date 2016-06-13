@@ -1194,7 +1194,7 @@ public class TweetDetailActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         if (!isFirstComming) {
-            //	refreshList();
+            refreshList();
         }
         isFirstComming = false;
     }

@@ -140,6 +140,7 @@
                             android:layout_width="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/space_4"
                             android:text="标签:"
                             android:textColor="@color/main_gray"
                             android:textSize="@dimen/text_size_12" />
@@ -153,7 +154,6 @@
                             android:gravity="center_vertical"
                             android:paddingLeft="4dp"
                             android:paddingRight="4dp"
-                            android:layout_marginLeft="4dp"
                             android:textColor="@color/white"
                             android:visibility="gone"
                             android:textSize="@dimen/text_size_12" />

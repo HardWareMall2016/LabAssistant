@@ -44,7 +44,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/question_title_tv"
-                android:text="标签"
+                android:layout_marginRight="@dimen/space_4"
+                android:text="标签:"
                 android:textColor="@color/main_gray"
                 android:textSize="@dimen/text_size_12" />
 

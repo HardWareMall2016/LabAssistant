@@ -447,4 +447,5 @@
 
     <!--新增资源-->
     <string name="search_user">搜索用户</string>
+    <string name="reward_rules"><![CDATA[<奖励规则>]]></string>
 </resources>

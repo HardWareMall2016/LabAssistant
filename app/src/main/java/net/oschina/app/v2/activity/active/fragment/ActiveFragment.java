@@ -16,6 +16,7 @@ import net.oschina.app.v2.model.MessageNum;
 import net.oschina.app.v2.model.User;
 import net.oschina.app.v2.model.event.MessageRefreshSingle;
 import net.oschina.app.v2.model.event.MessageRefreshTotal;
+import net.oschina.app.v2.ui.dialog.SignInDialog;
 import net.oschina.app.v2.utils.ActiveNumType;
 import net.oschina.app.v2.utils.BitmapLoaderUtil;
 import net.oschina.app.v2.utils.FastBlurUtil;
@@ -82,6 +83,7 @@ public class ActiveFragment extends BaseFragment {
 	private TextView tv_rank;
 	private View mHeaderLayoutContent;
 	private ImageView mViewHeaderBg;
+	private TextView btnSignIn;
 
 	private boolean mIsWatingLogin;
 	private View mIvClearUserName, mIvClearPassword;
@@ -343,7 +345,9 @@ public class ActiveFragment extends BaseFragment {
 		view.findViewById(R.id.active_wodezhushouhao).setOnClickListener(this);
 		view.findViewById(R.id.go_mall).setOnClickListener(this);
 
-	
+
+		btnSignIn=(TextView)view.findViewById(R.id.btn_sign);
+		btnSignIn.setOnClickListener(this);
 
 		active_woganxingqu_discription = (TextView) view
 				.findViewById(R.id.active_woganxingqu_discription);
@@ -634,6 +638,9 @@ public class ActiveFragment extends BaseFragment {
 		} else if (id == R.id.go_mall) {
 			Intent intent = new Intent(getActivity(), MallActivity.class);
 			startActivity(intent);
+		}else if(id == R.id.btn_sign){
+			SignInDialog dialog=new SignInDialog(getActivity(),R.style.Dialog);
+			dialog.show();
 		}
 	}
 

@@ -3,6 +3,8 @@ package net.oschina.app.v2.utils;
 import com.shiyanzhushou.app.R;
 
 import net.oschina.app.v2.model.MessageNum;
+
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
@@ -42,6 +44,19 @@ public class ActiveNumType {
 		} else {
 			tv.setText("");
 			tv.setBackgroundResource(R.drawable.ic_item_goto_right_tip);
+		}
+	}
+
+	public static void updateMessageLabelWithEmpty(int num,TextView tv){
+		if (num > 0) {
+			tv.setVisibility(View.VISIBLE);
+			//大于99显示99+
+			String findStr=num>99?num+"+":num+"";
+			tv.setText(findStr);
+			tv.setBackgroundResource(R.drawable.g_unread_messages_bg);
+		} else {
+			tv.setText("");
+			tv.setBackgroundColor(Color.TRANSPARENT);
 		}
 	}
 	

@@ -8,7 +8,6 @@ import net.oschina.app.v2.activity.FindPasswordActivity;
 import net.oschina.app.v2.activity.MainActivity;
 import net.oschina.app.v2.activity.MallActivity;
 import net.oschina.app.v2.activity.RegistActivity;
-import net.oschina.app.v2.activity.tweet.TweetPublicActivity;
 import net.oschina.app.v2.activity.tweet.view.CircleImageView;
 import net.oschina.app.v2.api.ApiHttpClient;
 import net.oschina.app.v2.api.remote.NewsApi;
@@ -17,8 +16,9 @@ import net.oschina.app.v2.model.MessageNum;
 import net.oschina.app.v2.model.User;
 import net.oschina.app.v2.model.event.MessageRefreshSingle;
 import net.oschina.app.v2.model.event.MessageRefreshTotal;
-import net.oschina.app.v2.model.event.ModifyUserHeadComplete;
 import net.oschina.app.v2.utils.ActiveNumType;
+import net.oschina.app.v2.utils.BitmapLoaderUtil;
+import net.oschina.app.v2.utils.FastBlurUtil;
 import net.oschina.app.v2.utils.SimpleTextWatcher;
 import net.oschina.app.v2.utils.UIHelper;
 import net.oschina.app.v2.utils.ViewFinder;
@@ -30,6 +30,9 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
@@ -40,13 +43,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.shiyanzhushou.app.R;
 import com.umeng.analytics.MobclickAgent;
 
@@ -60,9 +67,9 @@ public class ActiveFragment extends BaseFragment {
 	private TextView tv_address;
 	private ImageView iv_sex;
 	private TextView tv_jifen2;
-	private TextView active_tiwen_num;
-	private TextView active_huida_num;
-	private TextView active_beicaina_num;
+	//private TextView active_tiwen_num;
+	//private TextView active_huida_num;
+	//private TextView active_beicaina_num;
 	private TextView active_fensishu_num;
 	private TextView active_wodetiwen_num;
 	private TextView active_wodehuida_num;
@@ -72,7 +79,9 @@ public class ActiveFragment extends BaseFragment {
 
 	private TextView active_woganxingqu_discription;
 
-	
+	private TextView tv_rank;
+	private View mHeaderLayoutContent;
+	private ImageView mViewHeaderBg;
 
 	private boolean mIsWatingLogin;
 	private View mIvClearUserName, mIvClearPassword;
@@ -90,6 +99,8 @@ public class ActiveFragment extends BaseFragment {
 	private TextView mAskAfterNotice;
 	private TextView mSysMessageNotice;
 	private TextView mAttentionNotice;
+
+	private DisplayImageOptions options;
 	
 	// private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 	// @Override
@@ -126,10 +137,23 @@ public class ActiveFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View view = null;
-
+		options = BitmapLoaderUtil.loadDisplayImageOptions(R.drawable.ic_default_avatar);
 		if (AppContext.instance().isLogin()) {
-			view = inflater.inflate(R.layout.v2_fragment_active_private,
-					container, false);
+			view = inflater.inflate(R.layout.v2_fragment_active_private, container, false);
+			mViewHeaderBg =(ImageView)view.findViewById(R.id.header_bg);
+			mHeaderLayoutContent=view.findViewById(R.id.header_layout_content);
+			ViewTreeObserver vto = mHeaderLayoutContent.getViewTreeObserver();
+			vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+				@Override
+				public void onGlobalLayout() {
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+						mHeaderLayoutContent.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+					}else{
+						mHeaderLayoutContent.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+					}
+					mViewHeaderBg.setMinimumHeight(mHeaderLayoutContent.getHeight());
+				}
+			});
 			initViews(view);
 			loadData();
 			// 重新请求用户信息
@@ -151,8 +175,8 @@ public class ActiveFragment extends BaseFragment {
 				message=new MessageNum();
 			}
 			
-			ActiveNumType.updateMessageLabel(message.getQnum(), mMyQuestionNotice);
-			ActiveNumType.updateMessageLabel(message.getAnum(), mMyAnswerNotice);
+			ActiveNumType.updateMessageLabelWithEmpty(message.getQnum(), mMyQuestionNotice);
+			ActiveNumType.updateMessageLabelWithEmpty(message.getAnum(), mMyAnswerNotice);
 			ActiveNumType.updateMessageLabel(message.getFnum(), mFansForHelpNotice);
 			ActiveNumType.updateMessageLabel(message.getAfternum(), mAskAfterNotice);
 			ActiveNumType.updateMessageLabel(message.getMnum(), mSysMessageNotice);
@@ -327,16 +351,17 @@ public class ActiveFragment extends BaseFragment {
 		iv_sex = (ImageView) view.findViewById(R.id.iv_sex);
 		// 积分
 		tv_jifen = (TextView) view.findViewById(R.id.tv_jifen);
+		// 等级
+		tv_rank = (TextView) view.findViewById(R.id.rank);
 		// 认证情况
 		tv_verify = (TextView) view.findViewById(R.id.tv_verify);
 		tv_address = (TextView) view.findViewById(R.id.tv_address);
 		// 提问
-		active_tiwen_num = (TextView) view.findViewById(R.id.active_tiwen_num);
+		//active_tiwen_num = (TextView) view.findViewById(R.id.active_tiwen_num);
 		// 回答
-		active_huida_num = (TextView) view.findViewById(R.id.active_huida_num);
+		//active_huida_num = (TextView) view.findViewById(R.id.active_huida_num);
 		// 被采纳数量
-		active_beicaina_num = (TextView) view
-				.findViewById(R.id.active_beicaina_num);
+		//active_beicaina_num = (TextView) view.findViewById(R.id.active_beicaina_num);
 		// 粉丝数
 		active_fensishu_num = (TextView) view
 				.findViewById(R.id.active_fensishu_num);
@@ -386,18 +411,18 @@ public class ActiveFragment extends BaseFragment {
 //		tv_jifen.setText(Html.fromHtml("积分： <font color='#FB7C62'>"
 //				+ user.getIntegral() + "分</font>"));
 		
-		tv_nickname.setText("昵称: " + user.getNickname()
-				+ " Lv." + user.getRank());
-		tv_jifen.setText(Html.fromHtml("积分："
-				+ user.getIntegral() + "分"));
+		tv_nickname.setText(user.getNickname());
+		tv_rank.setText(" LV." + user.getRank());
+
+		tv_jifen.setText(user.getIntegral() + "分");
 		if (user.getRealname_status() == 1) {
 			tv_verify.setText("已认证");
-			tv_verify.setBackgroundDrawable(getResources().getDrawable(
-					R.drawable.btn_pink_normal));
+			tv_verify.setBackgroundResource(R.drawable.bg_pick_rounded_selector);
+			//tv_verify.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_pink_normal));
 		} else {
 			tv_verify.setText("未认证");
-			tv_verify.setBackgroundDrawable(getResources().getDrawable(
-					R.drawable.common_btn_pressed));
+			tv_verify.setBackgroundResource(R.drawable.bg_gray_rounded_selector);
+			//tv_verify.setBackgroundDrawable(getResources().getDrawable(R.drawable.common_btn_pressed));
 		}
 
 		tv_verify.setOnClickListener(new View.OnClickListener() {
@@ -416,14 +441,12 @@ public class ActiveFragment extends BaseFragment {
 			iv_sex.setImageResource(R.drawable.userinfo_icon_female);
 		}
 
-		active_tiwen_num.setText(user.getQnum() + "");
-		active_huida_num.setText(user.getAnum() + "");
-		active_beicaina_num.setText(user.getCnum() + "");
-		active_fensishu_num.setText(user.getFnum() + "");
-		active_wodetiwen_num.setText(getString(R.string.active_wodetiwen,
-				user.getQnum())+"("+user.getQnum()+")");
-		active_wodehuida_num.setText(getString(R.string.active_wodehuida,
-				user.getAnum())+"("+user.getAnum()+")");
+		//active_tiwen_num.setText(user.getQnum() + "");
+		//active_huida_num.setText(user.getAnum() + "");
+		//active_beicaina_num.setText(user.getCnum() + "");
+		active_fensishu_num.setText("粉丝 "+user.getFnum() + "");
+		active_wodetiwen_num.setText(+user.getQnum()+"");
+		active_wodehuida_num.setText(user.getAnum()+"");
 		active_zhuiwenwode_num.setText(getString(R.string.active_zhuiwenwode,
 				"0"));
 		active_fensiqiuzhu_num.setText(getString(R.string.active_fensiqiuzhu,
@@ -440,7 +463,30 @@ public class ActiveFragment extends BaseFragment {
 				.valueOf(invitation) : "");
 
 		ImageLoader.getInstance().displayImage(
-				ApiHttpClient.getImageApiUrl(user.getHead()), iv_img_head);
+				ApiHttpClient.getImageApiUrl(user.getHead()), iv_img_head,options,new ImageLoadingListener(){
+					@Override
+					public void onLoadingStarted(String s, View view) {
+					}
+
+					@Override
+					public void onLoadingFailed(String s, View view, FailReason failReason) {
+					}
+
+					@Override
+					public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+						if(bitmap==null){
+							return;
+						}
+
+						Bitmap blurBitmap = FastBlurUtil.doBlur(bitmap, 8, false);
+						mViewHeaderBg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+						mViewHeaderBg.setImageBitmap(blurBitmap);
+					}
+
+					@Override
+					public void onLoadingCancelled(String s, View view) {
+					}
+				});
 		// ImageLoader.getInstance().displayImage(user.getFace(), avatar);
 		NewsApi.refreshScore(AppContext.instance().getLoginUid(), mRefreshScoreHandler);
 	}
@@ -470,8 +516,7 @@ public class ActiveFragment extends BaseFragment {
 					User user=AppContext.instance().getLoginInfo();
 					user.setIntegral(integral);
 					AppContext.instance().saveLoginInfo(user);
-					tv_jifen.setText(Html.fromHtml("积分："
-							+ user.getIntegral() + "分"));
+					tv_jifen.setText(user.getIntegral() + "分");
 					
 				} else {
 					AppContext.showToast(response.getString("desc"));
@@ -587,8 +632,8 @@ public class ActiveFragment extends BaseFragment {
 	}
 
 	private void updateMessage(MessageNum message) {
-		ActiveNumType.updateMessageLabel(message.getQnum(), mMyQuestionNotice);
-		ActiveNumType.updateMessageLabel(message.getAnum(), mMyAnswerNotice);
+		ActiveNumType.updateMessageLabelWithEmpty(message.getQnum(), mMyQuestionNotice);
+		ActiveNumType.updateMessageLabelWithEmpty(message.getAnum(), mMyAnswerNotice);
 		ActiveNumType.updateMessageLabel(message.getFnum(), mFansForHelpNotice);
 		ActiveNumType.updateMessageLabel(message.getAfternum(), mAskAfterNotice);
 		ActiveNumType.updateMessageLabel(message.getMnum(), mSysMessageNotice);

@@ -138,7 +138,23 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/btn_sign"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_red_half_circle_selector"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"
+                        android:paddingTop="8dp"
+                        android:text="签到"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/text_size_16" />
 
                 </LinearLayout>
 
@@ -210,115 +226,126 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/active_wodetiwen"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/list_item_background"
-                android:orientation="horizontal"
+                android:gravity="center"
+                android:orientation="vertical"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp">
 
-                <ImageView
-                    android:id="@+id/img_my_ask"
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/icon_my_ask" />
+                    android:layout_gravity="center">
 
-                <TextView
-                    android:id="@+id/myquestion_notice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@id/img_my_ask"
-                    android:layout_alignRight="@id/img_my_ask"
-                    android:layout_alignTop="@id/img_my_ask"
-                    android:background="@drawable/ic_item_goto_right_tip"
-                    android:gravity="center"
-                    android:textColor="#fff" />
+                    <ImageView
+                        android:id="@+id/img_my_ask"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@null"
+                        android:src="@drawable/icon_my_ask" />
 
-                <TextView
-                    android:id="@+id/my_ask_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_8"
-                    android:layout_marginStart="@dimen/space_8"
-                    android:layout_toEndOf="@id/img_my_ask"
-                    android:layout_toRightOf="@id/img_my_ask"
-                    android:text="我的提问"
-                    android:textColor="@color/tab_text_gray" />
+                    <TextView
+                        android:id="@+id/myquestion_notice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@id/img_my_ask"
+                        android:layout_alignRight="@id/img_my_ask"
+                        android:layout_alignTop="@id/img_my_ask"
+                        android:background="@drawable/ic_item_goto_right_tip"
+                        android:gravity="center"
+                        android:textColor="#fff" />
 
-                <TextView
-                    android:id="@+id/active_wodetiwen_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/my_ask_title"
-                    android:layout_alignStart="@id/my_ask_title"
-                    android:layout_below="@id/my_ask_title"
-                    android:textColor="@color/tab_text_gray" />
+                    <TextView
+                        android:id="@+id/my_ask_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_8"
+                        android:layout_marginStart="@dimen/space_8"
+                        android:layout_toEndOf="@id/img_my_ask"
+                        android:layout_toRightOf="@id/img_my_ask"
+                        android:text="我的提问"
+                        android:textColor="@color/tab_text_gray" />
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/active_wodetiwen_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/my_ask_title"
+                        android:layout_alignStart="@id/my_ask_title"
+                        android:layout_below="@id/my_ask_title"
+                        android:textColor="@color/tab_text_gray" />
+
+                </RelativeLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="30dp"
                 android:background="@color/list_divider_color" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/active_wodehuida"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/list_item_background"
-                android:orientation="horizontal"
+                android:gravity="center"
+                android:orientation="vertical"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp">
 
-                <ImageView
-                    android:id="@+id/img_my_answer"
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/icon_my_answer" />
+                    android:layout_gravity="center">
 
-                <TextView
-                    android:id="@+id/myanswer_notice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@id/img_my_answer"
-                    android:layout_alignRight="@id/img_my_answer"
-                    android:layout_alignTop="@id/img_my_answer"
-                    android:background="@drawable/ic_item_goto_right_tip"
-                    android:gravity="center"
-                    android:textColor="#fff" />
+                    <ImageView
+                        android:id="@+id/img_my_answer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/icon_my_answer" />
 
-                <TextView
-                    android:id="@+id/my_answer_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_8"
-                    android:layout_marginStart="@dimen/space_8"
-                    android:layout_toEndOf="@id/img_my_answer"
-                    android:layout_toRightOf="@id/img_my_answer"
-                    android:text="我的回答"
-                    android:textColor="@color/tab_text_gray" />
+                    <TextView
+                        android:id="@+id/myanswer_notice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@id/img_my_answer"
+                        android:layout_alignRight="@id/img_my_answer"
+                        android:layout_alignTop="@id/img_my_answer"
+                        android:background="@drawable/ic_item_goto_right_tip"
+                        android:gravity="center"
+                        android:textColor="#fff" />
 
-                <TextView
-                    android:id="@+id/active_wodehuida_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/my_answer_title"
-                    android:layout_alignStart="@id/my_answer_title"
-                    android:layout_below="@id/my_answer_title"
-                    android:textColor="@color/tab_text_gray" />
+                    <TextView
+                        android:id="@+id/my_answer_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_8"
+                        android:layout_marginStart="@dimen/space_8"
+                        android:layout_toEndOf="@id/img_my_answer"
+                        android:layout_toRightOf="@id/img_my_answer"
+                        android:text="我的回答"
+                        android:textColor="@color/tab_text_gray" />
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/active_wodehuida_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@id/my_answer_title"
+                        android:layout_alignStart="@id/my_answer_title"
+                        android:layout_below="@id/my_answer_title"
+                        android:textColor="@color/tab_text_gray" />
 
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
 
         <!-- 引用一条分割线 -->

@@ -1381,7 +1381,7 @@ public class UIHelper {
 			public void onImageClick(String bigImageUrl) {
 				if (bigImageUrl != null) {
 					// UIHelper.showImageZoomDialog(cxt, bigImageUrl);
-					UIHelper.showImagePreview(cxt, new String[] { bigImageUrl });
+					UIHelper.showImagePreview(cxt, new String[]{bigImageUrl});
 				}
 			}
 		}, "mWebViewImageListener");
@@ -1544,6 +1544,13 @@ public class UIHelper {
 			intent.putExtra("num", num);
 			context.startActivity(intent);
 		}
+	//我的收藏的模块
+	public static void wodesoucangExtra(Context context,int num) {
+		Intent intent = new Intent(context, SimpleBackActivity.class);
+		intent.putExtra(SimpleBackActivity.BUNDLE_KEY_PAGE, SimpleBackPage.wodesoucang.getValue());
+		intent.putExtra("num", num);
+		context.startActivity(intent);
+	}
 	//我感兴趣的
 	public static void woganxingqude(Context context) {
 		showSimpleBack(context, SimpleBackPage.woganxingqude);

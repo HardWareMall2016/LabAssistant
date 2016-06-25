@@ -37,6 +37,7 @@ import net.oschina.app.v2.activity.user.fragment.AskMeAgainFragment;
 import net.oschina.app.v2.activity.user.fragment.FunsForHelpFragment;
 import net.oschina.app.v2.activity.user.fragment.MyAnswerFragment;
 import net.oschina.app.v2.activity.user.fragment.MyFavoriteViewPageFragment;
+import net.oschina.app.v2.activity.user.fragment.MyFavoritesViewPageFragment;
 import net.oschina.app.v2.activity.user.fragment.MyInterstFragment;
 import net.oschina.app.v2.activity.user.fragment.MyQuestionFragment;
 import net.oschina.app.v2.activity.user.fragment.MyZhuShouIDFragment;
@@ -101,8 +102,9 @@ public enum SimpleBackPage {
 	RENZHENGSHUOMING(46,R.string.settings_shimingrenzheng,RenZhengShuoMingFragment.class),
 	MYZHUSHOUID(47,R.string.active_wodezhushouhao,MyZhuShouIDFragment.class),
 	ANSWERAFTER(48,R.string.active_zhuiwenwode,AnswerAfterPagerFragment.class),
-	UserSHUOMING(49,R.string.active_userDescription,UserShuoMingFragment.class);
-	
+	UserSHUOMING(49,R.string.active_userDescription,UserShuoMingFragment.class),
+	wodesoucang(50,R.string.active_wodesoucang,MyFavoritesViewPageFragment.class);
+
 	private int title;
 	private Class<?> clz;
 	private int value;

@@ -336,6 +336,7 @@ public class ActiveFragment extends BaseFragment {
 		view.findViewById(R.id.active_fensiqiuzhu).setOnClickListener(this);
 		view.findViewById(R.id.active_xitongxiaoxi).setOnClickListener(this);
 		view.findViewById(R.id.active_guanzhuxinxi).setOnClickListener(this);
+		view.findViewById(R.id.active_wodesoucang).setOnClickListener(this);
 		view.findViewById(R.id.active_woganxingqu).setOnClickListener(this);
 		view.findViewById(R.id.active_renwuchengjiu).setOnClickListener(this);
 		view.findViewById(R.id.active_wodewupin).setOnClickListener(this);
@@ -610,7 +611,12 @@ public class ActiveFragment extends BaseFragment {
 				anum=AppContext.instance().getMessageNum().getGnum();
 			}
 			UIHelper.guanzhuxiaoxiExtra(getActivity(),anum);
-			
+		}else if (id == R.id.active_wodesoucang) {
+			int anum=0;
+			if(AppContext.instance().getMessageNum()!=null){
+				anum=AppContext.instance().getMessageNum().getGnum();
+			}
+			UIHelper.wodesoucangExtra(getActivity(), anum);
 		} else if (id == R.id.active_woganxingqu) {
 			UIHelper.woganxingqude(getActivity());
 		} else if (id == R.id.active_renwuchengjiu) {

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.shiyanzhushou.app"
-    android:versionCode="3"
-    android:versionName="1.3">
+    package="com.shiyanzhushou.app">
 
     <uses-sdk
         android:minSdkVersion="11"

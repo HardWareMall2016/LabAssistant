@@ -182,7 +182,6 @@
                 android:textColor="@color/main_black"
                 android:textSize="@dimen/text_size_12"
                 android:visibility="gone" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -192,18 +191,30 @@
                 android:layout_toRightOf="@id/iv_img_head"
                 android:orientation="horizontal">
 
-                <!-- 商城的图片，也可以是按钮 -->
                 <TextView
-                    android:id="@+id/go_mall"
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
+                    android:id="@+id/zhichi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:background="@color/me_mall_color"
+                    android:background="@drawable/bg_zhichi"
                     android:gravity="center"
-                    android:text="商城"
+                    android:text="收到5个支持"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="12sp" />
             </LinearLayout>
+
+            <!-- 商城的图片，也可以是按钮 -->
+            <TextView
+                android:id="@+id/go_mall"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/me_mall_color"
+                android:gravity="center"
+                android:text="商城"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
@@ -444,6 +455,7 @@
                     android:textColor="#fff" />
             </LinearLayout>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"

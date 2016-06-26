@@ -84,6 +84,7 @@ public class ActiveFragment extends BaseFragment {
 	private View mHeaderLayoutContent;
 	private ImageView mViewHeaderBg;
 	private TextView btnSignIn;
+	private TextView btnZhichi;
 
 	private boolean mIsWatingLogin;
 	private View mIvClearUserName, mIvClearPassword;
@@ -349,6 +350,9 @@ public class ActiveFragment extends BaseFragment {
 		btnSignIn=(TextView)view.findViewById(R.id.btn_sign);
 		btnSignIn.setOnClickListener(this);
 
+		btnZhichi=(TextView)view.findViewById(R.id.zhichi);
+		btnZhichi.setOnClickListener(this);
+
 		active_woganxingqu_discription = (TextView) view
 				.findViewById(R.id.active_woganxingqu_discription);
 		// 昵称
@@ -356,6 +360,7 @@ public class ActiveFragment extends BaseFragment {
 		iv_sex = (ImageView) view.findViewById(R.id.iv_sex);
 		// 积分
 		tv_jifen = (TextView) view.findViewById(R.id.tv_jifen);
+		tv_jifen.setOnClickListener(this);
 		// 等级
 		tv_rank = (TextView) view.findViewById(R.id.rank);
 		// 认证情况
@@ -641,6 +646,10 @@ public class ActiveFragment extends BaseFragment {
 		}else if(id == R.id.btn_sign){
 			SignInDialog dialog=new SignInDialog(getActivity(),R.style.Dialog);
 			dialog.show();
+		}else if(id==R.id.tv_jifen){
+			UIHelper.jifenxiangqing(getActivity());
+		}else if(id==R.id.zhichi){
+			UIHelper.zhichiwode(getActivity());
 		}
 	}
 

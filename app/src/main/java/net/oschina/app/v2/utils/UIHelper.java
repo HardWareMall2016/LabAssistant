@@ -1533,6 +1533,14 @@ public class UIHelper {
 	public static void xitongxiaoxi(Context context) {
 		showSimpleBack(context, SimpleBackPage.xitongxiaoxi);
 	}
+	//积分详情的模块
+	public static void jifenxiangqing(Context context) {
+		showSimpleBack(context, SimpleBackPage.jifenxiangqing);
+	}
+	//支持我的模块
+	public static void zhichiwode(Context context) {
+		showSimpleBack(context, SimpleBackPage.zhichiwode);
+	}
 	//关注消息的模块
 	public static void guanzhuxiaoxi(Context context) {
 		showSimpleBack(context, SimpleBackPage.guanzhuxiaoxi);

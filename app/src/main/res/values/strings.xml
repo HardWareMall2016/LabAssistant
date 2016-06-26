@@ -71,6 +71,8 @@
     <string name="default_name_level">James lv1</string>
     <string name="default_recommend_question">原问题，那种品牌的面膜效果好?</string>
     <string name="activite_xitongxiaoxi">系统消息</string>
+    <string name="activite_jifenxiangqing">积分列表</string>
+    <string name="activite_zhichiwode">支持我的</string>
     <string name="isfinish_newtask">你完成了一项新手任务</string>
     <string name="sysinfo_show">恭喜你，你完成了新手任务,奖励10分</string>
     <string name="activity_guanzhuxiaoxi">关注消息</string>

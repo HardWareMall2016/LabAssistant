@@ -35,6 +35,7 @@ import net.oschina.app.v2.activity.tweet.fragment.TweetPublicFragment;
 import net.oschina.app.v2.activity.user.fragment.AnswerAfterPagerFragment;
 import net.oschina.app.v2.activity.user.fragment.AskMeAgainFragment;
 import net.oschina.app.v2.activity.user.fragment.FunsForHelpFragment;
+import net.oschina.app.v2.activity.user.fragment.JifenXiangQingFragment;
 import net.oschina.app.v2.activity.user.fragment.MyAnswerFragment;
 import net.oschina.app.v2.activity.user.fragment.MyFavoriteViewPageFragment;
 import net.oschina.app.v2.activity.user.fragment.MyFavoritesViewPageFragment;
@@ -46,6 +47,7 @@ import net.oschina.app.v2.activity.user.fragment.UserCenterFragment;
 import net.oschina.app.v2.activity.user.fragment.UserProfileFragment;
 import net.oschina.app.v2.activity.user.fragment.WoDeWuPinViewPageFragment;
 import net.oschina.app.v2.activity.user.fragment.XiTongXiaoXiFragment;
+import net.oschina.app.v2.activity.user.fragment.ZhiChiWoDeFragment;
 
 import com.shiyanzhushou.app.R;
 
@@ -103,7 +105,9 @@ public enum SimpleBackPage {
 	MYZHUSHOUID(47,R.string.active_wodezhushouhao,MyZhuShouIDFragment.class),
 	ANSWERAFTER(48,R.string.active_zhuiwenwode,AnswerAfterPagerFragment.class),
 	UserSHUOMING(49,R.string.active_userDescription,UserShuoMingFragment.class),
-	wodesoucang(50,R.string.active_wodesoucang,MyFavoritesViewPageFragment.class);
+	wodesoucang(50,R.string.active_wodesoucang,MyFavoritesViewPageFragment.class),
+	jifenxiangqing(51,R.string.activite_jifenxiangqing,JifenXiangQingFragment.class),
+	zhichiwode(52,R.string.activite_zhichiwode,ZhiChiWoDeFragment.class);
 
 	private int title;
 	private Class<?> clz;

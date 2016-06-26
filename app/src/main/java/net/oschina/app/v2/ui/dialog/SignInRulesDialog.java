@@ -2,7 +2,6 @@ package net.oschina.app.v2.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -14,31 +13,26 @@ import com.shiyanzhushou.app.R;
 
 import net.oschina.app.v2.ui.calendar.CalendarAdapter;
 import net.oschina.app.v2.utils.DeviceUtils;
-import net.oschina.app.v2.utils.TDevice;
 
-public class SignInDialog extends Dialog implements View.OnClickListener{
-
-	//private TextView _messageTv;
-	private CalendarAdapter calV = null;
-	private GridView gridView = null;
+public class SignInRulesDialog extends Dialog implements View.OnClickListener{
 	private TextView mBtnOk = null;
 
-	public SignInDialog(Context context) {
+	public SignInRulesDialog(Context context) {
 		super(context);
 		init(context);
 	}
 
-	public SignInDialog(Context context, int defStyle) {
+	public SignInRulesDialog(Context context, int defStyle) {
 		super(context, defStyle);
 		init(context);
 	}
 
-	protected SignInDialog(Context context, boolean cancelable, OnCancelListener listener) {
+	protected SignInRulesDialog(Context context, boolean cancelable, OnCancelListener listener) {
 		super(context, cancelable, listener);
 		init(context);
 	}
 
-	public static boolean dismiss(SignInDialog dialog) {
+	public static boolean dismiss(SignInRulesDialog dialog) {
 		if (dialog != null) {
 			dialog.dismiss();
 			return false;
@@ -52,7 +46,7 @@ public class SignInDialog extends Dialog implements View.OnClickListener{
 			((DialogControl) context).hideWaitDialog();
 	}
 
-	public static boolean hide(SignInDialog dialog) {
+	public static boolean hide(SignInRulesDialog dialog) {
 		if (dialog != null) {
 			dialog.hide();
 			return false;
@@ -64,10 +58,7 @@ public class SignInDialog extends Dialog implements View.OnClickListener{
 	private void init(Context context) {
 		setCancelable(true);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		View view = LayoutInflater.from(context).inflate(R.layout.calendar, null);
-		gridView =(GridView)view.findViewById(R.id.gridview);
-		calV = new CalendarAdapter(context,context.getResources());
-		gridView.setAdapter(calV);
+		View view = LayoutInflater.from(context).inflate(R.layout.signin_rules, null);
 		setContentView(view);
 
 		Window dialogWindow = getWindow();
@@ -77,8 +68,6 @@ public class SignInDialog extends Dialog implements View.OnClickListener{
 
 		mBtnOk = (TextView) view.findViewById(R.id.btn_ok);
 		mBtnOk.setOnClickListener(this);
-
-		view.findViewById(R.id.reward_rules).setOnClickListener(this);
 	}
 
 	@Override
@@ -86,10 +75,6 @@ public class SignInDialog extends Dialog implements View.OnClickListener{
 		switch (v.getId()){
 			case  R.id.btn_ok:
 				dismiss();
-				break;
-			case R.id.reward_rules:
-				SignInRulesDialog dialog=new SignInRulesDialog(getContext(),R.style.Dialog);
-				dialog.show();
 				break;
 		}
 	}

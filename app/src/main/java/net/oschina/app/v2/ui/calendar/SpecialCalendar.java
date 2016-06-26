@@ -50,10 +50,14 @@ public class SpecialCalendar {
 	}
 	
 	//指定某年中的某月的第一天是星期几
+	//周一至周日:0-6
 	public int getWeekdayOfMonth(int year, int month){
 		Calendar cal = Calendar.getInstance();
 		cal.set(year, month-1, 1);
-		dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-1;
+		dayOfWeek = cal.get(Calendar.DAY_OF_WEEK)-2;
+		if(dayOfWeek==-1){
+			dayOfWeek=6;
+		}
 		return dayOfWeek;
 	}
 	

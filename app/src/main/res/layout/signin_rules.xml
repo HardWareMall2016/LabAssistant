@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:paddingTop="34dp">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_sign_in_body"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-50dp"
+            android:src="@drawable/reward_rules" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="1、连续签到5天奖励50积分"
+            android:textColor="#ff666666"
+            android:textSize="16dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="2、连续签到10天奖励100积分"
+            android:textColor="#ff666666"
+            android:textSize="16dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="3、连续签到20天奖励500积分"
+            android:textColor="#ff666666"
+            android:textSize="16dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="4、连续签到30天奖励800积分"
+            android:textColor="#ff666666"
+            android:textSize="16dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="5、连续签到50天奖励1200积分"
+            android:textColor="#ff666666"
+            android:textSize="16dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="6、连续签到100天奖励3000积分"
+            android:textColor="#ff666666"
+            android:textSize="16dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="7、连续签到200天奖励5000积分"
+            android:textColor="#ff666666"
+            android:textSize="16dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="8、连续签到365天奖励10000积分"
+            android:textColor="#ff666666"
+            android:textSize="16dip" />
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_sign_in_rounded_selector"
+            android:minHeight="40dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="返回"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</ScrollView>

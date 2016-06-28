@@ -450,4 +450,9 @@
     <!--新增资源-->
     <string name="search_user">搜索用户</string>
     <string name="reward_rules"><![CDATA[<奖励规则>]]></string>
+
+
+    <string name="comm_download_fialed">下载失败</string>
+    <string name="comm_network_download_path_null">下载地址为空!</string>
+    <string name="comm_unknow_service_error">服务器未知错误</string>
 </resources>

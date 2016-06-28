@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
@@ -40,6 +41,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -59,6 +61,16 @@ public class SearchBackActivity extends BaseActivity implements
 	private TweetAdapter mAdapter;
 	private View tip_layout;
 	private View tip_close;
+
+	private enum SearchType{QUESTIONS,USERS,ARTICLES}
+
+	private TextView mTabQuestions;
+	private TextView mTabUsers;
+	private TextView mTabArticles;
+
+	private SearchType mSearchType=SearchType.QUESTIONS;
+
+
 	private OnScrollListener mScrollListener = new OnScrollListener() {
 
 		@Override
@@ -109,7 +121,7 @@ public class SearchBackActivity extends BaseActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.v2_fragment_tweet_detail);
+		setContentView(R.layout.search_detail_layout);
 
 		Bundle bundle = getIntent().getExtras();
 
@@ -128,6 +140,15 @@ public class SearchBackActivity extends BaseActivity implements
 
 	private void initViews() {
 
+		mTabQuestions = (TextView) findViewById(R.id.questions);
+		mTabQuestions.setOnClickListener(this);
+		mTabUsers = (TextView) findViewById(R.id.users);
+		mTabUsers.setOnClickListener(this);
+		mTabArticles = (TextView) findViewById(R.id.articles);
+		mTabArticles.setOnClickListener(this);
+
+		refreshTabViews();
+
 		mListView = (ListView) findViewById(R.id.listview);
 		mListView.setOnScrollListener(mScrollListener);
 		mListView.setOnItemClickListener(this);
@@ -142,14 +163,52 @@ public class SearchBackActivity extends BaseActivity implements
 	public void onClick(View v) {
 
 		switch (v.getId()) {
-		case R.id.btn_search:
-			sendRequestData(false);
-			break;
-		case R.id.tip_close:
-			tip_layout.setVisibility(View.GONE);
-			break;
+			case R.id.btn_search:
+				sendRequestData(false);
+				break;
+			case R.id.tip_close:
+				tip_layout.setVisibility(View.GONE);
+				break;
+			case R.id.questions:
+				mSearchType=SearchType.QUESTIONS;
+				refreshTabViews();
+				break;
+			case R.id.users:
+				mSearchType=SearchType.USERS;
+				refreshTabViews();
+				break;
+			case R.id.articles:
+				mSearchType=SearchType.ARTICLES;
+				refreshTabViews();
+				break;
 		}
+	}
 
+	private void refreshTabViews(){
+		mTabQuestions.setBackgroundResource(R.drawable.bg_search_left_unselected);
+		mTabQuestions.setTextColor(0xff1daaf1);
+
+		mTabUsers.setBackgroundResource(R.drawable.bg_search_center_unselected);
+		mTabUsers.setTextColor(0xff1daaf1);
+
+		mTabArticles.setBackgroundResource(R.drawable.bg_search_right_unselected);
+		mTabArticles.setTextColor(0xff1daaf1);
+
+		switch (mSearchType){
+			case QUESTIONS:
+				mTabQuestions.setTextColor(Color.WHITE);
+				mTabQuestions.setBackgroundResource(R.drawable.bg_search_left_selected);
+				break;
+			case USERS:
+				mTabUsers.setTextColor(Color.WHITE);
+				mTabUsers.setBackgroundResource(R.drawable.bg_search_center_selected);
+				break;
+			case ARTICLES:
+				mTabArticles.setTextColor(Color.WHITE);
+				mTabArticles.setBackgroundResource(R.drawable.bg_search_right_selected);
+				break;
+
+		}
 	}
 
 	protected void initActionBar(ActionBar actionBar) {

@@ -34,6 +34,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -65,497 +66,505 @@ import com.umeng.socialize.sso.UMQQSsoHandler;
 
 
 public class ShowTitleDetailActivity extends BaseActivity implements
-		EmojiTextListener, EmojiFragmentControl, ToolbarFragmentControl {
-	private TextView tv_td_title;
-	private TextView tv_td_time;
+        EmojiTextListener, EmojiFragmentControl, ToolbarFragmentControl {
+    private TextView tv_td_title;
+    private TextView tv_td_time;
 
-	private ImageView detail_img;
-	// private ImageView iv_td;
-	private WebView wv_td;
-	private int mNewsId;
-	private int mNewsType = 1;
-	private String mNewsImg = null;
-	private int fromSource = 0;
-	private int fromTitle = -1;
+    private ImageView detail_img;
+    // private ImageView iv_td;
+    private WebView wv_td;
+    private int mNewsId;
+    private int mNewsType = 1;
+    private String mNewsImg = null;
+    private int fromSource = 0;
+    private int fromTitle = -1;
 
-	private View woyaobaoming;
-	private View taolun;
-	private View fenxiangTx, baomingTx;
+    private View woyaobaoming;
+    private View taolun;
+    private View fenxiangTx, baomingTx;
 
-	private StringEntity entity;
-	private String data;
-	private String thumb;
-	private String title;
-	private String description;
-	private int inputtime;
-	protected String content;
-	private ShareHelper shareHelper;
-	private String url;
-	private boolean isAllowShare;
+    private StringEntity entity;
+    private String data;
+    private String thumb;
+    private String title;
+    private String description;
+    private int inputtime;
+    protected String content;
+    private ShareHelper shareHelper;
+    private String url;
+    private boolean isAllowShare;
 
-	private Handler mhandler = new Handler() {
-		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-			case 1:
+    private Handler mhandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what) {
+                case 1:
 
-				break;
+                    break;
 
-			default:
-				break;
-			}
-		};
-	};
+                default:
+                    break;
+            }
+        }
 
-	@Override
-	protected int getActionBarTitle() {
+        ;
+    };
 
-		if (fromTitle > 0) {
-			return fromTitle;
-		}
-		return super.getActionBarTitle();
-	}
+    @Override
+    protected int getActionBarTitle() {
 
-	private TextView textTitle;
-	private ImageView shareBtn ;
+        if (fromTitle > 0) {
+            return fromTitle;
+        }
+        return super.getActionBarTitle();
+    }
 
-	protected void initActionBar(ActionBar actionBar) {
-		if (actionBar == null)
-			return;
-		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		View view = null;
-		view = inflateView(R.layout.v2_actionbar_custom_view);
+    private TextView textTitle;
+    private ImageView shareBtn;
 
-		textTitle = (TextView) view.findViewById(R.id.tv_ask_title);
+    protected void initActionBar(ActionBar actionBar) {
+        if (actionBar == null)
+            return;
+        actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        View view = null;
+        view = inflateView(R.layout.v2_actionbar_custom_view);
 
-		View btn_back = view.findViewById(R.id.btn_back);
+        textTitle = (TextView) view.findViewById(R.id.tv_ask_title);
 
-		shareBtn = (ImageView) view.findViewById(R.id.btn_share);
+        View btn_back = view.findViewById(R.id.btn_back);
 
-		TextView tv_back = (TextView) view.findViewById(R.id.tv_back);
+        shareBtn = (ImageView) view.findViewById(R.id.btn_share);
 
-		tv_back.setOnClickListener(new View.OnClickListener() {
+        TextView tv_back = (TextView) view.findViewById(R.id.tv_back);
 
-			@Override
-			public void onClick(View v) {
-				onBackPressed();
-			}
-		});
+        tv_back.setOnClickListener(new View.OnClickListener() {
 
-		btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
-			@Override
-			public void onClick(View v) {
-				onBackPressed();
-			}
-		});
+        btn_back.setOnClickListener(new View.OnClickListener() {
 
-		shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
-			@Override
-			public void onClick(View v) {
-			if (textTitle.getText().toString().trim().equals("培训信息")){
-				handleShare();
-			}else{
-				doShareToCircle();
-			}
-				
-			}
-		});
+        shareBtn.setOnClickListener(new View.OnClickListener() {
 
-		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT);
-		actionBar.setCustomView(view, params);
-	}
+            @Override
+            public void onClick(View v) {
+                if (textTitle.getText().toString().trim().equals("培训信息")) {
+                    handleShare();
+                } else {
+                    doShareToCircle();
+                }
 
-	//分享到实验圈
-	protected void doShareToCircle() {
-		final AlertDialog dialog = new AlertDialog.Builder(this).create();
-		dialog.show();
-		Window window = dialog.getWindow();
-		window.setContentView(R.layout.zhichi_dialog);
-		TextView titleTv = (TextView) window.findViewById(R.id.tv_title);
-		titleTv.setText("分享到实验圈？");
-		// 设置监听
-		Button zhichi = (Button) window.findViewById(R.id.ib_zhichi);
-		zhichi.setText("确定");
-		// 支持
-		zhichi.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (!AppContext.instance().isLogin()) {
-					Intent intent = new Intent(ShowTitleDetailActivity.this,
-							MainActivity.class);
-					intent.putExtra("type", "login");
-					startActivity(intent);
-				} else {
-					NewsApi.shareToCircle(AppContext.instance().getLoginUid(), mNewsId,mNewsType,
-							new JsonHttpResponseHandler() {
-								@Override
-								public void onSuccess(int statusCode,
-										Header[] headers, JSONObject response) {
-									System.out.println(response);
-									AppContext.showToast("分享成功");
-								}
-							});
-				}
-				dialog.dismiss();
-			}
-		});
-		// 查看支持者
-		Button chakanzhichi = (Button) window
-				.findViewById(R.id.ib_chakanzhichi);
-		chakanzhichi.setText("取消");
-		chakanzhichi.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
-	}
+            }
+        });
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.titledetail);
-		shareHelper = new ShareHelper(this);
-		Intent intent = getIntent();
-		mNewsId = intent.getIntExtra("id", 1);
-		mNewsType = intent.getIntExtra("type", 1);
-		mNewsImg = intent.getStringExtra("img");
-		fromSource = intent.getIntExtra("fromSource", 0);
-		fromTitle = intent.getIntExtra("fromTitle", R.string.app_name);
-		textTitle.setText(getText(fromTitle));
-		if(("培训信息").equals(getText(fromTitle))){
-			shareBtn.setVisibility(View.VISIBLE);
-		}
+        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT);
+        actionBar.setCustomView(view, params);
+    }
 
-		tv_td_title = (TextView) findViewById(R.id.tv_title);
-		tv_td_time = (TextView) findViewById(R.id.tv_time);
-		detail_img = (ImageView) findViewById(R.id.detail_img);
+    //分享到实验圈
+    protected void doShareToCircle() {
+        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setContentView(R.layout.zhichi_dialog);
+        TextView titleTv = (TextView) window.findViewById(R.id.tv_title);
+        titleTv.setText("分享到实验圈？");
+        // 设置监听
+        Button zhichi = (Button) window.findViewById(R.id.ib_zhichi);
+        zhichi.setText("确定");
+        // 支持
+        zhichi.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!AppContext.instance().isLogin()) {
+                    Intent intent = new Intent(ShowTitleDetailActivity.this,
+                            MainActivity.class);
+                    intent.putExtra("type", "login");
+                    startActivity(intent);
+                } else {
+                    NewsApi.shareToCircle(AppContext.instance().getLoginUid(), mNewsId, mNewsType,
+                            new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode,
+                                                      Header[] headers, JSONObject response) {
+                                    System.out.println(response);
+                                    AppContext.showToast("分享成功");
+                                }
+                            });
+                }
+                dialog.dismiss();
+            }
+        });
+        // 查看支持者
+        Button chakanzhichi = (Button) window
+                .findViewById(R.id.ib_chakanzhichi);
+        chakanzhichi.setText("取消");
+        chakanzhichi.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
 
-		woyaobaoming = findViewById(R.id.woyaobaoming);
-		taolun = findViewById(R.id.taolun);
-		fenxiangTx = findViewById(R.id.fenxiang);
-		baomingTx = findViewById(R.id.baoming);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.titledetail);
+        shareHelper = new ShareHelper(this);
+        Intent intent = getIntent();
+        mNewsId = intent.getIntExtra("id", 1);
+        mNewsType = intent.getIntExtra("type", 1);
+        mNewsImg = intent.getStringExtra("img");
+        fromSource = intent.getIntExtra("fromSource", 0);
+        fromTitle = intent.getIntExtra("fromTitle", R.string.app_name);
+        textTitle.setText(getText(fromTitle));
+        if (("培训信息").equals(getText(fromTitle))) {
+            shareBtn.setVisibility(View.VISIBLE);
+        }
 
-		woyaobaoming.setOnClickListener(new View.OnClickListener() {
+        tv_td_title = (TextView) findViewById(R.id.tv_title);
+        tv_td_time = (TextView) findViewById(R.id.tv_time);
+        detail_img = (ImageView) findViewById(R.id.detail_img);
 
-			@Override
-			public void onClick(View v) {
-				Intent intent = null;
+        woyaobaoming = findViewById(R.id.woyaobaoming);
+        taolun = findViewById(R.id.taolun);
+        fenxiangTx = findViewById(R.id.fenxiang);
+        baomingTx = findViewById(R.id.baoming);
 
-				if (fromSource == 1) {
-					if (!AppContext.instance().isLogin()) {
-						AppContext.showToast("登录用户方可参与报名");
+        woyaobaoming.setOnClickListener(new View.OnClickListener() {
 
-						return;
-					}
+            @Override
+            public void onClick(View v) {
+                Intent intent = null;
 
-					intent = new Intent(ShowTitleDetailActivity.this,
-							BaoMingActivity.class);
-					intent.putExtra("id", mNewsId);
-					startActivity(intent);
-				} else {
-					handleShare();
-				}
+                if (fromSource == 1) {
+                    if (!AppContext.instance().isLogin()) {
+                        AppContext.showToast("登录用户方可参与报名");
 
-			}
-		});
+                        return;
+                    }
 
-		taolun.setOnClickListener(new View.OnClickListener() {
+                    intent = new Intent(ShowTitleDetailActivity.this,
+                            BaoMingActivity.class);
+                    intent.putExtra("id", mNewsId);
+                    startActivity(intent);
+                } else {
+                    handleShare();
+                }
 
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(ShowTitleDetailActivity.this,
-						DiscussActivity.class);
-				intent.putExtra("articleId", mNewsId);
-				startActivity(intent);
-			}
-		});
+            }
+        });
 
-		fenxiangTx.setVisibility(fromSource != 1 ? View.VISIBLE : View.GONE);
-		baomingTx.setVisibility(fromSource == 1 ? View.VISIBLE : View.GONE);
+        taolun.setOnClickListener(new View.OnClickListener() {
 
-		if (TextUtils.isEmpty(mNewsImg)) {
-			detail_img.setVisibility(View.GONE);
-		} else {
-			detail_img.setVisibility(View.VISIBLE);
-			ImageLoader.getInstance().displayImage(mNewsImg, detail_img);
-		}
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShowTitleDetailActivity.this,
+                        DiscussActivity.class);
+                intent.putExtra("articleId", mNewsId);
+                startActivity(intent);
+            }
+        });
 
-		// iv_td = (ImageView) findViewById(R.id.iv_td);
-		wv_td = (WebView) findViewById(R.id.wv_td);
-		wv_td.getSettings().setJavaScriptEnabled(true);
-		sendRequestData();
+        fenxiangTx.setVisibility(fromSource != 1 ? View.VISIBLE : View.GONE);
+        baomingTx.setVisibility(fromSource == 1 ? View.VISIBLE : View.GONE);
 
-		mController.getConfig().closeToast();
-	}
+        if (TextUtils.isEmpty(mNewsImg)) {
+            detail_img.setVisibility(View.GONE);
+        } else {
+            detail_img.setVisibility(View.VISIBLE);
+            ImageLoader.getInstance().displayImage(mNewsImg, detail_img);
+        }
 
-	protected void sendRequestData() {
-		// mEmptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
-		int uid=0;
-		if(AppContext.instance().isLogin()==true){
-			uid=AppContext.instance().getLoginUid();
-		}
-		NewsApi.getQuestionnairelist(uid,mNewsId, mNewsType, handler);
-	}
+        // iv_td = (ImageView) findViewById(R.id.iv_td);
+        wv_td = (WebView) findViewById(R.id.wv_td);
+       /* wv_td.getSettings().setJavaScriptEnabled(true);
+        // 设置可以支持缩放
+        wv_td.getSettings().setSupportZoom(true);
+        // 设置出现缩放工具
+        wv_td.getSettings().setBuiltInZoomControls(true);
+       //扩大比例的缩放
+        wv_td.getSettings().setUseWideViewPort(true);
+       //自适应屏幕
+        wv_td.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        wv_td.getSettings().setLoadWithOverviewMode(true);*/
+        sendRequestData();
 
-	JsonHttpResponseHandler handler = new JsonHttpResponseHandler() {
+        mController.getConfig().closeToast();
+    }
 
-		@Override
-		public void onSuccess(int statusCode, Header[] headers,
-				JSONObject response) {
+    protected void sendRequestData() {
+        // mEmptyLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
+        int uid = 0;
+        if (AppContext.instance().isLogin() == true) {
+            uid = AppContext.instance().getLoginUid();
+        }
+        NewsApi.getQuestionnairelist(uid, mNewsId, mNewsType, handler);
+    }
 
-			data = response.optString("data");
+    JsonHttpResponseHandler handler = new JsonHttpResponseHandler() {
 
-			if (TextUtils.isEmpty(data)) {
-				String tipContent = response.optString("desc");
-				showTipsDialog(tipContent);
+        @Override
+        public void onSuccess(int statusCode, Header[] headers,
+                              JSONObject response) {
 
-				return;
-			}
+            data = response.optString("data");
 
-			try {
+            if (TextUtils.isEmpty(data)) {
+                String tipContent = response.optString("desc");
+                showTipsDialog(tipContent);
 
-				JSONObject obj = new JSONObject(data);
-				thumb = obj.getString("thumb");
-				//System.out.println(thumb.toString() + "刚拿的thumb");
-				title = obj.getString("title");
-				// description = obj.getString("description");
-				content = obj.getString("url");
-				url = content+"?rn=1";
-				// inputtime = obj.getInt("inputtime");
-				// tv_td_time.setText(DateUtil.getFormatTime(inputtime));
-				tv_td_title.setText(title);
-				
+                return;
+            }
 
-				// wv_td.loadDataWithBaseURL("http://phpapi.ccjjj.net/",
-				// content.toString(),
-				// "text/html", "utf-8", null);
-				//屏蔽下载按钮
-				wv_td.loadUrl(content.toString()+"?APP_VERSION=1");
-				
-				isAllowShare=obj.optInt("allow_share",1)==0?false:true;
-				
-				// wv_td.loadDataWithBaseURL(content.toString(), null,
-				// "text/html", "utf-8", null);
-				// mhandler.sendEmptyMessageDelayed(1, 0);
-			} catch (JSONException e) {
-				e.printStackTrace();
+            try {
 
-			} catch (NullPointerException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+                JSONObject obj = new JSONObject(data);
+                thumb = obj.getString("thumb");
+                //System.out.println(thumb.toString() + "刚拿的thumb");
+                title = obj.getString("title");
+                // description = obj.getString("description");
+                content = obj.getString("url");
+                url = content + "?rn=1";
+                // inputtime = obj.getInt("inputtime");
+                // tv_td_time.setText(DateUtil.getFormatTime(inputtime));
+                tv_td_title.setText(title);
 
-	};
+                Log.e("---------", content.toString() + "?APP_VERSION=1");
+                //屏蔽下载按钮
+                wv_td.loadUrl(content.toString() + "?APP_VERSION=1");
 
-	@Override
-	public void setToolBarFragment(ToolbarFragment fragment) {
-		// TODO Auto-generated method stub
+                isAllowShare = obj.optInt("allow_share", 1) == 0 ? false : true;
 
-	}
+                // wv_td.loadDataWithBaseURL(content.toString(), null,
+                // "text/html", "utf-8", null);
+                // mhandler.sendEmptyMessageDelayed(1, 0);
+            } catch (JSONException e) {
+                e.printStackTrace();
 
-	@Override
-	public void setEmojiFragment(EmojiFragment fragment) {
-		// TODO Auto-generated method stub
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
-	}
+    };
 
-	@Override
-	public void onSendClick(String text) {
-		// TODO Auto-generated method stub
+    @Override
+    public void setToolBarFragment(ToolbarFragment fragment) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	private void showTipsDialog(String tipContent) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("提示");
-		builder.setMessage(tipContent);
-		builder.setCancelable(true);
-		builder.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+    @Override
+    public void setEmojiFragment(EmojiFragment fragment) {
+        // TODO Auto-generated method stub
 
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
+    }
 
-				finish();
-			}
-		});
+    @Override
+    public void onSendClick(String text) {
+        // TODO Auto-generated method stub
 
-		builder.show();
-	}
+    }
 
-	// ////////////////////////////////////////////////////////////////
-	// //////// share
-	// ////////////////////////////////////////////////////////////////
+    private void showTipsDialog(String tipContent) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage(tipContent);
+        builder.setCancelable(true);
+        builder.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
 
-	final UMSocialService mController = UMServiceFactory
-			.getUMSocialService("com.umeng.share");
-	
-	protected void ShareCount(int mType) {
-		NewsApi.shareCount(AppContext.instance().getLoginUid(), mNewsId,mType,
-				new JsonHttpResponseHandler() {
-					@Override
-					public void onSuccess(int statusCode,
-							Header[] headers, JSONObject response) {
-						System.out.println(response);
-					}
-				});
-	}
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
-	protected void handleShare() {
-		if(!isAllowShare){
-			Toast.makeText(this, "该内容无法分享.", Toast.LENGTH_SHORT).show();
-			return;
-		}
-		final ShareDialog dialog = new ShareDialog(ShowTitleDetailActivity.this);
-		dialog.setCancelable(true);
-		dialog.setCanceledOnTouchOutside(true);
-		dialog.setTitle(R.string.share_to);
-		dialog.setOnPlatformClickListener(new OnSharePlatformClick() {
+                finish();
+            }
+        });
 
-			@Override
-			public void onPlatformClick(SHARE_MEDIA media) {
-				switch (media) {
-				case SINA:
-					shareHelper.shareToSinaWeibo(title, url,
-					//	ApiHttpClient.getImageApiUrl(mNewsImg));
-					ApiHttpClient.getImageApiUrl(thumb));
-					ShareCount(1);
-					break;
-				case WEIXIN:
-					shareHelper.shareToWeiChat(title, title, url,
+        builder.show();
+    }
+
+    // ////////////////////////////////////////////////////////////////
+    // //////// share
+    // ////////////////////////////////////////////////////////////////
+
+    final UMSocialService mController = UMServiceFactory
+            .getUMSocialService("com.umeng.share");
+
+    protected void ShareCount(int mType) {
+        NewsApi.shareCount(AppContext.instance().getLoginUid(), mNewsId, mType,
+                new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode,
+                                          Header[] headers, JSONObject response) {
+                        System.out.println(response);
+                    }
+                });
+    }
+
+    protected void handleShare() {
+        if (!isAllowShare) {
+            Toast.makeText(this, "该内容无法分享.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        final ShareDialog dialog = new ShareDialog(ShowTitleDetailActivity.this);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setTitle(R.string.share_to);
+        dialog.setOnPlatformClickListener(new OnSharePlatformClick() {
+
+            @Override
+            public void onPlatformClick(SHARE_MEDIA media) {
+                switch (media) {
+                    case SINA:
+                        shareHelper.shareToSinaWeibo(title, url,
+                                //	ApiHttpClient.getImageApiUrl(mNewsImg));
+                                ApiHttpClient.getImageApiUrl(thumb));
+                        ShareCount(1);
+                        break;
+                    case WEIXIN:
+                        shareHelper.shareToWeiChat(title, title, url,
 //							ApiHttpClient.getImageApiUrl(mNewsImg));
-							ApiHttpClient.getImageApiUrl(thumb));
-					ShareCount(2);
-					break;
-				case WEIXIN_CIRCLE:
-					shareHelper.shareToWeiChatCircle(title, title, url,
-							ApiHttpClient.getImageApiUrl(thumb));
-					ShareCount(3);
-					break;
-			    case QQ:
-			    	/*shareToQQ(title, title, url,
-							ApiHttpClient.getImageApiUrl(thumb));*/
-					shareHelper.shareToQQ(
-							title,
-							title,
-							url,
-							ApiHttpClient.getImageApiUrl(thumb),
-							ShowTitleDetailActivity.this);
-					ShareCount(4);
-					break;
-				case QZONE:
-					shareToQZone(title, title, url,
-							ApiHttpClient.getImageApiUrl(thumb));
-					ShareCount(5);
-					break;  
-				default:
-					break;
-				}
-				dialog.dismiss();
-			}
-		});
-		dialog.show();
-	}
-	
-	
-	private void shareToQQ(String shareTitle, String shareContent,
-			String shareUrl, String shareImg) {
-		
-		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this,
-				Constants.QQ_APPID, Constants.QQ_APPKEY);
-		qqSsoHandler.setTargetUrl(shareUrl);
-		qqSsoHandler.setTitle(shareContent);
-
-		
-		qqSsoHandler.addToSocialSDK();
-		mController.setShareContent(shareContent);
-		
-		mController.postShare(this, SHARE_MEDIA.QQ, new SnsPostListener() {
-
-			@Override
-			public void onStart() {
-				//AppContext.showToastShort(R.string.tip_start_share);
-			}
-
-			@Override
-			public void onComplete(SHARE_MEDIA arg0, int arg1,
-					SocializeEntity arg2) {
-				//AppContext.showToastShort(R.string.tip_share_done);
-			}
-		});
-	}
-	
-	private void shareToQZone(String shareTitle, String shareContent,
-			String shareUrl, String shareImg) {
-		QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this,
-				Constants.QQ_APPID, Constants.QQ_APPKEY);
+                                ApiHttpClient.getImageApiUrl(thumb));
+                        ShareCount(2);
+                        break;
+                    case WEIXIN_CIRCLE:
+                        shareHelper.shareToWeiChatCircle(title, title, url,
+                                ApiHttpClient.getImageApiUrl(thumb));
+                        ShareCount(3);
+                        break;
+                    case QQ:
+                    /*shareToQQ(title, title, url,
+                            ApiHttpClient.getImageApiUrl(thumb));*/
+                        shareHelper.shareToQQ(
+                                title,
+                                title,
+                                url,
+                                ApiHttpClient.getImageApiUrl(thumb),
+                                ShowTitleDetailActivity.this);
+                        ShareCount(4);
+                        break;
+                    case QZONE:
+                        shareToQZone(title, title, url,
+                                ApiHttpClient.getImageApiUrl(thumb));
+                        ShareCount(5);
+                        break;
+                    default:
+                        break;
+                }
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
 
-		QZoneShareContent qzone = new QZoneShareContent();
-		// 设置分享文字
-		qzone.setShareContent(shareTitle);
-		// 设置点击消息的跳转URL
-		qzone.setTargetUrl(shareUrl);
-		// 设置分享内容的标题
-		qzone.setTitle(shareContent);
-		// 设置分享图片
-		qzone.setShareImage(new UMImage(this, shareImg));
-		mController.setShareMedia(qzone);
-		
-		qZoneSsoHandler.addToSocialSDK();
-		
-		mController.postShare(this, SHARE_MEDIA.QZONE,
-				new SnsPostListener() {
+    private void shareToQQ(String shareTitle, String shareContent,
+                           String shareUrl, String shareImg) {
 
-					@Override
-					public void onStart() {
-						//AppContext.showToastShort(R.string.tip_start_share);
-					}
+        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this,
+                Constants.QQ_APPID, Constants.QQ_APPKEY);
+        qqSsoHandler.setTargetUrl(shareUrl);
+        qqSsoHandler.setTitle(shareContent);
 
-					@Override
-					public void onComplete(SHARE_MEDIA arg0, int arg1,
-							SocializeEntity arg2) {
-						//AppContext.showToastShort(R.string.tip_share_done);
-					}
-				});
-	}
 
-	
-	protected String getShareUrl() {
-		// TODO
+        qqSsoHandler.addToSocialSDK();
+        mController.setShareContent(shareContent);
 
-		return "";
-	}
+        mController.postShare(this, SHARE_MEDIA.QQ, new SnsPostListener() {
 
-	protected String getShareTitle() {
+            @Override
+            public void onStart() {
+                //AppContext.showToastShort(R.string.tip_start_share);
+            }
 
-		return getString(R.string.share_title);
-	}
+            @Override
+            public void onComplete(SHARE_MEDIA arg0, int arg1,
+                                   SocializeEntity arg2) {
+                //AppContext.showToastShort(R.string.tip_share_done);
+            }
+        });
+    }
 
-	protected String getShareContent() {
-		// TODO
-		return "";
-	}
+    private void shareToQZone(String shareTitle, String shareContent,
+                              String shareUrl, String shareImg) {
+        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this,
+                Constants.QQ_APPID, Constants.QQ_APPKEY);
 
-	private void shareContent(SHARE_MEDIA media) {
-		mController.setShareContent("实验助手分享");
-		mController.directShare(this, media, new SnsPostListener() {
 
-			@Override
-			public void onStart() {
-				AppContext.showToastShort(R.string.tip_start_share);
-			}
+        QZoneShareContent qzone = new QZoneShareContent();
+        // 设置分享文字
+        qzone.setShareContent(shareTitle);
+        // 设置点击消息的跳转URL
+        qzone.setTargetUrl(shareUrl);
+        // 设置分享内容的标题
+        qzone.setTitle(shareContent);
+        // 设置分享图片
+        qzone.setShareImage(new UMImage(this, shareImg));
+        mController.setShareMedia(qzone);
 
-			@Override
-			public void onComplete(SHARE_MEDIA arg0, int arg1,
-					SocializeEntity arg2) {
-				AppContext.showToastShort(R.string.tip_share_done);
-			}
-		});
-	}
+        qZoneSsoHandler.addToSocialSDK();
+
+        mController.postShare(this, SHARE_MEDIA.QZONE,
+                new SnsPostListener() {
+
+                    @Override
+                    public void onStart() {
+                        //AppContext.showToastShort(R.string.tip_start_share);
+                    }
+
+                    @Override
+                    public void onComplete(SHARE_MEDIA arg0, int arg1,
+                                           SocializeEntity arg2) {
+                        //AppContext.showToastShort(R.string.tip_share_done);
+                    }
+                });
+    }
+
+
+    protected String getShareUrl() {
+        // TODO
+
+        return "";
+    }
+
+    protected String getShareTitle() {
+
+        return getString(R.string.share_title);
+    }
+
+    protected String getShareContent() {
+        // TODO
+        return "";
+    }
+
+    private void shareContent(SHARE_MEDIA media) {
+        mController.setShareContent("实验助手分享");
+        mController.directShare(this, media, new SnsPostListener() {
+
+            @Override
+            public void onStart() {
+                AppContext.showToastShort(R.string.tip_start_share);
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA arg0, int arg1,
+                                   SocializeEntity arg2) {
+                AppContext.showToastShort(R.string.tip_share_done);
+            }
+        });
+    }
 
 }

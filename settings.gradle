@@ -1,1 +1,3 @@
 include ':app', ':viewpagerindicator', ':pulltorefresh', ':umengshare', ':pinnedsection', ':photoview', ':stickylistheaders', ':supportv7'
+include ':android-pdfview'
+project(':android-pdfview').projectDir = "$rootDir/android-pdfview" as File

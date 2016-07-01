@@ -15,6 +15,9 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.util.Log;
 
+import net.oschina.app.v2.AppContext;
+import net.oschina.app.v2.base.BaseApplication;
+
 /**
  * 文件操作工具包
  * 
@@ -633,4 +636,20 @@ public class FileUtils {
 		savedir = null;
 		return savePath;
 	}
+	//临时目录
+	private final static String TEMP = "TEMP";
+	private final static String CELEBRITY = "CELEBRITY";
+
+	public static File getExternalCelebrityFilesDir() {
+		if (isExternalStorageWritable()) {
+			return BaseApplication.context().getExternalFilesDir(TEMP+"/"+CELEBRITY);
+		} else {
+			return null;
+		}
+	}
+	public static boolean isExternalStorageWritable() {
+		String state = Environment.getExternalStorageState();
+		return Environment.MEDIA_MOUNTED.equals(state);
+	}
+
 }

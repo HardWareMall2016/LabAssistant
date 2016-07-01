@@ -127,21 +127,21 @@
         android:layout_above="@id/bottom_area"
         android:background="@color/main_black" />
 
-    <WebView
+   <!-- <WebView
         android:id="@+id/wv_td"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@id/spliter"
         android:layout_alignWithParentIfMissing="true"
         android:layout_below="@id/top_tmp_area"
-        android:background="@color/transparent" />
-   <!-- <com.joanzapata.pdfview.PDFView
+        android:background="@color/transparent" />-->
+   <com.joanzapata.pdfview.PDFView
         android:id="@+id/pdfview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/top_tmp_area"
         android:layout_above="@id/spliter"
-        android:background="@color/transparent" />-->
+        android:background="@color/transparent" />
 
     <net.oschina.app.v2.ui.empty.EmptyLayout
         android:id="@+id/error_layout"

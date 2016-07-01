@@ -16,6 +16,11 @@ import net.oschina.app.v2.base.BaseActivity;
 import net.oschina.app.v2.base.Constants;
 import net.oschina.app.v2.emoji.EmojiFragment;
 import net.oschina.app.v2.emoji.EmojiFragment.EmojiTextListener;
+import net.oschina.app.v2.utils.FileDownloadCallback;
+import net.oschina.app.v2.utils.FileDownloadHandler;
+import net.oschina.app.v2.utils.FileDownloadListener;
+import net.oschina.app.v2.utils.FileUtils;
+import net.oschina.app.v2.utils.HttpRequestUtils;
 
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
@@ -41,6 +46,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.joanzapata.pdfview.PDFView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shiyanzhushou.app.R;
@@ -64,6 +70,8 @@ import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 
+import java.io.File;
+
 
 public class ShowTitleDetailActivity extends BaseActivity implements
         EmojiTextListener, EmojiFragmentControl, ToolbarFragmentControl {
@@ -73,6 +81,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
     private ImageView detail_img;
     // private ImageView iv_td;
     private WebView wv_td;
+    private PDFView pdfView ;
     private int mNewsId;
     private int mNewsType = 1;
     private String mNewsImg = null;
@@ -287,7 +296,8 @@ public class ShowTitleDetailActivity extends BaseActivity implements
         }
 
         // iv_td = (ImageView) findViewById(R.id.iv_td);
-        wv_td = (WebView) findViewById(R.id.wv_td);
+       // wv_td = (WebView) findViewById(R.id.wv_td);
+        pdfView = (PDFView) findViewById(R.id.pdfview);
        /* wv_td.getSettings().setJavaScriptEnabled(true);
         // 设置可以支持缩放
         wv_td.getSettings().setSupportZoom(true);
@@ -331,24 +341,22 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 
                 JSONObject obj = new JSONObject(data);
                 thumb = obj.getString("thumb");
-                //System.out.println(thumb.toString() + "刚拿的thumb");
                 title = obj.getString("title");
-                // description = obj.getString("description");
                 content = obj.getString("url");
                 url = content + "?rn=1";
-                // inputtime = obj.getInt("inputtime");
-                // tv_td_time.setText(DateUtil.getFormatTime(inputtime));
                 tv_td_title.setText(title);
 
-                Log.e("---------", content.toString() + "?APP_VERSION=1");
+                if (hasDownloadUrl(mNewsId+"")) {
+                    Log.e("-222222--","------------");
+                    display(mNewsId + ".pdf");
+                }else{
+                    Log.e("--------","------------");
+                    LoadUrl(content.toString() + "?APP_VERSION=1",mNewsId + "");
+                }
                 //屏蔽下载按钮
-                wv_td.loadUrl(content.toString() + "?APP_VERSION=1");
-
+               // wv_td.loadUrl(content.toString() + "?APP_VERSION=1");
                 isAllowShare = obj.optInt("allow_share", 1) == 0 ? false : true;
 
-                // wv_td.loadDataWithBaseURL(content.toString(), null,
-                // "text/html", "utf-8", null);
-                // mhandler.sendEmptyMessageDelayed(1, 0);
             } catch (JSONException e) {
                 e.printStackTrace();
 
@@ -360,6 +368,74 @@ public class ShowTitleDetailActivity extends BaseActivity implements
         }
 
     };
+
+    private void display(String s) {
+        Log.e("---------ssss", s);
+        /*pdfView.fromAsset(s)
+                .load();*/
+        pdfView.fromAsset(s)
+                .pages(0, 2, 1, 3, 3, 3)
+                .defaultPage(1)
+                .showMinimap(false)
+                .enableSwipe(true)
+                //.onDraw(onDrawListener)
+                //.onLoad(onLoadCompleteListener)
+                //.onPageChange(onPageChangeListener)
+                .load();
+    }
+
+
+    private boolean hasDownloadUrl(String objectId) {
+        File audioFile = new File(getAudioPath(objectId));
+        return audioFile.exists();
+    }
+
+    private String getAudioPath(String objectId) {
+        String celebrityPath = FileUtils.getExternalCelebrityFilesDir().getAbsolutePath();
+        return celebrityPath + "/" + objectId + ".pdf";
+    }
+
+
+    private void LoadUrl(String url,String path) {
+        Log.e("-----url--->",url);
+        Log.e("-----本地路径--->",getAudioPath(path));
+        //HttpRequestUtils.downloadFile(url, getAudioPath(path), mAudioDownloadListener);
+        HttpRequestUtils.downloadFile("http://www.zhan.com/uploadfile/2016/03/30902_201603041631222yYlq.pdf", getAudioPath(path), mAudioDownloadListener);
+    }
+
+    public FileDownloadHandler mAudioDownloadListener = new FileDownloadHandler() {
+
+        @Override
+        public void onDownloadFailed(String errorMsg) {
+            Log.e("-----errorMsg",errorMsg);
+            deleteAudioFile(mNewsId+"");
+        }
+
+        @Override
+        public void onNoNetwork() {
+            deleteAudioFile(mNewsId+"");
+        }
+
+        @Override
+        public void onCanceled() {
+            deleteAudioFile(mNewsId+"");
+        }
+
+        @Override
+        public void onDownloadSuccess(File downFile) {
+            if (hasDownloadUrl(mNewsId + "")) {
+                display(mNewsId + ".pdf");
+            }
+        }
+    };
+
+    private void deleteAudioFile(String objectId) {
+        File audioFile = new File(getAudioPath(objectId));
+        if (audioFile.exists()) {
+            audioFile.delete();
+        }
+    }
+
 
     @Override
     public void setToolBarFragment(ToolbarFragment fragment) {

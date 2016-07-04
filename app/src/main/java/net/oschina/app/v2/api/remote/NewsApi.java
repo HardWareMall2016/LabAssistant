@@ -275,6 +275,26 @@ public class NewsApi extends BaseApi {
 		// jsonObject,handler);
 	}
 
+	//type   1 用户(助手ID/用户名) 2 文章  3 问题
+	public static void getSearchList(String content,int type, int pageIndex,
+									 JsonHttpResponseHandler handler) {
+		JSONObject jsonObject = new JSONObject();
+
+		try {
+			jsonObject.put("pid", pageIndex);
+			jsonObject.put("num", 30);
+			jsonObject.put("type", type);
+			jsonObject.put("keyword", content);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		ApiHttpClient.post("index.php/Api/Index/search.html", jsonObject,
+				handler);
+
+		// ApiHttpClient.post("index.php/Api/Found/search.html",
+		// jsonObject,handler);
+	}
+
 	/**
 	 * 修改助手号详情
 	 * 

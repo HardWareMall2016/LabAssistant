@@ -62,13 +62,17 @@ public class SearchBackActivity extends BaseActivity implements
 	private View tip_layout;
 	private View tip_close;
 
-	private enum SearchType{QUESTIONS,USERS,ARTICLES}
+	private class SearchType{
+		static final  int USERS=1;
+		static final  int ARTICLES=2;
+		static final  int QUESTIONS=3;
+	}
 
 	private TextView mTabQuestions;
 	private TextView mTabUsers;
 	private TextView mTabArticles;
 
-	private SearchType mSearchType=SearchType.QUESTIONS;
+	private int mSearchType=SearchType.QUESTIONS;
 
 
 	private OnScrollListener mScrollListener = new OnScrollListener() {
@@ -112,8 +116,7 @@ public class SearchBackActivity extends BaseActivity implements
 
 			mCurrentPage = mCurrentPage < 1 ? 1 : mCurrentPage;
 
-			NewsApi.getSearchList(et_content.getText().toString(),
-					mCurrentPage, handler);
+			NewsApi.getSearchList(et_content.getText().toString(),mSearchType, mCurrentPage, handler);
 		}
 
 	}
@@ -195,15 +198,15 @@ public class SearchBackActivity extends BaseActivity implements
 		mTabArticles.setTextColor(0xff1daaf1);
 
 		switch (mSearchType){
-			case QUESTIONS:
+			case SearchType.QUESTIONS:
 				mTabQuestions.setTextColor(Color.WHITE);
 				mTabQuestions.setBackgroundResource(R.drawable.bg_search_left_selected);
 				break;
-			case USERS:
+			case SearchType.USERS:
 				mTabUsers.setTextColor(Color.WHITE);
 				mTabUsers.setBackgroundResource(R.drawable.bg_search_center_selected);
 				break;
-			case ARTICLES:
+			case SearchType.ARTICLES:
 				mTabArticles.setTextColor(Color.WHITE);
 				mTabArticles.setBackgroundResource(R.drawable.bg_search_right_selected);
 				break;

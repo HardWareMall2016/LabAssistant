@@ -7,6 +7,7 @@ import java.util.List;
 import net.oschina.app.v2.AppContext;
 import net.oschina.app.v2.AppException;
 import net.oschina.app.v2.activity.comment.adapter.CommentAdapter.OnOperationListener;
+import net.oschina.app.v2.activity.favorite.adapter.SearchUserAdapter;
 import net.oschina.app.v2.activity.news.fragment.EmojiFragmentControl;
 import net.oschina.app.v2.activity.tweet.adapter.TweetAdapter;
 import net.oschina.app.v2.api.remote.NewsApi;
@@ -17,12 +18,15 @@ import net.oschina.app.v2.emoji.EmojiFragment.EmojiTextListener;
 import net.oschina.app.v2.model.Ask;
 import net.oschina.app.v2.model.AskList;
 import net.oschina.app.v2.model.Comment;
+import net.oschina.app.v2.model.FavoriteList;
+import net.oschina.app.v2.model.event.FavoriteRefreshOther;
 import net.oschina.app.v2.utils.UIHelper;
 
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -33,11 +37,11 @@ import android.support.v7.app.ActionBar.LayoutParams;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -47,9 +51,11 @@ import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.shiyanzhushou.app.R;
 
+import de.greenrobot.event.EventBus;
+
 public class SearchBackActivity extends BaseActivity implements
 		EmojiTextListener, EmojiFragmentControl, OnOperationListener,
-		OnItemClickListener {
+		OnItemClickListener{
 
 	public final static String BUNDLE_KEY_PAGE = "BUNDLE_KEY_PAGE";
 	public final static String BUNDLE_KEY_ARGS = "BUNDLE_KEY_ARGS";
@@ -58,7 +64,8 @@ public class SearchBackActivity extends BaseActivity implements
 	private WeakReference<Fragment> mFragment;
 	private ListView mListView;
 	private int mCurrentPage = 0;
-	private TweetAdapter mAdapter;
+	private TweetAdapter mQuestionAdapter;
+	private SearchUserAdapter mUserAdapter;
 	private View tip_layout;
 	private View tip_close;
 
@@ -74,61 +81,32 @@ public class SearchBackActivity extends BaseActivity implements
 
 	private int mSearchType=SearchType.QUESTIONS;
 
-
-	private OnScrollListener mScrollListener = new OnScrollListener() {
-
-		@Override
-		public void onScrollStateChanged(AbsListView view, int scrollState) {
-		}
-
-		@Override
-		public void onScroll(AbsListView view, int firstVisibleItem,
-				int visibleItemCount, int totalItemCount) {
-			if (mAdapter != null
-					&& mAdapter.getDataSize() > 0
-					&& mListView.getLastVisiblePosition() == (mListView
-							.getCount() - 1)) {
-				// if (mState == STATE_NONE
-				// && mAdapter.getState() == ListBaseAdapter.STATE_LOAD_MORE) {
-				// mState = STATE_LOADMORE;
-				// mCurrentPage++;
-				//
-				// // sendRequestCommentData();
-				// }
-			}
-		}
-	};
-
 	@Override
 	protected boolean hasBackButton() {
 		return true;
 	}
 
 	protected void sendRequestData(boolean isAutoSearch) {
-
 		String searchContent = et_content.getText().toString();
-		mAdapter.setHighLight(searchContent);
+		mQuestionAdapter.setHighLight(searchContent);
 		if (TextUtils.isEmpty(searchContent)) {
 			if (!isAutoSearch) {
 				AppContext.showToast("请输入查询内容", Toast.LENGTH_SHORT);
 			}
 		} else {
-
 			mCurrentPage = mCurrentPage < 1 ? 1 : mCurrentPage;
-
-			NewsApi.getSearchList(et_content.getText().toString(),mSearchType, mCurrentPage, handler);
+			NewsApi.getSearchList(et_content.getText().toString(),AppContext.instance().getLoginUid(),mSearchType, mCurrentPage, new SearchHandler(mSearchType));
 		}
-
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.search_detail_layout);
-
 		Bundle bundle = getIntent().getExtras();
 
 		initViews();
+
 		mCurrentPage = 1;
 
 		if (null != bundle) {
@@ -153,10 +131,9 @@ public class SearchBackActivity extends BaseActivity implements
 		refreshTabViews();
 
 		mListView = (ListView) findViewById(R.id.listview);
-		mListView.setOnScrollListener(mScrollListener);
 		mListView.setOnItemClickListener(this);
-		mAdapter = new TweetAdapter();
-		mListView.setAdapter(mAdapter);
+		mQuestionAdapter = new TweetAdapter();
+		mListView.setAdapter(mQuestionAdapter);
 		
 		tip_layout=findViewById(R.id.tip_layout);
 		tip_close=findViewById(R.id.tip_close);
@@ -175,14 +152,17 @@ public class SearchBackActivity extends BaseActivity implements
 			case R.id.questions:
 				mSearchType=SearchType.QUESTIONS;
 				refreshTabViews();
+				sendRequestData(false);
 				break;
 			case R.id.users:
 				mSearchType=SearchType.USERS;
 				refreshTabViews();
+				sendRequestData(false);
 				break;
 			case R.id.articles:
 				mSearchType=SearchType.ARTICLES;
 				refreshTabViews();
+				sendRequestData(false);
 				break;
 		}
 	}
@@ -246,39 +226,56 @@ public class SearchBackActivity extends BaseActivity implements
 		actionBar.setCustomView(view, params);
 	}
 
-	JsonHttpResponseHandler handler = new JsonHttpResponseHandler() {
+	private class SearchHandler extends JsonHttpResponseHandler{
+		private int searchType;
+
+		public SearchHandler(int searchType){
+			this.searchType=searchType;
+		}
+
 		@Override
-		public void onFailure(int statusCode, Header[] headers,
-				Throwable throwable, JSONObject errorResponse) {
+		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 			super.onFailure(statusCode, headers, throwable, errorResponse);
 			// 请求失败则解析errorResponse，返回错误信息给用户
 		}
 
 		@Override
-		public void onSuccess(int statusCode, Header[] headers,
-				JSONObject response) {
+		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 			super.onSuccess(statusCode, headers, response);
+			if(mSearchType!=searchType){
+				return;
+			}
 			try {
 				if (response.getInt("code") == 88) {
-
-					AskList list;
 					try {
-						list = AskList.parse(response.toString());
-						executeOnLoadCommentDataSuccess(list);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (AppException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					InputMethodManager imm = (InputMethodManager) SearchBackActivity.this
-							.getSystemService(Context.INPUT_METHOD_SERVICE);
-					imm.hideSoftInputFromWindow(et_content.getWindowToken(),
-							0);
+						switch (mSearchType){
+							case SearchType.QUESTIONS:
+								AskList askList = AskList.parse(response.toString());
+								mQuestionAdapter = new TweetAdapter();
+								mListView.setAdapter(mQuestionAdapter);
+								List<Ask> data = askList.getAsklist();
+								mQuestionAdapter.addData(data);
+								break;
+							case SearchType.USERS:
+								FavoriteList favoriteList = FavoriteList.parse(response.toString());
+								mUserAdapter=new SearchUserAdapter();
+								mUserAdapter.setOnClickListener(mOnAttachClickListener);
+								mListView.setAdapter(mUserAdapter);
+								mUserAdapter.addData(favoriteList.getFavoritelist());
+								break;
+							case SearchType.ARTICLES:
 
+								break;
+
+						}
+					} catch (IOException e) {
+
+					} catch (AppException e) {
+
+					}
+					InputMethodManager imm = (InputMethodManager) SearchBackActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(et_content.getWindowToken(), 0);
 				} else {
-					// AppContext.instance().cleanLoginInfo();
 					hideWaitDialog();
 					AppContext.showToast("查询失败");
 				}
@@ -288,13 +285,6 @@ public class SearchBackActivity extends BaseActivity implements
 				e.printStackTrace();
 			}
 		}
-	};
-
-	private void executeOnLoadCommentDataSuccess(AskList list) {
-		mAdapter.clear();
-		List<Ask> data = list.getAsklist();
-		mAdapter.addData(data);
-
 	}
 
 	@Override
@@ -316,11 +306,12 @@ public class SearchBackActivity extends BaseActivity implements
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		Ask ask = (Ask) mAdapter.getItem(position);
-		if (ask != null)
-			UIHelper.showTweetDetail(view.getContext(), ask);
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		if(mListView.getAdapter() instanceof TweetAdapter){
+			Ask ask = (Ask) mQuestionAdapter.getItem(position);
+			if (ask != null)
+				UIHelper.showTweetDetail(view.getContext(), ask);
+		}
 	}
 
 	@Override
@@ -340,4 +331,66 @@ public class SearchBackActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 
 	}
+
+	private OnClickListener mOnAttachClickListener=new OnClickListener(){
+
+		@Override
+		public void onClick(View v) {
+
+		}
+	};
+
+
+		/*FavoriteList.Favorite f = (FavoriteList.Favorite)v.getTag();
+		int uid=AppContext.instance().getLoginUid();
+		NewsApi.addAttention(uid, f.getFuid(), new JsonHttpResponseHandler(){
+			@Override
+			public void onSuccess(int statusCode, Header[] headers,
+								  JSONObject response) {
+				AppContext.showToast(response.optString("desc", ""));
+				mState=STATE_REFRESH;
+				onRefresh(mListView);
+			}
+		});*/
+
+
+	/*protected void doCancelAttention(final FavoriteList.Favorite f) {
+		final AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
+		dialog.show();
+		Window window = dialog.getWindow();
+		window.setContentView(R.layout.zhichi_dialog);
+		TextView titleTv = (TextView) window.findViewById(R.id.tv_title);
+		titleTv.setText("您确定要取消关注该用户吗？");
+		// 设置监听
+		Button zhichi = (Button) window.findViewById(R.id.ib_zhichi);
+		zhichi.setText("确定");
+		// 支持
+		zhichi.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int uid=AppContext.instance().getLoginUid();
+				NewsApi.unAttention(uid, f.getTuid(), new JsonHttpResponseHandler(){
+					@Override
+					public void onSuccess(int statusCode, Header[] headers,
+										  JSONObject response) {
+						AppContext.showToast(response.optString("desc", ""));
+						mState=STATE_REFRESH;
+						onRefresh(mListView);
+						EventBus.getDefault().post(new FavoriteRefreshOther());
+					}
+				});
+				dialog.dismiss();
+			}
+		});
+		// 查看支持者
+		Button chakanzhichi = (Button) window
+				.findViewById(R.id.ib_chakanzhichi);
+		chakanzhichi.setText("取消");
+		chakanzhichi.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+	}*/
 }

@@ -276,12 +276,11 @@ public class NewsApi extends BaseApi {
 	}
 
 	//type   1 用户(助手ID/用户名) 2 文章  3 问题
-	public static void getSearchList(String content,int type, int pageIndex,
-									 JsonHttpResponseHandler handler) {
+	public static void getSearchList(String content,int userId,int type, int pageIndex, JsonHttpResponseHandler handler) {
 		JSONObject jsonObject = new JSONObject();
-
 		try {
 			jsonObject.put("pid", pageIndex);
+			jsonObject.put("uid", userId);
 			jsonObject.put("num", 30);
 			jsonObject.put("type", type);
 			jsonObject.put("keyword", content);

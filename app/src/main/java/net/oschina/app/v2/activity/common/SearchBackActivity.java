@@ -7,7 +7,9 @@ import java.util.List;
 import net.oschina.app.v2.AppContext;
 import net.oschina.app.v2.AppException;
 import net.oschina.app.v2.activity.comment.adapter.CommentAdapter.OnOperationListener;
+import net.oschina.app.v2.activity.favorite.adapter.ArticleAdapter;
 import net.oschina.app.v2.activity.favorite.adapter.SearchUserAdapter;
+import net.oschina.app.v2.activity.find.fragment.ShowTitleDetailActivity;
 import net.oschina.app.v2.activity.news.fragment.EmojiFragmentControl;
 import net.oschina.app.v2.activity.tweet.adapter.TweetAdapter;
 import net.oschina.app.v2.api.remote.NewsApi;
@@ -15,6 +17,7 @@ import net.oschina.app.v2.base.BaseActivity;
 import net.oschina.app.v2.base.BaseFragment;
 import net.oschina.app.v2.emoji.EmojiFragment;
 import net.oschina.app.v2.emoji.EmojiFragment.EmojiTextListener;
+import net.oschina.app.v2.model.ArticleList;
 import net.oschina.app.v2.model.Ask;
 import net.oschina.app.v2.model.AskList;
 import net.oschina.app.v2.model.Comment;
@@ -66,6 +69,7 @@ public class SearchBackActivity extends BaseActivity implements
 	private int mCurrentPage = 0;
 	private TweetAdapter mQuestionAdapter;
 	private SearchUserAdapter mUserAdapter;
+	private ArticleAdapter mArticleAdapter;
 	private View tip_layout;
 	private View tip_close;
 
@@ -88,7 +92,6 @@ public class SearchBackActivity extends BaseActivity implements
 
 	protected void sendRequestData(boolean isAutoSearch) {
 		String searchContent = et_content.getText().toString();
-		mQuestionAdapter.setHighLight(searchContent);
 		if (TextUtils.isEmpty(searchContent)) {
 			if (!isAutoSearch) {
 				AppContext.showToast("请输入查询内容", Toast.LENGTH_SHORT);
@@ -152,17 +155,23 @@ public class SearchBackActivity extends BaseActivity implements
 			case R.id.questions:
 				mSearchType=SearchType.QUESTIONS;
 				refreshTabViews();
-				sendRequestData(false);
+				if (!TextUtils.isEmpty(et_content.getText().toString())) {
+					sendRequestData(false);
+				}
 				break;
 			case R.id.users:
 				mSearchType=SearchType.USERS;
 				refreshTabViews();
-				sendRequestData(false);
+				if (!TextUtils.isEmpty(et_content.getText().toString())) {
+					sendRequestData(false);
+				}
 				break;
 			case R.id.articles:
 				mSearchType=SearchType.ARTICLES;
 				refreshTabViews();
-				sendRequestData(false);
+				if (!TextUtils.isEmpty(et_content.getText().toString())) {
+					sendRequestData(false);
+				}
 				break;
 		}
 	}
@@ -252,6 +261,8 @@ public class SearchBackActivity extends BaseActivity implements
 							case SearchType.QUESTIONS:
 								AskList askList = AskList.parse(response.toString());
 								mQuestionAdapter = new TweetAdapter();
+								String searchContent = et_content.getText().toString();
+								mQuestionAdapter.setHighLight(searchContent);
 								mListView.setAdapter(mQuestionAdapter);
 								List<Ask> data = askList.getAsklist();
 								mQuestionAdapter.addData(data);
@@ -264,9 +275,12 @@ public class SearchBackActivity extends BaseActivity implements
 								mUserAdapter.addData(favoriteList.getFavoritelist());
 								break;
 							case SearchType.ARTICLES:
-
+								mArticleAdapter = new ArticleAdapter();
+								mArticleAdapter.setHighLight(et_content.getText().toString());
+								mListView.setAdapter(mArticleAdapter);
+								ArticleList articleList = ArticleList.parse(response.toString());
+								mArticleAdapter.addData(articleList.getArticles());
 								break;
-
 						}
 					} catch (IOException e) {
 
@@ -311,6 +325,11 @@ public class SearchBackActivity extends BaseActivity implements
 			Ask ask = (Ask) mQuestionAdapter.getItem(position);
 			if (ask != null)
 				UIHelper.showTweetDetail(view.getContext(), ask);
+		}else if(mListView.getAdapter() instanceof ArticleAdapter){
+			Intent intent = new Intent(this, ShowTitleDetailActivity.class);
+			ArticleList.Article article = (ArticleList.Article ) mQuestionAdapter.getItem(position);
+			intent.putExtra("id", article.getId());
+			startActivity(intent);
 		}
 	}
 
@@ -333,29 +352,32 @@ public class SearchBackActivity extends BaseActivity implements
 	}
 
 	private OnClickListener mOnAttachClickListener=new OnClickListener(){
-
 		@Override
 		public void onClick(View v) {
-
+			FavoriteList.Favorite f = (FavoriteList.Favorite)v.getTag();
+			if(f.getSame()==1){
+				doCancelAttention(f);
+			}else{
+				attention(f);
+			}
 		}
 	};
 
 
-		/*FavoriteList.Favorite f = (FavoriteList.Favorite)v.getTag();
+	private void attention(final FavoriteList.Favorite f){
 		int uid=AppContext.instance().getLoginUid();
 		NewsApi.addAttention(uid, f.getFuid(), new JsonHttpResponseHandler(){
 			@Override
-			public void onSuccess(int statusCode, Header[] headers,
-								  JSONObject response) {
+			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 				AppContext.showToast(response.optString("desc", ""));
-				mState=STATE_REFRESH;
-				onRefresh(mListView);
+				sendRequestData(false);
 			}
-		});*/
+		});
+	}
 
 
-	/*protected void doCancelAttention(final FavoriteList.Favorite f) {
-		final AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
+	private void doCancelAttention(final FavoriteList.Favorite f) {
+		final AlertDialog dialog = new AlertDialog.Builder(this).create();
 		dialog.show();
 		Window window = dialog.getWindow();
 		window.setContentView(R.layout.zhichi_dialog);
@@ -371,20 +393,16 @@ public class SearchBackActivity extends BaseActivity implements
 				int uid=AppContext.instance().getLoginUid();
 				NewsApi.unAttention(uid, f.getTuid(), new JsonHttpResponseHandler(){
 					@Override
-					public void onSuccess(int statusCode, Header[] headers,
-										  JSONObject response) {
+					public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 						AppContext.showToast(response.optString("desc", ""));
-						mState=STATE_REFRESH;
-						onRefresh(mListView);
-						EventBus.getDefault().post(new FavoriteRefreshOther());
+						sendRequestData(false);
 					}
 				});
 				dialog.dismiss();
 			}
 		});
 		// 查看支持者
-		Button chakanzhichi = (Button) window
-				.findViewById(R.id.ib_chakanzhichi);
+		Button chakanzhichi = (Button) window.findViewById(R.id.ib_chakanzhichi);
 		chakanzhichi.setText("取消");
 		chakanzhichi.setOnClickListener(new OnClickListener() {
 			@Override
@@ -392,5 +410,5 @@ public class SearchBackActivity extends BaseActivity implements
 				dialog.dismiss();
 			}
 		});
-	}*/
+	}
 }

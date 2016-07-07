@@ -38,9 +38,18 @@ public class Ask extends Entity {
 	private int isanswer;
 	private int from;
 	private String hits;
+	private int collectflag;
 
 	public Ask() {
 
+	}
+
+	public int getCollectflag() {
+		return collectflag;
+	}
+
+	public void setCollectflag(int collectflag) {
+		this.collectflag = collectflag;
 	}
 
 	public int getId() {
@@ -234,6 +243,7 @@ public class Ask extends Entity {
 		ask.setCompany(response.optString("company"));
 		ask.setIsanswer(response.optInt("isanswer"));
 		ask.setFrom(response.optInt("from"));
+		ask.setCollectflag(response.optInt("collectflag"));
 		String hits=response.optString("hits");
 		if(TextUtils.isEmpty(hits)){
 			hits="0";

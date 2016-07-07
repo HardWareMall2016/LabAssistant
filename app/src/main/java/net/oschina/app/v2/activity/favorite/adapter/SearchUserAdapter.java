@@ -13,6 +13,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shiyanzhushou.app.R;
 
+import net.oschina.app.v2.AppContext;
 import net.oschina.app.v2.activity.image.IvSignUtils;
 import net.oschina.app.v2.api.ApiHttpClient;
 import net.oschina.app.v2.base.ListBaseAdapter;
@@ -51,12 +52,13 @@ public class SearchUserAdapter extends ListBaseAdapter {
 		}
 		vh.itemComany.setText(company);
 
-		ImageLoader.getInstance().displayImage(ApiHttpClient.getImageApiUrl(item.getHead()), vh.itemImage,options);
+		ImageLoader.getInstance().displayImage(ApiHttpClient.getImageApiUrl(item.getHead()), vh.itemImage, options);
 		
-		IvSignUtils.displayIvSignByType(item.getType(), vh.iv_sign,vh.avstarBg);
+		IvSignUtils.displayIvSignByType(item.getType(), vh.iv_sign, vh.avstarBg);
+
+		vh.itemAttention.setEnabled(AppContext.instance().isLogin());
 
 		if (item.getSame() != 1) {
-			vh.itemAttention.setEnabled(true);
 			vh.itemAttention.setText("关注");
 		} else {
 			vh.itemAttention.setText("取消关注");

@@ -135,7 +135,7 @@ public class TweetDetailActivity extends BaseActivity {
     private EmojiEditText editText;
 
     private HashMap<Integer, UserBean> userList;
-
+    private ImageView favBtn ;
 
     @Override
     protected int getLayoutId() {
@@ -170,6 +170,13 @@ public class TweetDetailActivity extends BaseActivity {
                 }
             });
         }
+        favBtn = (ImageView) view.findViewById(R.id.btn_fav);
+        if(AppContext.instance().isLogin()){
+            favBtn.setVisibility(View.VISIBLE);
+        }else{
+            favBtn.setVisibility(View.GONE);
+        }
+
         mTvActionTitle = (TextView) view.findViewById(R.id.tv_actionbar_title);
         View moreBtn = view.findViewById(R.id.tv_actionbar_right_more);
         moreBtn.setOnClickListener(new OnClickListener() {
@@ -181,6 +188,43 @@ public class TweetDetailActivity extends BaseActivity {
         LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.MATCH_PARENT);
         actionBar.setCustomView(view, params);
+
+
+        favBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ask==null){
+                    return;
+                }
+                if (ask.getCollectflag() == 1) {
+                    NewsApi.collectQuestion(ask.getId(), AppContext.instance().getLoginUid(), 0,
+                            new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                    if (response == null || response.optInt("code") != 88) {
+                                        AppContext.showToast("取消收藏失败");
+                                        return;
+                                    }
+                                    ask.setCollectflag(0);
+                                    favBtn.setImageResource(R.drawable.actionbar_favorite_icon);
+                                }
+                            });
+                } else {
+                    NewsApi.collectQuestion(ask.getId(), AppContext.instance().getLoginUid(), 1,
+                            new JsonHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                                    if (response == null || response.optInt("code") != 88) {
+                                        AppContext.showToast("收藏失败");
+                                        return;
+                                    }
+                                    ask.setCollectflag(1);
+                                    favBtn.setImageResource(R.drawable.actionbar_unfavorite_icon);
+                                }
+                            });
+                }
+            }
+        });
     }
 
     @Override
@@ -892,6 +936,12 @@ public class TweetDetailActivity extends BaseActivity {
     }
 
     private void fillUI() {
+        if(ask.getCollectflag()==1){
+            favBtn.setImageResource(R.drawable.actionbar_unfavorite_icon);
+        }else{
+            favBtn.setImageResource(R.drawable.actionbar_favorite_icon);
+        }
+
         mTvTime.setText(ask.getinputtime());
         mTvCommentCount
                 .setText(getString(R.string.comment_count, ask.getanum()));

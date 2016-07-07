@@ -92,6 +92,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 	private ShareHelper shareHelper;
 	private String url;
 	private boolean isAllowShare;
+	private int collectflag;//1已收藏 0未收藏
 
 	private Handler mhandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
@@ -117,6 +118,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 
 	private TextView textTitle;
 	private ImageView shareBtn ;
+	private ImageView favBtn ;
 
 	protected void initActionBar(ActionBar actionBar) {
 		if (actionBar == null)
@@ -130,6 +132,13 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 		View btn_back = view.findViewById(R.id.btn_back);
 
 		shareBtn = (ImageView) view.findViewById(R.id.btn_share);
+
+		favBtn = (ImageView) view.findViewById(R.id.btn_fav);
+		if(AppContext.instance().isLogin()){
+			favBtn.setVisibility(View.VISIBLE);
+		}else{
+			favBtn.setVisibility(View.GONE);
+		}
 
 		TextView tv_back = (TextView) view.findViewById(R.id.tv_back);
 
@@ -161,6 +170,39 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 				
 			}
 		});
+
+		favBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (collectflag == 1) {
+					NewsApi.collectArticle(mNewsId, AppContext.instance().getLoginUid(), 0,
+							new JsonHttpResponseHandler() {
+								@Override
+								public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+									if (response==null||response.optInt("code") != 88) {
+										AppContext.showToast("取消收藏失败");
+										return;
+									}
+									collectflag = 0;
+									favBtn.setImageResource(R.drawable.actionbar_favorite_icon);
+								}
+							});
+				} else {
+					NewsApi.collectArticle(mNewsId, AppContext.instance().getLoginUid(), 1,
+						new JsonHttpResponseHandler() {
+							@Override
+							public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+								if (response==null||response.optInt("code") != 88) {
+									AppContext.showToast("收藏失败");
+									return;
+								}
+								collectflag = 1;
+								favBtn.setImageResource(R.drawable.actionbar_unfavorite_icon);
+							}
+						});
+			}
+		}
+	});
 
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT);
@@ -327,7 +369,13 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 				// inputtime = obj.getInt("inputtime");
 				// tv_td_time.setText(DateUtil.getFormatTime(inputtime));
 				tv_td_title.setText(title);
-				
+
+				collectflag= obj.optInt("collectflag");
+				if(collectflag==1){
+					favBtn.setImageResource(R.drawable.actionbar_unfavorite_icon);
+				}else{
+					favBtn.setImageResource(R.drawable.actionbar_favorite_icon);
+				}
 
 				// wv_td.loadDataWithBaseURL("http://phpapi.ccjjj.net/",
 				// content.toString(),

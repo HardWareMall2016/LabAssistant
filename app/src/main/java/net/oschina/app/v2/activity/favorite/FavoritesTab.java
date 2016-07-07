@@ -2,14 +2,16 @@ package net.oschina.app.v2.activity.favorite;
 
 import com.shiyanzhushou.app.R;
 
+import net.oschina.app.v2.activity.user.fragment.FavoriteArticleFragment;
 import net.oschina.app.v2.activity.user.fragment.FavoriteMeFragment;
+import net.oschina.app.v2.activity.user.fragment.FavoriteQuestionFragment;
 import net.oschina.app.v2.activity.user.fragment.MyFavoriteFragment;
 import net.oschina.app.v2.model.FavoriteList;
 
 public enum FavoritesTab {
 
-	SOFTWARE(0, FavoriteList.TYPE_SOFTWARE, R.string.frame_title_favorites_answer, MyFavoriteFragment.class),
-	POST(1, FavoriteList.TYPE_POST, R.string.frame_title_favorites_article,FavoriteMeFragment.class);
+	SOFTWARE(0, FavoriteList.TYPE_SOFTWARE, R.string.frame_title_favorites_answer, FavoriteQuestionFragment.class),
+	POST(1, FavoriteList.TYPE_POST, R.string.frame_title_favorites_article,FavoriteArticleFragment.class);
 
 	private Class<?> clz;
 	private int idx;

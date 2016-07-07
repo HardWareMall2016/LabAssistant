@@ -135,6 +135,9 @@ public class HomeFragment extends HomeBaseFragment implements
 				containerViews.clear();
 				pointLinear.removeAllViews();
 
+				if(getActivity()==null){
+					return;
+				}
 				for (int i = 0; i < homeAds.size(); i++) {
 					ImageView pointView = new ImageView(getActivity());
 					if (i == 0) {
@@ -392,6 +395,9 @@ public class HomeFragment extends HomeBaseFragment implements
 		@Override
 		public void onSuccess(int statusCode, Header[] headers,
 				JSONObject response) {
+			if(getActivity()==null){
+				return;
+			}
 			try {
 				HomeList list = HomeList.parse(response.toString());
 				new SaveCacheTask(getActivity(), list, getCacheKey("homelist_",

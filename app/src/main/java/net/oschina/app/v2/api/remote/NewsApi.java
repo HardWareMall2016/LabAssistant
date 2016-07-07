@@ -294,6 +294,32 @@ public class NewsApi extends BaseApi {
 		// jsonObject,handler);
 	}
 
+	//收藏/取消收藏文章 flag 1收藏 0取消
+	public static void collectArticle(int aid,int uid,int flag, JsonHttpResponseHandler handler) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("aid", aid);
+			jsonObject.put("uid", uid);
+			jsonObject.put("flag", flag);
+		} catch (Exception e) {
+
+		}
+		ApiHttpClient.post("index.php/Api/Collect/article.html", jsonObject, handler);
+	}
+
+	//收藏/取消收藏提问 flag 1收藏 0取消
+	public static void collectQuestion(int qid,int uid,int flag, JsonHttpResponseHandler handler) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("qid", qid);
+			jsonObject.put("uid", uid);
+			jsonObject.put("flag", flag);
+		} catch (Exception e) {
+
+		}
+		ApiHttpClient.post("index.php/Api/Collect/question.html", jsonObject, handler);
+	}
+
 	/**
 	 * 修改助手号详情
 	 * 
@@ -507,6 +533,22 @@ public class NewsApi extends BaseApi {
 				jsonObject, handler);
 	}
 
+	/**
+	 * 我关注的 分页
+	 *
+	 */
+	public static void getCollectQuestionList(int uid, int page,JsonHttpResponseHandler handler) {
+		JSONObject jsonObject = new JSONObject();
+
+		try {
+			jsonObject.put("uid", uid);
+			jsonObject.put("pid", page);
+			jsonObject.put("num", 30);
+		} catch (Exception e) {
+		}
+
+		ApiHttpClient.post("index.php/Api/Collect/questionlist.html", jsonObject, handler);
+	}
 
 	public static void getFansList(int uid, JsonHttpResponseHandler handler) {
 		JSONObject jsonObject = new JSONObject();
@@ -536,6 +578,22 @@ public class NewsApi extends BaseApi {
 
 		ApiHttpClient.post("index.php/Api/Member/fanspage.html", jsonObject,
 				handler);
+	}
+
+	/**
+	 * 关注我的 分页
+	 *
+	 */
+	public static void getCollectArticleList(int uid, int page,JsonHttpResponseHandler handler) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("uid", uid);
+			jsonObject.put("pid", page);
+			jsonObject.put("num", 30);
+		} catch (Exception e) {
+		}
+
+		ApiHttpClient.post("index.php/Api/Collect/articlelist.html", jsonObject, handler);
 	}
 
 	/**

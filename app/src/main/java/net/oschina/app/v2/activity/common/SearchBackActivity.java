@@ -326,10 +326,12 @@ public class SearchBackActivity extends BaseActivity implements
 			if (ask != null)
 				UIHelper.showTweetDetail(view.getContext(), ask);
 		}else if(mListView.getAdapter() instanceof ArticleAdapter){
-			Intent intent = new Intent(this, ShowTitleDetailActivity.class);
-			ArticleList.Article article = (ArticleList.Article ) mQuestionAdapter.getItem(position);
-			intent.putExtra("id", article.getId());
-			startActivity(intent);
+			ArticleList.Article article = (ArticleList.Article ) mArticleAdapter.getItem(position);
+			if(article!=null){
+				Intent intent = new Intent(this, ShowTitleDetailActivity.class);
+				intent.putExtra("id", Integer.valueOf(article.getId()));
+				startActivity(intent);
+			}
 		}
 	}
 

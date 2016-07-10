@@ -2,6 +2,7 @@ package net.oschina.app.v2.ui.calendar;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -10,6 +11,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
@@ -57,6 +59,8 @@ public class CalendarAdapter extends BaseAdapter {
 	private String sys_year = "";
 	private String sys_month = "";
 	private String sys_day = "";
+	private int[] mSignDatas=new int[0];
+	private ArrayList<Integer> mSignedPosition=new ArrayList<Integer>();
 	
 	public CalendarAdapter(){
 		Date date = new Date();
@@ -81,12 +85,21 @@ public class CalendarAdapter extends BaseAdapter {
 		
 	}
 
-	public CalendarAdapter(Context context,Resources rs){
+	public CalendarAdapter(Context context,Resources rs,String signedDays){
 		this();
 		this.context= context;
 		sc = new SpecialCalendar();
 		//lc = new LunarCalendar();
 		this.res = rs;
+
+		if(!TextUtils.isEmpty(signedDays)){
+			String[] signedDayArry=signedDays.split(",");
+			mSignDatas=new int[signedDayArry.length];
+			for (int i=0;i<signedDayArry.length;i++){
+				mSignDatas[i]=Integer.parseInt(signedDayArry[i]);
+			}
+		}
+
 		Calendar calendar=Calendar.getInstance();
 		currentYear = String.valueOf(calendar.get(Calendar.YEAR)); //得到跳转到的年份
 		currentMonth = String.valueOf(calendar.get(Calendar.MONTH)+1);  //得到跳转到的月份
@@ -149,6 +162,15 @@ public class CalendarAdapter extends BaseAdapter {
 			textView.setBackgroundResource(R.drawable.bg_red_empty_circle);
 			textView.setTextColor(Color.BLACK);
 		}
+
+		for(Integer signedPos:mSignedPosition){
+			if(signedPos==position){
+				textView.setBackgroundResource(R.drawable.bg_red_circle);
+				textView.setTextColor(Color.WHITE);
+				break;
+			}
+		}
+
 		return convertView;
 	}
 	
@@ -164,6 +186,7 @@ public class CalendarAdapter extends BaseAdapter {
 	
 	//将一个月中的每一天的值添加入数组dayNuber中
 	private void getWeek(int year, int month) {
+		mSignedPosition.clear();
 		int j = 1;
 		//得到当前月的所有日程日期(这些日期需要标记)
 		for (int i = 0; i < dayNumber.length; i++) {
@@ -171,15 +194,23 @@ public class CalendarAdapter extends BaseAdapter {
 				int temp = lastDaysOfMonth - dayOfWeek+1;
 				dayNumber[i] = String.valueOf((temp + i));
 			}else if(i < daysOfMonth + dayOfWeek){   //本月
-				String day = String.valueOf(i-dayOfWeek+1);   //得到的日期
-				dayNumber[i] = String.valueOf(i-dayOfWeek+1);
+				int day=i-dayOfWeek+1;//得到的日期
+				String dayStr = String.valueOf(day);   //得到的日期
+				dayNumber[i] = String.valueOf(day);
 				//对于当前月才去标记当前日期
-				if(sys_year.equals(String.valueOf(year)) && sys_month.equals(String.valueOf(month)) && sys_day.equals(day)){
+				if(sys_year.equals(String.valueOf(year)) && sys_month.equals(String.valueOf(month)) && sys_day.equals(dayStr)){
 					//标记当前日期
 					currentFlag = i;
 				}	
 				setShowYear(String.valueOf(year));
 				setShowMonth(String.valueOf(month));
+
+				 for(int signDay:mSignDatas){
+					 if(signDay==day){
+						 mSignedPosition.add(i);
+						 break;
+					 }
+				 }
 			}else{   //下一个月
 				dayNumber[i] = String.valueOf(j);
 				j++;

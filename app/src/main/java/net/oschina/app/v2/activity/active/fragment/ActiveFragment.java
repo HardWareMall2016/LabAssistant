@@ -17,6 +17,7 @@ import net.oschina.app.v2.model.User;
 import net.oschina.app.v2.model.event.MessageRefreshSingle;
 import net.oschina.app.v2.model.event.MessageRefreshTotal;
 import net.oschina.app.v2.ui.dialog.SignInDialog;
+import net.oschina.app.v2.ui.dialog.WaitDialog;
 import net.oschina.app.v2.utils.ActiveNumType;
 import net.oschina.app.v2.utils.BitmapLoaderUtil;
 import net.oschina.app.v2.utils.FastBlurUtil;
@@ -65,6 +66,7 @@ public class ActiveFragment extends BaseFragment {
 	private TextView tv_nickname;
 	private TextView tv_jifen;
 	private TextView tv_verify;
+	private TextView tv_verified;
 	private TextView tv_address;
 	private ImageView iv_sex;
 	private TextView tv_jifen2;
@@ -365,6 +367,7 @@ public class ActiveFragment extends BaseFragment {
 		tv_rank = (TextView) view.findViewById(R.id.rank);
 		// 认证情况
 		tv_verify = (TextView) view.findViewById(R.id.tv_verify);
+		tv_verified= (TextView) view.findViewById(R.id.tv_verified);
 		tv_address = (TextView) view.findViewById(R.id.tv_address);
 		// 提问
 		//active_tiwen_num = (TextView) view.findViewById(R.id.active_tiwen_num);
@@ -429,9 +432,13 @@ public class ActiveFragment extends BaseFragment {
 			tv_verify.setText("已认证");
 			tv_verify.setBackgroundResource(R.drawable.bg_pick_rounded_selector);
 			//tv_verify.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_pink_normal));
+			tv_verify.setVisibility(View.GONE);
+			tv_verified.setVisibility(View.VISIBLE);
 		} else {
 			tv_verify.setText("未认证");
 			tv_verify.setBackgroundResource(R.drawable.bg_gray_rounded_selector);
+			tv_verified.setVisibility(View.GONE);
+			tv_verify.setVisibility(View.VISIBLE);
 			//tv_verify.setBackgroundDrawable(getResources().getDrawable(R.drawable.common_btn_pressed));
 		}
 
@@ -644,13 +651,81 @@ public class ActiveFragment extends BaseFragment {
 			Intent intent = new Intent(getActivity(), MallActivity.class);
 			startActivity(intent);
 		}else if(id == R.id.btn_sign){
-			SignInDialog dialog=new SignInDialog(getActivity(),R.style.Dialog);
-			dialog.show();
+			signIndRequest();
 		}else if(id==R.id.tv_jifen){
 			UIHelper.jifenxiangqing(getActivity());
 		}else if(id==R.id.zhichi){
 			UIHelper.zhichiwode(getActivity());
 		}
+	}
+
+	private WaitDialog mSignProgressDialog;
+
+	private void showSignDialog(){
+		mSignProgressDialog=showWaitDialog(R.string.signing);
+	}
+
+	private void closeSignDialog(){
+		if(mSignProgressDialog!=null&&mSignProgressDialog.isShowing()){
+			mSignProgressDialog.dismiss();
+			mSignProgressDialog=null;
+		}
+	}
+
+
+	private void signIndRequest(){
+		showSignDialog();
+		NewsApi.signIn(AppContext.instance().getLoginUid(), new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+				super.onSuccess(statusCode, headers, response);
+				closeSignDialog();
+				try {
+					switch (response.getInt("code")){
+						case 88:
+						case 1295:
+							SignInDialog dialog=new SignInDialog(getActivity(),R.style.Dialog);
+							JSONObject json = new JSONObject(response.optString("data"));
+							String signremind=json.optString("signremind");
+							String integral=json.optString("integral");
+							String curmonth=json.optString("curmonth");
+							int continuecount=json.optInt("continuecount");
+							dialog.setContinuecount(continuecount);
+							dialog.setSignremind(signremind);
+							dialog.setIntegral(integral);
+							dialog.setCurmonth(curmonth);
+							dialog.prepareUI();
+							dialog.show();
+
+							//刷新个人信息积分
+							tv_jifen.setText(integral + "分");
+							break;
+						case 1290:
+							AppContext.showToast("uid为空");
+							break;
+						case 1291:
+							AppContext.showToast("用户不存在");
+							break;
+						/*case 1295:
+							AppContext.showToast("今日已签到");
+							break;*/
+						case 1294:
+							AppContext.showToast("签到失败");
+							break;
+					}
+
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+				super.onFailure(statusCode, headers, responseString, throwable);
+				closeSignDialog();
+			}
+		});
 	}
 
 	private void updateMessage(MessageNum message) {

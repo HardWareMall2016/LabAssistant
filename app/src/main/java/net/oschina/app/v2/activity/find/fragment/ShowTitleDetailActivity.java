@@ -328,6 +328,9 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 		// iv_td = (ImageView) findViewById(R.id.iv_td);
 		wv_td = (WebView) findViewById(R.id.wv_td);
 		wv_td.getSettings().setJavaScriptEnabled(true);
+		//add by wuyue
+		wv_td.getSettings().setSupportZoom(true);
+		wv_td.getSettings().setBuiltInZoomControls(true);
 		sendRequestData();
 
 		mController.getConfig().closeToast();
@@ -443,6 +446,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 			.getUMSocialService("com.umeng.share");
 	
 	protected void ShareCount(int mType) {
+		AppContext.showToast("分享 + 10分");
 		NewsApi.shareCount(AppContext.instance().getLoginUid(), mNewsId,mType,
 				new JsonHttpResponseHandler() {
 					@Override

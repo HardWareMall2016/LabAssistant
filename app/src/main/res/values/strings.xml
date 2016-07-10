@@ -455,4 +455,6 @@
     <string name="comm_download_fialed">下载失败</string>
     <string name="comm_network_download_path_null">下载地址为空!</string>
     <string name="comm_unknow_service_error">服务器未知错误</string>
+
+    <string name="signing">正在签到...</string>
 </resources>

@@ -307,6 +307,40 @@ public class NewsApi extends BaseApi {
 		ApiHttpClient.post("index.php/Api/Collect/article.html", jsonObject, handler);
 	}
 
+	/***
+	 * 签到
+	 * @param aid
+	 * @param uid
+	 * @param flag
+	 * @param handler
+	 */
+	public static void signIn(int uid,JsonHttpResponseHandler handler) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("uid", uid);
+		} catch (Exception e) {
+
+		}
+		ApiHttpClient.post("index.php/Api/Member/signin.html", jsonObject, handler);
+	}
+
+	/***
+	 * 签到提醒接口
+	 * @param uid
+	 * @param remind//0 取消提醒 1提醒
+	 * @param handler
+	 */
+	public static void signRemind(int uid,int remind,JsonHttpResponseHandler handler) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("uid", uid);
+			jsonObject.put("signremind", remind);
+		} catch (Exception e) {
+
+		}
+		ApiHttpClient.post("index.php/Api/member/signremind.html", jsonObject, handler);
+	}
+
 	//收藏/取消收藏提问 flag 1收藏 0取消
 	public static void collectQuestion(int qid,int uid,int flag, JsonHttpResponseHandler handler) {
 		JSONObject jsonObject = new JSONObject();

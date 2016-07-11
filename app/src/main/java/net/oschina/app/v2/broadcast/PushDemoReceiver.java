@@ -307,7 +307,18 @@ public class PushDemoReceiver extends BroadcastReceiver {
 						
 //						showNotification(context,"提示","回答被采纳",clickIntent);
 						showNotification(context,json.optString("notifytitle"),json.optString("notifycontent"),clickIntent);
-					}else if(type.equals("questionkey")||type.equals("questionadd")){
+					} else if (type.equals("signjob")) {
+						showNotification(context,"签到提醒","亲，今天还没有签到哦！");
+					}else if (type.equals("adoptjob")) {//add by wuyue
+						// 18、我的回答 被采纳
+						Ask ask = new Ask();
+						ask.setId(contentJson.optInt("id",0));
+						Intent clickIntent = new Intent(context, TweetDetailActivity.class);
+						clickIntent.putExtra("ask", ask);
+
+						showNotification(context,"采纳提醒","有人回复你的问题，请采纳!",clickIntent);
+					}
+					else if(type.equals("questionkey")||type.equals("questionadd")){
 						//27、提问后，问题涉及某个关键词 // 22、用户提问未通过审核通知
 						showNotification(context,json.optString("notifytitle"),json.optString("notifycontent"));
 					}else if (type.equals("fanshelp")) {

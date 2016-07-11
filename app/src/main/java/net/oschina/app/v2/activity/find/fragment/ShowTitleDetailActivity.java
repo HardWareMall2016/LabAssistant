@@ -392,7 +392,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 					favBtn.setImageResource(R.drawable.actionbar_favorite_icon);
 				}
 
-				String pdfFilePath = obj.getString("pdffile");
+				String pdfFilePath = obj.optString("pdffile");
 				// wv_td.loadDataWithBaseURL("http://phpapi.ccjjj.net/",
 				// content.toString(),
 				// "text/html", "utf-8", null);

@@ -132,6 +132,12 @@ public class SignInDialog extends Dialog implements View.OnClickListener,Compoun
 
 		TextView tvMonth = (TextView) view.findViewById(R.id.tv_month);
 		tvMonth.setText((calendar.get(Calendar.MONTH) + 1) + "月");
+
+
+		IntegralUpgrade data=calculateIntegralUpgrade(continuecount);
+		TextView tvSignInfo = (TextView) view.findViewById(R.id.sign_info);
+		tvSignInfo.setText(String.format("再签到%d天，可以获得%d积分奖励",data.day,data.integral));
+
 	}
 
 	@Override
@@ -176,4 +182,41 @@ public class SignInDialog extends Dialog implements View.OnClickListener,Compoun
 			}
 		});
 	}
+
+	private IntegralUpgrade calculateIntegralUpgrade(int continuecount){
+		IntegralUpgrade data=new IntegralUpgrade();
+		if(continuecount<5){
+			data.integral=50;
+			data.day=5-continuecount;
+		} else if (continuecount<10){
+			data.integral=100;
+			data.day=10-continuecount;
+		}else if (continuecount<20){
+			data.integral=500;
+			data.day=20-continuecount;
+		}else if (continuecount<30){
+			data.integral=800;
+			data.day=30-continuecount;
+		}else if (continuecount<50){
+			data.integral=1200;
+			data.day=50-continuecount;
+		}else if (continuecount<100){
+			data.integral=3000;
+			data.day=100-continuecount;
+		}else if (continuecount<200){
+			data.integral=5000;
+			data.day=200-continuecount;
+		}else if (continuecount<365){
+			data.integral=10000;
+			data.day=365-continuecount;
+		}
+		return  data;
+	}
+
+
+	private class IntegralUpgrade{
+		int integral;
+		int day;
+	}
+
 }

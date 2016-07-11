@@ -37,9 +37,10 @@ public class User extends Base {
 	private int anum;
 	private int cnum;
 	private int fnum;
-	private int gnum;
+	private int gnum;//关注数
 	private int integral;
 	private int rank;
+	private int supportednum;//被支持数
 
 	private int sex;
 	private int phone_status;
@@ -58,10 +59,23 @@ public class User extends Base {
 	private int fansnum;//粉丝求助数目
 	private String password;
 	private String phone;
-	
-	
-	
-	
+	private boolean issigned;
+
+	public boolean issigned() {
+		return issigned;
+	}
+
+	public void setIssigned(boolean issigned) {
+		this.issigned = issigned;
+	}
+
+	public int getSupportednum() {
+		return supportednum;
+	}
+
+	public void setSupportednum(int supportednum) {
+		this.supportednum = supportednum;
+	}
 
 	public String getPhone() {
 		return phone;
@@ -335,6 +349,9 @@ public class User extends Base {
 		user.setInterest(userinfo.optString("interest"));
 		user.setIsattention(userinfo.optInt("isattention"));
 		user.setFansnum(userinfo.optInt("fansnum"));
+		user.setSupportednum(userinfo.optInt("supportednum"));
+		user.setIssigned(userinfo.optBoolean("issigned"));
+
 		return user;
 	}
 }

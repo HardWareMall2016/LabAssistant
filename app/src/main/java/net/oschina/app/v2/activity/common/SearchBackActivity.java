@@ -155,23 +155,23 @@ public class SearchBackActivity extends BaseActivity implements
 			case R.id.questions:
 				mSearchType=SearchType.QUESTIONS;
 				refreshTabViews();
-				if (!TextUtils.isEmpty(et_content.getText().toString())) {
+				/*if (!TextUtils.isEmpty(et_content.getText().toString())) {
 					sendRequestData(false);
-				}
+				}*/
 				break;
 			case R.id.users:
 				mSearchType=SearchType.USERS;
 				refreshTabViews();
-				if (!TextUtils.isEmpty(et_content.getText().toString())) {
+				/*if (!TextUtils.isEmpty(et_content.getText().toString())) {
 					sendRequestData(false);
-				}
+				}*/
 				break;
 			case R.id.articles:
 				mSearchType=SearchType.ARTICLES;
 				refreshTabViews();
-				if (!TextUtils.isEmpty(et_content.getText().toString())) {
+				/*if (!TextUtils.isEmpty(et_content.getText().toString())) {
 					sendRequestData(false);
-				}
+				}*/
 				break;
 		}
 	}

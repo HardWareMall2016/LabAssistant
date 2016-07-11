@@ -2217,6 +2217,21 @@ public class NewsApi extends BaseApi {
 				jsonObject, mJsonHandler);
 	}
 
+	// 支持列表
+	public static void getSupportedinfo(int uid, int mCurrentPage,
+									   JsonHttpResponseHandler mJsonHandler) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("uid", uid);
+			jsonObject.put("pid", mCurrentPage);
+			jsonObject.put("num", 20);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ApiHttpClient.post("index.php/Api/Member/supportedinfo.html",
+				jsonObject, mJsonHandler);
+	}
+
 	// 粉丝求助接口的请求
 	public static void getFunsForHelpList(int uid, int mCurrentPage,
 			JsonHttpResponseHandler mJsonHandler) {

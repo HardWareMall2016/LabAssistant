@@ -1,6 +1,7 @@
 package net.oschina.app.v2.activity.favorite.adapter;
 
 import android.annotation.SuppressLint;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,6 +46,8 @@ public class FavoriteArticleAdapter extends ListBaseAdapter {
 		ImageLoader.getInstance().displayImage(ApiHttpClient.getImageApiUrl(item.getThumb()), vh.itemImage, options);
 		vh.title.setText(item.getTitle());
 		vh.time.setText(item.getDate());
+		vh.come_from.setText(item.getCatname());
+		vh.summary.setText(Html.fromHtml(item.getContent()));
 
 		return convertView;
 	}

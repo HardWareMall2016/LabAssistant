@@ -24,11 +24,11 @@
         android:layout_marginLeft="8dp"
         android:layout_toRightOf="@id/img"
         android:ellipsize="end"
-        android:maxLines="4"
+        android:maxLines="2"
         android:textColor="@color/gray"
         android:textSize="14sp"/>
 
-    <!--<TextView
+    <TextView
         android:id="@+id/summary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,9 +37,9 @@
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/img"
         android:ellipsize="end"
-        android:maxLines="2"
+        android:maxLines="3"
         android:textColor="@color/gray"
-        android:textSize="14sp"/>-->
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/come_from"

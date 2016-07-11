@@ -7,6 +7,16 @@
     android:paddingRight="@dimen/space_10"
     android:paddingTop="@dimen/space_10">
 
+    <ImageView
+        android:id="@+id/iv_avastarBg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/iv_boss_bg"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:visibility="invisible"
+        />
+
     <net.oschina.app.v2.activity.tweet.view.CircleImageView
         android:id="@+id/iv_avatar"
         android:layout_width="@dimen/list_item_avatar_size"

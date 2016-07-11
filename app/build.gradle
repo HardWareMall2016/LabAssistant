@@ -47,6 +47,7 @@ dependencies {
     compile project(':umengshare')
     compile project(':photoview')
     compile project(':stickylistheaders')
+    compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
     /*compile project(':supportv7')*/
     /*compile 'com.android.support:appcompat-v7:19.+'*/
 }

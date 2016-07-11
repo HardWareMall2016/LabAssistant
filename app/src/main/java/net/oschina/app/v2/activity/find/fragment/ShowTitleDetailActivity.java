@@ -16,6 +16,11 @@ import net.oschina.app.v2.base.BaseActivity;
 import net.oschina.app.v2.base.Constants;
 import net.oschina.app.v2.emoji.EmojiFragment;
 import net.oschina.app.v2.emoji.EmojiFragment.EmojiTextListener;
+import net.oschina.app.v2.ui.dialog.WaitDialog;
+import net.oschina.app.v2.utils.FileDownloadCallback;
+import net.oschina.app.v2.utils.FileDownloadHandler;
+import net.oschina.app.v2.utils.HttpRequestUtils;
+import net.oschina.app.v2.utils.PathUtils;
 
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
@@ -40,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.joanzapata.pdfview.PDFView;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shiyanzhushou.app.R;
@@ -62,6 +68,8 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
+
+import java.io.File;
 
 
 public class ShowTitleDetailActivity extends BaseActivity implements
@@ -93,6 +101,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 	private String url;
 	private boolean isAllowShare;
 	private int collectflag;//1已收藏 0未收藏
+	private PDFView pdfView;
 
 	private Handler mhandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
@@ -325,6 +334,9 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 			ImageLoader.getInstance().displayImage(mNewsImg, detail_img);
 		}
 
+
+		pdfView=(PDFView) findViewById(R.id.pdfView);
+
 		// iv_td = (ImageView) findViewById(R.id.iv_td);
 		wv_td = (WebView) findViewById(R.id.wv_td);
 		wv_td.getSettings().setJavaScriptEnabled(true);
@@ -380,12 +392,20 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 					favBtn.setImageResource(R.drawable.actionbar_favorite_icon);
 				}
 
+				String pdfFilePath = obj.getString("pdffile");
 				// wv_td.loadDataWithBaseURL("http://phpapi.ccjjj.net/",
 				// content.toString(),
 				// "text/html", "utf-8", null);
 				//屏蔽下载按钮
-				wv_td.loadUrl(content.toString()+"?APP_VERSION=1");
-				
+				if(TextUtils.isEmpty(pdfFilePath)){
+					wv_td.setVisibility(View.VISIBLE);
+					pdfView.setVisibility(View.GONE);
+					wv_td.loadUrl(content.toString() + "?APP_VERSION=1");
+				}else{
+					pdfView.setVisibility(View.VISIBLE);
+					wv_td.setVisibility(View.GONE);
+					showPdfFile(pdfFilePath);
+				}
 				isAllowShare=obj.optInt("allow_share",1)==0?false:true;
 				
 				// wv_td.loadDataWithBaseURL(content.toString(), null,
@@ -402,6 +422,60 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 		}
 
 	};
+
+	private WaitDialog mWaitDialog;
+	private void showPdfFile(String pdfFilePath){
+		if(isPdfExist()){
+			pdfView.fromFile(new File(getPdfFilePath())).load();
+			return;
+		}
+		mWaitDialog=showWaitDialog("正在载入pdf...");
+		//"http://ws.shiyanzhushou.com:8888/Uploads/pdf-test.pdf"
+		HttpRequestUtils.downloadFile(pdfFilePath, getPdfFilePath(), new FileDownloadHandler() {
+			@Override
+			public void onDownloadFailed(String errorMsg) {
+				super.onDownloadFailed(errorMsg);
+				pdfView.setVisibility(View.GONE);
+			}
+
+			@Override
+			public void onDownloadSuccess(File downFile) {
+				if(downFile!=null&&downFile.exists()){
+					pdfView.fromFile(downFile).load();
+				}
+				super.onDownloadSuccess(downFile);
+			}
+
+			@Override
+			public void onRequestFinished() {
+				super.onRequestFinished();
+				if(mWaitDialog!=null){
+					mWaitDialog.dismiss();
+					mWaitDialog=null;
+				}
+			}
+		});
+	}
+
+
+	private boolean isPdfExist(){
+		String pdfPath=getPdfFilePath();
+		if(pdfPath!=null){
+			File pdfFile=new File(pdfPath);
+			return pdfFile.exists();
+		}
+		return false;
+	}
+
+	private String getPdfFilePath(){
+		File pdfPathDir=PathUtils.getExternalPDFFilesDir();
+		if(pdfPathDir!=null){
+			String pdfPath=pdfPathDir.getAbsolutePath();
+			return String.format("%s/%d.pdf",pdfPath,mNewsId);
+		}
+		return null;
+	}
+
 
 	@Override
 	public void setToolBarFragment(ToolbarFragment fragment) {

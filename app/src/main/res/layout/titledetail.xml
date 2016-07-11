@@ -132,9 +132,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/spliter"
+        android:visibility="gone"
         android:layout_alignWithParentIfMissing="true"
         android:layout_below="@id/top_tmp_area"
         android:background="@color/transparent" />
+
+    <com.joanzapata.pdfview.PDFView
+        android:id="@+id/pdfView"
+        android:layout_above="@id/spliter"
+        android:visibility="gone"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_below="@id/top_tmp_area"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <net.oschina.app.v2.ui.empty.EmptyLayout
         android:id="@+id/error_layout"

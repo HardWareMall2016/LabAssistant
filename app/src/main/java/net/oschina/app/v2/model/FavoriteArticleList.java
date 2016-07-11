@@ -34,6 +34,8 @@ public class FavoriteArticleList extends Entity implements ListEntity {
 		private String title;
 		private String thumb;
 		private String date;
+		private String content;
+		private String catname;
 
 		public String getId() {
 			return id;
@@ -83,6 +85,22 @@ public class FavoriteArticleList extends Entity implements ListEntity {
 			this.date = date;
 		}
 
+		public String getCatname() {
+			return catname;
+		}
+
+		public void setCatname(String catname) {
+			this.catname = catname;
+		}
+
+		public String getContent() {
+			return content;
+		}
+
+		public void setContent(String content) {
+			this.content = content;
+		}
+
 		public static FavoriteArticle parse(JSONObject response) throws IOException,
 				AppException {
 			FavoriteArticle question = new FavoriteArticle();
@@ -92,6 +110,8 @@ public class FavoriteArticleList extends Entity implements ListEntity {
 			question.setTitle(response.optString("title"));
 			question.setThumb(response.optString("thumb"));
 			question.setDate(response.optString("date"));
+			question.setContent(response.optString("content"));
+			question.setCatname(response.optString("catname"));
 			return question;
 		}
 	}

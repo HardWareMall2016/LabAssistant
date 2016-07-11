@@ -87,6 +87,7 @@ public class ActiveFragment extends BaseFragment {
 	private ImageView mViewHeaderBg;
 	private TextView btnSignIn;
 	private TextView btnZhichi;
+	private TextView mViewAttention;
 
 	private boolean mIsWatingLogin;
 	private View mIvClearUserName, mIvClearPassword;
@@ -352,6 +353,8 @@ public class ActiveFragment extends BaseFragment {
 		btnSignIn=(TextView)view.findViewById(R.id.btn_sign);
 		btnSignIn.setOnClickListener(this);
 
+		mViewAttention=(TextView)view.findViewById(R.id.attention);
+
 		btnZhichi=(TextView)view.findViewById(R.id.zhichi);
 		btnZhichi.setOnClickListener(this);
 
@@ -423,9 +426,24 @@ public class ActiveFragment extends BaseFragment {
 //				+ "  <font color='#9A9A9A'>LV" + user.getRank() + "</font>"));
 //		tv_jifen.setText(Html.fromHtml("积分： <font color='#FB7C62'>"
 //				+ user.getIntegral() + "分</font>"));
+
+		if(user.issigned()){
+			btnSignIn.setText("已签到");
+			btnSignIn.setEnabled(false);
+			btnSignIn.setBackgroundResource(R.drawable.bg_gray_half_circle_selector);
+		}else {
+			btnSignIn.setText("签到");
+			btnSignIn.setEnabled(true);
+			btnSignIn.setBackgroundResource(R.drawable.bg_red_half_circle_selector);
+		}
+
 		
 		tv_nickname.setText(user.getNickname());
 		tv_rank.setText(" LV." + user.getRank());
+
+		mViewAttention.setText("关注"+user.getGnum());
+
+		btnZhichi.setText(String.format("收到%d个支持",user.getSupportednum()));
 
 		tv_jifen.setText(user.getIntegral() + "分");
 		if (user.getRealname_status() == 1) {
@@ -653,7 +671,7 @@ public class ActiveFragment extends BaseFragment {
 		}else if(id == R.id.btn_sign){
 			signIndRequest();
 		}else if(id==R.id.tv_jifen){
-			UIHelper.jifenxiangqing(getActivity());
+			//UIHelper.jifenxiangqing(getActivity());
 		}else if(id==R.id.zhichi){
 			UIHelper.zhichiwode(getActivity());
 		}
@@ -683,7 +701,6 @@ public class ActiveFragment extends BaseFragment {
 				try {
 					switch (response.getInt("code")){
 						case 88:
-						case 1295:
 							SignInDialog dialog=new SignInDialog(getActivity(),R.style.Dialog);
 							JSONObject json = new JSONObject(response.optString("data"));
 							String signremind=json.optString("signremind");
@@ -706,9 +723,9 @@ public class ActiveFragment extends BaseFragment {
 						case 1291:
 							AppContext.showToast("用户不存在");
 							break;
-						/*case 1295:
+						case 1295:
 							AppContext.showToast("今日已签到");
-							break;*/
+							break;
 						case 1294:
 							AppContext.showToast("签到失败");
 							break;

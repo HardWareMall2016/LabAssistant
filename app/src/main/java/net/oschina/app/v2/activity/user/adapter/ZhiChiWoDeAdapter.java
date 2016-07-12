@@ -15,6 +15,7 @@ import com.shiyanzhushou.app.R;
 import net.oschina.app.v2.activity.image.IvSignUtils;
 import net.oschina.app.v2.activity.user.model.XiTongXiaoXi;
 import net.oschina.app.v2.activity.user.model.ZhiChiWoDe;
+import net.oschina.app.v2.api.ApiHttpClient;
 import net.oschina.app.v2.base.ListBaseAdapter;
 import net.oschina.app.v2.utils.BitmapLoaderUtil;
 
@@ -39,8 +40,7 @@ public class ZhiChiWoDeAdapter extends ListBaseAdapter {
         ZhiChiWoDe data = (ZhiChiWoDe) _data.get(position);
 
 
-        ImageLoader.getInstance().displayImage(data.getHead(),
-                vh.iv_avatar, options);
+        ImageLoader.getInstance().displayImage(ApiHttpClient.getImageApiUrl(data.getHead()), vh.iv_avatar, options);
 
         String str1="在\"";
         String str2=data.getTitle();

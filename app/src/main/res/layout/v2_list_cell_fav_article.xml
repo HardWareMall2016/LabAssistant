@@ -25,7 +25,7 @@
         android:layout_toRightOf="@id/img"
         android:ellipsize="end"
         android:maxLines="2"
-        android:textColor="@color/gray"
+        android:textColor="@color/black"
         android:textSize="14sp"/>
 
     <TextView
@@ -38,6 +38,17 @@
         android:layout_toRightOf="@id/img"
         android:ellipsize="end"
         android:maxLines="3"
+        android:lines="3"
+        android:textColor="@color/gray"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/summary"
+        android:layout_alignParentRight="true"
+        android:singleLine="true"
         android:textColor="@color/gray"
         android:textSize="14sp"/>
 
@@ -46,27 +57,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/img"
-        android:layout_marginTop="4dp"
+        android:layout_below="@id/summary"
         android:singleLine="true"
         android:text="来自 实验助手"
-        android:textColor="@color/gray"
-        android:textSize="14sp"/>
-
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/come_from"
-        android:layout_alignParentRight="true"
-        android:singleLine="true"
         android:textColor="@color/gray"
         android:textSize="14sp"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:layout_below="@id/come_from"
+        android:layout_below="@id/time"
         android:layout_marginTop="8dp"
         android:background="@color/divider"/>
 

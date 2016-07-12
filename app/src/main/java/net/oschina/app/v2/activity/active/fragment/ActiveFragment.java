@@ -716,6 +716,10 @@ public class ActiveFragment extends BaseFragment {
 
 							//刷新个人信息积分
 							tv_jifen.setText(integral + "分");
+
+							btnSignIn.setText("已签到");
+							btnSignIn.setEnabled(false);
+							btnSignIn.setBackgroundResource(R.drawable.bg_gray_half_circle_selector);
 							break;
 						case 1290:
 							AppContext.showToast("uid为空");

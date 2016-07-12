@@ -13,74 +13,74 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ZhiChiWoDeList extends Entity implements ListEntity {
-	private int code;
-	private String desc;
-	private String supportednum;
-	private String todaysupportednum;
+    private int code;
+    private String desc;
+    private String supportednum;
+    private String todaysupportednum;
 
 
-	private List<ZhiChiWoDe> xitongxiaoxilist = new ArrayList<ZhiChiWoDe>();
-	
-	public int getCode() {
-		return code;
-	}
+    private List<ZhiChiWoDe> xitongxiaoxilist = new ArrayList<ZhiChiWoDe>();
 
-	public void setCode(int code) {
-		this.code = code;
-	}
+    public int getCode() {
+        return code;
+    }
 
-	public String getDesc() {
-		return desc;
-	}
+    public void setCode(int code) {
+        this.code = code;
+    }
 
-	public void setDesc(String desc) {
-		this.desc = desc;
-	}
+    public String getDesc() {
+        return desc;
+    }
 
-	public List<ZhiChiWoDe> getXitongxiaoxilist() {
-		return xitongxiaoxilist;
-	}
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public List<ZhiChiWoDe> getXitongxiaoxilist() {
+        return xitongxiaoxilist;
+    }
 
 
-	public String getSupportednum() {
-		return supportednum;
-	}
+    public String getSupportednum() {
+        return supportednum;
+    }
 
-	public void setSupportednum(String supportednum) {
-		this.supportednum = supportednum;
-	}
+    public void setSupportednum(String supportednum) {
+        this.supportednum = supportednum;
+    }
 
-	public String getTodaysupportednum() {
-		return todaysupportednum;
-	}
+    public String getTodaysupportednum() {
+        return todaysupportednum;
+    }
 
-	public void setTodaysupportednum(String todaysupportednum) {
-		this.todaysupportednum = todaysupportednum;
-	}
+    public void setTodaysupportednum(String todaysupportednum) {
+        this.todaysupportednum = todaysupportednum;
+    }
 
-	public static ZhiChiWoDeList parse(String jsonStr) throws IOException,
-			AppException {
-		ZhiChiWoDeList xitongxiaoxilist=new ZhiChiWoDeList();
-		ZhiChiWoDe xiTongXiaoXi=null;
-		try {
-			JSONObject json = new JSONObject(jsonStr);
+    public static ZhiChiWoDeList parse(String jsonStr) throws IOException,
+            AppException {
+        ZhiChiWoDeList xitongxiaoxilist = new ZhiChiWoDeList();
+        ZhiChiWoDe xiTongXiaoXi = null;
+        try {
+            JSONObject json = new JSONObject(jsonStr);
 
-			xitongxiaoxilist.supportednum=json.optString("supportednum");
-			xitongxiaoxilist.todaysupportednum=json.optString("todaysupportednum");
+            json= new JSONObject(json.getString("data"));
+            xitongxiaoxilist.supportednum = json.optString("supportednum");
+            xitongxiaoxilist.todaysupportednum = json.optString("todaysupportednum");
+            JSONArray dataList = new JSONArray(json.getString("list"));
+            for (int i = 0; i < dataList.length(); i++) {
+                xiTongXiaoXi = ZhiChiWoDe.parse(dataList.getJSONObject(i));
+                xitongxiaoxilist.getXitongxiaoxilist().add(xiTongXiaoXi);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return xitongxiaoxilist;
+    }
 
-			JSONArray dataList = new JSONArray(json.getString("data"));
-	            for (int i = 0; i < dataList.length(); i++)
-	            {
-	            	xiTongXiaoXi=ZhiChiWoDe.parse(dataList.getJSONObject(i));
-	            	xitongxiaoxilist.getXitongxiaoxilist().add(xiTongXiaoXi);
-	            }
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return xitongxiaoxilist;
-	}
-	@Override
-	public List<?> getList() {
-		return xitongxiaoxilist;
-	}
+    @Override
+    public List<?> getList() {
+        return xitongxiaoxilist;
+    }
 }

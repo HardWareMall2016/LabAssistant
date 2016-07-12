@@ -110,7 +110,7 @@ public class FavoriteArticleList extends Entity implements ListEntity {
 			question.setTitle(response.optString("title"));
 			question.setThumb(response.optString("thumb"));
 			question.setDate(response.optString("date"));
-			question.setContent(response.optString("content"));
+			question.setContent(response.optString("description"));
 			question.setCatname(response.optString("catname"));
 			return question;
 		}

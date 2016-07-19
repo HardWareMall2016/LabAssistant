@@ -343,6 +343,10 @@ public class SearchBackActivity extends BaseActivity implements
 			if(article!=null){
 				Intent intent = new Intent(this, ShowTitleDetailActivity.class);
 				intent.putExtra("id", Integer.valueOf(article.getId()));
+				if("培训信息".equals(article.getCname())){
+					intent.putExtra("fromTitle",  R.string.find_peixunxinxi);
+					intent.putExtra("fromSource", 1);
+				}
 				startActivity(intent);
 			}
 		}

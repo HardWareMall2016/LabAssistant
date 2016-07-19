@@ -108,7 +108,7 @@ public class SignInDialog extends Dialog implements View.OnClickListener,Compoun
 
 		Window dialogWindow = getWindow();
 		WindowManager.LayoutParams lp = dialogWindow.getAttributes();
-		lp.width = (int) (DeviceUtils.getScreenWidth(mContext) * 0.9);
+		lp.width = (int) (DeviceUtils.getScreenWidth(mContext) * 0.8);
 		dialogWindow.setAttributes(lp);
 
 		mBtnOk = (TextView) view.findViewById(R.id.btn_ok);

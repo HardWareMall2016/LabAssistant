@@ -164,6 +164,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="22.0dip"
                 android:background="@color/white">
+
                 <TextView
                     style="@style/weekName"
                     android:text="一" />
@@ -195,11 +196,12 @@
 
             <GridView
                 android:id="@+id/gridview"
-                android:layout_width="fill_parent"
-                android:layout_height="190dp"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_gravity="center_horizontal"
                 android:clickable="true"
                 android:clipChildren="true"
-                android:columnWidth="30.0dip"
+                android:columnWidth="20.0dip"
                 android:horizontalSpacing="1.0dip"
                 android:listSelector="@null"
                 android:numColumns="7"

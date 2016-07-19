@@ -348,7 +348,7 @@
         <item name="android:layout_weight">1.0</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">#ff666666</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="Dialog" parent="@android:style/Theme.Dialog">

@@ -180,7 +180,6 @@ public class ActiveFragment extends BaseFragment {
 			if (message == null) {
 				message=new MessageNum();
 			}
-			
 			ActiveNumType.updateMessageLabelWithEmpty(message.getQnum(), mMyQuestionNotice);
 			ActiveNumType.updateMessageLabelWithEmpty(message.getAnum(), mMyAnswerNotice);
 			ActiveNumType.updateMessageLabel(message.getFnum(), mFansForHelpNotice);

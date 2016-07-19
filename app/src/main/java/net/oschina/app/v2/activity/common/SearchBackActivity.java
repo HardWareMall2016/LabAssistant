@@ -23,6 +23,7 @@ import net.oschina.app.v2.model.AskList;
 import net.oschina.app.v2.model.Comment;
 import net.oschina.app.v2.model.FavoriteList;
 import net.oschina.app.v2.model.event.FavoriteRefreshOther;
+import net.oschina.app.v2.ui.dialog.WaitDialog;
 import net.oschina.app.v2.utils.UIHelper;
 
 import org.apache.http.Header;
@@ -85,6 +86,8 @@ public class SearchBackActivity extends BaseActivity implements
 
 	private int mSearchType=SearchType.QUESTIONS;
 
+	private WaitDialog mDialog;
+
 	@Override
 	protected boolean hasBackButton() {
 		return true;
@@ -97,6 +100,7 @@ public class SearchBackActivity extends BaseActivity implements
 				AppContext.showToast("请输入查询内容", Toast.LENGTH_SHORT);
 			}
 		} else {
+			mDialog=showWaitDialog("正在搜索中...");
 			mCurrentPage = mCurrentPage < 1 ? 1 : mCurrentPage;
 			NewsApi.getSearchList(et_content.getText().toString(),AppContext.instance().getLoginUid(),mSearchType, mCurrentPage, new SearchHandler(mSearchType));
 		}
@@ -246,11 +250,19 @@ public class SearchBackActivity extends BaseActivity implements
 		public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 			super.onFailure(statusCode, headers, throwable, errorResponse);
 			// 请求失败则解析errorResponse，返回错误信息给用户
+			if(mDialog!=null&&mDialog.isShowing()){
+				mDialog.dismiss();
+				mDialog=null;
+			}
 		}
 
 		@Override
 		public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 			super.onSuccess(statusCode, headers, response);
+			if(mDialog!=null&&mDialog.isShowing()){
+				mDialog.dismiss();
+				mDialog=null;
+			}
 			if(mSearchType!=searchType){
 				return;
 			}
@@ -270,6 +282,7 @@ public class SearchBackActivity extends BaseActivity implements
 							case SearchType.USERS:
 								FavoriteList favoriteList = FavoriteList.parse(response.toString());
 								mUserAdapter=new SearchUserAdapter();
+								mUserAdapter.setHighLight(et_content.getText().toString());
 								mUserAdapter.setOnClickListener(mOnAttachClickListener);
 								mListView.setAdapter(mUserAdapter);
 								mUserAdapter.addData(favoriteList.getFavoritelist());
@@ -358,7 +371,7 @@ public class SearchBackActivity extends BaseActivity implements
 		public void onClick(View v) {
 			FavoriteList.Favorite f = (FavoriteList.Favorite)v.getTag();
 			if(f.getSame()==1){
-				doCancelAttention(f);
+				//doCancelAttention(f);
 			}else{
 				attention(f);
 			}

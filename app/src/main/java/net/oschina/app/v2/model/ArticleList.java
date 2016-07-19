@@ -25,6 +25,8 @@ public class ArticleList extends Entity implements ListEntity {
         private String title;
         private String catid;
         private String description;
+        private String cname;
+        private String inputtime;
 
 
         public String getId() {
@@ -59,12 +61,30 @@ public class ArticleList extends Entity implements ListEntity {
             this.description = description;
         }
 
+        public String getCname() {
+            return cname;
+        }
+
+        public void setCname(String cname) {
+            this.cname = cname;
+        }
+
+        public String getInputtime() {
+            return inputtime;
+        }
+
+        public void setInputtime(String inputtime) {
+            this.inputtime = inputtime;
+        }
+
         public static Article parse(JSONObject response) throws IOException, AppException {
             Article question = new Article();
             question.setId(response.optString("id"));
             question.setTitle(response.optString("title"));
             question.setCatid(response.optString("catid"));
             question.setDescription(response.optString("description"));
+            question.setCname(response.optString("catname"));
+            question.setInputtime(response.optString("inputtime"));
             return question;
         }
     }

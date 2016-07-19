@@ -53,7 +53,7 @@ public class ActiveNumType {
 			//大于99显示99+
 			String findStr=num>99?num+"+":num+"";
 			tv.setText(findStr);
-			tv.setBackgroundResource(R.drawable.g_unread_messages_bg);
+			tv.setBackgroundResource(R.drawable.message_unread_bg);
 		} else {
 			tv.setText("");
 			tv.setBackgroundColor(Color.TRANSPARENT);

@@ -54,19 +54,9 @@ import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SnsPostListener;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
-import com.umeng.socialize.exception.SocializeException;
-import com.umeng.socialize.sso.SinaSsoHandler;
-import com.umeng.socialize.utils.OauthHelper;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
-import com.umeng.socialize.weixin.media.CircleShareContent;
-import com.umeng.socialize.weixin.media.WeiXinShareContent;
-
-import com.umeng.socialize.media.QQShareContent;
 import com.umeng.socialize.media.QZoneShareContent;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.QZoneSsoHandler;
-import com.umeng.socialize.sso.TencentWBSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 
 import java.io.File;
@@ -192,6 +182,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 										AppContext.showToast("取消收藏失败");
 										return;
 									}
+									AppContext.showToast("取消收藏");
 									collectflag = 0;
 									favBtn.setImageResource(R.drawable.actionbar_favorite_icon);
 								}
@@ -206,6 +197,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 									return;
 								}
 								collectflag = 1;
+								AppContext.showToast("已收藏");
 								favBtn.setImageResource(R.drawable.actionbar_unfavorite_icon);
 							}
 						});
@@ -426,7 +418,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 	private WaitDialog mWaitDialog;
 	private void showPdfFile(String pdfFilePath){
 		if(isPdfExist()){
-			pdfView.fromFile(new File(getPdfFilePath())).load();
+			pdfView.fromFile(new File(getPdfFilePath())).swipeVertical(true).load();
 			return;
 		}
 		mWaitDialog=showWaitDialog("正在载入pdf...");
@@ -441,7 +433,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 			@Override
 			public void onDownloadSuccess(File downFile) {
 				if(downFile!=null&&downFile.exists()){
-					pdfView.fromFile(downFile).load();
+					pdfView.fromFile(downFile).swipeVertical(true).load();
 				}
 				super.onDownloadSuccess(downFile);
 			}

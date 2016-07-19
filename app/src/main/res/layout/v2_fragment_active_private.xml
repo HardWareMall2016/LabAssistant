@@ -118,12 +118,13 @@
                         android:textSize="@dimen/text_size_16" />
 
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_verified"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:layout_marginTop="@dimen/space_8"
+                    android:singleLine="true"
                     android:text="认证信息:实名认证"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_12" />
@@ -232,7 +233,8 @@
                 android:gravity="center"
                 android:text="商城"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -261,6 +263,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/list_item_background"
+                android:clipChildren="false"
+                android:clipToPadding="false"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingBottom="8dp"
@@ -269,7 +273,9 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
 
                     <ImageView
                         android:id="@+id/img_my_ask"
@@ -285,9 +291,14 @@
                         android:layout_alignEnd="@id/img_my_ask"
                         android:layout_alignRight="@id/img_my_ask"
                         android:layout_alignTop="@id/img_my_ask"
-                        android:background="@drawable/ic_item_goto_right_tip"
+                        android:layout_marginRight="-6dp"
+                        android:layout_marginTop="-6dp"
+                        android:background="@drawable/message_unread_bg"
                         android:gravity="center"
-                        android:textColor="#fff" />
+                        android:minHeight="16dp"
+                        android:minWidth="15dp"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/text_size_9" />
 
                     <TextView
                         android:id="@+id/my_ask_title"
@@ -323,6 +334,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/list_item_background"
+                android:clipChildren="false"
+                android:clipToPadding="false"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:paddingBottom="8dp"
@@ -331,7 +344,9 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
 
                     <ImageView
                         android:id="@+id/img_my_answer"
@@ -349,9 +364,14 @@
                         android:layout_alignEnd="@id/img_my_answer"
                         android:layout_alignRight="@id/img_my_answer"
                         android:layout_alignTop="@id/img_my_answer"
-                        android:background="@drawable/ic_item_goto_right_tip"
+                        android:layout_marginRight="-6dp"
+                        android:layout_marginTop="-6dp"
+                        android:background="@drawable/message_unread_bg"
                         android:gravity="center"
-                        android:textColor="#fff" />
+                        android:minHeight="16dp"
+                        android:minWidth="15dp"
+                        android:textColor="#ffffff"
+                        android:textSize="@dimen/text_size_9" />
 
                     <TextView
                         android:id="@+id/my_answer_title"

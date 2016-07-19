@@ -24,8 +24,11 @@ import net.oschina.app.v2.utils.BitmapLoaderUtil;
 import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.UIHelper;
 
+import java.text.SimpleDateFormat;
+
 public class ArticleAdapter extends ListBaseAdapter {
     private String mHighLight;
+    private SimpleDateFormat mDateFormat=new SimpleDateFormat("yyyy/MM/dd");
 
     public void setHighLight(String highLight) {
         this.mHighLight = highLight;
@@ -53,6 +56,15 @@ public class ArticleAdapter extends ListBaseAdapter {
             vh.tv_content.setText(StringUtils.getShowSingleLineStr(item.getDescription()));
         }
 
+        vh.tv_cname.setText(item.getCname());
+
+        try{
+            Long time= Long.valueOf(item.getInputtime());
+            vh.tv_time.setText(mDateFormat.format(time*1000));
+        }catch (Exception ex){
+            vh.tv_time.setText("");
+        }
+
         return convertView;
     }
 
@@ -60,10 +72,14 @@ public class ArticleAdapter extends ListBaseAdapter {
     static class ViewHolder {
         private TextView tv_title;
         private TextView tv_content;
+        private TextView tv_cname;
+        private TextView tv_time;
 
         public ViewHolder(View view) {
             tv_title = (TextView) view.findViewById(R.id.tv_title);
             tv_content = (TextView) view.findViewById(R.id.tv_content);
+            tv_cname = (TextView) view.findViewById(R.id.tv_cname);
+            tv_time = (TextView) view.findViewById(R.id.tv_time);
         }
     }
 }

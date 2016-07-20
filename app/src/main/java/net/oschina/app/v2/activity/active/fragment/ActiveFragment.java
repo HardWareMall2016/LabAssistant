@@ -65,6 +65,7 @@ public class ActiveFragment extends BaseFragment {
 	private static final String FIND_SCREEN = "find_screen";
 	private TextView tv_nickname;
 	private TextView tv_jifen;
+	private TextView tv_add_integral;
 	private TextView tv_verify;
 	private TextView tv_verified;
 	private TextView tv_address;
@@ -365,6 +366,9 @@ public class ActiveFragment extends BaseFragment {
 		// 积分
 		tv_jifen = (TextView) view.findViewById(R.id.tv_jifen);
 		tv_jifen.setOnClickListener(this);
+
+		tv_add_integral = (TextView) view.findViewById(R.id.tv_add_integral);
+
 		// 等级
 		tv_rank = (TextView) view.findViewById(R.id.rank);
 		// 认证情况
@@ -715,6 +719,9 @@ public class ActiveFragment extends BaseFragment {
 
 							//刷新个人信息积分
 							tv_jifen.setText(integral + "分");
+
+							tv_add_integral.setText("+2");
+							tv_add_integral.setVisibility(View.VISIBLE);
 
 							btnSignIn.setText("已签到");
 							btnSignIn.setEnabled(false);

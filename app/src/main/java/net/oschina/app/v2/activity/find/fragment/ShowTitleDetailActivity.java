@@ -45,7 +45,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.joanzapata.pdfview.PDFView;
+import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shiyanzhushou.app.R;
@@ -416,9 +417,20 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 	};
 
 	private WaitDialog mWaitDialog;
+	private WaitDialog mLoadPdfDialog;
+
 	private void showPdfFile(String pdfFilePath){
 		if(isPdfExist()){
-			pdfView.fromFile(new File(getPdfFilePath())).swipeVertical(true).load();
+			mLoadPdfDialog=showWaitDialog("正在载入pdf...");
+			pdfView.fromFile(new File(getPdfFilePath())).swipeVertical(true).onLoad(new OnLoadCompleteListener(){
+				@Override
+				public void loadComplete(int nbPages) {
+					if (mLoadPdfDialog != null) {
+						mLoadPdfDialog.dismiss();
+						mLoadPdfDialog = null;
+					}
+				}
+			}).load();
 			return;
 		}
 		mWaitDialog=showWaitDialog("正在载入pdf...");
@@ -432,7 +444,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 
 			@Override
 			public void onDownloadSuccess(File downFile) {
-				if(downFile!=null&&downFile.exists()){
+				if (downFile != null && downFile.exists()) {
 					pdfView.fromFile(downFile).swipeVertical(true).load();
 				}
 				super.onDownloadSuccess(downFile);
@@ -441,9 +453,9 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 			@Override
 			public void onRequestFinished() {
 				super.onRequestFinished();
-				if(mWaitDialog!=null){
+				if (mWaitDialog != null) {
 					mWaitDialog.dismiss();
-					mWaitDialog=null;
+					mWaitDialog = null;
 				}
 			}
 		});

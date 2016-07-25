@@ -4,13 +4,18 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import net.oschina.app.v2.AppContext;
+import net.oschina.app.v2.activity.tweet.TweetDetailActivity;
 import net.oschina.app.v2.activity.user.adapter.XiTongXiaoXiAdapter;
+import net.oschina.app.v2.activity.user.model.XiTongXiaoXi;
 import net.oschina.app.v2.activity.user.model.XiTongXiaoXiList;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.BaseListFragment;
 import net.oschina.app.v2.base.ListBaseAdapter;
+import net.oschina.app.v2.model.Ask;
 import net.oschina.app.v2.model.ListEntity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,7 +56,23 @@ public class XiTongXiaoXiFragment extends BaseListFragment {
 		NewsApi.getXiTongXiaoXi(uid, mCurrentPage, mJsonHandler);
 	}
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		XiTongXiaoXi xiaoXi = (XiTongXiaoXi) mAdapter.getItem(position - 1);
+		if (xiaoXi != null&&"1".equals(xiaoXi.getType())){
+			Ask ask = new Ask();
+			ask.setId(Integer.parseInt(xiaoXi.getQid()));
+			/*ask.setanum(answer.getAnum());
+			ask.setnickname(answer.getNickname());
+			ask.setLabel(answer.getLabel());
+			ask.setContent(answer.getTitle());
+			ask.setinputtime(answer.getInputtime());
+			ask.setsuperlist(answer.getSuperlist());*/
+
+			Intent intent = new Intent(getActivity(), TweetDetailActivity.class);
+			Bundle bundle = new Bundle();
+			bundle.putSerializable("ask", ask);
+			intent.putExtras(bundle);
+			getActivity().startActivity(intent);
+		}
 	}
 }

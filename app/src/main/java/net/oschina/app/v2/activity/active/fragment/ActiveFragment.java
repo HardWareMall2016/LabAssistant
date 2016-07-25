@@ -719,9 +719,23 @@ public class ActiveFragment extends BaseFragment {
 
 							//刷新个人信息积分
 							tv_jifen.setText(integral + "分");
+							try{
+								User user=AppContext.instance().getLoginInfo();
+								int preIntegral=user.getIntegral();
+								int addIntegra=Integer.parseInt(integral)-preIntegral;
+								if(addIntegra>0){
+									tv_add_integral.setText("+"+addIntegra);
+									user.setIntegral(Integer.parseInt(integral));
+									AppContext.instance().saveLoginInfo(user);
+									tv_add_integral.setVisibility(View.VISIBLE);
+								}else{
+									tv_add_integral.setVisibility(View.GONE);
+								}
 
-							tv_add_integral.setText("+2");
-							tv_add_integral.setVisibility(View.VISIBLE);
+							}catch (Exception ex){
+								tv_add_integral.setText("+2");
+								tv_add_integral.setVisibility(View.VISIBLE);
+							}
 
 							btnSignIn.setText("已签到");
 							btnSignIn.setEnabled(false);

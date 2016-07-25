@@ -20,6 +20,12 @@ public class XiTongXiaoXi implements Serializable {
 	private String content;
 	private String inputtime;
 	private String description;
+	private String type;
+	private String status;
+	private String qid;
+	private String quid;
+	private String aid;
+	private String auid;
 
 	public int getCode() {
 		return code;
@@ -86,6 +92,54 @@ public class XiTongXiaoXi implements Serializable {
 		this.description = description;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getQid() {
+		return qid;
+	}
+
+	public void setQid(String qid) {
+		this.qid = qid;
+	}
+
+	public String getQuid() {
+		return quid;
+	}
+
+	public void setQuid(String quid) {
+		this.quid = quid;
+	}
+
+	public String getAid() {
+		return aid;
+	}
+
+	public void setAid(String aid) {
+		this.aid = aid;
+	}
+
+	public String getAuid() {
+		return auid;
+	}
+
+	public void setAuid(String auid) {
+		this.auid = auid;
+	}
+
 	public static XiTongXiaoXi parse(JSONObject response) throws IOException,
 			AppException {
 		XiTongXiaoXi xiTongXiaoXi = new XiTongXiaoXi();
@@ -95,6 +149,12 @@ public class XiTongXiaoXi implements Serializable {
 		xiTongXiaoXi.setContent(response.optString("content"));
 		xiTongXiaoXi.setInputtime(response.optString("inputtime"));
 		xiTongXiaoXi.setDescription(response.optString("description"));
+		xiTongXiaoXi.setType(response.optString("type"));
+		xiTongXiaoXi.setStatus(response.optString("status"));
+		xiTongXiaoXi.setQid(response.optString("qid"));
+		xiTongXiaoXi.setQuid(response.optString("quid"));
+		xiTongXiaoXi.setAid(response.optString("aid"));
+		xiTongXiaoXi.setAuid(response.optString("auid"));
 		return xiTongXiaoXi;
 	}
 }

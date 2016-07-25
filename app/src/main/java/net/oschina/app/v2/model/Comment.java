@@ -52,6 +52,7 @@ public class Comment extends Entity {
 	protected String head;
 	protected String image;
 	protected String hits;
+	protected String isread;
 
 	
 	protected int aid;
@@ -63,10 +64,15 @@ public class Comment extends Entity {
 	protected int count;
 	
 	private String aftername;
-	
-	
-	
-	
+
+
+	public String getIsread() {
+		return isread;
+	}
+
+	public void setIsread(String isread) {
+		this.isread = isread;
+	}
 
 	public String getAftername() {
 		return aftername;
@@ -339,6 +345,7 @@ public class Comment extends Entity {
 			comment.setAid(response.optInt("aid"));
 			comment.setRank(response.optInt("rank"));
 			comment.setImage(response.optString("image"));
+			comment.setIsread(response.optString("isread"));
 			String hits=response.optString("hits");
 			if(TextUtils.isEmpty(hits)){
 				hits="0";

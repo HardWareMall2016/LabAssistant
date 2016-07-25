@@ -1000,7 +1000,9 @@ public class NewsApi extends BaseApi {
 	public static void getAskById(int qid, JsonHttpResponseHandler handler) {
 		JSONObject jsonObject = new JSONObject();
 		try {
+			int uid=AppContext.instance().getLoginUid();
 			jsonObject.put("id", qid);
+			jsonObject.put("uid", uid);
 			/*jsonObject.put("pid", 1);
 			jsonObject.put("num", 30);*/
 		} catch (JSONException e) {

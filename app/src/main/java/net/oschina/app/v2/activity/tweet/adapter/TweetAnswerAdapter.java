@@ -306,6 +306,14 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 				vh.relativeLayout
 						.setBackgroundResource(R.drawable.common_list_item_bg);
 			}
+
+			if("0".equals(item.getIsread())){
+				vh.unread_answer.setVisibility(View.VISIBLE);
+			}else{
+				vh.unread_answer.setVisibility(View.GONE);
+			}
+		}else{
+			vh.unread_answer.setVisibility(View.GONE);
 		}
 
 		return convertView;
@@ -398,6 +406,7 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 		public MoreCommentView commentView;
 		public TextView textMore;
 		public RelativeLayout relativeLayout;
+		public TextView unread_answer;
 
 		public ViewHolder(View view,int position) {
 			name = (TextView) view.findViewById(R.id.tv_name);
@@ -426,6 +435,7 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 			
 			iv_sign = (ImageView) view.findViewById(R.id.iv_sign);
 			avstarBg=(ImageView)view.findViewById(R.id.iv_avastarBg);
+			unread_answer=(TextView)view.findViewById(R.id.unread_answer);
 		}
 	}
 

@@ -500,31 +500,38 @@ public class ActiveFragment extends BaseFragment {
 		active_wodezhushouhao_disc.setText(invitation > 0 ? String
 				.valueOf(invitation) : "");
 
-		ImageLoader.getInstance().displayImage(
-				ApiHttpClient.getImageApiUrl(user.getHead()), iv_img_head,options,new ImageLoadingListener(){
-					@Override
-					public void onLoadingStarted(String s, View view) {
-					}
-
-					@Override
-					public void onLoadingFailed(String s, View view, FailReason failReason) {
-					}
-
-					@Override
-					public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-						if(bitmap==null){
-							return;
+		if(TextUtils.isEmpty(user.getHead())){
+			iv_img_head.setImageResource(R.drawable.ic_default_avatar);
+			mViewHeaderBg.setImageResource(R.drawable.header_bg);
+		}else{
+			ImageLoader.getInstance().displayImage(
+					ApiHttpClient.getImageApiUrl(user.getHead()), iv_img_head,options,new ImageLoadingListener(){
+						@Override
+						public void onLoadingStarted(String s, View view) {
 						}
 
-						Bitmap blurBitmap = FastBlurUtil.doBlur(bitmap, 8, false);
-						mViewHeaderBg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-						mViewHeaderBg.setImageBitmap(blurBitmap);
-					}
+						@Override
+						public void onLoadingFailed(String s, View view, FailReason failReason) {
 
-					@Override
-					public void onLoadingCancelled(String s, View view) {
-					}
-				});
+						}
+
+						@Override
+						public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+							if(bitmap==null){
+								return;
+							}
+
+							Bitmap blurBitmap = FastBlurUtil.doBlur(bitmap, 8, false);
+							mViewHeaderBg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+							mViewHeaderBg.setImageBitmap(blurBitmap);
+						}
+
+						@Override
+						public void onLoadingCancelled(String s, View view) {
+
+						}
+					});
+		}
 		// ImageLoader.getInstance().displayImage(user.getFace(), avatar);
 		NewsApi.refreshScore(AppContext.instance().getLoginUid(), mRefreshScoreHandler);
 	}

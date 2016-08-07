@@ -89,10 +89,10 @@ public class SearchUserAdapter extends ListBaseAdapter {
 			@Override
 			public void onClick(View v) {
 				if(item.getSame()==1){
-					UIHelper.showUserCenter(v.getContext(), item.getFuid(),
+					UIHelper.showUserCenter(v.getContext(), item.getId(),
 							item.getNickname());
 				}else{
-					UIHelper.showUserCenter(v.getContext(), item.getTuid(),
+					UIHelper.showUserCenter(v.getContext(), item.getId(),
 							item.getNickname());
 				}
 				

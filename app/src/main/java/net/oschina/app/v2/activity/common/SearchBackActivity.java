@@ -385,7 +385,7 @@ public class SearchBackActivity extends BaseActivity implements
 
 	private void attention(final FavoriteList.Favorite f){
 		int uid=AppContext.instance().getLoginUid();
-		NewsApi.addAttention(uid, f.getFuid(), new JsonHttpResponseHandler(){
+		NewsApi.addAttention(uid, f.getId(), new JsonHttpResponseHandler(){
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 				AppContext.showToast(response.optString("desc", ""));

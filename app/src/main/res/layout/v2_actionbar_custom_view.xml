@@ -47,7 +47,7 @@
             android:contentDescription="@null"
             android:paddingLeft="@dimen/space_8"
             android:paddingRight="@dimen/space_8"
-            android:src="@drawable/actionbar_favorite_icon"
+            android:src="@drawable/actionbar_favorite_icon_2"
             android:visibility="gone"/>
 
         <ImageView

@@ -11,6 +11,8 @@ import java.io.Serializable;
  * @author acer 系统消息实体
  */
 public class ZhiChiWoDe implements Serializable {
+	private String uid;
+	private String id;
 
 	private String title;
 	private String content;
@@ -22,6 +24,22 @@ public class ZhiChiWoDe implements Serializable {
 	private String head;
 	private String questiontotal;
 	private String rank;
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getTitle() {
 		return title;
@@ -106,6 +124,8 @@ public class ZhiChiWoDe implements Serializable {
 	public static ZhiChiWoDe parse(JSONObject response) throws IOException,
 			AppException {
 		ZhiChiWoDe zhiChiWoDe = new ZhiChiWoDe();
+		zhiChiWoDe.setUid(response.optString("uid"));
+		zhiChiWoDe.setId(response.optString("id"));
 		zhiChiWoDe.setTitle(response.optString("title"));
 		zhiChiWoDe.setContent(response.optString("content"));
 		zhiChiWoDe.setInputtime(response.optString("inputtime"));

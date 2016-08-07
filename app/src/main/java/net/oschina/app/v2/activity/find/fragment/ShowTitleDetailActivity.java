@@ -185,7 +185,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 									}
 									AppContext.showToast("取消收藏");
 									collectflag = 0;
-									favBtn.setImageResource(R.drawable.actionbar_favorite_icon);
+									favBtn.setImageResource(R.drawable.actionbar_favorite_icon_2);
 								}
 							});
 				} else {
@@ -199,7 +199,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 								}
 								collectflag = 1;
 								AppContext.showToast("已收藏");
-								favBtn.setImageResource(R.drawable.actionbar_unfavorite_icon);
+								favBtn.setImageResource(R.drawable.actionbar_unfavorite_icon_2);
 							}
 						});
 			}
@@ -380,9 +380,9 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 
 				collectflag= obj.optInt("collectflag");
 				if(collectflag==1){
-					favBtn.setImageResource(R.drawable.actionbar_unfavorite_icon);
+					favBtn.setImageResource(R.drawable.actionbar_unfavorite_icon_2);
 				}else{
-					favBtn.setImageResource(R.drawable.actionbar_favorite_icon);
+					favBtn.setImageResource(R.drawable.actionbar_favorite_icon_2);
 				}
 
 				String pdfFilePath = obj.optString("pdffile");

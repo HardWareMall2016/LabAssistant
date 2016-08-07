@@ -17,7 +17,9 @@ import net.oschina.app.v2.activity.user.model.XiTongXiaoXi;
 import net.oschina.app.v2.activity.user.model.ZhiChiWoDe;
 import net.oschina.app.v2.api.ApiHttpClient;
 import net.oschina.app.v2.base.ListBaseAdapter;
+import net.oschina.app.v2.model.Ask;
 import net.oschina.app.v2.utils.BitmapLoaderUtil;
+import net.oschina.app.v2.utils.UIHelper;
 
 public class ZhiChiWoDeAdapter extends ListBaseAdapter {
     private DisplayImageOptions options;
@@ -37,10 +39,25 @@ public class ZhiChiWoDeAdapter extends ListBaseAdapter {
         } else {
             vh = (ViewHolder) convertView.getTag();
         }
-        ZhiChiWoDe data = (ZhiChiWoDe) _data.get(position);
+        final ZhiChiWoDe data = (ZhiChiWoDe) _data.get(position);
 
 
         ImageLoader.getInstance().displayImage(ApiHttpClient.getImageApiUrl(data.getHead()), vh.iv_avatar, options);
+        vh.iv_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.showUserCenter(v.getContext(), Integer.parseInt(data.getUid()), data.getNickname());
+            }
+        });
+
+        vh.summary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Ask ask=new Ask();
+                ask.setId(Integer.parseInt(data.getId()));
+                UIHelper.showTweetDetail(v.getContext(), ask);
+            }
+        });
 
         String str1="在\"";
         String str2=data.getTitle();

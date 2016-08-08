@@ -728,8 +728,12 @@ public class ActiveFragment extends BaseFragment {
 							tv_jifen.setText(integral + "分");
 							try{
 								User user=AppContext.instance().getLoginInfo();
-								int preIntegral=user.getIntegral();
-								int addIntegra=Integer.parseInt(integral)-preIntegral;
+								//int preIntegral=user.getIntegral();
+
+								user.setIntegral(Integer.parseInt(integral));
+								AppContext.instance().saveLoginInfo(user);
+
+								/*int addIntegra=Integer.parseInt(integral)-preIntegral;
 								if(addIntegra>0){
 									tv_add_integral.setText("+"+addIntegra);
 									user.setIntegral(Integer.parseInt(integral));
@@ -737,11 +741,11 @@ public class ActiveFragment extends BaseFragment {
 									tv_add_integral.setVisibility(View.VISIBLE);
 								}else{
 									tv_add_integral.setVisibility(View.GONE);
-								}
+								}*/
 
 							}catch (Exception ex){
-								tv_add_integral.setText("+2");
-								tv_add_integral.setVisibility(View.VISIBLE);
+								/*tv_add_integral.setText("+2");
+								tv_add_integral.setVisibility(View.VISIBLE);*/
 							}
 
 							btnSignIn.setText("已签到");

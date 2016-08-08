@@ -41,6 +41,7 @@
     <style name="ActionBarBaseStyle.Transparent" parent="@style/ActionBarBaseStyle">
         <item name="android:background">@color/transparent</item>
         <item name="background">@color/transparent</item>
+        <item name="android:backgroundSplit">@color/transparent</item>
     </style>
 
     <style name="ActionBarBaseTheme" parent="@style/Theme.AppCompat.Light">
@@ -60,6 +61,13 @@
 
     <style name="ActionBarBaseTheme.Preview" parent="@style/ActionBarBaseTheme">
         <item name="android:windowBackground">@android:color/black</item>
+        <item name="actionBarStyle">@style/ActionBarBaseStyle.Transparent</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="ActionBarBaseTheme.Main" parent="@style/ActionBarBaseTheme">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowContentOverlay">@null</item>
         <item name="actionBarStyle">@style/ActionBarBaseStyle.Transparent</item>
         <item name="windowActionBarOverlay">true</item>
     </style>

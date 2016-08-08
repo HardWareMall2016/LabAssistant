@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -71,6 +72,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	private TextView tvTitleTweetHelp;
 
 	private FrameLayout contentView;
+
+	private View mActionBarLayout;
 
 	/**
 	 * bottomView控件
@@ -208,35 +211,34 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		if (actionBar == null)
 			return;
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		View view = null;
-		view = inflateView(R.layout.v2_actionbar_main_home);
-		bar_home = (LinearLayout) view.findViewById(R.id.actionbar_home);
-		bar_question = (LinearLayout) view.findViewById(R.id.actionbar_question);
-		bar_find = (LinearLayout) view.findViewById(R.id.actionbar_find);
-		bar_me = (RelativeLayout) view.findViewById(R.id.actionbar_me);
-		actionbar_login = (LinearLayout) view
+		mActionBarLayout = inflateView(R.layout.v2_actionbar_main_home);
+		bar_home = (LinearLayout) mActionBarLayout.findViewById(R.id.actionbar_home);
+		bar_question = (LinearLayout) mActionBarLayout.findViewById(R.id.actionbar_question);
+		bar_find = (LinearLayout) mActionBarLayout.findViewById(R.id.actionbar_find);
+		bar_me = (RelativeLayout) mActionBarLayout.findViewById(R.id.actionbar_me);
+		actionbar_login = (LinearLayout) mActionBarLayout
 				.findViewById(R.id.actionbar_login);
-		et_content = (EditText) view.findViewById(R.id.et_content);
+		et_content = (EditText) mActionBarLayout.findViewById(R.id.et_content);
 
-		ImageButton searchBtn = (ImageButton) view
+		ImageButton searchBtn = (ImageButton) mActionBarLayout
 				.findViewById(R.id.btn_search);
 		//Button shaixuanBtn = (Button) view.findViewById(R.id.btn_shaixuan);
-		Button fankuiBtn = (Button) view.findViewById(R.id.btn_fankui);
-		Button settingBtn = (Button) view.findViewById(R.id.btn_setting);
+		Button fankuiBtn = (Button) mActionBarLayout.findViewById(R.id.btn_fankui);
+		Button settingBtn = (Button) mActionBarLayout.findViewById(R.id.btn_setting);
 		searchBtn.setOnClickListener(this);
 		//shaixuanBtn.setOnClickListener(this);
 		fankuiBtn.setOnClickListener(this);
 		settingBtn.setOnClickListener(this);
 		et_content.setOnClickListener(this);
 
-		tvTitleTweetAsk=(TextView) view.findViewById(R.id.tv_title_tweet_ask);
-		tvTitleTweetHelp=(TextView) view.findViewById(R.id.tv_title_tweet_help);
+		tvTitleTweetAsk=(TextView) mActionBarLayout.findViewById(R.id.tv_title_tweet_ask);
+		tvTitleTweetHelp=(TextView) mActionBarLayout.findViewById(R.id.tv_title_tweet_help);
 		tvTitleTweetAsk.setOnClickListener(this);
 		tvTitleTweetHelp.setOnClickListener(this);
 
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT);
-		actionBar.setCustomView(view, params);
+		actionBar.setCustomView(mActionBarLayout, params);
 	}
 
 	private void initView() {
@@ -322,6 +324,12 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	Fragment mCurrentFragment;
 
 	public void changeContent(int clickViewId) {
+		if(mActionBarLayout!=null){
+			mActionBarLayout.setBackgroundColor(0xff1daaf1);
+		}
+		int actionBarHeight = getSupportActionBar().getHeight();
+		contentView.setPadding(0, actionBarHeight, 0, 0);
+
 		FragmentTransaction fragmentTransaction = this
 				.getSupportFragmentManager().beginTransaction();
 		hideFragments(fragmentTransaction);
@@ -420,9 +428,18 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			}
 			
 			if(meFragment!=null){
+				if(meFragment instanceof ActiveFragment){
+					getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0x00000000));
+					contentView.setPadding(0, 0,0,0);
+					mActionBarLayout.setBackgroundColor(0x00000000);
+				}
 				fragmentTransaction.show(meFragment);
 			}else{
 				if (AppContext.instance().isLogin()) {
+					getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0x00000000));
+					contentView.setPadding(0, 0,0,0);
+					mActionBarLayout.setBackgroundColor(0x00000000);
+
 					meFragment = new ActiveFragment();
 				}else{
 					meFragment = new LoginFragment();
@@ -438,7 +455,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			tv_find.setSelected(false);
 			iv_me.setSelected(true);
 			tv_me.setSelected(true);
-			
+
 			break;
 		}
 		

@@ -38,6 +38,7 @@ public class SignInDialog extends Dialog implements View.OnClickListener,Compoun
 	private String integral;
 	private String curmonth;
 	private int continuecount;
+	private String daysignintegral;
 
 	private Context mContext;
 
@@ -70,6 +71,10 @@ public class SignInDialog extends Dialog implements View.OnClickListener,Compoun
 
 	public void setSignremind(String signremind) {
 		this.signremind = signremind;
+	}
+
+	public void setDaysignintegral(String daysignintegral) {
+		this.daysignintegral = daysignintegral;
 	}
 
 	public static boolean dismiss(SignInDialog dialog) {
@@ -120,6 +125,10 @@ public class SignInDialog extends Dialog implements View.OnClickListener,Compoun
 	private void populateView(View view) {
 		TextView tvContinueCount = (TextView) view.findViewById(R.id.continuecount);
 		tvContinueCount.setText("已连续签到" + continuecount + "天");
+
+		TextView tvDaysignintegral = (TextView) view.findViewById(R.id.daysignintegral);
+		tvDaysignintegral.setText("+"+daysignintegral);
+
 		TextView tvCurrentIntegral = (TextView) view.findViewById(R.id.current_integral);
 		tvCurrentIntegral.setText(integral);
 		mUISwitchButton = (UISwitchButton) view.findViewById(R.id.switchButton);

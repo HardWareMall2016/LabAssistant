@@ -11,9 +11,15 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.CharacterStyle;
+import android.text.style.ForegroundColorSpan;
 
 /**
  * 字符串操作工具包
@@ -310,6 +316,39 @@ public class StringUtils {
 			e.printStackTrace();
 		}
 		return content;
+	}
+
+	/**
+	 * 关键字高亮显示
+	 *
+	 * @param text	     需要显示的文字
+	 * @return spannable 处理完后的结果，记得不要toString()，否则没有效果
+	 */
+	public static SpannableStringBuilder highlight(String text, String highLightStr) {
+		SpannableStringBuilder spannable = new SpannableStringBuilder(text);
+		try{
+			String[] highLightStrs=highLightStr.split(" ");
+			ArrayList<String> strList=new ArrayList();
+			for(String highStr:highLightStrs){
+				if(!strList.contains(highStr)&&!TextUtils.isEmpty(highStr)){
+					strList.add(highStr);
+				}
+			}
+
+			CharacterStyle span ;
+			for(String highStr:strList){
+				Pattern p = Pattern.compile(highStr);
+				Matcher m = p.matcher(text);
+				while (m.find()) {
+					span = new ForegroundColorSpan(0xff2FBDE7);
+					spannable.setSpan(span, m.start(), m.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+				}
+			}
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return spannable;
 	}
 	
 	public static String getStringWithOmit(String str,int beginOmit){

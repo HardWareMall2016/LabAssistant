@@ -241,7 +241,42 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		actionBar.setCustomView(mActionBarLayout, params);
 	}
 
+	@Override
+	protected boolean hasActionBar() {
+		return false;
+	}
+
+	private void initActionBarContent() {
+		mActionBarLayout = findViewById(R.id.actionbar_layout);
+		bar_home = (LinearLayout) mActionBarLayout.findViewById(R.id.actionbar_home);
+		bar_question = (LinearLayout) mActionBarLayout.findViewById(R.id.actionbar_question);
+		bar_find = (LinearLayout) mActionBarLayout.findViewById(R.id.actionbar_find);
+		bar_me = (RelativeLayout) mActionBarLayout.findViewById(R.id.actionbar_me);
+		actionbar_login = (LinearLayout) mActionBarLayout
+				.findViewById(R.id.actionbar_login);
+		et_content = (EditText) mActionBarLayout.findViewById(R.id.et_content);
+
+		ImageButton searchBtn = (ImageButton) mActionBarLayout
+				.findViewById(R.id.btn_search);
+		//Button shaixuanBtn = (Button) view.findViewById(R.id.btn_shaixuan);
+		Button fankuiBtn = (Button) mActionBarLayout.findViewById(R.id.btn_fankui);
+		Button settingBtn = (Button) mActionBarLayout.findViewById(R.id.btn_setting);
+		searchBtn.setOnClickListener(this);
+		//shaixuanBtn.setOnClickListener(this);
+		fankuiBtn.setOnClickListener(this);
+		settingBtn.setOnClickListener(this);
+		et_content.setOnClickListener(this);
+
+		tvTitleTweetAsk=(TextView) mActionBarLayout.findViewById(R.id.tv_title_tweet_ask);
+		tvTitleTweetHelp=(TextView) mActionBarLayout.findViewById(R.id.tv_title_tweet_help);
+		tvTitleTweetAsk.setOnClickListener(this);
+		tvTitleTweetHelp.setOnClickListener(this);
+
+	}
+
 	private void initView() {
+		initActionBarContent();
+
 		contentView = (FrameLayout) findViewById(R.id.frame_content);
 
 		fl_home = findViewById(R.id.layout_home);
@@ -324,14 +359,9 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	Fragment mCurrentFragment;
 
 	public void changeContent(int clickViewId) {
-		if(mActionBarLayout!=null){
-			mActionBarLayout.setBackgroundColor(0xff1daaf1);
-		}
-		int actionBarHeight = getSupportActionBar().getHeight();
-		contentView.setPadding(0, actionBarHeight, 0, 0);
+		mActionBarLayout.setVisibility(View.VISIBLE);
 
-		FragmentTransaction fragmentTransaction = this
-				.getSupportFragmentManager().beginTransaction();
+		FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 		hideFragments(fragmentTransaction);
 		
 		switch (clickViewId) {
@@ -426,20 +456,18 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				bar_me.setVisibility(View.GONE);
 				actionbar_login.setVisibility(View.VISIBLE);
 			}
-			
+
+			//不管怎样都隐藏
+			//bar_me.setVisibility(View.GONE);
+
 			if(meFragment!=null){
 				if(meFragment instanceof ActiveFragment){
-					getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0x00000000));
-					contentView.setPadding(0, 0,0,0);
-					mActionBarLayout.setBackgroundColor(0x00000000);
+					mActionBarLayout.setVisibility(View.GONE);
 				}
 				fragmentTransaction.show(meFragment);
 			}else{
 				if (AppContext.instance().isLogin()) {
-					getSupportActionBar().setBackgroundDrawable(new ColorDrawable(0x00000000));
-					contentView.setPadding(0, 0,0,0);
-					mActionBarLayout.setBackgroundColor(0x00000000);
-
+					mActionBarLayout.setVisibility(View.GONE);
 					meFragment = new ActiveFragment();
 				}else{
 					meFragment = new LoginFragment();

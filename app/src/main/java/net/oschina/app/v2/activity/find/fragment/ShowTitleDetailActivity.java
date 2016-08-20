@@ -183,9 +183,9 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 										AppContext.showToast("取消收藏失败");
 										return;
 									}
-									AppContext.showToast("取消收藏");
 									collectflag = 0;
 									favBtn.setImageResource(R.drawable.actionbar_favorite_icon_2);
+									AppContext.showToast("取消收藏");
 								}
 							});
 				} else {

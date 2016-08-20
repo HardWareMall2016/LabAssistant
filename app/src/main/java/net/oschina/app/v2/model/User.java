@@ -60,6 +60,7 @@ public class User extends Base {
 	private String password;
 	private String phone;
 	private boolean issigned;
+	private String info;//认证信息
 
 	public boolean issigned() {
 		return issigned;
@@ -317,6 +318,14 @@ public class User extends Base {
 		this.isOnce = isOnce;
 	}
 
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
 	public static User parse(JSONObject json) throws IOException, AppException {
 		User user = new User();
 		JSONObject userinfo = json;
@@ -351,6 +360,7 @@ public class User extends Base {
 		user.setFansnum(userinfo.optInt("fansnum"));
 		user.setSupportednum(userinfo.optInt("supportednum"));
 		user.setIssigned(userinfo.optBoolean("issigned"));
+		user.setInfo(userinfo.optString("info"));
 
 		return user;
 	}

@@ -82,21 +82,18 @@ public class TweetAdapter extends ListBaseAdapter {
 				vh.question_layout.setBackgroundResource(R.drawable.common_list_item_spec_bg);
 				String topContent = "<font color=#FF0000>"+tip+"</font>"+item.getContent();
 				if (!StringUtils.isEmpty(mHighLight)) {
-					vh.title.setText(Html.fromHtml(StringUtils
-							.getShowSingleLineWithHighlight(topContent,
-									mHighLight)));
+					//vh.title.setText(Html.fromHtml(StringUtils.getShowSingleLineWithHighlight(topContent, mHighLight)));
+					vh.title.setText(StringUtils.highlight(topContent, mHighLight));
 				}else{
 					vh.title.setText(Html.fromHtml(topContent));
 				}
 			}else{
 				vh.question_layout.setBackgroundResource(R.drawable.common_list_item_bg);
 				if (!StringUtils.isEmpty(mHighLight)) {
-					vh.title.setText(Html.fromHtml(StringUtils
-							.getShowSingleLineWithHighlight(item.getContent(),
-									mHighLight)));
+					//vh.title.setText(Html.fromHtml(StringUtils.getShowSingleLineWithHighlight(item.getContent(), mHighLight)));
+					vh.title.setText(StringUtils.highlight(item.getContent(), mHighLight));
 				}else{
-					vh.title.setText(StringUtils.getShowSingleLineStr(item
-							.getContent()));
+					vh.title.setText(StringUtils.getShowSingleLineStr(item.getContent()));
 				}
 			}
 		} else {

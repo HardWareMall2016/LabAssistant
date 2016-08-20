@@ -1,53 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp">
-
-        <TextView
-            android:id="@+id/questions"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_search_left_unselected"
-            android:gravity="center"
-            android:minHeight="30dp"
-            android:text="问题"
-            android:textColor="@color/action_bar_bg"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/users"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_search_center_unselected"
-            android:gravity="center"
-            android:minHeight="30dp"
-            android:text="用户"
-            android:textColor="@color/action_bar_bg"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:id="@+id/articles"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_search_right_unselected"
-            android:gravity="center"
-            android:minHeight="30dp"
-            android:text="文章"
-            android:textColor="@color/action_bar_bg"
-            android:textSize="14sp"/>
-    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/tip_layout"
@@ -67,7 +22,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="3dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/tip_close"/>
+            android:src="@drawable/tip_close" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -79,8 +34,53 @@
             android:paddingTop="3dp"
             android:text="助手贴士：如您需搜索多个关键词，还请在关键词之间加”空格“"
             android:textColor="@color/white"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <TextView
+            android:id="@+id/questions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_search_left_unselected"
+            android:gravity="center"
+            android:minHeight="30dp"
+            android:text="问答"
+            android:textColor="@color/action_bar_bg"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/users"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_search_center_unselected"
+            android:gravity="center"
+            android:minHeight="30dp"
+            android:text="用户"
+            android:textColor="@color/action_bar_bg"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/articles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_search_right_unselected"
+            android:gravity="center"
+            android:minHeight="30dp"
+            android:text="文章"
+            android:textColor="@color/action_bar_bg"
+            android:textSize="14sp" />
+    </LinearLayout>
+
 
     <ListView
         android:id="@+id/listview"
@@ -92,12 +92,12 @@
         android:dividerHeight="5dp"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
-        android:listSelector="@android:color/transparent"/>
+        android:listSelector="@android:color/transparent" />
 
     <net.oschina.app.v2.ui.empty.EmptyLayout
         android:id="@+id/error_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </LinearLayout>

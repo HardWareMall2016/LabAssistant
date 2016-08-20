@@ -207,6 +207,7 @@ public class TweetDetailActivity extends BaseActivity {
                                     }
                                     ask.setCollectflag(0);
                                     favBtn.setImageResource(R.drawable.actionbar_favorite_icon_2);
+                                    AppContext.showToast("取消收藏");
                                 }
                             });
                 } else {
@@ -220,6 +221,7 @@ public class TweetDetailActivity extends BaseActivity {
                                     }
                                     ask.setCollectflag(1);
                                     favBtn.setImageResource(R.drawable.actionbar_unfavorite_icon_2);
+                                    AppContext.showToast("已收藏");
                                 }
                             });
                 }

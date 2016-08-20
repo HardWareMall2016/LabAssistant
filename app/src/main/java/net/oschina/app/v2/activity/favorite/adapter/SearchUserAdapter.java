@@ -53,8 +53,9 @@ public class SearchUserAdapter extends ListBaseAdapter {
 		final Favorite item = (Favorite) _data.get(position);
 
 		if (!StringUtils.isEmpty(mHighLight)) {
-			vh.itemName.setText(Html.fromHtml(StringUtils.getShowSingleLineWithHighlight(item.getNickname(), mHighLight)));
-		}else{
+			//vh.itemName.setText(Html.fromHtml(StringUtils.getShowSingleLineWithHighlight(item.getNickname(), mHighLight)));
+			vh.itemName.setText(StringUtils.highlight(item.getNickname(), mHighLight));
+		} else {
 			vh.itemName.setText(item.getNickname());
 		}
 
@@ -65,8 +66,9 @@ public class SearchUserAdapter extends ListBaseAdapter {
 		}
 
 		if (!StringUtils.isEmpty(mHighLight)) {
-			vh.itemComany.setText(Html.fromHtml(StringUtils.getShowSingleLineWithHighlight(company, mHighLight)));
-		}else{
+			//vh.itemComany.setText(Html.fromHtml(StringUtils.getShowSingleLineWithHighlight(company, mHighLight)));
+			vh.itemComany.setText(StringUtils.highlight(company, mHighLight));
+		} else {
 			vh.itemComany.setText(company);
 		}
 

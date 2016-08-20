@@ -40,6 +40,7 @@ public class ZhiChiWoDeFragment extends BaseListFragment {
 	protected void initViews(View view) {
 		super.initViews(view);
 		mVtSummary=(TextView)view.findViewById(R.id.summary);
+		populateView("0","0");
 	}
 
 	// 适配器

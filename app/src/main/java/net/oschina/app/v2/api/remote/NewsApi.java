@@ -2154,7 +2154,7 @@ public class NewsApi extends BaseApi {
 			jsonObject.put("auid", uid);
 			jsonObject.put("pid", page);
 			jsonObject.put("qid", qid);
-			jsonObject.put("num", 300);
+			jsonObject.put("num", 0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

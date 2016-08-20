@@ -349,6 +349,8 @@ public class ActiveFragment extends BaseFragment {
 		view.findViewById(R.id.active_wodezhushouhao).setOnClickListener(this);
 		view.findViewById(R.id.go_mall).setOnClickListener(this);
 
+		view.findViewById(R.id.btn_fankui).setOnClickListener(this);
+		view.findViewById(R.id.btn_setting).setOnClickListener(this);
 
 		btnSignIn=(TextView)view.findViewById(R.id.btn_sign);
 		btnSignIn.setOnClickListener(this);
@@ -432,11 +434,11 @@ public class ActiveFragment extends BaseFragment {
 
 		if(user.issigned()){
 			btnSignIn.setText("已签到");
-			btnSignIn.setEnabled(false);
+			//btnSignIn.setEnabled(false);
 			btnSignIn.setBackgroundResource(R.drawable.bg_gray_half_circle_selector);
 		}else {
 			btnSignIn.setText("签到");
-			btnSignIn.setEnabled(true);
+			//btnSignIn.setEnabled(true);
 			btnSignIn.setBackgroundResource(R.drawable.bg_red_half_circle_selector);
 		}
 
@@ -455,6 +457,7 @@ public class ActiveFragment extends BaseFragment {
 			//tv_verify.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_pink_normal));
 			tv_verify.setVisibility(View.GONE);
 			tv_verified.setVisibility(View.VISIBLE);
+			tv_verified.setText("认证信息:"+user.getInfo());
 		} else {
 			tv_verify.setText("未认证");
 			tv_verify.setBackgroundResource(R.drawable.bg_gray_rounded_selector);
@@ -684,6 +687,10 @@ public class ActiveFragment extends BaseFragment {
 			//UIHelper.jifenxiangqing(getActivity());
 		}else if(id==R.id.zhichi){
 			UIHelper.zhichiwode(getActivity());
+		}else if(id==R.id.btn_fankui){
+			UIHelper.showFeedBack(getActivity());
+		}else if(id==R.id.btn_setting){
+			UIHelper.showSetting(getActivity());
 		}
 	}
 
@@ -717,10 +724,12 @@ public class ActiveFragment extends BaseFragment {
 							String integral=json.optString("integral");
 							String curmonth=json.optString("curmonth");
 							int continuecount=json.optInt("continuecount");
+							String daysignintegral=json.optString("daysignintegral");
 							dialog.setContinuecount(continuecount);
 							dialog.setSignremind(signremind);
 							dialog.setIntegral(integral);
 							dialog.setCurmonth(curmonth);
+							dialog.setDaysignintegral(daysignintegral);
 							dialog.prepareUI();
 							dialog.show();
 
@@ -749,7 +758,7 @@ public class ActiveFragment extends BaseFragment {
 							}
 
 							btnSignIn.setText("已签到");
-							btnSignIn.setEnabled(false);
+							//btnSignIn.setEnabled(false);
 							btnSignIn.setBackgroundResource(R.drawable.bg_gray_half_circle_selector);
 							break;
 						case 1290:

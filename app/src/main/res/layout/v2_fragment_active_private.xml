@@ -15,10 +15,29 @@
 
             <ImageView
                 android:id="@+id/header_bg"
-                android:src="@drawable/header_bg"
-                android:scaleType="fitXY"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/header_bg" />
+
+            <Button
+                android:id="@+id/btn_fankui"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="8dp"
+                android:text="意见反馈"
+                android:textColor="@drawable/btn_text_selector"
+                android:textSize="@dimen/text_size_16"
+                android:background="@color/transparent"/>
+
+            <Button
+                android:id="@+id/btn_setting"
+                android:layout_width="22dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="8dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/btn_setting_selector"
+                android:gravity="right|center_vertical"/>
 
             <!-- 头像 -->
             <net.oschina.app.v2.activity.tweet.view.CircleImageView
@@ -71,6 +90,7 @@
                 android:gravity="center"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
+                android:visibility="gone"
                 android:singleLine="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_16" />
@@ -127,6 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_8"
                     android:singleLine="true"
+                    android:visibility="gone"
                     android:text="认证信息:实名认证"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_12" />

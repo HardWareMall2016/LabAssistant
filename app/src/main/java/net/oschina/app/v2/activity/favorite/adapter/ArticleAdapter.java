@@ -49,21 +49,17 @@ public class ArticleAdapter extends ListBaseAdapter {
         final ArticleList.Article item = (ArticleList.Article) _data.get(position);
 
         if (!StringUtils.isEmpty(mHighLight)) {
-            vh.tv_title.setText(Html.fromHtml(StringUtils.getShowSingleLineWithHighlight(item.getTitle(), mHighLight)));
-            vh.tv_content.setText(Html.fromHtml(StringUtils.getShowSingleLineWithHighlight(item.getDescription(), mHighLight)));
-        }else{
+            /*vh.tv_title.setText(Html.fromHtml(StringUtils.getShowSingleLineWithHighlight(item.getTitle(), mHighLight)));
+            vh.tv_content.setText(Html.fromHtml(StringUtils.getShowSingleLineWithHighlight(item.getDescription(), mHighLight)));*/
+            vh.tv_title.setText(StringUtils.highlight(item.getTitle(), mHighLight));
+            vh.tv_content.setText(StringUtils.highlight(item.getDescription(), mHighLight));
+        } else {
             vh.tv_title.setText(StringUtils.getShowSingleLineStr(item.getTitle()));
             vh.tv_content.setText(StringUtils.getShowSingleLineStr(item.getDescription()));
         }
 
         vh.tv_cname.setText(item.getCname());
-
-        try{
-            Long time= Long.valueOf(item.getInputtime());
-            vh.tv_time.setText(mDateFormat.format(time*1000));
-        }catch (Exception ex){
-            vh.tv_time.setText("");
-        }
+        vh.tv_time.setText(item.getInputtime());
 
         return convertView;
     }

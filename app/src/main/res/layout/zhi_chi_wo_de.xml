@@ -31,6 +31,7 @@
 
     <net.oschina.app.v2.ui.empty.EmptyLayout
         android:id="@+id/error_layout"
+        android:layout_below="@id/summary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />

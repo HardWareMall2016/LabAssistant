@@ -446,7 +446,7 @@ public class ActiveFragment extends BaseFragment {
 		tv_nickname.setText(user.getNickname());
 		tv_rank.setText(" LV." + user.getRank());
 
-		mViewAttention.setText("关注"+user.getGnum());
+		mViewAttention.setText("关注 "+user.getGnum());
 
 		btnZhichi.setText(String.format("收到%d个支持",user.getSupportednum()));
 
@@ -455,13 +455,13 @@ public class ActiveFragment extends BaseFragment {
 			tv_verify.setText("已认证");
 			tv_verify.setBackgroundResource(R.drawable.bg_pick_rounded_selector);
 			//tv_verify.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_pink_normal));
-			tv_verify.setVisibility(View.GONE);
+			tv_verify.setVisibility(View.INVISIBLE);
 			tv_verified.setVisibility(View.VISIBLE);
 			tv_verified.setText("认证信息:"+user.getInfo());
 		} else {
 			tv_verify.setText("未认证");
 			tv_verify.setBackgroundResource(R.drawable.bg_gray_rounded_selector);
-			tv_verified.setVisibility(View.GONE);
+			tv_verified.setVisibility(View.INVISIBLE);
 			tv_verify.setVisibility(View.VISIBLE);
 			//tv_verify.setBackgroundDrawable(getResources().getDrawable(R.drawable.common_btn_pressed));
 		}
@@ -524,7 +524,7 @@ public class ActiveFragment extends BaseFragment {
 								return;
 							}
 
-							Bitmap blurBitmap = FastBlurUtil.doBlur(bitmap, 8, false);
+							Bitmap blurBitmap = FastBlurUtil.doBlur(bitmap, 50, false);
 							mViewHeaderBg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 							mViewHeaderBg.setImageBitmap(blurBitmap);
 						}

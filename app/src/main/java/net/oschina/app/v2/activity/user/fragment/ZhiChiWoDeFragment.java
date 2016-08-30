@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
@@ -99,6 +100,14 @@ public class ZhiChiWoDeFragment extends BaseListFragment {
 	};
 
 	private void populateView(String supportednum,String todaysupportednum){
+		if(TextUtils.isEmpty(supportednum)){
+			supportednum="0";
+		}
+
+		if(TextUtils.isEmpty(todaysupportednum)){
+			todaysupportednum="0";
+		}
+
 		String str1="共";
 		String str2="收到";
 		String str3=supportednum;

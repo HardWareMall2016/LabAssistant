@@ -1,5 +1,7 @@
 package net.oschina.app.v2.activity.home.model;
 
+import android.util.Log;
+
 import java.io.IOException;
 
 import net.oschina.app.v2.AppException;
@@ -18,7 +20,7 @@ public class Ad extends Entity{
 	
 	private int id;
 	private String title;
-	private int inputtime;
+	private String inputtime;
 	private String image;
 	private String url;
 	private int type;
@@ -40,10 +42,10 @@ public class Ad extends Entity{
 	public void settitle(String title) {
 		this.title = title;
 	}
-	public int getinputtime() {
+	public String getinputtime() {
 		return inputtime;
 	}
-	public void setinputtime(int inputtime) {
+	public void setinputtime(String inputtime) {
 		this.inputtime = inputtime;
 	}
 	
@@ -83,10 +85,9 @@ public class Ad extends Entity{
 		try {
 			daily.setId(response.getInt("id"));
 			daily.settitle(response.getString("title"));
-			daily.setinputtime(response.getInt("inputtime"));
+			daily.setinputtime(response.getString("inputtime"));
 			daily.setimage(response.getString("image"));
 			daily.seturl(response.getString("url"));
-			
 			daily.setArticleid(response.optInt("articleid"));
 			daily.setType(response.optInt("type"));
 			

@@ -77,7 +77,7 @@
                 android:paddingLeft="3dp"
                 android:paddingBottom="3dp"
                 android:paddingTop="3dp"
-                android:text="助手贴士：如您有需要共享的实验室相关法规或文献，还请联系助手QQ:2076938360"
+                android:text="助手贴士：本版块建议在wifi 条件下阅览，pdf 文件可放大缩小查看。如有希望分享的资料，可以联系客服QQ 2076938360"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </RelativeLayout>

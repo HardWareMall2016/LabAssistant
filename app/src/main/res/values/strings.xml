@@ -229,7 +229,7 @@
     <string name="active_userDescription">用户协议</string>
     <string name="find_shoushouribao">助手日报</string>
     <string name="find_shiyanzhoukan">实验周刊</string>
-    <string name="find_faguiwenxian">法规文献</string>
+    <string name="find_faguiwenxian">资料库</string>
     <string name="find_huodongzhongxin">活动中心</string>
     <string name="find_pinpaiku">品牌库</string>
     <string name="find_peixunxinxi">培训信息</string>
@@ -237,7 +237,7 @@
     <string name="find_paihangbang">排行榜</string>
     <string name="find_shoushouribao_discription">每日精选，丰富你的实验生活</string>
     <string name="find_shiyanzhoukan_discription">每周精选问答，培训资料等</string>
-    <string name="find_faguiwenxian_discription">查阅国内外法规，文献资料</string>
+    <string name="find_faguiwenxian_discription">查阅各类标准，文献资料</string>
     <string name="find_huodongzhongxin_discription">促销，活动</string>
     <string name="find_pinpaiku_discription">实验室仪器，耗材品牌，正牌代理商</string>
     <string name="find_peixunxinxi_discription">实验室相关培训安排</string>

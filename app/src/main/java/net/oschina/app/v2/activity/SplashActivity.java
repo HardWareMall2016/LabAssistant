@@ -89,7 +89,7 @@ public class SplashActivity extends ActionBarActivity {
 
 
 		AppContext.requestDailyEnglish();
-		checkUpdate();
+		//checkUpdate();
 		final View view = View.inflate(this, R.layout.a_guide_main_pageone, null);
 		setContentView(view);
 

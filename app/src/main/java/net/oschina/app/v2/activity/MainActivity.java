@@ -46,6 +46,10 @@ import android.widget.TextView;
 import com.igexin.sdk.PushManager;
 import com.shiyanzhushou.app.R;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
 
 import de.greenrobot.event.EventBus;
 
@@ -102,6 +106,12 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			}
 		}
 	};
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		checkUpdate();
+	}
 
 	@Override
 	protected int getLayoutId() {
@@ -625,4 +635,29 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
+	private void checkUpdate() {
+		UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+
+			@Override
+			public void onUpdateReturned(int updateStatus,
+										 UpdateResponse updateInfo) {
+				switch (updateStatus) {
+					case UpdateStatus.Yes: // has update
+						// mVersion = new Version(updateInfo);
+						//mShouldGoTo = false;
+						UmengUpdateAgent.showUpdateDialog(getApplicationContext(),
+								updateInfo);
+						break;
+					case UpdateStatus.No: // has no update
+						break;
+					case UpdateStatus.NoneWifi: // none wifi
+						break;
+					case UpdateStatus.Timeout: // time out
+						break;
+				}
+			}
+		});
+		UmengUpdateAgent.setUpdateAutoPopup(false);
+		UmengUpdateAgent.update(getApplicationContext());
+	}
 }

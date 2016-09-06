@@ -179,7 +179,10 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 		btnSend = (ImageButton) findViewById(R.id.btn_send);
 
 		int uid = AppContext.instance().getLoginUid();
-		if (uid != ask.getUid()) {
+		/*if (uid != ask.getUid()) {
+			adoptBtn.setVisibility(View.GONE);
+		}*/
+		if (uid == comment.getauid()) {
 			adoptBtn.setVisibility(View.GONE);
 		}
 		if (comment.getauid()==uid){ //自己的回答、举报 隐藏

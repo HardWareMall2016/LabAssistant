@@ -422,6 +422,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 	private void showPdfFile(String pdfFilePath){
 		if(isPdfExist()){
 			mLoadPdfDialog=showWaitDialog("正在载入pdf...");
+			mWaitDialog.setCancelable(true);
 			pdfView.fromFile(new File(getPdfFilePath())).swipeVertical(true).onLoad(new OnLoadCompleteListener(){
 				@Override
 				public void loadComplete(int nbPages) {
@@ -434,6 +435,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 			return;
 		}
 		mWaitDialog=showWaitDialog("正在载入pdf...");
+		mWaitDialog.setCancelable(true);
 		//"http://ws.shiyanzhushou.com:8888/Uploads/pdf-test.pdf"
 		HttpRequestUtils.downloadFile(pdfFilePath, getPdfFilePath(), new FileDownloadHandler() {
 			@Override

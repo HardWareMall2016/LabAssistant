@@ -295,12 +295,13 @@ public class NewsApi extends BaseApi {
 	}
 
 	//收藏/取消收藏文章 flag 1收藏 0取消
-	public static void collectArticle(int aid,int uid,int flag, JsonHttpResponseHandler handler) {
+	public static void collectArticle(int aid,int uid,int flag,int type, JsonHttpResponseHandler handler) {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			jsonObject.put("aid", aid);
 			jsonObject.put("uid", uid);
 			jsonObject.put("flag", flag);
+			jsonObject.put("type", type);
 		} catch (Exception e) {
 
 		}

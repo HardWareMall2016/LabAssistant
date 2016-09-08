@@ -175,7 +175,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 			@Override
 			public void onClick(View v) {
 				if (collectflag == 1) {
-					NewsApi.collectArticle(mNewsId, AppContext.instance().getLoginUid(), 0,
+					NewsApi.collectArticle(mNewsId, AppContext.instance().getLoginUid(), 0,mNewsType,
 							new JsonHttpResponseHandler() {
 								@Override
 								public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -189,7 +189,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 								}
 							});
 				} else {
-					NewsApi.collectArticle(mNewsId, AppContext.instance().getLoginUid(), 1,
+					NewsApi.collectArticle(mNewsId, AppContext.instance().getLoginUid(), 1,mNewsType,
 						new JsonHttpResponseHandler() {
 							@Override
 							public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

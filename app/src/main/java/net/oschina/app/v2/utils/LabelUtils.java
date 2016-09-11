@@ -22,7 +22,11 @@ public class LabelUtils {
                 return R.drawable.bg_label_4;
             } else if("职场与生活".equals(classStr)){
                 return R.drawable.bg_label_5;
-            } else{
+            } else if("临床医学".equals(classStr)){
+                return R.drawable.bg_label_6;
+            }else if("化妆品".equals(classStr)){
+                return R.drawable.bg_label_7;
+            }else{
                 return R.drawable.bg_label_other;
             }
         }else{

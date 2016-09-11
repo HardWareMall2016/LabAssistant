@@ -526,7 +526,7 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 			.getUMSocialService("com.umeng.share");
 	
 	protected void ShareCount(int mType) {
-		AppContext.showToast("分享 + 10分");
+		//AppContext.showToast("分享 + 10分");
 		NewsApi.shareCount(AppContext.instance().getLoginUid(), mNewsId,mType,
 				new JsonHttpResponseHandler() {
 					@Override

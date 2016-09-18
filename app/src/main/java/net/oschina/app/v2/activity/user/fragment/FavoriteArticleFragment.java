@@ -86,6 +86,8 @@ public class FavoriteArticleFragment extends BaseListFragment{
 		if(article!=null){
 			Intent intent = new Intent(getActivity(), ShowTitleDetailActivity.class);
 			intent.putExtra("id", Integer.valueOf(article.getId()));
+			intent.putExtra("type", Integer.valueOf(article.getTYPE()));
+
 			startActivity(intent);
 		}
 	}

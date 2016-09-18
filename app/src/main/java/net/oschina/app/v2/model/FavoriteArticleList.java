@@ -28,6 +28,7 @@ public class FavoriteArticleList extends Entity implements ListEntity {
 	 * 收藏实体类
 	 */
 	public static class FavoriteArticle implements Serializable {
+		private String TYPE;
 		private String id;
 		private String qnid;
 		private String catid;
@@ -101,6 +102,14 @@ public class FavoriteArticleList extends Entity implements ListEntity {
 			this.content = content;
 		}
 
+		public String getTYPE() {
+			return TYPE;
+		}
+
+		public void setTYPE(String TYPE) {
+			this.TYPE = TYPE;
+		}
+
 		public static FavoriteArticle parse(JSONObject response) throws IOException,
 				AppException {
 			FavoriteArticle question = new FavoriteArticle();
@@ -112,6 +121,7 @@ public class FavoriteArticleList extends Entity implements ListEntity {
 			question.setDate(response.optString("date"));
 			question.setContent(response.optString("description"));
 			question.setCatname(response.optString("catname"));
+			question.setTYPE(response.optString("TYPE"));
 			return question;
 		}
 	}

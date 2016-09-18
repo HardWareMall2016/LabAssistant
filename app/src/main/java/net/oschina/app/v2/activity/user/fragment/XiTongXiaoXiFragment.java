@@ -61,6 +61,7 @@ public class XiTongXiaoXiFragment extends BaseListFragment {
 		if (xiaoXi != null&&"1".equals(xiaoXi.getType())){
 			Ask ask = new Ask();
 			ask.setId(Integer.parseInt(xiaoXi.getQid()));
+			ask.setUid(Integer.parseInt(xiaoXi.getQuid()));
 			/*ask.setanum(answer.getAnum());
 			ask.setnickname(answer.getNickname());
 			ask.setLabel(answer.getLabel());

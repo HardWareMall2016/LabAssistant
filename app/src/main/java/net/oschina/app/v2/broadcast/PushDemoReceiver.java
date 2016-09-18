@@ -313,10 +313,11 @@ public class PushDemoReceiver extends BroadcastReceiver {
 						// 18、我的回答 被采纳
 						Ask ask = new Ask();
 						ask.setId(contentJson.optInt("id",0));
+						ask.setUid(contentJson.optInt("uid",0));
 						Intent clickIntent = new Intent(context, TweetDetailActivity.class);
 						clickIntent.putExtra("ask", ask);
 
-						showNotification(context,"采纳提醒","有人回复你的问题，请采纳!",clickIntent);
+						showNotification(context,"采纳提醒","您仍有提问未采纳回答，请查看!",clickIntent);
 					}
 					else if(type.equals("questionkey")||type.equals("questionadd")){
 						//27、提问后，问题涉及某个关键词 // 22、用户提问未通过审核通知
@@ -345,7 +346,11 @@ public class PushDemoReceiver extends BroadcastReceiver {
 						// 23、积分商城，用户兑换学习资料
 						// 24、系统消息：若用户的关注对象 ≤ 10人
 						// 25、培训信息-我要报名，提交报名信息后
-						showNotification(context,json.optString("notifytitle"),json.optString("notifycontent"));
+						//Add by wuyue start
+						Intent clickIntent = new Intent(context, SimpleBackActivity.class);
+						clickIntent.putExtra(SimpleBackActivity.BUNDLE_KEY_PAGE, SimpleBackPage.xitongxiaoxi.getValue());
+						//Add by wuyue end
+						showNotification(context,json.optString("notifytitle"),json.optString("notifycontent"),clickIntent);
 					}  else if (type.equals("invitation")) {
 						// 26、某人填写某个助手号注册成功后
 						Intent clickIntent = new Intent(context, SimpleBackActivity.class);

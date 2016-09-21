@@ -364,7 +364,11 @@ public class TweetDetailActivity extends BaseActivity {
                         try {
                             ask = Ask.parse(new JSONObject(response
                                     .getString("data")));
+                            if(ask!=null&&answerListFragment!=null){
+                                answerListFragment.resetAsk(ask);
+                            }
                             fillUI();
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

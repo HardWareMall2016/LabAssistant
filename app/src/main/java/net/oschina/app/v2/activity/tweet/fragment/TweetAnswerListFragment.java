@@ -43,7 +43,7 @@ public class TweetAnswerListFragment extends BaseListFragment implements
 	private static final String CACHE_KEY_PREFIX = "commentlist_";
 
 	private TweetDetailActivity mActivity;
-	public ListBaseAdapter adapter;
+	public TweetAnswerAdapter adapter;
 	private Ask ask;
 	private List<Comment> data;
 
@@ -64,6 +64,14 @@ public class TweetAnswerListFragment extends BaseListFragment implements
 	protected ListBaseAdapter getListAdapter() {
 		adapter  = new TweetAnswerAdapter(getActivity(),ask);
 		return adapter;
+	}
+
+	public void resetAsk(Ask ask){
+		if(adapter!=null){
+			this.ask=ask;
+			adapter.setAskAndNotify(ask);
+			adapter.notifyDataSetChanged();
+		}
 	}
 
 	@Override

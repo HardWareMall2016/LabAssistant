@@ -72,6 +72,10 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 		ask.setissolveed(adopt);
 	}
 
+	public void setAskAndNotify(Ask ask){
+		this.ask=ask;
+	}
+
 	@SuppressLint("InflateParams")
 	@Override
 	protected View getRealView(int position, View convertView,

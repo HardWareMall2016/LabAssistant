@@ -308,7 +308,8 @@ public class PushDemoReceiver extends BroadcastReceiver {
 //						showNotification(context,"提示","回答被采纳",clickIntent);
 						showNotification(context,json.optString("notifytitle"),json.optString("notifycontent"),clickIntent);
 					} else if (type.equals("signjob")) {
-						showNotification(context,"签到提醒","亲，今天还没有签到哦！");
+						Intent clickIntent = new Intent(context, MainActivity.class);
+						showNotification(context,"签到提醒","亲，今天还没有签到哦！",clickIntent);
 					}else if (type.equals("adoptjob")) {//add by wuyue
 						// 18、我的回答 被采纳
 						Ask ask = new Ask();

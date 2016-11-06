@@ -34,6 +34,7 @@ import net.oschina.app.v2.activity.settings.fragment.UserShuoMingFragment;
 import net.oschina.app.v2.activity.tweet.fragment.TweetPublicFragment;
 import net.oschina.app.v2.activity.user.fragment.AnswerAfterPagerFragment;
 import net.oschina.app.v2.activity.user.fragment.AskMeAgainFragment;
+import net.oschina.app.v2.activity.user.fragment.CaoGaoXiangFragment;
 import net.oschina.app.v2.activity.user.fragment.FunsForHelpFragment;
 import net.oschina.app.v2.activity.user.fragment.JifenXiangQingFragment;
 import net.oschina.app.v2.activity.user.fragment.MyAnswerFragment;
@@ -69,7 +70,6 @@ public enum SimpleBackPage {
 	MESSAGE_FORWARD(17, R.string.actionbar_title_message_forward, MessageForwardFragment.class),
 	NOTIFICATION_SETTINGS(18, R.string.actionbar_title_notification_settings, NotifIcationSettingsFragment.class),
 	DAILY_ENGLISH(19, R.string.actionbar_title_daily_english, DailyEnglishFragment.class),
-	
 
 	DAILY(20, R.string.find_shoushouribao, DailyFragment.class),
 	WEEKLY(21, R.string.find_shiyanzhoukan, WeeklyFragment.class),
@@ -107,7 +107,8 @@ public enum SimpleBackPage {
 	UserSHUOMING(49,R.string.active_userDescription,UserShuoMingFragment.class),
 	wodesoucang(50,R.string.active_wodesoucang,MyFavoritesViewPageFragment.class),
 	jifenxiangqing(51,R.string.activite_jifenxiangqing,JifenXiangQingFragment.class),
-	zhichiwode(52,R.string.activite_zhichiwode,ZhiChiWoDeFragment.class);
+	zhichiwode(52,R.string.activite_zhichiwode,ZhiChiWoDeFragment.class),
+	caogaoxiang(53,R.string.active_caogaoxiang,CaoGaoXiangFragment.class);
 
 	private int title;
 	private Class<?> clz;

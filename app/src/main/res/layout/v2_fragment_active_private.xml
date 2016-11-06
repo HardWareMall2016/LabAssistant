@@ -25,19 +25,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_marginLeft="8dp"
+                android:background="@color/transparent"
                 android:text="意见反馈"
                 android:textColor="@drawable/btn_text_selector"
-                android:textSize="@dimen/text_size_16"
-                android:background="@color/transparent"/>
+                android:textSize="@dimen/text_size_16" />
 
             <Button
                 android:id="@+id/btn_setting"
                 android:layout_width="22dp"
                 android:layout_height="25dp"
-                android:layout_marginRight="8dp"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
                 android:background="@drawable/btn_setting_selector"
-                android:gravity="right|center_vertical"/>
+                android:gravity="right|center_vertical" />
 
             <!-- 头像 -->
             <net.oschina.app.v2.activity.tweet.view.CircleImageView
@@ -70,9 +70,9 @@
                 android:id="@+id/iv_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:layout_alignBottom="@id/tv_nickname"
                 android:layout_marginBottom="2dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_toEndOf="@id/tv_nickname"
                 android:layout_toRightOf="@id/tv_nickname"
@@ -91,10 +91,10 @@
                 android:gravity="center"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:visibility="invisible"
                 android:singleLine="true"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_16" />
+                android:textSize="@dimen/text_size_16"
+                android:visibility="invisible" />
 
             <LinearLayout
                 android:id="@+id/attention_fans_verify_content"
@@ -148,10 +148,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_8"
                     android:singleLine="true"
-                    android:visibility="invisible"
                     android:text="认证信息:实名认证"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_12" />
+                    android:textSize="@dimen/text_size_12"
+                    android:visibility="invisible" />
             </LinearLayout>
 
 
@@ -627,6 +627,39 @@
                     android:gravity="center"
                     android:textColor="#fff" />
             </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
+        <!-- 草稿箱 -->
+        <LinearLayout
+            android:id="@+id/active_caogaoxiang"
+            style="@style/setting_item_container"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingRight="@dimen/space_10">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:contentDescription="@null"
+                android:src="@drawable/active_8" />
+
+            <TextView
+                style="@style/setting_item_text"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_marginLeft="@dimen/space_10"
+                android:text="@string/active_caogaoxiang" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:src="@drawable/ic_item_goto_right_tip" />
         </LinearLayout>
 
         <View

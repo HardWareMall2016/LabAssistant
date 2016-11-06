@@ -10,8 +10,8 @@ android {
         applicationId "com.shiyanzhushou.app"
         minSdkVersion 15
         targetSdkVersion 19
-        versionCode 140
-        versionName "1.4.0"
+        versionCode 150
+        versionName "1.5.0"
         /*multiDexEnabled true*/
     }
     buildTypes {

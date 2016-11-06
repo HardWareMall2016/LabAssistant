@@ -341,6 +341,7 @@ public class ActiveFragment extends BaseFragment {
 		view.findViewById(R.id.active_zhuiwenwode).setOnClickListener(this);
 		view.findViewById(R.id.active_fensiqiuzhu).setOnClickListener(this);
 		view.findViewById(R.id.active_xitongxiaoxi).setOnClickListener(this);
+		view.findViewById(R.id.active_caogaoxiang).setOnClickListener(this);
 		view.findViewById(R.id.active_guanzhuxinxi).setOnClickListener(this);
 		view.findViewById(R.id.active_wodesoucang).setOnClickListener(this);
 		view.findViewById(R.id.active_woganxingqu).setOnClickListener(this);
@@ -652,6 +653,9 @@ public class ActiveFragment extends BaseFragment {
 			// 系统消息的模块
 			UIHelper.xitongxiaoxi(getActivity());
 			updateTime(mSysMessageNotice,ActiveNumType.sysMessage_type);
+		} else if (id == R.id.active_caogaoxiang) {
+			// 草稿箱的模块
+			UIHelper.caogaoxiang(getActivity());
 		} else if (id == R.id.active_guanzhuxinxi) {
 			int anum=0;
 			if(AppContext.instance().getMessageNum()!=null){

@@ -27,11 +27,11 @@ public class ApiHttpClient {
 	public static final String DELETE = "DELETE";
 
 	//测试环境
-	/*public static String DEV_API_URL = "http://ws.shiyanzhushou.com:8888/%s";
-	public static String DEV_API_IMAGE_URL = "http://ws.shiyanzhushou.com:8888/%s";*/
+	public static String DEV_API_URL = "http://test.shiyanzhushou.com/%s";
+	public static String DEV_API_IMAGE_URL = "http://test.shiyanzhushou.com/%s";
 	//生产环境
-	public static String DEV_API_URL = "http://ws.shiyanzhushou.com/%s";
-	public static String DEV_API_IMAGE_URL = "http://ws.shiyanzhushou.com/%s";
+	/*public static String DEV_API_URL = "http://ws.shiyanzhushou.com/%s";
+	public static String DEV_API_IMAGE_URL = "http://ws.shiyanzhushou.com/%s";*/
 
 	public static final String GET = "GET";
 	public static final String POST = "POST";

@@ -14,6 +14,8 @@ import net.oschina.app.v2.model.Ask;
 import net.oschina.app.v2.model.Comment;
 import net.oschina.app.v2.model.CommentItem;
 import net.oschina.app.v2.model.CommentList;
+import net.oschina.app.v2.ui.dialog.CommonDialog;
+import net.oschina.app.v2.ui.dialog.DialogHelper;
 import net.oschina.app.v2.ui.empty.EmptyLayout;
 import net.oschina.app.v2.utils.DateUtil;
 import net.oschina.app.v2.utils.StringUtils;
@@ -29,12 +31,14 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -470,5 +474,4 @@ public class TweetDetailFragment extends BaseFragment implements OnClickListener
 		MobclickAgent.onPageEnd(TWEET_DETAIL_SCREEN);
 		MobclickAgent.onPause(getActivity());
 	}
-
 }

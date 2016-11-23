@@ -1,1 +1,1 @@
-include ':app', ':viewpagerindicator', ':pulltorefresh', ':umengshare', ':pinnedsection', ':photoview', ':stickylistheaders', ':supportv7'
+include ':app', ':viewpagerindicator', ':pulltorefresh', ':umengshare', ':pinnedsection', ':photoview', ':stickylistheaders', ':supportv7',':sql-orm'

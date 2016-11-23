@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@drawable/bg_white_underline_selector"
     android:orientation="vertical"
     android:paddingBottom="16dp"
     android:paddingLeft="@dimen/space_10"
@@ -23,6 +23,7 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/save_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -33,6 +34,7 @@
             android:textSize="14sp" />
 
         <ImageView
+            android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
@@ -42,6 +44,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/draft_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -56,6 +59,7 @@
         android:background="@color/divider" />
 
     <TextView
+        android:id="@+id/question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

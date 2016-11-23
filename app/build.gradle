@@ -50,6 +50,7 @@ dependencies {
     compile ('com.github.barteksc:android-pdf-viewer:1.3.0'){
         exclude module: 'support-v4'
     }
+    compile project(':sql-orm')
     /*compile project(':supportv7')*/
     /*compile 'com.android.support:appcompat-v7:19.+'*/
 }

@@ -15,7 +15,8 @@ import net.oschina.app.v2.activity.tweet.view.ExtendMediaPicker.OnMediaPickerLis
 import net.oschina.app.v2.api.ApiHttpClient;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.BaseActivity;
-import net.oschina.app.v2.base.Constants;
+import net.oschina.app.v2.db.DBHelper;
+import net.oschina.app.v2.db.DraftBean;
 import net.oschina.app.v2.emoji.EmojiEditText;
 import net.oschina.app.v2.emoji.SupperListActivity;
 import net.oschina.app.v2.model.Ask;
@@ -25,7 +26,6 @@ import net.oschina.app.v2.model.event.AdoptSuccEvent;
 import net.oschina.app.v2.ui.dialog.CommonDialog;
 import net.oschina.app.v2.ui.dialog.DialogHelper;
 import net.oschina.app.v2.ui.dialog.WaitDialog;
-import net.oschina.app.v2.utils.DeviceUtils;
 import net.oschina.app.v2.utils.LabelUtils;
 import net.oschina.app.v2.utils.StringUtils;
 import net.oschina.app.v2.utils.TDevice;
@@ -288,7 +288,6 @@ public class TweetDetailActivity extends BaseActivity {
                     }
                 }
             }
-
                 /*mPopMenuContent = (LinearLayout)getLayoutInflater().inflate(R.layout.tweet_detail_editbox_layout, null);
                 mPopupWindow.setContentView(mPopMenuContent);
 
@@ -948,6 +947,12 @@ public class TweetDetailActivity extends BaseActivity {
             favBtn.setImageResource(R.drawable.actionbar_favorite_icon_2);
         }
 
+        DraftBean draftBean= DBHelper.findDrafBean(ask.getId());
+        if(draftBean!=null){
+            mEtInput.setText(draftBean.getDraftContent());
+            DBHelper.deleteData(draftBean);
+        }
+
         mTvTime.setText(ask.getinputtime());
         mTvCommentCount
                 .setText(getString(R.string.comment_count, ask.getanum()));
@@ -1255,12 +1260,40 @@ public class TweetDetailActivity extends BaseActivity {
         isFirstComming = false;
     }
 
-    ;
-
-
     public void refreshList() {
         answerListFragment.adapter.clear();
 
         answerListFragment.sendRequestData();
+    }
+
+    @Override
+    public void onBackPressed() {
+        final String tweet = mEtInput.getText().toString();
+        if (!TextUtils.isEmpty(tweet)&&ask!=null) {
+            CommonDialog dialog = DialogHelper.getPinterestDialogCancelable(this);
+            dialog.setMessage(R.string.draft_tweet_message);
+            dialog.setNegativeButton(R.string.cancle, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    TweetDetailActivity.super.onBackPressed();
+                }
+            });
+            dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    DraftBean draft=new DraftBean();
+                    draft.setDraftContent(tweet);
+                    draft.setQuestionId(ask.getId());
+                    draft.setQuestionTitle(ask.getContent());
+                    DBHelper.saveData(draft);
+                    dialog.dismiss();
+                    TweetDetailActivity.super.onBackPressed();
+                }
+            });
+            dialog.show();
+        }else{
+            super.onBackPressed();
+        }
     }
 }

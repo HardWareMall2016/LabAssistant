@@ -1,8 +1,12 @@
 package net.oschina.app.v2.activity.user.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -183,7 +187,10 @@ public class CaoGaoXiangFragment extends Fragment implements AdapterView.OnItemC
             btnDel.setTag(data);
             btnDel.setOnClickListener(mOnClickListener);
             tvSaveTime.setText(mTimeFormat.format(data.getSaveTime()));
-            tvDraftContent.setText("[草稿]"+data.getDraftContent());
+            SpannableString spanText = new SpannableString("[草稿]");
+            spanText.setSpan(new ForegroundColorSpan(0xffCB4444), 0, spanText.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            tvDraftContent.setText(spanText);
+            tvDraftContent.append(data.getDraftContent());
             tvQuestion.setText(data.getQuestionTitle());
         }
     }

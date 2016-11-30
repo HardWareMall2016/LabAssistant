@@ -1,34 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
+        android:orientation="vertical">
         <LinearLayout
             android:id="@+id/ly_xiugainicheng"
             style="@style/setting_item_container"
-            android:padding="@dimen/space_10" >
-	
+            android:padding="@dimen/space_10">
             <TextView
                 style="@style/setting_item_text"
                 android:text="@string/settings_xiugainicheng" />
-			       <LinearLayout 
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_8"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_item_goto_right_tip" />
-           </LinearLayout>
+                android:gravity="right">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
         </LinearLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
@@ -39,32 +35,64 @@
         <LinearLayout
             android:id="@+id/ly_shimingrenzheng"
             style="@style/setting_item_container"
-            android:padding="@dimen/space_10" >
-
+            android:padding="@dimen/space_10">
             <TextView
                 style="@style/setting_item_text"
                 android:text="@string/settings_shimingrenzheng" />
-			       <LinearLayout 
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                >
-            <TextView
-                android:id="@+id/tv_cache_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="积分翻倍，尊享特权"
-                android:textColor="@color/main_gray"
-                android:textSize="@dimen/text_size_14" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_8"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_item_goto_right_tip" />
+                android:gravity="right">
+                <TextView
+                    android:id="@+id/tv_cache_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="积分翻倍，尊享特权"
+                    android:textColor="@color/main_gray"
+                    android:textSize="@dimen/text_size_14" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
         </LinearLayout>
-		</LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
+        <LinearLayout
+            android:id="@+id/ly_change_phone"
+            style="@style/setting_item_container"
+            android:padding="@dimen/space_10">
+
+            <TextView
+                style="@style/setting_item_text"
+                android:text="更换手机号" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/main_gray"
+                    android:textSize="@dimen/text_size_14" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
+        </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
@@ -72,55 +100,60 @@
             android:layout_marginRight="@dimen/space_8"
             android:background="@color/list_divider_color" />
 
-       <LinearLayout
+        <LinearLayout
             android:id="@+id/ly_xiugaimima"
             style="@style/setting_item_container"
-            android:padding="@dimen/space_10" >
+            android:padding="@dimen/space_10">
 
             <TextView
                 style="@style/setting_item_text"
                 android:text="@string/settings_xiugaimima" />
-		       <LinearLayout 
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_8"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_item_goto_right_tip" />
+                android:gravity="right">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
         </LinearLayout>
-		</LinearLayout>
-       <View
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginLeft="@dimen/space_8"
             android:layout_marginRight="@dimen/space_8"
             android:background="@color/list_divider_color"
             android:visibility="gone" />
+
         <LinearLayout
             android:id="@+id/ly_xiaoxishezhi"
             style="@style/setting_item_container"
-            android:padding="@dimen/space_10" 
-            android:visibility="gone" >
+            android:padding="@dimen/space_10"
+            android:visibility="gone">
 
             <TextView
                 style="@style/setting_item_text"
                 android:text="@string/settings_xiaoxishezhi" />
-       <LinearLayout 
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_item_goto_right_tip" />
+                android:gravity="right">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
         </LinearLayout>
-		</LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="30px"
@@ -129,51 +162,52 @@
         <LinearLayout
             android:id="@+id/ly_fenxianggeipengyou"
             style="@style/setting_item_container"
-            android:padding="@dimen/space_10" >
+            android:padding="@dimen/space_10">
 
             <TextView
                 style="@style/setting_item_text"
                 android:text="@string/settings_fenxianggeipengyou" />
-	       <LinearLayout 
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_item_goto_right_tip" />
-        </LinearLayout>
-		</LinearLayout>
-      <!--   <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="@dimen/space_8"
-            android:layout_marginRight="@dimen/space_8"
-            android:background="@color/list_divider_color" />
+                android:gravity="right">
 
-        <LinearLayout
-            android:id="@+id/ly_saoyisaoxiazai"
-            style="@style/setting_item_container"
-            android:padding="@dimen/space_10" >
-
-            <TextView
-                style="@style/setting_item_text"
-                android:text="@string/settings_saoyisaoxiazai" />
-       <LinearLayout 
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_item_goto_right_tip" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
         </LinearLayout>
-       </LinearLayout> -->
-          <View
+        <!--   <View
+              android:layout_width="match_parent"
+              android:layout_height="1px"
+              android:layout_marginLeft="@dimen/space_8"
+              android:layout_marginRight="@dimen/space_8"
+              android:background="@color/list_divider_color" />
+
+          <LinearLayout
+              android:id="@+id/ly_saoyisaoxiazai"
+              style="@style/setting_item_container"
+              android:padding="@dimen/space_10" >
+
+              <TextView
+                  style="@style/setting_item_text"
+                  android:text="@string/settings_saoyisaoxiazai" />
+         <LinearLayout
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="right"
+                  >
+              <ImageView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:contentDescription="@null"
+                  android:src="@drawable/ic_item_goto_right_tip" />
+          </LinearLayout>
+         </LinearLayout> -->
+        <View
             android:layout_width="match_parent"
             android:layout_height="30px"
             android:background="@color/list_divider_color" />
@@ -181,45 +215,49 @@
         <LinearLayout
             android:id="@+id/ly_bangdingshoujihao"
             style="@style/setting_item_container"
-            android:visibility="gone"
-            android:padding="@dimen/space_10" >
+            android:padding="@dimen/space_10"
+            android:visibility="gone">
 
             <TextView
                 style="@style/setting_item_text"
                 android:text="@string/settings_bangdingshoujihao" />
-       <LinearLayout 
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_item_goto_right_tip" />
+                android:gravity="right">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
         </LinearLayout>
-		</LinearLayout>
+
         <LinearLayout
             android:id="@+id/ly_guanyuruanjian"
             style="@style/setting_item_container"
-            android:padding="@dimen/space_10" >
+            android:padding="@dimen/space_10">
 
             <TextView
                 style="@style/setting_item_text"
                 android:text="@string/settings_guanyuruanjian" />
-	       <LinearLayout 
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_item_goto_right_tip" />
+                android:gravity="right">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
         </LinearLayout>
-        </LinearLayout>
-           <View
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginLeft="@dimen/space_8"
@@ -229,24 +267,26 @@
         <LinearLayout
             android:id="@+id/ly_bangzhu"
             style="@style/setting_item_container"
-            android:padding="@dimen/space_10" >
+            android:padding="@dimen/space_10">
 
             <TextView
                 style="@style/setting_item_text"
                 android:text="@string/settings_bangzhu" />
-       <LinearLayout 
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_item_goto_right_tip" />
+                android:gravity="right">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
         </LinearLayout>
-        </LinearLayout>
-           <View
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginLeft="@dimen/space_8"
@@ -256,24 +296,26 @@
         <LinearLayout
             android:id="@+id/ly_jianchaxinbanben"
             style="@style/setting_item_container"
-            android:padding="@dimen/space_10" >
+            android:padding="@dimen/space_10">
 
             <TextView
                 style="@style/setting_item_text"
                 android:text="@string/settings_jianchaxinbanben" />
-       <LinearLayout 
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_item_goto_right_tip" />
+                android:gravity="right">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
         </LinearLayout>
-        </LinearLayout>
-           <View
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginLeft="@dimen/space_8"
@@ -283,26 +325,26 @@
         <LinearLayout
             android:id="@+id/ly_tuichuzhanghao"
             style="@style/setting_item_container"
-            android:padding="@dimen/space_10" >
+            android:padding="@dimen/space_10">
 
             <TextView
                 style="@style/setting_item_text"
                 android:text="@string/settings_tuichuzhanghao" />
-       <LinearLayout 
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                >
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_item_goto_right_tip" />
+                android:gravity="right">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_item_goto_right_tip" />
+            </LinearLayout>
         </LinearLayout>
-        </LinearLayout>
-         
-        
-    
+
+
     </LinearLayout>
 
 </ScrollView>

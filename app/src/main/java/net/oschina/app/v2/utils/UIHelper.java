@@ -537,6 +537,10 @@ public class UIHelper {
 //		showSimpleBack(context, SimpleBackPage.EDITNICKNAME);
 		showBtnBack(context, SimpleBackPage.EDITNICKNAME);
 	}
+
+	public static void showChangePhone(Context context) {
+		showSimpleBack(context, SimpleBackPage.changePhone);
+	}
 	/**
 	 * 显示实名认证界面
 	 * 

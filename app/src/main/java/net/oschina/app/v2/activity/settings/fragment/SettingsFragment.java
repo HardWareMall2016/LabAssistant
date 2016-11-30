@@ -108,6 +108,7 @@ public class SettingsFragment extends BaseFragment {
         view.findViewById(R.id.ly_bangzhu).setOnClickListener(this);
         view.findViewById(R.id.ly_jianchaxinbanben).setOnClickListener(this);
         view.findViewById(R.id.ly_tuichuzhanghao).setOnClickListener(this);
+        view.findViewById(R.id.ly_change_phone).setOnClickListener(this);
 
 
     }
@@ -258,6 +259,8 @@ public class SettingsFragment extends BaseFragment {
             UmengUpdateAgent.forceUpdate(getActivity());
         } else if (id == R.id.ly_tuichuzhanghao) {
             handleLogout();
+        } else if (id == R.id.ly_change_phone) {
+            UIHelper.showChangePhone(getActivity());
         }
     }
 

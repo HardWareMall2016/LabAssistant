@@ -19,6 +19,7 @@ import net.oschina.app.v2.activity.message.fragment.MessageForwardFragment;
 import net.oschina.app.v2.activity.message.fragment.MessagePublicFragment;
 import net.oschina.app.v2.activity.settings.fragment.AboutSoftFragment;
 import net.oschina.app.v2.activity.settings.fragment.BangDingShouJiFragment;
+import net.oschina.app.v2.activity.settings.fragment.ChangePhoneFragment;
 import net.oschina.app.v2.activity.settings.fragment.EditNicknameFragment;
 import net.oschina.app.v2.activity.settings.fragment.EditPasswordFragment;
 import net.oschina.app.v2.activity.settings.fragment.FeedbackFragment;
@@ -108,7 +109,8 @@ public enum SimpleBackPage {
 	wodesoucang(50,R.string.active_wodesoucang,MyFavoritesViewPageFragment.class),
 	jifenxiangqing(51,R.string.activite_jifenxiangqing,JifenXiangQingFragment.class),
 	zhichiwode(52,R.string.activite_zhichiwode,ZhiChiWoDeFragment.class),
-	caogaoxiang(53,R.string.active_caogaoxiang,CaoGaoXiangFragment.class);
+	caogaoxiang(53,R.string.active_caogaoxiang,CaoGaoXiangFragment.class),
+	changePhone(54,R.string.settings_change_phone,ChangePhoneFragment.class);
 
 	private int title;
 	private Class<?> clz;

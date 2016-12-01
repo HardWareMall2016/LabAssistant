@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/fans_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/all_question"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_blue_underline"
+            android:gravity="center"
+            android:text="全部"
+            android:textColor="@color/text_dark"
+            android:textSize="@dimen/text_size_15"/>
+
+        <TextView
+            android:id="@+id/answered_question"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/default_bg"
+            android:gravity="center"
+            android:text="被采纳"
+            android:textColor="@color/text_dark"
+            android:textSize="@dimen/text_size_15"/>
+
+        <TextView
+            android:id="@+id/unanswered_question"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/default_bg"
+            android:gravity="center"
+            android:text="待采纳"
+            android:textColor="@color/text_dark"
+            android:textSize="@dimen/text_size_15"/>
+
+    </LinearLayout>
+    <!--  
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#ffffffff"
+        android:descendantFocusability="blocksDescendants"
+        android:divider="@color/list_divider_color"
+        android:dividerHeight="1.0px"
+        android:listSelector="@android:color/transparent"
+        app:ptrDrawable="@drawable/ic_pullrefresh"
+        app:ptrHeaderTextColor="@android:color/darker_gray" />
+        -->
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fans_tab"
+        android:background="@color/page_content_bg"
+        android:cacheColorHint="#ffffffff"
+        android:descendantFocusability="blocksDescendants"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        app:ptrDrawable="@drawable/ic_pullrefresh"
+        app:ptrHeaderTextColor="@android:color/darker_gray"/>
+
+    <net.oschina.app.v2.ui.empty.EmptyLayout
+        android:id="@+id/error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fans_tab"
+        android:visibility="gone"/>
+
+</RelativeLayout>

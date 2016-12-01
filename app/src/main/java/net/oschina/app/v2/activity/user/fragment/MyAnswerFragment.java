@@ -17,6 +17,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
+
+import com.shiyanzhushou.app.R;
 
 public class MyAnswerFragment extends BaseListFragment {
 	//我的问题的Fragment的tag
@@ -27,7 +30,16 @@ public class MyAnswerFragment extends BaseListFragment {
 	private int mUid;
 	
 	private boolean isCurrentUser=true;
-	
+
+
+	private int mStatus =1;//1 全部  2 已回答 3 未回答
+
+	//Tab fans views
+	private TextView mViewAllQuestion;
+	private TextView mViewAnsweredQuestion;
+	private TextView mViewUnansweredQuestion;
+
+
 	/**
 	 * 是否个人页，否调getAnswerList接口，是调getPersonalAnswerList接口
 	 */
@@ -45,6 +57,36 @@ public class MyAnswerFragment extends BaseListFragment {
 		
 	}
 
+	private View.OnClickListener mFansTabClickListener=new View.OnClickListener(){
+		@Override
+		public void onClick(View v) {
+			mViewAllQuestion.setTextColor(getResources().getColor(R.color.text_dark));
+			mViewAllQuestion.setBackgroundResource(R.drawable.default_bg);
+			mViewAnsweredQuestion.setTextColor(getResources().getColor(R.color.text_dark));
+			mViewAnsweredQuestion.setBackgroundResource(R.drawable.default_bg);
+			mViewUnansweredQuestion.setTextColor(getResources().getColor(R.color.text_dark));
+			mViewUnansweredQuestion.setBackgroundResource(R.drawable.default_bg);
+
+			switch (v.getId()){
+				case R.id.all_question:
+					mViewAllQuestion.setTextColor(getResources().getColor(R.color.text_dark));
+					mViewAllQuestion.setBackgroundResource(R.drawable.bg_blue_underline);
+					mStatus=1;
+					break;
+				case R.id.answered_question:
+					mViewAnsweredQuestion.setTextColor(getResources().getColor(R.color.text_dark));
+					mViewAnsweredQuestion.setBackgroundResource(R.drawable.bg_blue_underline);
+					mStatus=3;
+					break;
+				case R.id.unanswered_question:
+					mViewUnansweredQuestion.setTextColor(getResources().getColor(R.color.text_dark));
+					mViewUnansweredQuestion.setBackgroundResource(R.drawable.bg_blue_underline);
+					mStatus=2;
+					break;
+			}
+			setRefresh();
+		}
+	};
 
 	//适配器
 	@Override
@@ -61,8 +103,21 @@ public class MyAnswerFragment extends BaseListFragment {
 	protected void initViews(View view) {
 		super.initViews(view);
 		mListView.setOnItemClickListener(null);
+
+		mViewAllQuestion=(TextView)view.findViewById(R.id.all_question);
+		mViewAnsweredQuestion=(TextView)view.findViewById(R.id.answered_question);
+		mViewUnansweredQuestion=(TextView)view.findViewById(R.id.unanswered_question);
+		mViewAllQuestion.setOnClickListener(mFansTabClickListener);
+		mViewAnsweredQuestion.setOnClickListener(mFansTabClickListener);
+		mViewUnansweredQuestion.setOnClickListener(mFansTabClickListener);
 	}
-	
+
+	@Override
+	protected int getLayoutRes() {
+		return R.layout.my_answer_fragment_pull_refresh_listview;
+	}
+
+
 	@Override
 	protected ListEntity parseList(InputStream is) throws Exception {
 		//流转换成为String

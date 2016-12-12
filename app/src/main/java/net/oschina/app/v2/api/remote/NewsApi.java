@@ -2507,4 +2507,19 @@ public class NewsApi extends BaseApi {
 		ApiHttpClient.post("index.php/Api/Member/interestadd.html", jsonObject,
 				addInterestedHandler);
 	}
+
+	/**
+	 * 问题补充
+	 */
+	public static void addAskSupply(int uid, int qid,String content,JsonHttpResponseHandler handler) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("uid", uid);
+			jsonObject.put("qid", qid);
+			jsonObject.put("content", content);
+		} catch (Exception e) {
+		}
+		ApiHttpClient.post("index.php/Api/Question/quesedit.html", jsonObject,
+				handler);
+	}
 }

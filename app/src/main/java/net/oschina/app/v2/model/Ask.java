@@ -1,6 +1,7 @@
 package net.oschina.app.v2.model;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.IOException;
 
@@ -39,9 +40,18 @@ public class Ask extends Entity {
 	private int from;
 	private String hits;
 	private int collectflag;
+	private String newcontent;
 
 	public Ask() {
 
+	}
+
+	public String getNewcontent() {
+		return newcontent;
+	}
+
+	public void setNewcontent(String newcontent) {
+		this.newcontent = newcontent;
 	}
 
 	public int getCollectflag() {
@@ -244,6 +254,7 @@ public class Ask extends Entity {
 		ask.setIsanswer(response.optInt("isanswer"));
 		ask.setFrom(response.optInt("from"));
 		ask.setCollectflag(response.optInt("collectflag"));
+		ask.setNewcontent(response.optString("newcontent"));
 		String hits=response.optString("hits");
 		if(TextUtils.isEmpty(hits)){
 			hits="0";

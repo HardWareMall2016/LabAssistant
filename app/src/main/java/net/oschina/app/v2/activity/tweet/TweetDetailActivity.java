@@ -36,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -66,12 +67,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -928,6 +931,8 @@ public class TweetDetailActivity extends BaseActivity {
     }
 
     private void fillUI() {
+        refreshAskSupply();
+
         if(ask.getCollectflag()==1){
             favBtn.setImageResource(R.drawable.actionbar_unfavorite_icon_2);
         }else{
@@ -1017,6 +1022,29 @@ public class TweetDetailActivity extends BaseActivity {
             mTvTitle.setText("" + ask.getContent());
         }
 
+    }
+
+    private void refreshAskSupply() {
+        View supplementContent=findViewById(R.id.supplement_content);
+        TextView askSupplyContent = (TextView) findViewById(R.id.tv_ask_supplement_content);
+        TextView askSupply = (TextView) findViewById(R.id.tv_ask_supplement);
+        askSupply.setVisibility(View.GONE);
+        askSupply.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAskSupplyDialog();
+            }
+        });
+
+        if(TextUtils.isEmpty(ask.getNewcontent())||"null".equals(ask.getNewcontent())){
+            supplementContent.setVisibility(View.GONE);
+            if (ask.getUid() == AppContext.instance().getLoginUid()){
+                askSupply.setVisibility(View.VISIBLE);
+            }
+        }else{
+            supplementContent.setVisibility(View.VISIBLE);
+            askSupplyContent.setText(ask.getNewcontent());
+        }
     }
 
     public void showTiWenMe() {
@@ -1282,5 +1310,59 @@ public class TweetDetailActivity extends BaseActivity {
         }else{
             super.onBackPressed();
         }
+    }
+
+    private void showAskSupplyDialog(){
+        final Dialog confirmDialog = new Dialog(this, R.style.Dialog);
+        confirmDialog.setContentView(R.layout.ask_supplement);
+
+        TextView titleView= (TextView)confirmDialog.findViewById(R.id.title);
+
+        final EditText askSupplyContent= (EditText)confirmDialog.findViewById(R.id.ask_supply_content);
+
+        TextView cancelBtn= (TextView)confirmDialog.findViewById(R.id.cancel);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmDialog.dismiss();
+            }
+        });
+
+        TextView confirmBtn= (TextView)confirmDialog.findViewById(R.id.confirm);
+        confirmBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String supply = askSupplyContent.getText().toString();
+                if (TextUtils.isEmpty(supply)) {
+                    AppContext.showToast("请填写问题补充内容");
+                    return;
+                }
+                if(ask==null){
+                    return;
+                }
+                askSupply(ask.getId(),supply);
+                confirmDialog.dismiss();
+            }
+        });
+        confirmDialog.show();
+    }
+
+    private void askSupply(int qid, final String content) {
+        NewsApi.addAskSupply(AppContext.instance().getLoginUid(), qid, content,
+                new JsonHttpResponseHandler() {
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers,
+                                          JSONObject response) {
+                        try {
+                            if (response.optInt("code") == 88) {
+                                ask.setNewcontent(content);
+                                refreshAskSupply();
+                            } else {
+                                AppContext.showToast("问题补充失败");
+                            }
+                        } catch (Exception e) {
+                        }
+                    }
+                });
     }
 }

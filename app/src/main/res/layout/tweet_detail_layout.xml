@@ -77,6 +77,7 @@
             android:layout_marginTop="6dp"
             android:background="#EFF2F7"
             android:orientation="vertical"
+            android:visibility="gone"
             android:padding="4dp">
 
             <TextView
@@ -140,6 +141,7 @@
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:paddingTop="4dp"
+                    android:visibility="gone"
                     android:text="问题补充"
                     android:textColor="#2FBDE7"
                     android:textSize="@dimen/text_size_14" />

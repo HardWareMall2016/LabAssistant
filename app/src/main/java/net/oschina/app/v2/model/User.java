@@ -61,6 +61,15 @@ public class User extends Base {
 	private String phone;
 	private boolean issigned;
 	private String info;//认证信息
+	private int curdayintegral;//当天积分数
+
+	public int getCurdayintegral() {
+		return curdayintegral;
+	}
+
+	public void setCurdayintegral(int curdayintegral) {
+		this.curdayintegral = curdayintegral;
+	}
 
 	public boolean issigned() {
 		return issigned;
@@ -361,6 +370,7 @@ public class User extends Base {
 		user.setSupportednum(userinfo.optInt("supportednum"));
 		user.setIssigned(userinfo.optBoolean("issigned"));
 		user.setInfo(userinfo.optString("info"));
+		user.setCurdayintegral(userinfo.optInt("curdayintegral"));
 
 		return user;
 	}

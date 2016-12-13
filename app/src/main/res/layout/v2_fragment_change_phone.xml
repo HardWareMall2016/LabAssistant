@@ -54,7 +54,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_regist"
+            android:id="@+id/btn_submit"
             style="@style/button_common_blue"
             android:layout_width="match_parent"
             android:layout_height="40dp"

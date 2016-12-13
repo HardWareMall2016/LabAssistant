@@ -5,7 +5,7 @@
                 android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/fans_tab"
+        android:id="@+id/answer_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -64,7 +64,7 @@
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/fans_tab"
+        android:layout_below="@id/answer_tab"
         android:background="@color/page_content_bg"
         android:cacheColorHint="#ffffffff"
         android:descendantFocusability="blocksDescendants"
@@ -77,7 +77,7 @@
         android:id="@+id/error_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/fans_tab"
+        android:layout_below="@id/answer_tab"
         android:visibility="gone"/>
 
 </RelativeLayout>

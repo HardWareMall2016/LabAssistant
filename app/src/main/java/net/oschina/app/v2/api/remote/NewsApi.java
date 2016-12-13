@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.ref.SoftReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -2074,7 +2075,7 @@ public class NewsApi extends BaseApi {
 	}
 
 	// 获取我回答的列表
-	public static void getAnswerList(int uid, int page,
+	public static void getAnswerList(int isadopt,int uid, int page,
 			JsonHttpResponseHandler mJsonHandler) {
 		JSONObject jsonObject = new JSONObject();
 		try {
@@ -2082,6 +2083,9 @@ public class NewsApi extends BaseApi {
 			// jsonObject.put("cid", "58f8643d1093fd2c75544d8c4589f6bb");
 			jsonObject.put("uid", uid);
 			jsonObject.put("pid", page);
+			if(isadopt>=0){
+				jsonObject.put("isadopt", isadopt);
+			}
 			jsonObject.put("num", 20);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -2521,5 +2525,29 @@ public class NewsApi extends BaseApi {
 		}
 		ApiHttpClient.post("index.php/Api/Question/quesedit.html", jsonObject,
 				handler);
+	}
+
+	// 获取我回答的列表
+	public static void updateCheck(JsonHttpResponseHandler mJsonHandler) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("type", 1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ApiHttpClient.post("/index.php/Api/Member/getversion.html", jsonObject, mJsonHandler);
+	}
+
+	// 修改手机号
+	public static void updatephone(String telverify,String phone,JsonHttpResponseHandler mJsonHandler) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("uid",AppContext.instance().getLoginUid());
+			jsonObject.put("telverify", telverify);
+			jsonObject.put("phone", phone);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ApiHttpClient.post("/index.php/Api/Member/updatephone.html", jsonObject, mJsonHandler);
 	}
 }

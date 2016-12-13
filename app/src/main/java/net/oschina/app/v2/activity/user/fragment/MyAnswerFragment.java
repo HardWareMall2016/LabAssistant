@@ -32,7 +32,7 @@ public class MyAnswerFragment extends BaseListFragment {
 	private boolean isCurrentUser=true;
 
 
-	private int mStatus =1;//1 全部  2 已回答 3 未回答
+	private int mStatus =-1;//0未采纳  1采纳
 
 	//Tab fans views
 	private TextView mViewAllQuestion;
@@ -71,17 +71,17 @@ public class MyAnswerFragment extends BaseListFragment {
 				case R.id.all_question:
 					mViewAllQuestion.setTextColor(getResources().getColor(R.color.text_dark));
 					mViewAllQuestion.setBackgroundResource(R.drawable.bg_blue_underline);
-					mStatus=1;
+					mStatus=-1;
 					break;
 				case R.id.answered_question:
 					mViewAnsweredQuestion.setTextColor(getResources().getColor(R.color.text_dark));
 					mViewAnsweredQuestion.setBackgroundResource(R.drawable.bg_blue_underline);
-					mStatus=3;
+					mStatus=1;
 					break;
 				case R.id.unanswered_question:
 					mViewUnansweredQuestion.setTextColor(getResources().getColor(R.color.text_dark));
 					mViewUnansweredQuestion.setBackgroundResource(R.drawable.bg_blue_underline);
-					mStatus=2;
+					mStatus=0;
 					break;
 			}
 			setRefresh();
@@ -103,6 +103,13 @@ public class MyAnswerFragment extends BaseListFragment {
 	protected void initViews(View view) {
 		super.initViews(view);
 		mListView.setOnItemClickListener(null);
+
+		View answerTab=view.findViewById(R.id.answer_tab);
+		if(isPersonalPage){
+			answerTab.setVisibility(View.GONE);
+		}else{
+			answerTab.setVisibility(View.VISIBLE);
+		}
 
 		mViewAllQuestion=(TextView)view.findViewById(R.id.all_question);
 		mViewAnsweredQuestion=(TextView)view.findViewById(R.id.answered_question);
@@ -144,7 +151,7 @@ public class MyAnswerFragment extends BaseListFragment {
 		if(isPersonalPage){
 			NewsApi.getPersonalAnswerList(uid,mCurrentPage,mJsonHandler) ;
 		}else{
-			NewsApi.getAnswerList(uid,mCurrentPage,mJsonHandler) ;
+			NewsApi.getAnswerList(mStatus,uid,mCurrentPage,mJsonHandler) ;
 		}
 		
 	}

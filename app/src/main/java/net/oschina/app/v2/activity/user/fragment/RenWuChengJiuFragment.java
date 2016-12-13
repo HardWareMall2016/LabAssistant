@@ -50,7 +50,7 @@ public class RenWuChengJiuFragment extends BaseListFragment {
 	//发送请求的数据。
 	@Override
 	protected void sendRequestData() {
-		NewsApi.getAnswerList(1,mCurrentPage,mJsonHandler) ;
+		NewsApi.getAnswerList(-1,1,mCurrentPage,mJsonHandler) ;
 	}
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {

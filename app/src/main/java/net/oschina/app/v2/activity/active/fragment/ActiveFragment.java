@@ -452,6 +452,13 @@ public class ActiveFragment extends BaseFragment {
 		btnZhichi.setText(String.format("收到%d个支持",user.getSupportednum()));
 
 		tv_jifen.setText(user.getIntegral() + "分");
+		if(user.getCurdayintegral()>0){
+			tv_add_integral.setVisibility(View.VISIBLE);
+			tv_add_integral.setText(String.format("+%d", user.getCurdayintegral()));
+		}else{
+			tv_add_integral.setVisibility(View.GONE);
+		}
+
 		if (user.getRealname_status() == 1) {
 			tv_verify.setText("已认证");
 			tv_verify.setBackgroundResource(R.drawable.bg_pick_rounded_selector);
@@ -741,20 +748,21 @@ public class ActiveFragment extends BaseFragment {
 							tv_jifen.setText(integral + "分");
 							try{
 								User user=AppContext.instance().getLoginInfo();
-								//int preIntegral=user.getIntegral();
+								int preIntegral=user.getIntegral();
 
 								user.setIntegral(Integer.parseInt(integral));
 								AppContext.instance().saveLoginInfo(user);
 
-								/*int addIntegra=Integer.parseInt(integral)-preIntegral;
+								int addIntegra=Integer.parseInt(integral)-preIntegral;
 								if(addIntegra>0){
-									tv_add_integral.setText("+"+addIntegra);
+									tv_add_integral.setText(String.format("+%d", addIntegra));
 									user.setIntegral(Integer.parseInt(integral));
+									user.setCurdayintegral(addIntegra);
 									AppContext.instance().saveLoginInfo(user);
 									tv_add_integral.setVisibility(View.VISIBLE);
 								}else{
 									tv_add_integral.setVisibility(View.GONE);
-								}*/
+								}
 
 							}catch (Exception ex){
 								/*tv_add_integral.setText("+2");
@@ -800,6 +808,13 @@ public class ActiveFragment extends BaseFragment {
 		ActiveNumType.updateMessageLabel(message.getAfternum(), mAskAfterNotice);
 		ActiveNumType.updateMessageLabel(message.getMnum(), mSysMessageNotice);
 		ActiveNumType.updateMessageLabel(message.getGnum(), mAttentionNotice);
+
+		if(message.getCurdayintegral()>0){
+			tv_add_integral.setVisibility(View.VISIBLE);
+			tv_add_integral.setText(String.format("+%d", message.getCurdayintegral()));
+		}else{
+			tv_add_integral.setVisibility(View.GONE);
+		}
 	}
 
 	private void setNewMessage(TextView textView, int number) {

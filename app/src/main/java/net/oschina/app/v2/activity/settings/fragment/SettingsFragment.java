@@ -8,12 +8,20 @@ import net.oschina.app.v2.activity.tweet.ShareHelper;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.BaseFragment;
 import net.oschina.app.v2.base.Constants;
+import net.oschina.app.v2.model.MessageNum;
 import net.oschina.app.v2.model.User;
 import net.oschina.app.v2.ui.dialog.CommonDialog;
 import net.oschina.app.v2.ui.dialog.DialogHelper;
 import net.oschina.app.v2.utils.DownloadHelper;
 import net.oschina.app.v2.utils.UIHelper;
 
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -39,6 +47,7 @@ import android.view.LayoutInflater;
 import android.app.Dialog;
 import android.app.AlertDialog;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -256,7 +265,8 @@ public class SettingsFragment extends BaseFragment {
         } else if (id == R.id.ly_bangzhu) {
             UIHelper.showHelp(getActivity());
         } else if (id == R.id.ly_jianchaxinbanben) {
-            UmengUpdateAgent.forceUpdate(getActivity());
+            //UmengUpdateAgent.forceUpdate(getActivity());
+            checkUpdate();
         } else if (id == R.id.ly_tuichuzhanghao) {
             handleLogout();
         } else if (id == R.id.ly_change_phone) {
@@ -265,7 +275,7 @@ public class SettingsFragment extends BaseFragment {
     }
 
 
-    private void checkUpdate() {
+    /*private void checkUpdate() {
         NewsApi.checkUpdate(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers,
@@ -290,7 +300,7 @@ public class SettingsFragment extends BaseFragment {
                 }
             }
         });
-    }
+    }*/
 
     private void download(String fileUrl) {
         DownloadHelper download = new DownloadHelper(getActivity());
@@ -409,5 +419,145 @@ public class SettingsFragment extends BaseFragment {
         super.onPause();
         MobclickAgent.onPageEnd(SETTINGS_SCREEN);
         MobclickAgent.onPause(getActivity());
+    }
+
+    private void checkUpdate() {
+        NewsApi.updateCheck(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if (response.optInt("code") == 88) {
+                        JSONObject dataList = new JSONObject(response.getString("data"));
+                        String serverVersion = dataList.optString("version");
+                        String url = dataList.optString("url");
+                        String currentVersionName=getVersion();
+                        if(needUpdate(currentVersionName,serverVersion)){
+                            showUpdateDialog(serverVersion,url);
+                        }else{
+                            AppContext.showToast("已经是最新版本");
+                        }
+                    } else {
+                        AppContext.showToast("问题补充失败");
+                    }
+                } catch (Exception e) {
+                }
+            }
+        });
+    }
+
+    /**
+     * 下载并安装app
+     *
+     * @param url
+     */
+    public static void installApp(String url) {
+        final DownloadManager systemService = (DownloadManager) AppContext.instance().getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "upgrade.apk");
+        systemService.enqueue(request);
+        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+        final BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                long reference = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+
+                DownloadManager.Query myDownloadQuery = new DownloadManager.Query();
+                myDownloadQuery.setFilterById(reference);
+
+                Cursor myDownload = systemService.query(myDownloadQuery);
+                if (myDownload.moveToFirst()) {
+                    int fileUriIdx = myDownload.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
+
+                    String fileUri = myDownload.getString(fileUriIdx);
+
+                    Intent ViewInstallIntent = new Intent(Intent.ACTION_VIEW);
+                    ViewInstallIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    ViewInstallIntent.setDataAndType(Uri.parse(fileUri), "application/vnd.android.package-archive");
+                    context.startActivity(ViewInstallIntent);
+                }
+                myDownload.close();
+
+                AppContext.instance().unregisterReceiver(this);
+            }
+        };
+        AppContext.instance().registerReceiver(receiver, filter);
+    }
+
+    public Dialog showUpdateDialog(String serverVersion,String url){
+        final Dialog confirmDialog=new Dialog(getActivity(), R.style.Dialog);
+        confirmDialog.setContentView(R.layout.dialog_cancel_or_confirm);
+
+        TextView titleView= (TextView)confirmDialog.findViewById(R.id.title);
+        titleView.setText("版本更新");
+        TextView summaryView= (TextView)confirmDialog.findViewById(R.id.summary);
+        summaryView.setText(String.format("最新版本:%s\n有新版本是否更新", serverVersion));
+
+        TextView cancelBtn= (TextView)confirmDialog.findViewById(R.id.cancel);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmDialog.dismiss();
+            }
+        });
+
+        TextView confirmBtn= (TextView)confirmDialog.findViewById(R.id.confirm);
+        confirmBtn.setTag(url);
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = (String) v.getTag();
+                installApp(url);
+                confirmDialog.dismiss();
+            }
+        });
+
+        confirmDialog.show();
+
+        return confirmDialog;
+    }
+
+    /**
+     * 获取版本号
+     * @return 当前应用的版本号
+     */
+    public String getVersion() {
+        try {
+            PackageManager manager = getActivity().getPackageManager();
+            PackageInfo info = manager.getPackageInfo(getActivity().getPackageName(), 0);
+            return info.versionName;
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    private boolean needUpdate(String currentVersion,String serverVersion){
+        if(TextUtils.isEmpty(currentVersion)||TextUtils.isEmpty(serverVersion)){
+            return false;
+        }
+        Log.i("wuyue","currentVersion = "+currentVersion+" , serverVersion = "+serverVersion);
+        String [] currentVersionArr=currentVersion.split("\\.");
+        String [] serverVersionArr=serverVersion.split("\\.");
+        if(currentVersionArr.length != 3||serverVersionArr.length != 3){
+            return false;
+        }
+
+        boolean update=false;
+        for(int i=0;i<3;i++){
+            String curItem=currentVersionArr[i];
+            String serverItem=serverVersionArr[i];
+            try{
+                if(Integer.valueOf(serverItem)>Integer.valueOf(curItem)){
+                    update=true;
+                    break;
+                }else if(Integer.valueOf(serverItem)<Integer.valueOf(curItem)){
+                    update=false;
+                    break;
+                }
+            }catch (Exception ignored){
+
+            }
+        }
+
+        return update;
     }
 }

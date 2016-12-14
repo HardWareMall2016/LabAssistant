@@ -273,6 +273,14 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 			shareBtn.setVisibility(View.VISIBLE);
 		}
 
+		findViewById(R.id.advertisement).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(ShowTitleDetailActivity.this, AdvertisementActivity.class);
+				startActivity(intent);
+			}
+		});
+
 		tv_td_title = (TextView) findViewById(R.id.tv_title);
 		tv_td_time = (TextView) findViewById(R.id.tv_time);
 		detail_img = (ImageView) findViewById(R.id.detail_img);

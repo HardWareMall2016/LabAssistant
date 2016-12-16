@@ -85,8 +85,9 @@ public class AdvertisementActivity extends BaseActivity {
         mWebView=(WebView)findViewById(R.id.webView);
         // 设置WebView属性，能够执行Javascript脚本
         mWebView.getSettings().setJavaScriptEnabled(true);
+        String adUrl=getIntent().getStringExtra("adUrl");
         // 加载需要显示的网页
-        mWebView.loadUrl("http://www.baidu.com/");
+        mWebView.loadUrl(adUrl);
         // 设置Web视图
         mWebView.setWebViewClient(new HelloWebViewClient());
     }

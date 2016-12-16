@@ -17,7 +17,7 @@ import net.oschina.app.v2.base.Constants;
 import net.oschina.app.v2.emoji.EmojiFragment;
 import net.oschina.app.v2.emoji.EmojiFragment.EmojiTextListener;
 import net.oschina.app.v2.ui.dialog.WaitDialog;
-import net.oschina.app.v2.utils.FileDownloadCallback;
+import net.oschina.app.v2.utils.BitmapLoaderUtil;
 import net.oschina.app.v2.utils.FileDownloadHandler;
 import net.oschina.app.v2.utils.HttpRequestUtils;
 import net.oschina.app.v2.utils.PathUtils;
@@ -48,6 +48,7 @@ import android.widget.Toast;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shiyanzhushou.app.R;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -80,6 +81,11 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 	private View woyaobaoming;
 	private View taolun;
 	private View fenxiangTx, baomingTx;
+
+	private View mAdContainer;
+	private ImageView mAdImage;
+	private TextView mAdContent;
+	private DisplayImageOptions options;
 
 	private StringEntity entity;
 	private String data;
@@ -232,11 +238,11 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 					intent.putExtra("type", "login");
 					startActivity(intent);
 				} else {
-					NewsApi.shareToCircle(AppContext.instance().getLoginUid(), mNewsId,mNewsType,
+					NewsApi.shareToCircle(AppContext.instance().getLoginUid(), mNewsId, mNewsType,
 							new JsonHttpResponseHandler() {
 								@Override
 								public void onSuccess(int statusCode,
-										Header[] headers, JSONObject response) {
+													  Header[] headers, JSONObject response) {
 									System.out.println(response);
 									AppContext.showToast("分享成功");
 								}
@@ -273,10 +279,16 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 			shareBtn.setVisibility(View.VISIBLE);
 		}
 
-		findViewById(R.id.advertisement).setOnClickListener(new OnClickListener() {
+		options = BitmapLoaderUtil.loadDisplayImageOptions(R.drawable.pic_bg);
+		mAdContainer=findViewById(R.id.advertisement);
+		mAdImage=(ImageView)findViewById(R.id.ad_image);
+		mAdContent=(TextView)findViewById(R.id.ad_content);
+		mAdContainer.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				String adUrl=(String)v.getTag();
 				Intent intent = new Intent(ShowTitleDetailActivity.this, AdvertisementActivity.class);
+				intent.putExtra("adUrl",adUrl);
 				startActivity(intent);
 			}
 		});
@@ -376,6 +388,14 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 			try {
 
 				JSONObject obj = new JSONObject(data);
+
+				//广告
+				String adurl = obj.getString("adurl");
+				String adtitle = obj.getString("adtitle");
+				String adimage = obj.getString("adimage");
+				refreshAdvertisement(adtitle,adurl,adimage);
+
+
 				thumb = obj.getString("thumb");
 				//System.out.println(thumb.toString() + "刚拿的thumb");
 				title = obj.getString("title");
@@ -423,6 +443,17 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 		}
 
 	};
+
+	private void refreshAdvertisement(String adtitle,String adurl,String adimage){
+		if(TextUtils.isEmpty(adurl)){
+			mAdContainer.setVisibility(View.GONE);
+		}else{
+			mAdContainer.setVisibility(View.VISIBLE);
+			mAdContent.setText(adtitle);
+			mAdContainer.setTag(adurl);
+			ImageLoader.getInstance().displayImage(ApiHttpClient.getImageApiUrl(adimage), mAdImage, options);
+		}
+	}
 
 	private WaitDialog mWaitDialog;
 	private WaitDialog mLoadPdfDialog;

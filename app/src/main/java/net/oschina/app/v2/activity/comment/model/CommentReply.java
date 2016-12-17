@@ -39,6 +39,9 @@ public class CommentReply extends Entity implements Serializable {
 	private int count;
 	
 	private int sign;
+
+	private String fileurl;
+	private String filename;
 	
 	public int getSign() {
 		return sign;
@@ -48,7 +51,21 @@ public class CommentReply extends Entity implements Serializable {
 		this.sign = sign;
 	}
 
-	
+	public String getFileurl() {
+		return fileurl;
+	}
+
+	public void setFileurl(String fileurl) {
+		this.fileurl = fileurl;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 
 	public int getCount() {
 		return count;
@@ -205,6 +222,9 @@ public class CommentReply extends Entity implements Serializable {
 		comment.setQnickname(response.optString("qnickname"));
 		comment.setQhead(response.optString("qhead"));
 		comment.setQuestion(response.optString("question"));
+
+		comment.setFilename(response.optString("filename"));
+		comment.setFileurl(response.optString("fileurl"));
 		return comment;
 	}
 
@@ -229,6 +249,9 @@ public class CommentReply extends Entity implements Serializable {
 		comment.setQhead(response.optString("qhead"));
 		comment.setQuestion(response.optString("question"));
 		comment.setCount(response.optInt("count"));
+
+		comment.setFilename(response.optString("filename"));
+		comment.setFileurl(response.optString("fileurl"));
 		return comment;
 	}
 

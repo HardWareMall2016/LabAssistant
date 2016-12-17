@@ -307,6 +307,12 @@ public class PushDemoReceiver extends BroadcastReceiver {
 						
 //						showNotification(context,"提示","回答被采纳",clickIntent);
 						showNotification(context,json.optString("notifytitle"),json.optString("notifycontent"),clickIntent);
+					}else if (type.equals("updateques")) {
+						Ask ask = new Ask();
+						ask.setId(contentJson.optInt("id",0));
+						Intent clickIntent = new Intent(context, TweetDetailActivity.class);
+						clickIntent.putExtra("ask", ask);
+						showNotification(context, json.optString("notifytitle"), json.optString("notifycontent"), clickIntent);
 					} else if (type.equals("signjob")) {
 						Intent clickIntent = new Intent(context, MainActivity.class);
 						showNotification(context,"签到提醒","亲，今天还没有签到哦！",clickIntent);

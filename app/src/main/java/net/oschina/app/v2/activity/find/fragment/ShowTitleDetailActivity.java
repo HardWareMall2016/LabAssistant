@@ -390,9 +390,9 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 				JSONObject obj = new JSONObject(data);
 
 				//广告
-				String adurl = obj.getString("adurl");
-				String adtitle = obj.getString("adtitle");
-				String adimage = obj.getString("adimage");
+				String adurl = obj.optString("adurl");
+				String adtitle = obj.optString("adtitle");
+				String adimage = obj.optString("adimage");
 				refreshAdvertisement(adtitle,adurl,adimage);
 
 

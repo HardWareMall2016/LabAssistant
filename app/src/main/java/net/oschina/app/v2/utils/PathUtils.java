@@ -15,6 +15,8 @@ public class PathUtils {
 	private final static String PIC = "PIC";
 	//临时目录
 	private final static String TEMP = "PDF";
+	//附件目录
+	private final static String ATTACHMENTS = "ATTACHMENTS";
 
 	public static boolean isExternalStorageWritable() {
 		String state = Environment.getExternalStorageState();
@@ -57,6 +59,14 @@ public class PathUtils {
 	public static File getExternalPDFFilesDir() {
 		if (isExternalStorageWritable()) {
 			return AppContext.instance().getExternalFilesDir(TEMP);
+		} else {
+			return null;
+		}
+	}
+
+	public static File getExternalAttachmentsFilesDir() {
+		if (isExternalStorageWritable()) {
+			return AppContext.instance().getExternalFilesDir(ATTACHMENTS);
 		} else {
 			return null;
 		}

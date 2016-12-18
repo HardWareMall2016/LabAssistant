@@ -41,15 +41,16 @@
             android:textColor="@color/question_text_color"
             android:textSize="13sp" />
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/left_chat_content_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/left_user_name"
             android:layout_toRightOf="@id/left_chat_userPhoto"
             android:background="@drawable/chat_left_white_bg"
-            android:gravity="center"
+            android:gravity="start|center_vertical"
             android:maxWidth="150dp"
+            android:orientation="vertical"
             android:minWidth="50dp"
             android:padding="10dp" >
 
@@ -130,7 +131,7 @@
 
             </LinearLayout>
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <!--
         <TextView
@@ -183,15 +184,16 @@
             android:textColor="@color/question_text_color"
             android:textSize="13sp" />
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/right_chat_content_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/right_user_name"
             android:layout_toLeftOf="@id/right_chat_userPhoto"
             android:background="@drawable/chat_right_blue_bg"
-            android:gravity="center"
+            android:gravity="end|center_vertical"
             android:maxWidth="150dp"
+            android:orientation="vertical"
             android:minWidth="50dp"
             android:padding="4dp" >
 
@@ -271,7 +273,7 @@
                     android:text="PDF" />
 
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
 
         <!--
         <TextView

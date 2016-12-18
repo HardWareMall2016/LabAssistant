@@ -83,100 +83,100 @@ public class CommunicatAdapter extends ListBaseAdapter implements
     private DisplayImageOptions options;
     private int type;
     //private int aid ;
-    private int mIsadopt ;
+    private int mIsadopt;
 
     private WaitDialog mWaitDialog;
 
-    private final String[][] MIME_MapTable={
+    private final String[][] MIME_MapTable = {
             //{后缀名，MIME类型}
-            {".3gp",    "video/3gpp"},
-            {".apk",    "application/vnd.android.package-archive"},
-            {".asf",    "video/x-ms-asf"},
-            {".avi",    "video/x-msvideo"},
-            {".bin",    "application/octet-stream"},
-            {".bmp",    "image/bmp"},
-            {".c",  "text/plain"},
-            {".class",  "application/octet-stream"},
-            {".conf",   "text/plain"},
-            {".cpp",    "text/plain"},
-            {".doc",    "application/msword"},
-            {".docx",   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
-            {".xls",    "application/vnd.ms-excel"},
-            {".xlsx",   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
-            {".exe",    "application/octet-stream"},
-            {".gif",    "image/gif"},
-            {".gtar",   "application/x-gtar"},
+            {".3gp", "video/3gpp"},
+            {".apk", "application/vnd.android.package-archive"},
+            {".asf", "video/x-ms-asf"},
+            {".avi", "video/x-msvideo"},
+            {".bin", "application/octet-stream"},
+            {".bmp", "image/bmp"},
+            {".c", "text/plain"},
+            {".class", "application/octet-stream"},
+            {".conf", "text/plain"},
+            {".cpp", "text/plain"},
+            {".doc", "application/msword"},
+            {".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
+            {".xls", "application/vnd.ms-excel"},
+            {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+            {".exe", "application/octet-stream"},
+            {".gif", "image/gif"},
+            {".gtar", "application/x-gtar"},
             {".gz", "application/x-gzip"},
-            {".h",  "text/plain"},
-            {".htm",    "text/html"},
-            {".html",   "text/html"},
-            {".jar",    "application/java-archive"},
-            {".java",   "text/plain"},
-            {".jpeg",   "image/jpeg"},
-            {".jpg",    "image/jpeg"},
+            {".h", "text/plain"},
+            {".htm", "text/html"},
+            {".html", "text/html"},
+            {".jar", "application/java-archive"},
+            {".java", "text/plain"},
+            {".jpeg", "image/jpeg"},
+            {".jpg", "image/jpeg"},
             {".js", "application/x-javascript"},
-            {".log",    "text/plain"},
-            {".m3u",    "audio/x-mpegurl"},
-            {".m4a",    "audio/mp4a-latm"},
-            {".m4b",    "audio/mp4a-latm"},
-            {".m4p",    "audio/mp4a-latm"},
-            {".m4u",    "video/vnd.mpegurl"},
-            {".m4v",    "video/x-m4v"},
-            {".mov",    "video/quicktime"},
-            {".mp2",    "audio/x-mpeg"},
-            {".mp3",    "audio/x-mpeg"},
-            {".mp4",    "video/mp4"},
-            {".mpc",    "application/vnd.mpohun.certificate"},
-            {".mpe",    "video/mpeg"},
-            {".mpeg",   "video/mpeg"},
-            {".mpg",    "video/mpeg"},
-            {".mpg4",   "video/mp4"},
-            {".mpga",   "audio/mpeg"},
-            {".msg",    "application/vnd.ms-outlook"},
-            {".ogg",    "audio/ogg"},
-            {".pdf",    "application/pdf"},
-            {".png",    "image/png"},
-            {".pps",    "application/vnd.ms-powerpoint"},
-            {".ppt",    "application/vnd.ms-powerpoint"},
-            {".pptx",   "application/vnd.openxmlformats-officedocument.presentationml.presentation"},
-            {".prop",   "text/plain"},
+            {".log", "text/plain"},
+            {".m3u", "audio/x-mpegurl"},
+            {".m4a", "audio/mp4a-latm"},
+            {".m4b", "audio/mp4a-latm"},
+            {".m4p", "audio/mp4a-latm"},
+            {".m4u", "video/vnd.mpegurl"},
+            {".m4v", "video/x-m4v"},
+            {".mov", "video/quicktime"},
+            {".mp2", "audio/x-mpeg"},
+            {".mp3", "audio/x-mpeg"},
+            {".mp4", "video/mp4"},
+            {".mpc", "application/vnd.mpohun.certificate"},
+            {".mpe", "video/mpeg"},
+            {".mpeg", "video/mpeg"},
+            {".mpg", "video/mpeg"},
+            {".mpg4", "video/mp4"},
+            {".mpga", "audio/mpeg"},
+            {".msg", "application/vnd.ms-outlook"},
+            {".ogg", "audio/ogg"},
+            {".pdf", "application/pdf"},
+            {".png", "image/png"},
+            {".pps", "application/vnd.ms-powerpoint"},
+            {".ppt", "application/vnd.ms-powerpoint"},
+            {".pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation"},
+            {".prop", "text/plain"},
             {".rc", "text/plain"},
-            {".rmvb",   "audio/x-pn-realaudio"},
-            {".rtf",    "application/rtf"},
+            {".rmvb", "audio/x-pn-realaudio"},
+            {".rtf", "application/rtf"},
             {".sh", "text/plain"},
-            {".tar",    "application/x-tar"},
-            {".tgz",    "application/x-compressed"},
-            {".txt",    "text/plain"},
-            {".wav",    "audio/x-wav"},
-            {".wma",    "audio/x-ms-wma"},
-            {".wmv",    "audio/x-ms-wmv"},
-            {".wps",    "application/vnd.ms-works"},
-            {".xml",    "text/plain"},
-            {".z",  "application/x-compress"},
-            {".zip",    "application/x-zip-compressed"},
-            {"",        "*/*"}
+            {".tar", "application/x-tar"},
+            {".tgz", "application/x-compressed"},
+            {".txt", "text/plain"},
+            {".wav", "audio/x-wav"},
+            {".wma", "audio/x-ms-wma"},
+            {".wmv", "audio/x-ms-wmv"},
+            {".wps", "application/vnd.ms-works"},
+            {".xml", "text/plain"},
+            {".z", "application/x-compress"},
+            {".zip", "application/x-zip-compressed"},
+            {"", "*/*"}
     };
 
     private String getMIMEType(File file) {
-        String type="*/*";
+        String type = "*/*";
         String fName = file.getName();
         //获取后缀名前的分隔符"."在fName中的位置。
         int dotIndex = fName.lastIndexOf(".");
-        if(dotIndex < 0){
+        if (dotIndex < 0) {
             return type;
         }
         /* 获取文件的后缀名*/
-        String end=fName.substring(dotIndex,fName.length()).toLowerCase();
-        if(end.equals(""))return type;
+        String end = fName.substring(dotIndex, fName.length()).toLowerCase();
+        if (end.equals("")) return type;
         //在MIME和文件类型的匹配表中找到对应的MIME类型。
-        for(int i=0;i<MIME_MapTable.length;i++){ //MIME_MapTable??在这里你一定有疑问，这个MIME_MapTable是什么？
-            if(end.equals(MIME_MapTable[i][0]))
+        for (int i = 0; i < MIME_MapTable.length; i++) { //MIME_MapTable??在这里你一定有疑问，这个MIME_MapTable是什么？
+            if (end.equals(MIME_MapTable[i][0]))
                 type = MIME_MapTable[i][1];
         }
         return type;
     }
 
-    private void openFile(File file){
+    private void openFile(File file) {
 
         Intent intent = new Intent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -189,12 +189,12 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         //跳转
         try {
             context.startActivity(intent);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             AppContext.showToast("该文件无法打开");
         }
     }
 
-    public WaitDialog showWaitDialog(Activity context,String message) {
+    public WaitDialog showWaitDialog(Activity context, String message) {
 
         if (mWaitDialog == null) {
             mWaitDialog = DialogHelper.getWaitDialog(context, message);
@@ -206,11 +206,11 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         return mWaitDialog;
     }
 
-    public CommunicatAdapter(Activity context,CommunicatFragment frag, int type,int isadopt) {
+    public CommunicatAdapter(Activity context, CommunicatFragment frag, int type, int isadopt) {
         this.context = context;
         this.type = type;
-        this.mIsadopt = isadopt ;
-        mFrag=frag;
+        this.mIsadopt = isadopt;
+        mFrag = frag;
     }
 
     public int getViewType(int position) {
@@ -232,9 +232,9 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         return false;
     }
 
-    private String getExtName(String fileName){
+    private String getExtName(String fileName) {
         String extention = "";
-        if(!StringUtils.isEmpty(fileName)) {  //--截取文件名
+        if (!StringUtils.isEmpty(fileName)) {  //--截取文件名
             int i = fileName.lastIndexOf(".");
             if (i > -1 && i < fileName.length()) {
                 extention = fileName.substring(i + 1); //--扩展名
@@ -243,23 +243,23 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         return extention;
     }
 
-    private void showAttachment(CommentReply itemModel){
-        String extention=getExtName(itemModel.getFilename());
-        if(TextUtils.isEmpty(extention)){
+    private void showAttachment(CommentReply itemModel) {
+        String extention = getExtName(itemModel.getFilename());
+        if (TextUtils.isEmpty(extention)) {
             return;
         }
 
-        String filePath=getAttachmentFilePath(itemModel.getId(),extention);
-        if(filePath==null){
+        String filePath = getAttachmentFilePath(itemModel.getId(), extention);
+        if (filePath == null) {
             return;
         }
-        File attachmentFile=new File(filePath);
-        if(attachmentFile.exists()){
+        File attachmentFile = new File(filePath);
+        if (attachmentFile.exists()) {
             openFile(attachmentFile);
             return;
         }
 
-        mWaitDialog=showWaitDialog(context,"正在下载...");
+        mWaitDialog = showWaitDialog(context, "正在下载...");
         String fileUrl = ApiHttpClient.getImageApiUrl(itemModel.getFileurl());
         HttpRequestUtils.downloadFile(fileUrl, filePath, new FileDownloadHandler() {
             @Override
@@ -308,7 +308,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
     @Override
     protected View getRealView(int position, View convertView,
                                final ViewGroup parent) {
-        options= ImageLoderOptionUtil.buldDisplayImageOptionsForAvatar();
+        options = ImageLoderOptionUtil.buldDisplayImageOptionsForAvatar();
         final ViewHolder viewHolder;
         int viewType = getViewType(position);
 
@@ -320,19 +320,19 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
             viewHolder = new ViewHolder();
 
-            viewHolder.leftAttachmentsContent= convertView.findViewById(R.id.left_attachments_content);
-            viewHolder.leftAttachmentsName= (TextView)convertView.findViewById(R.id.left_attachments_name);
-            viewHolder.leftAttachmentsSize= (TextView)convertView.findViewById(R.id.left_attachments_size);
-            viewHolder.leftAttachmentsType= (TextView)convertView.findViewById(R.id.left_attachments_type);
+            viewHolder.leftAttachmentsContent = convertView.findViewById(R.id.left_attachments_content);
+            viewHolder.leftAttachmentsName = (TextView) convertView.findViewById(R.id.left_attachments_name);
+            viewHolder.leftAttachmentsSize = (TextView) convertView.findViewById(R.id.left_attachments_size);
+            viewHolder.leftAttachmentsType = (TextView) convertView.findViewById(R.id.left_attachments_type);
 
-            viewHolder.rightAttachmentsContent= convertView.findViewById(R.id.right_attachments_content);
-            viewHolder.rightAttachmentsName= (TextView)convertView.findViewById(R.id.right_attachments_name);
-            viewHolder.rightAttachmentsSize= (TextView)convertView.findViewById(R.id.right_attachments_size);
-            viewHolder.rightAttachmentsType= (TextView)convertView.findViewById(R.id.right_attachments_type);
+            viewHolder.rightAttachmentsContent = convertView.findViewById(R.id.right_attachments_content);
+            viewHolder.rightAttachmentsName = (TextView) convertView.findViewById(R.id.right_attachments_name);
+            viewHolder.rightAttachmentsSize = (TextView) convertView.findViewById(R.id.right_attachments_size);
+            viewHolder.rightAttachmentsType = (TextView) convertView.findViewById(R.id.right_attachments_type);
 
 
             // 左侧气泡
-            viewHolder.LeftChatContentLayout = (RelativeLayout) convertView
+            viewHolder.LeftChatContentLayout = convertView
                     .findViewById(R.id.left_chat_content_layout);
             viewHolder.leftChatLayout = (RelativeLayout) convertView
                     .findViewById(R.id.left_chat_layout);
@@ -349,9 +349,9 @@ public class CommunicatAdapter extends ListBaseAdapter implements
             viewHolder.leftContentImageBar = (ProgressBar) convertView.findViewById(R.id.left_chat_conent_image_progressbar);
 
             // 右侧气泡
-            viewHolder.rightChatContentLayout = (RelativeLayout) convertView
+            viewHolder.rightChatContentLayout = convertView
                     .findViewById(R.id.right_chat_content_layout);
-            viewHolder.rightChatLayout = (RelativeLayout) convertView
+            viewHolder.rightChatLayout = convertView
                     .findViewById(R.id.right_chat_layout);
             viewHolder.rightUserPhoto = (ImageView) convertView
                     .findViewById(R.id.right_chat_userPhoto);
@@ -414,19 +414,19 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
             if (StringUtils.isEmpty(itemModel.getFileurl())) {
                 viewHolder.leftAttachmentsContent.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolder.leftAttachmentsContent.setVisibility(View.VISIBLE);
                 viewHolder.leftAttachmentsContent.setTag(itemModel);
                 viewHolder.leftAttachmentsName.setText(itemModel.getFilename());
 
-                String extention=getExtName(itemModel.getFilename());
+                String extention = getExtName(itemModel.getFilename());
                 viewHolder.leftAttachmentsType.setText(extention);
-                String filePath=getAttachmentFilePath(itemModel.getId(),extention);
-                if(filePath!=null) {
+                String filePath = getAttachmentFilePath(itemModel.getId(), extention);
+                if (filePath != null) {
                     File file = new File(filePath);
-                    String size=  bytes2kb(file.length());
+                    String size = bytes2kb(file.length());
                     viewHolder.leftAttachmentsSize.setText(size);
-                }else{
+                } else {
                     viewHolder.leftAttachmentsSize.setText(null);
                 }
 
@@ -460,7 +460,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                     String contentImg = ApiHttpClient.getImageApiUrl(itemModel
                             .getImage());
                     ImageLoader.getInstance().displayImage(contentImg,
-                            viewHolder.leftContentImage, options,new SimpleImageLoadingListener() {
+                            viewHolder.leftContentImage, options, new SimpleImageLoadingListener() {
                                 @Override
                                 public void onLoadingStarted(String imageUri, View view) {
                                     viewHolder.leftContentImageBar.setProgress(0);
@@ -519,7 +519,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                     String contentImg = ApiHttpClient.getImageApiUrl(itemModel
                             .getImage());
                     ImageLoader.getInstance().displayImage(contentImg,
-                            viewHolder.leftContentImage, options,new SimpleImageLoadingListener() {
+                            viewHolder.leftContentImage, options, new SimpleImageLoadingListener() {
                                 @Override
                                 public void onLoadingStarted(String imageUri, View view) {
                                     viewHolder.leftContentImageBar.setProgress(0);
@@ -594,19 +594,19 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
             if (StringUtils.isEmpty(itemModel.getFileurl())) {
                 viewHolder.rightAttachmentsContent.setVisibility(View.GONE);
-            }else{
+            } else {
                 viewHolder.rightAttachmentsContent.setVisibility(View.VISIBLE);
                 viewHolder.rightAttachmentsContent.setTag(itemModel);
                 viewHolder.rightAttachmentsName.setText(itemModel.getFilename());
 
-                String extention=getExtName(itemModel.getFilename());
+                String extention = getExtName(itemModel.getFilename());
                 viewHolder.rightAttachmentsType.setText(extention);
-                String filePath=getAttachmentFilePath(itemModel.getId(),extention);
-                if(filePath!=null) {
+                String filePath = getAttachmentFilePath(itemModel.getId(), extention);
+                if (filePath != null) {
                     File file = new File(filePath);
-                    String size=  bytes2kb(file.length());
+                    String size = bytes2kb(file.length());
                     viewHolder.rightAttachmentsSize.setText(size);
-                }else{
+                } else {
                     viewHolder.rightAttachmentsSize.setText(null);
                 }
 
@@ -620,7 +620,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
             }
 
             if (type == 2 && position != 0 && position != 1) {
-                viewHolder.flag = 1 ;
+                viewHolder.flag = 1;
                 viewHolder.rightChatContentLayout.setBackgroundResource(R.drawable.chat_right_green_bg);
                 viewHolder.rightContentTxt.setVisibility(View.VISIBLE);
                 viewHolder.rightContentTxt.setText("");
@@ -640,7 +640,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                     String contentImg = ApiHttpClient.getImageApiUrl(itemModel
                             .getImage());
                     ImageLoader.getInstance().displayImage(contentImg,
-                            viewHolder.rightContentImage, options,new SimpleImageLoadingListener() {
+                            viewHolder.rightContentImage, options, new SimpleImageLoadingListener() {
                                 @Override
                                 public void onLoadingStarted(String imageUri, View view) {
                                     viewHolder.rightContentImageBar.setProgress(0);
@@ -679,7 +679,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                     String contentImg = ApiHttpClient.getImageApiUrl(itemModel
                             .getImage());
                     ImageLoader.getInstance().displayImage(contentImg,
-                            viewHolder.rightContentImage, options,new SimpleImageLoadingListener() {
+                            viewHolder.rightContentImage, options, new SimpleImageLoadingListener() {
                                 @Override
                                 public void onLoadingStarted(String imageUri, View view) {
                                     viewHolder.rightContentImageBar.setProgress(0);
@@ -723,14 +723,14 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
                     if (position == 0) {
                         viewHolder.rightContentTxt.setText("问题：" + itemModel.getContent());
-                        viewHolder.flag = 1 ;
+                        viewHolder.flag = 1;
                     } else {
                         if (position == 1) {
                             viewHolder.rightContentTxt.setText("回答：" + itemModel.getContent());
-                            viewHolder.flag = 0 ;
+                            viewHolder.flag = 0;
                         } else {
                             viewHolder.rightContentTxt.setText(itemModel.getContent());
-                            viewHolder.flag = 1 ;
+                            viewHolder.flag = 1;
                         }
                     }
                 }
@@ -751,7 +751,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         return convertView;
     }
 
-    private void showPopUpImageView(ImageView v){
+    private void showPopUpImageView(ImageView v) {
         LinearLayout layout = new LinearLayout(v.getContext());
         layout.setBackgroundResource(R.drawable.popbackground);
         layout.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -765,7 +765,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         tv.setVisibility(View.GONE);
         TextView mdelect = (TextView) view.findViewById(R.id.pop_layout_delet);
 
-        CommentReply itemModel=(CommentReply)v.getTag();
+        CommentReply itemModel = (CommentReply) v.getTag();
         mdelect.setTag(itemModel);
 
 
@@ -774,11 +774,11 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         mdelect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mIsadopt == 1){
+                if (mIsadopt == 1) {
                     AppContext.showToast("被采纳回答无法删除");
-                }else{
+                } else {
                     int uid = AppContext.instance().getLoginUid();
-                    final CommentReply itemModel=(CommentReply)v.getTag();
+                    final CommentReply itemModel = (CommentReply) v.getTag();
                     NewsApi.delectAnswer(uid, itemModel.getId(),
                             new JsonHttpResponseHandler() {
                                 @Override
@@ -830,15 +830,15 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         TextView mdelect = (TextView) view.findViewById(R.id.pop_layout_delet);
         /*TextView modify = (TextView) view.findViewById(R.id.pop_layout_modify);*/
 
-        CommentReply itemModel=(CommentReply)v.getTag();
-        if(itemModel==null){
+        CommentReply itemModel = (CommentReply) v.getTag();
+        if (itemModel == null) {
             mdelect.setVisibility(View.GONE);
-        }else{
+        } else {
             mdelect.setVisibility(View.VISIBLE);
             mdelect.setTag(itemModel);
         }
 
-        final PopupWindow popupWindow = new PopupWindow(layout, 120, itemModel==null?140:240);
+        final PopupWindow popupWindow = new PopupWindow(layout, 120, itemModel == null ? 140 : 240);
 
         tv.setOnClickListener(new OnClickListener() {
             @Override
@@ -855,10 +855,10 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         mdelect.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(final View v) {
-                if(mIsadopt == 1){
+                if (mIsadopt == 1) {
                     AppContext.showToast("被采纳回答无法删除");
-                }else{
-                    if(flag == 0){
+                } else {
+                    if (flag == 0) {
                         final AlertDialog dialog = new AlertDialog.Builder(context).create();
                         dialog.show();
                         Window window = dialog.getWindow();
@@ -872,7 +872,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                             @Override
                             public void onClick(View view_zhichi) {
                                 int uid = AppContext.instance().getLoginUid();
-                                final CommentReply itemModel=(CommentReply)v.getTag();
+                                final CommentReply itemModel = (CommentReply) v.getTag();
                                 NewsApi.delectAnswer(uid, itemModel.getId(),
                                         new JsonHttpResponseHandler() {
                                             @Override
@@ -883,7 +883,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                                                     int code = response.getInt("code");
                                                     if (code != 88) {
                                                         str = response.getString("desc");
-                                                    }else{
+                                                    } else {
                                                         //removeDescItem(itemModel.getId());
                                                         mFrag.refreshCommunicat();
                                                     }
@@ -907,10 +907,10 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                         });
 
                         popupWindow.dismiss();
-                    }else{
+                    } else {
 
                         int uid = AppContext.instance().getLoginUid();
-                        final CommentReply itemModel=(CommentReply)v.getTag();
+                        final CommentReply itemModel = (CommentReply) v.getTag();
                         NewsApi.delectAnswer(uid, itemModel.getId(),
                                 new JsonHttpResponseHandler() {
                                     @Override
@@ -935,7 +935,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                     }
                 }
                 popupWindow.dismiss();
-                }
+            }
         });
       /*  modify.setOnClickListener(new OnClickListener() {
             @Override
@@ -954,16 +954,16 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0] + (v.getWidth() >> 1), location[1] - popupWindow.getHeight());
     }
 
-    private void removeDescItem(int aid){
+    private void removeDescItem(int aid) {
         CommentReply removeItem = null;
-        for(int i=0;i<_data.size();i++){
+        for (int i = 0; i < _data.size(); i++) {
             CommentReply itemModel = (CommentReply) _data.get(i);
-            if(itemModel.getId()==aid){
-                removeItem=itemModel;
+            if (itemModel.getId() == aid) {
+                removeItem = itemModel;
                 break;
             }
         }
-        if(removeItem!=null){
+        if (removeItem != null) {
             _data.remove(removeItem);
         }
         notifyDataSetChanged();
@@ -971,7 +971,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
 
     static class ViewHolder {
-        RelativeLayout leftChatLayout, rightChatLayout, LeftChatContentLayout, rightChatContentLayout;
+        View leftChatLayout, rightChatLayout, LeftChatContentLayout, rightChatContentLayout;
         ImageView leftUserPhoto, rightUserPhoto;
         TextView leftUserName, rightUserName, leftContentTxt, rightContentTxt;
         ImageView leftContentImage, rightContentImage;
@@ -980,23 +980,23 @@ public class CommunicatAdapter extends ListBaseAdapter implements
         ProgressBar leftContentImageBar;
 
         View leftAttachmentsContent;
-        TextView leftAttachmentsName, leftAttachmentsSize,leftAttachmentsType;
+        TextView leftAttachmentsName, leftAttachmentsSize, leftAttachmentsType;
 
         View rightAttachmentsContent;
-        TextView rightAttachmentsName, rightAttachmentsSize,rightAttachmentsType;
+        TextView rightAttachmentsName, rightAttachmentsSize, rightAttachmentsType;
 
         int flag;
     }
 
-    private static File pdfPathDir=null;
+    private static File pdfPathDir = null;
 
-    private String getAttachmentFilePath(int id,String fileExt){
-        if(pdfPathDir==null){
-            pdfPathDir= PathUtils.getExternalPDFFilesDir();
+    private String getAttachmentFilePath(int id, String fileExt) {
+        if (pdfPathDir == null) {
+            pdfPathDir = PathUtils.getExternalPDFFilesDir();
         }
-        if(pdfPathDir!=null){
-            String pdfPath=pdfPathDir.getAbsolutePath();
-            return String.format("%s/%d.%s",pdfPath,id,fileExt);
+        if (pdfPathDir != null) {
+            String pdfPath = pdfPathDir.getAbsolutePath();
+            return String.format("%s/%d.%s", pdfPath, id, fileExt);
         }
         return null;
     }

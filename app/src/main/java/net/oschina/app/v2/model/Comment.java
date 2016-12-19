@@ -53,7 +53,7 @@ public class Comment extends Entity {
 	protected String image;
 	protected String hits;
 	protected String isread;
-
+	protected String quid;
 	
 	protected int aid;
 	protected String title;
@@ -83,7 +83,13 @@ public class Comment extends Entity {
 		this.aftername = aftername;
 	}
 
+	public String getQuid() {
+		return quid;
+	}
 
+	public void setQuid(String quid) {
+		this.quid = quid;
+	}
 
 	protected boolean zhuiWen;
 	
@@ -346,6 +352,7 @@ public class Comment extends Entity {
 			comment.setRank(response.optInt("rank"));
 			comment.setImage(response.optString("image"));
 			comment.setIsread(response.optString("isread"));
+			comment.setQuid(response.optString("quid"));
 			String hits=response.optString("hits");
 			if(TextUtils.isEmpty(hits)){
 				hits="0";

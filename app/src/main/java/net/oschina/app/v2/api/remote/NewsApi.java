@@ -1055,8 +1055,8 @@ public class NewsApi extends BaseApi {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			//回答列表，返回已读未读 add by wuyue
-			/*int uid=AppContext.instance().getLoginUid();
-			jsonObject.put("uid", uid);*/
+			int uid=AppContext.instance().getLoginUid();
+			jsonObject.put("uid", uid);
 			jsonObject.put("pid", page);
 			jsonObject.put("qid", qid);
 			jsonObject.put("num", 20);

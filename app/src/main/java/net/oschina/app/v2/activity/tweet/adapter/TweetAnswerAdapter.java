@@ -311,7 +311,7 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 						.setBackgroundResource(R.drawable.common_list_item_bg);
 			}
 
-			if("0".equals(item.getIsread())){
+			if("0".equals(item.getIsread())&&String.valueOf(uid).equals(item.getQuid())){
 				vh.unread_answer.setVisibility(View.VISIBLE);
 			}else{
 				vh.unread_answer.setVisibility(View.GONE);

@@ -311,13 +311,13 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 						.setBackgroundResource(R.drawable.common_list_item_bg);
 			}
 
-			/*if("0".equals(item.getIsread())){
+			if("0".equals(item.getIsread())){
 				vh.unread_answer.setVisibility(View.VISIBLE);
 			}else{
 				vh.unread_answer.setVisibility(View.GONE);
-			}*/
+			}
 		}else{
-			//vh.unread_answer.setVisibility(View.GONE);
+			vh.unread_answer.setVisibility(View.GONE);
 		}
 
 		return convertView;

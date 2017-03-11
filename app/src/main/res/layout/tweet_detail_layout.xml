@@ -75,10 +75,9 @@
             android:layout_marginLeft="6dp"
             android:layout_marginRight="6dp"
             android:layout_marginTop="6dp"
-            android:background="#EFF2F7"
+            android:background="@drawable/addition_bg"
             android:orientation="vertical"
-            android:visibility="gone"
-            android:padding="4dp">
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="match_parent"
@@ -92,7 +91,6 @@
                 android:id="@+id/tv_ask_supplement_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:lineSpacingExtra="5dp"
                 android:text="这是补充回答的内容"
                 android:textColor="#2FBDE7"

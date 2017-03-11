@@ -27,6 +27,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.text.Html;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -495,11 +496,19 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
                 if (position == 0) {
                     viewHolder.leftContentTxt.setText("问题：" + itemModel.getContent());
+                    if(!TextUtils.isEmpty(itemModel.getNewcontent())){
+                        Spanned content= Html.fromHtml("<br/><font color=#2FBDE7>问题补充：" + itemModel.getNewcontent() + "</font>");
+                        viewHolder.leftContentTxt.append(content);
+                    }
                     viewHolder.LeftChatContentLayout.setBackgroundResource(R.drawable.chat_left_white_bg);
                 } else {
                     if (position == 1) {
                         viewHolder.leftContentTxt.setText("回答：" + itemModel.getContent());
                         viewHolder.LeftChatContentLayout.setBackgroundResource(R.drawable.chat_left_blue_bg);
+                        if(!TextUtils.isEmpty(itemModel.getNewcontent())){
+                            Spanned content= Html.fromHtml("<br/><font color=#2FBDE7>问题补充：" + itemModel.getNewcontent() + "</font>");
+                            viewHolder.leftContentTxt.append(content);
+                        }
                     } else {
                         viewHolder.leftContentTxt.setText(itemModel.getContent());
 
@@ -723,10 +732,18 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
                     if (position == 0) {
                         viewHolder.rightContentTxt.setText("问题：" + itemModel.getContent());
+                        if(!TextUtils.isEmpty(itemModel.getNewcontent())){
+                            Spanned content= Html.fromHtml("<br/><font color=#2FBDE7>问题补充：" + itemModel.getNewcontent() + "</font>");
+                            viewHolder.rightContentTxt.append(content);
+                        }
                         viewHolder.flag = 1;
                     } else {
                         if (position == 1) {
                             viewHolder.rightContentTxt.setText("回答：" + itemModel.getContent());
+                            if(!TextUtils.isEmpty(itemModel.getNewcontent())){
+                                Spanned content= Html.fromHtml("<br/><font color=#2FBDE7>问题补充：" + itemModel.getNewcontent() + "</font>");
+                                viewHolder.rightContentTxt.append(content);
+                            }
                             viewHolder.flag = 0;
                         } else {
                             viewHolder.rightContentTxt.setText(itemModel.getContent());

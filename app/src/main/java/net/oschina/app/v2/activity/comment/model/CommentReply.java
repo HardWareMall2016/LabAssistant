@@ -42,6 +42,7 @@ public class CommentReply extends Entity implements Serializable {
 
 	private String fileurl;
 	private String filename;
+	private String newcontent;
 	
 	public int getSign() {
 		return sign;
@@ -201,6 +202,14 @@ public class CommentReply extends Entity implements Serializable {
 
 	public void setQhead(String qhead) {
 		this.qhead = qhead;
+	}
+
+	public String getNewcontent() {
+		return newcontent;
+	}
+
+	public void setNewcontent(String newcontent) {
+		this.newcontent = newcontent;
 	}
 
 	public static CommentReply parseReply(JSONObject response)

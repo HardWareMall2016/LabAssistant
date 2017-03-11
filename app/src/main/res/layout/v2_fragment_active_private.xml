@@ -552,6 +552,39 @@
             android:layout_marginLeft="@dimen/space_8"
             android:layout_marginRight="@dimen/space_8"
             android:background="@color/list_divider_color" />
+        <!-- 草稿箱 -->
+        <LinearLayout
+            android:id="@+id/active_caogaoxiang"
+            style="@style/setting_item_container"
+            android:paddingLeft="@dimen/space_10"
+            android:paddingRight="@dimen/space_10">
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:contentDescription="@null"
+                android:src="@drawable/icon_caogaoxiang" />
+
+            <TextView
+                style="@style/setting_item_text"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_marginLeft="@dimen/space_10"
+                android:text="@string/active_caogaoxiang" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:src="@drawable/ic_item_goto_right_tip" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginRight="@dimen/space_8"
+            android:background="@color/list_divider_color" />
         <!-- 我的收藏 -->
         <LinearLayout
             android:id="@+id/active_wodesoucang"
@@ -626,39 +659,6 @@
                     android:gravity="center"
                     android:textColor="#fff" />
             </LinearLayout>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="@dimen/space_8"
-            android:layout_marginRight="@dimen/space_8"
-            android:background="@color/list_divider_color" />
-        <!-- 草稿箱 -->
-        <LinearLayout
-            android:id="@+id/active_caogaoxiang"
-            style="@style/setting_item_container"
-            android:paddingLeft="@dimen/space_10"
-            android:paddingRight="@dimen/space_10">
-
-            <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:contentDescription="@null"
-                android:src="@drawable/active_8" />
-
-            <TextView
-                style="@style/setting_item_text"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_marginLeft="@dimen/space_10"
-                android:text="@string/active_caogaoxiang" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end"
-                android:src="@drawable/ic_item_goto_right_tip" />
         </LinearLayout>
 
         <View

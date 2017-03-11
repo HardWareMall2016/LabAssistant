@@ -941,7 +941,13 @@ public class TweetDetailActivity extends BaseActivity {
 
         DraftBean draftBean= DBHelper.findDrafBean(ask.getId());
         if(draftBean!=null){
-            mEtInput.setText(draftBean.getDraftContent());
+            if(!TextUtils.isEmpty(draftBean.getHeaderUnDelete())){
+                mEtInput.setHeaderUnDelete(draftBean.getHeaderUnDelete());
+                toSomeone=draftBean.getToSomeone();
+                superlist=draftBean.getSuperlist();
+                userList=draftBean.getUserList();
+            }
+            mEtInput.append(draftBean.getDraftContent());
             DBHelper.deleteData(draftBean);
         }
 
@@ -1283,7 +1289,11 @@ public class TweetDetailActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        final String tweet = mEtInput.getText().toString();
+        String tweet = mEtInput.getText().toString();
+        final String headerUnDelete= mEtInput.getmHeaderUnDelete();
+        if(!TextUtils.isEmpty(headerUnDelete)&&!TextUtils.isEmpty(tweet)){
+            tweet=tweet.replace(headerUnDelete,"");
+        }
         if (!TextUtils.isEmpty(tweet)&&ask!=null) {
             CommonDialog dialog = DialogHelper.getPinterestDialogCancelable(this);
             dialog.setMessage(R.string.draft_tweet_message);
@@ -1293,14 +1303,19 @@ public class TweetDetailActivity extends BaseActivity {
                     TweetDetailActivity.super.onBackPressed();
                 }
             });
+            final String finalTweet = tweet;
             dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     DraftBean draft=new DraftBean();
-                    draft.setDraftContent(tweet);
+                    draft.setDraftContent(finalTweet);
                     draft.setQuestionId(ask.getId());
                     draft.setQuestionTitle(ask.getContent());
+                    draft.setHeaderUnDelete(headerUnDelete);
+                    draft.setToSomeone(toSomeone);
+                    draft.setSuperlist(superlist);
+                    draft.setUserList(userList);
                     DBHelper.saveData(draft);
                     dialog.dismiss();
                     TweetDetailActivity.super.onBackPressed();

@@ -134,6 +134,7 @@ public class CommunicatFragment extends BaseListFragment {
 		commentReply.setContent(ask.getContent());
 		commentReply.setIntputtime(ask.getinputtime());
 		commentReply.setImage(ask.getImage());
+		commentReply.setNewcontent(ask.getNewcontent());
 		list.getCommentlist().add(0, commentReply);
 
 		is.close();

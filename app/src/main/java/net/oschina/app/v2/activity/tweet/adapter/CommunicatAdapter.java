@@ -496,7 +496,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
                 if (position == 0) {
                     viewHolder.leftContentTxt.setText("问题：" + itemModel.getContent());
-                    if(!TextUtils.isEmpty(itemModel.getNewcontent())){
+                    if(!TextUtils.isEmpty(itemModel.getNewcontent())&&!"null".equalsIgnoreCase(itemModel.getNewcontent())){
                         Spanned content= Html.fromHtml("<br/><font color=#2FBDE7>问题补充：" + itemModel.getNewcontent() + "</font>");
                         viewHolder.leftContentTxt.append(content);
                     }
@@ -505,7 +505,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                     if (position == 1) {
                         viewHolder.leftContentTxt.setText("回答：" + itemModel.getContent());
                         viewHolder.LeftChatContentLayout.setBackgroundResource(R.drawable.chat_left_blue_bg);
-                        if(!TextUtils.isEmpty(itemModel.getNewcontent())){
+                        if(!TextUtils.isEmpty(itemModel.getNewcontent())&&!"null".equalsIgnoreCase(itemModel.getNewcontent())){
                             Spanned content= Html.fromHtml("<br/><font color=#2FBDE7>问题补充：" + itemModel.getNewcontent() + "</font>");
                             viewHolder.leftContentTxt.append(content);
                         }
@@ -732,7 +732,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
 
                     if (position == 0) {
                         viewHolder.rightContentTxt.setText("问题：" + itemModel.getContent());
-                        if(!TextUtils.isEmpty(itemModel.getNewcontent())){
+                        if(!TextUtils.isEmpty(itemModel.getNewcontent())&&!"null".equalsIgnoreCase(itemModel.getNewcontent())){
                             Spanned content= Html.fromHtml("<br/><font color=#2FBDE7>问题补充：" + itemModel.getNewcontent() + "</font>");
                             viewHolder.rightContentTxt.append(content);
                         }
@@ -740,7 +740,7 @@ public class CommunicatAdapter extends ListBaseAdapter implements
                     } else {
                         if (position == 1) {
                             viewHolder.rightContentTxt.setText("回答：" + itemModel.getContent());
-                            if(!TextUtils.isEmpty(itemModel.getNewcontent())){
+                            if(!TextUtils.isEmpty(itemModel.getNewcontent())&&!"null".equalsIgnoreCase(itemModel.getNewcontent())){
                                 Spanned content= Html.fromHtml("<br/><font color=#2FBDE7>问题补充：" + itemModel.getNewcontent() + "</font>");
                                 viewHolder.rightContentTxt.append(content);
                             }

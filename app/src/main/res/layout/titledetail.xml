@@ -156,7 +156,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="广告"
                     android:textColor="@color/main_gray"
-                    android:textSize="@dimen/text_size_12" />
+                    android:textSize="@dimen/text_size_16" />
 
                 <View
                     android:layout_width="0dp"

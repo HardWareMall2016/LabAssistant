@@ -308,6 +308,7 @@ public class PushDemoReceiver extends BroadcastReceiver {
 //						showNotification(context,"提示","回答被采纳",clickIntent);
 						showNotification(context,json.optString("notifytitle"),json.optString("notifycontent"),clickIntent);
 					}else if (type.equals("updateques")) {
+						//提问者补充了问题描述，请查看
 						Ask ask = new Ask();
 						ask.setId(contentJson.optInt("id",0));
 						Intent clickIntent = new Intent(context, TweetDetailActivity.class);

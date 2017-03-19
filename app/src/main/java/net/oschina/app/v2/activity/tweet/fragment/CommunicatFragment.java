@@ -66,9 +66,7 @@ public class CommunicatFragment extends BaseListFragment {
 					if (response.getString("desc").equals("success")) {
 
 						try {
-							ask = Ask.parse( new JSONObject(response
-									.getString("data")));
-							
+							ask = Ask.parse( new JSONObject(response.getString("data")));
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -136,7 +134,6 @@ public class CommunicatFragment extends BaseListFragment {
 		commentReply.setImage(ask.getImage());
 		commentReply.setNewcontent(ask.getNewcontent());
 		list.getCommentlist().add(0, commentReply);
-
 		is.close();
 		return list;
 	}

@@ -73,6 +73,21 @@ public class DBHelper {
         return data;
     }
 
+    public static DraftBean findDrafBean(int type,int askId,int commentId){
+        DraftBean data=null;
+        Extra extra = getExtra(DraftBean.class);
+
+        String selection="type=? and askId=? and commentId=?";
+        String[] selectionArgs=new String[]{String.valueOf(type),String.valueOf(askId),String.valueOf(commentId)};
+
+        List<DraftBean> beanList = getDBSqlite().select(DraftBean.class,selection,selectionArgs);
+
+        if(beanList!=null&&beanList.size()>0){
+            data=beanList.get(0);
+        }
+        return data;
+    }
+
     public static <T> void saveData(T data) {
         Extra extra = getExtra(data.getClass());
         getDBSqlite().insert(extra, data);

@@ -18,10 +18,13 @@ import android.widget.TextView;
 
 import com.shiyanzhushou.app.R;
 
+import net.oschina.app.v2.AppContext;
+import net.oschina.app.v2.activity.tweet.CommunicatActivity;
 import net.oschina.app.v2.activity.tweet.TweetDetailActivity;
 import net.oschina.app.v2.db.DBHelper;
 import net.oschina.app.v2.db.DraftBean;
 import net.oschina.app.v2.model.Ask;
+import net.oschina.app.v2.model.Comment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,7 +71,7 @@ public class CaoGaoXiangFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         DraftBean draftBean=  mDraftList.get(position);
-        if (draftBean != null ) {
+        if (draftBean != null&&draftBean.getDraftType()==1 ) {
             Ask ask = new Ask();
             ask.setId(draftBean.getQuestionId());
             //ask.setUid(Integer.parseInt(xiaoXi.getQuid()));
@@ -78,6 +81,32 @@ public class CaoGaoXiangFragment extends Fragment implements AdapterView.OnItemC
             bundle.putSerializable("ask", ask);
             intent.putExtras(bundle);
             getActivity().startActivity(intent);
+        }else   if (draftBean != null&&draftBean.getDraftType()==2 ) {
+            Comment comment = new Comment();
+            comment.setId(draftBean.getCommentId());
+            comment.setAid(draftBean.getCommentAid());
+            comment.setqid(draftBean.getCommentQid());
+            comment.setauid(draftBean.getCommentAuid());
+            comment.setnickname(draftBean.getCommentNickName());
+
+            Ask ask = new Ask();
+            ask.setId(draftBean.getAskId());
+            ask.setUid(draftBean.getAskUid());
+            ask.setnickname(draftBean.getAskNickname());
+            ask.sethead(draftBean.getAskHead());
+            ask.setContent(draftBean.getAskContent());
+            ask.setinputtime(draftBean.getAskIntPutTime());
+            ask.setImage(draftBean.getAskImage());
+            ask.setNewcontent(draftBean.getAskNewContent());
+
+            Intent intent = new Intent(getActivity(), CommunicatActivity.class);
+            Bundle bundle=new Bundle();
+            bundle.putInt("type", draftBean.getType());
+            bundle.putSerializable("ask",ask);
+            bundle.putSerializable("comment", comment);
+            intent.putExtras(bundle);
+            getActivity().startActivity(intent);
+
         }
     }
 

@@ -56,6 +56,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1309,6 +1310,7 @@ public class TweetDetailActivity extends BaseActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     DraftBean draft=new DraftBean();
+                    draft.setDraftType(1);
                     draft.setDraftContent(finalTweet);
                     draft.setQuestionId(ask.getId());
                     draft.setQuestionTitle(ask.getContent());

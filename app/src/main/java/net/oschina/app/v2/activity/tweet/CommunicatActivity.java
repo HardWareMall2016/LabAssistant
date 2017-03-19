@@ -7,6 +7,8 @@ import net.oschina.app.v2.activity.tweet.view.ExtendMediaPicker;
 import net.oschina.app.v2.activity.tweet.view.ExtendMediaPicker.OnMediaPickerListener;
 import net.oschina.app.v2.api.remote.NewsApi;
 import net.oschina.app.v2.base.BaseActivity;
+import net.oschina.app.v2.db.DBHelper;
+import net.oschina.app.v2.db.DraftBean;
 import net.oschina.app.v2.emoji.EmojiEditText;
 import net.oschina.app.v2.model.Ask;
 import net.oschina.app.v2.model.Comment;
@@ -23,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +35,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBar.LayoutParams;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -260,6 +264,18 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 		trans.add(R.id.container, communicatFragment);
 		trans.commit();
 
+
+		if(ask!=null&&comment!=null) {
+			DraftBean draftBean = DBHelper.findDrafBean(type, ask.getId(), comment.getId());
+			Log.i("wuyue","type = "+type);
+			Log.i("wuyue","ask.getId = "+ask.getId());
+			Log.i("wuyue","comment.getId = "+comment.getId());
+			Log.i("wuyue","draftBean = "+draftBean);
+			if (draftBean != null) {
+				emojiEditText.setText(draftBean.getDraftContent());
+				DBHelper.deleteData(draftBean);
+			}
+		}
 	}
 
 	/**
@@ -712,6 +728,61 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 		if(mWaitDialog!=null&&mWaitDialog.isShowing()){
 			mWaitDialog.dismiss();
 			mWaitDialog=null;
+		}
+	}
+
+
+	@Override
+	public void onBackPressed() {
+		String tweet = emojiEditText.getText().toString();
+		final String headerUnDelete= emojiEditText.getmHeaderUnDelete();
+		if(!TextUtils.isEmpty(headerUnDelete)&&!TextUtils.isEmpty(tweet)){
+			tweet=tweet.replace(headerUnDelete,"");
+		}
+		if (!TextUtils.isEmpty(tweet)&&ask!=null&&comment!=null) {
+			CommonDialog dialog = DialogHelper.getPinterestDialogCancelable(this);
+			dialog.setMessage(R.string.draft_tweet_message);
+			dialog.setNegativeButton(R.string.cancle, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					CommunicatActivity.super.onBackPressed();
+				}
+			});
+			final String finalTweet = tweet;
+			dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+
+					DraftBean draft=new DraftBean();
+					draft.setDraftType(2);
+					draft.setDraftContent(finalTweet);
+
+					draft.setType(type);
+
+					draft.setAskId(ask.getId());
+					draft.setAskNickname(ask.getnickname());
+					draft.setAskUid(ask.getUid());
+					draft.setAskHead(ask.gethead());
+					draft.setAskContent(ask.getContent());
+					draft.setAskIntPutTime(ask.getinputtime());
+					draft.setAskImage(ask.getImage());
+					draft.setAskNewContent(ask.getNewcontent());
+
+					draft.setCommentId(comment.getId());
+					draft.setCommentAid(comment.getAid());
+					draft.setCommentQid(comment.getqid());
+					draft.setCommentAuid(comment.getauid());
+					draft.setAskNickname(comment.getnickname());
+
+					DBHelper.saveData(draft);
+					dialog.dismiss();
+					CommunicatActivity.super.onBackPressed();
+				}
+			});
+			dialog.show();
+		}else{
+			super.onBackPressed();
 		}
 	}
 }

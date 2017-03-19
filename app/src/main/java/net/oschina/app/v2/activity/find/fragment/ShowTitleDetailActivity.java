@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -39,9 +40,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -99,6 +102,8 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 	private boolean isAllowShare;
 	private int collectflag;//1已收藏 0未收藏
 	private PDFView pdfView;
+	private LinearLayout mPdfContent;
+	private LinearLayout mWebbViewContent;
 
 	private Handler mhandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
@@ -181,11 +186,11 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 			@Override
 			public void onClick(View v) {
 				if (collectflag == 1) {
-					NewsApi.collectArticle(mNewsId, AppContext.instance().getLoginUid(), 0,mNewsType,
+					NewsApi.collectArticle(mNewsId, AppContext.instance().getLoginUid(), 0, mNewsType,
 							new JsonHttpResponseHandler() {
 								@Override
 								public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-									if (response==null||response.optInt("code") != 88) {
+									if (response == null || response.optInt("code") != 88) {
 										AppContext.showToast("取消收藏失败");
 										return;
 									}
@@ -195,22 +200,22 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 								}
 							});
 				} else {
-					NewsApi.collectArticle(mNewsId, AppContext.instance().getLoginUid(), 1,mNewsType,
-						new JsonHttpResponseHandler() {
-							@Override
-							public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-								if (response==null||response.optInt("code") != 88) {
-									AppContext.showToast("收藏失败");
-									return;
+					NewsApi.collectArticle(mNewsId, AppContext.instance().getLoginUid(), 1, mNewsType,
+							new JsonHttpResponseHandler() {
+								@Override
+								public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+									if (response == null || response.optInt("code") != 88) {
+										AppContext.showToast("收藏失败");
+										return;
+									}
+									collectflag = 1;
+									AppContext.showToast("已收藏");
+									favBtn.setImageResource(R.drawable.actionbar_unfavorite_icon_2);
 								}
-								collectflag = 1;
-								AppContext.showToast("已收藏");
-								favBtn.setImageResource(R.drawable.actionbar_unfavorite_icon_2);
-							}
-						});
+							});
+				}
 			}
-		}
-	});
+		});
 
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT);
@@ -347,12 +352,19 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 			ImageLoader.getInstance().displayImage(mNewsImg, detail_img);
 		}
 
-
+		mPdfContent=(LinearLayout)findViewById(R.id.pdfViewContent);
 		pdfView=(PDFView) findViewById(R.id.pdfView);
+		mWebbViewContent=(LinearLayout)findViewById(R.id.webViewContent);
 
 		// iv_td = (ImageView) findViewById(R.id.iv_td);
 		wv_td = (WebView) findViewById(R.id.wv_td);
 		wv_td.getSettings().setJavaScriptEnabled(true);
+		wv_td.getSettings().setDefaultTextEncodingName("utf-8");
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+			wv_td.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
+		} else {
+			wv_td.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+		}
 		//add by wuyue
 		wv_td.getSettings().setSupportZoom(true);
 		wv_td.getSettings().setBuiltInZoomControls(true);
@@ -420,10 +432,12 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 				//屏蔽下载按钮
 				if(TextUtils.isEmpty(pdfFilePath)){
 					wv_td.setVisibility(View.VISIBLE);
-					pdfView.setVisibility(View.GONE);
+					mPdfContent.setVisibility(View.GONE);
 					wv_td.loadUrl(content.toString() + "?APP_VERSION=1");
 				}else{
-					pdfView.setVisibility(View.VISIBLE);
+					mPdfContent.setVisibility(View.VISIBLE);
+					mWebbViewContent.removeView(mAdContainer);
+					mPdfContent.addView(mAdContainer,1);
 					wv_td.setVisibility(View.GONE);
 					showPdfFile(pdfFilePath);
 				}

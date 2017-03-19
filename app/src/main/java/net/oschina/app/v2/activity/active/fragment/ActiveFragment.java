@@ -16,6 +16,8 @@ import net.oschina.app.v2.model.MessageNum;
 import net.oschina.app.v2.model.User;
 import net.oschina.app.v2.model.event.MessageRefreshSingle;
 import net.oschina.app.v2.model.event.MessageRefreshTotal;
+import net.oschina.app.v2.ui.dialog.CommonDialog;
+import net.oschina.app.v2.ui.dialog.DialogHelper;
 import net.oschina.app.v2.ui.dialog.SignInDialog;
 import net.oschina.app.v2.ui.dialog.WaitDialog;
 import net.oschina.app.v2.utils.ActiveNumType;
@@ -30,6 +32,7 @@ import org.apache.http.entity.StringEntity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
@@ -353,6 +356,8 @@ public class ActiveFragment extends BaseFragment {
 		view.findViewById(R.id.btn_fankui).setOnClickListener(this);
 		view.findViewById(R.id.btn_setting).setOnClickListener(this);
 
+		view.findViewById(R.id.jiFenContent).setOnClickListener(this);
+
 		btnSignIn=(TextView)view.findViewById(R.id.btn_sign);
 		btnSignIn.setOnClickListener(this);
 
@@ -368,7 +373,7 @@ public class ActiveFragment extends BaseFragment {
 		iv_sex = (ImageView) view.findViewById(R.id.iv_sex);
 		// 积分
 		tv_jifen = (TextView) view.findViewById(R.id.tv_jifen);
-		tv_jifen.setOnClickListener(this);
+		//tv_jifen.setOnClickListener(this);
 
 		tv_add_integral = (TextView) view.findViewById(R.id.tv_add_integral);
 
@@ -702,7 +707,42 @@ public class ActiveFragment extends BaseFragment {
 			UIHelper.showFeedBack(getActivity());
 		}else if(id==R.id.btn_setting){
 			UIHelper.showSetting(getActivity());
+		}else if(id==R.id.jiFenContent){
+			final User user = AppContext.instance().getLoginInfo();
+			if(user==null||user.getCurdayintegral()==0){
+				return;
+			}
+			CommonDialog dialog = DialogHelper.getPinterestDialogCancelable(getActivity());
+			dialog.setMessage("您今天截至目前获得积分："+user.getCurdayintegral());
+			dialog.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+					clearCurDayIntegral();
+				}
+			});
+			dialog.show();
 		}
+	}
+
+	/**
+	 * 清除当前积分
+	 */
+	private void clearCurDayIntegral() {
+		/*NewsApi.updatephone("","",new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+				try {
+					if (response.optInt("code") == 88) {
+						AppContext.showToast("手机号修改成功");
+
+					}else{
+						AppContext.showToast("手机号修改失败");
+					}
+				} catch (Exception e) {
+				}
+			}
+		});*/
 	}
 
 	private WaitDialog mSignProgressDialog;

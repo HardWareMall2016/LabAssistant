@@ -2550,4 +2550,16 @@ public class NewsApi extends BaseApi {
 		}
 		ApiHttpClient.post("/index.php/Api/Member/updatephone.html", jsonObject, mJsonHandler);
 	}
+
+	// 当天积分清零
+	public static void clearTodayJinFen(JsonHttpResponseHandler mJsonHandler) {
+		JSONObject jsonObject = new JSONObject();
+		try {
+			jsonObject.put("uid",AppContext.instance().getLoginUid());
+			jsonObject.put("type", 21);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ApiHttpClient.post("/index.php/Api/Member/updatetime.html", jsonObject, mJsonHandler);
+	}
 }

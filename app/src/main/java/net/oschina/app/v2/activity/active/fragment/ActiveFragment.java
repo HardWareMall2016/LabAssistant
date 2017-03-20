@@ -729,20 +729,25 @@ public class ActiveFragment extends BaseFragment {
 	 * 清除当前积分
 	 */
 	private void clearCurDayIntegral() {
-		/*NewsApi.updatephone("","",new JsonHttpResponseHandler() {
+		NewsApi.clearTodayJinFen(new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 				try {
 					if (response.optInt("code") == 88) {
-						AppContext.showToast("手机号修改成功");
-
-					}else{
-						AppContext.showToast("手机号修改失败");
+						final User user = AppContext.instance().getLoginInfo();
+						if (user == null || user.getCurdayintegral() == 0) {
+							return;
+						}
+						user.setCurdayintegral(0);
+						AppContext.instance().saveLoginInfo(user);
+						tv_add_integral.setVisibility(View.GONE);
+					} else {
+						AppContext.showToast("操作失败");
 					}
 				} catch (Exception e) {
 				}
 			}
-		});*/
+		});
 	}
 
 	private WaitDialog mSignProgressDialog;

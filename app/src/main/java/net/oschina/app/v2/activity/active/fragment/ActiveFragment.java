@@ -713,7 +713,7 @@ public class ActiveFragment extends BaseFragment {
 				return;
 			}
 			CommonDialog dialog = DialogHelper.getPinterestDialogCancelable(getActivity());
-			dialog.setMessage("您今天截至目前获得积分："+user.getCurdayintegral());
+			dialog.setMessage("您今天截至目前获得积分："+user.getIntegral());
 			dialog.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {

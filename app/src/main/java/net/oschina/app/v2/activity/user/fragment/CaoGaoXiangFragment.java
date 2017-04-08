@@ -28,6 +28,8 @@ import net.oschina.app.v2.model.Comment;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
@@ -65,6 +67,12 @@ public class CaoGaoXiangFragment extends Fragment implements AdapterView.OnItemC
 
     private void refreshView(){
         mDraftList= DBHelper.findData(DraftBean.class);
+        Collections.sort(mDraftList,new Comparator<DraftBean>() {
+            @Override
+            public int compare(DraftBean lhs, DraftBean rhs) {
+                return lhs.getSaveTime()>rhs.getSaveTime()?-1:1;
+            }
+        });
         mAdapter.notifyDataSetChanged();
     }
 

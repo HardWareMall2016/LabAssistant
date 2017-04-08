@@ -270,9 +270,17 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 			Log.i("wuyue","type = "+type);
 			Log.i("wuyue","ask.getId = "+ask.getId());
 			Log.i("wuyue","comment.getId = "+comment.getId());
-			Log.i("wuyue","draftBean = "+draftBean);
+			Log.i("wuyue", "draftBean = " + draftBean);
 			if (draftBean != null) {
-				emojiEditText.setText(draftBean.getDraftContent());
+				if(!TextUtils.isEmpty(draftBean.getCommentHeader())){
+					emojiEditText.setHeader(draftBean.getCommentHeader());
+					emojiEditText.setAskUid(draftBean.getCommentAskUid());
+					emojiEditText.setId(draftBean.getCommentViewId());
+					emojiEditText.setSelection(emojiEditText.getHeader().length());
+
+					draftBean.setDraftContent(draftBean.getDraftContent().replace(draftBean.getCommentHeader(),""));
+				}
+				emojiEditText.append(draftBean.getDraftContent());
 				DBHelper.deleteData(draftBean);
 			}
 		}
@@ -735,10 +743,10 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 	@Override
 	public void onBackPressed() {
 		String tweet = emojiEditText.getText().toString();
-		final String headerUnDelete= emojiEditText.getmHeaderUnDelete();
+		/*final String headerUnDelete= emojiEditText.getmHeaderUnDelete();
 		if(!TextUtils.isEmpty(headerUnDelete)&&!TextUtils.isEmpty(tweet)){
 			tweet=tweet.replace(headerUnDelete,"");
-		}
+		}*/
 		if (!TextUtils.isEmpty(tweet)&&ask!=null&&comment!=null) {
 			CommonDialog dialog = DialogHelper.getPinterestDialogCancelable(this);
 			dialog.setMessage(R.string.draft_tweet_message);
@@ -748,40 +756,48 @@ public class CommunicatActivity extends BaseActivity implements OnClickListener 
 					CommunicatActivity.super.onBackPressed();
 				}
 			});
-			final String finalTweet = tweet;
 			dialog.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
 
-					DraftBean draft=new DraftBean();
-					draft.setDraftType(2);
-					draft.setDraftContent(finalTweet);
+							DraftBean draft = new DraftBean();
+							draft.setDraftType(2);
 
-					draft.setType(type);
+							String tweet = emojiEditText.getText().toString();
+							draft.setDraftContent(tweet);
 
-					draft.setAskId(ask.getId());
-					draft.setAskNickname(ask.getnickname());
-					draft.setAskUid(ask.getUid());
-					draft.setAskHead(ask.gethead());
-					draft.setAskContent(ask.getContent());
-					draft.setAskIntPutTime(ask.getinputtime());
-					draft.setAskImage(ask.getImage());
-					draft.setAskNewContent(ask.getNewcontent());
+							draft.setType(type);
 
-					draft.setCommentId(comment.getId());
-					draft.setCommentAid(comment.getAid());
-					draft.setCommentQid(comment.getqid());
-					draft.setCommentAuid(comment.getauid());
-					draft.setAskNickname(comment.getnickname());
+							draft.setAskId(ask.getId());
+							draft.setAskNickname(ask.getnickname());
+							draft.setAskUid(ask.getUid());
+							draft.setAskHead(ask.gethead());
+							draft.setAskContent(ask.getContent());
+							draft.setAskIntPutTime(ask.getinputtime());
+							draft.setAskImage(ask.getImage());
+							draft.setAskNewContent(ask.getNewcontent());
 
-					DBHelper.saveData(draft);
-					dialog.dismiss();
-					CommunicatActivity.super.onBackPressed();
-				}
-			});
-			dialog.show();
-		}else{
+							draft.setCommentId(comment.getId());
+							draft.setCommentAid(comment.getAid());
+							draft.setCommentQid(comment.getqid());
+							draft.setCommentAuid(comment.getauid());
+							draft.setCommentNickName(comment.getnickname());
+							if (!TextUtils.isEmpty(emojiEditText.getHeader())) {
+								draft.setCommentHeader(emojiEditText.getHeader());
+								draft.setCommentAskUid(emojiEditText.getAskUid());
+								draft.setCommentViewId(emojiEditText.getId());
+							}
+
+							DBHelper.saveData(draft);
+							dialog.dismiss();
+							CommunicatActivity.super.onBackPressed();
+						}
+					}
+
+				);
+				dialog.show();
+			}else{
 			super.onBackPressed();
 		}
 	}

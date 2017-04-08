@@ -57,6 +57,9 @@ public class DraftBean extends BaseDataBean{
     private int commentQid;
     private int commentAuid;
     private String commentNickName;
+    private String commentHeader;
+    private int commentAskUid;
+    private int commentViewId;
 
     //Ask
     private int askId;
@@ -252,5 +255,29 @@ public class DraftBean extends BaseDataBean{
 
     public void setAskNewContent(String askNewContent) {
         this.askNewContent = askNewContent;
+    }
+
+    public String getCommentHeader() {
+        return commentHeader;
+    }
+
+    public void setCommentHeader(String commentHeader) {
+        this.commentHeader = commentHeader;
+    }
+
+    public int getCommentAskUid() {
+        return commentAskUid;
+    }
+
+    public void setCommentAskUid(int commentAskUid) {
+        this.commentAskUid = commentAskUid;
+    }
+
+    public int getCommentViewId() {
+        return commentViewId;
+    }
+
+    public void setCommentViewId(int commentViewId) {
+        this.commentViewId = commentViewId;
     }
 }

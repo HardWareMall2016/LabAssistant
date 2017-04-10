@@ -2155,6 +2155,7 @@ public class NewsApi extends BaseApi {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			// 请求的参数
+			jsonObject.put("uid",AppContext.instance().getLoginUid());
 			jsonObject.put("aid", aid);
 			jsonObject.put("auid", uid);
 			jsonObject.put("pid", page);

@@ -310,10 +310,19 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 				vh.relativeLayout
 						.setBackgroundResource(R.drawable.common_list_item_bg);
 			}
-
-			if("0".equals(item.getIsread())&&String.valueOf(uid).equals(item.getQuid())){
-				vh.unread_answer.setVisibility(View.VISIBLE);
-			}else{
+			if(String.valueOf(uid).equals(item.getQuid())){
+				if("0".equals(item.getIsread())){
+					vh.unread_answer.setText("new");
+					vh.unread_answer.setVisibility(View.VISIBLE);
+				}else{
+					if(item.getNewcount()>0){
+						vh.unread_answer.setText(String.valueOf(item.getNewcount()));
+						vh.unread_answer.setVisibility(View.VISIBLE);
+					}else {
+						vh.unread_answer.setVisibility(View.GONE);
+					}
+				}
+			} else{
 				vh.unread_answer.setVisibility(View.GONE);
 			}
 		}else{

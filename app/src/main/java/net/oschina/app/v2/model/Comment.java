@@ -62,9 +62,19 @@ public class Comment extends Entity {
 	protected List<CommentItem> itemList=new ArrayList<CommentItem>();
 	protected String ansupperlist;
 	protected int count;
+
+	protected int newcount;
 	
 	private String aftername;
 
+
+	public int getNewcount() {
+		return newcount;
+	}
+
+	public void setNewcount(int newcount) {
+		this.newcount = newcount;
+	}
 
 	public String getIsread() {
 		return isread;
@@ -354,6 +364,7 @@ public class Comment extends Entity {
 			comment.setIsread(response.optString("isread"));
 			comment.setQuid(response.optString("quid"));
 			String hits=response.optString("hits");
+			comment.setNewcount(response.optInt("newcount"));
 			if(TextUtils.isEmpty(hits)){
 				hits="0";
 			}

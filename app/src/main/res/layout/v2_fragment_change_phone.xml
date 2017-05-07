@@ -17,7 +17,7 @@
             <EditText
                 android:id="@+id/et_obatin_verify"
                 style="@style/item_input_edittext"
-                android:hint="请输入您的手机号"
+                android:hint="请输入您的新手机号"
                 android:inputType="phone" />
         </LinearLayout>
 

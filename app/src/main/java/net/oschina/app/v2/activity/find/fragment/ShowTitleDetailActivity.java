@@ -42,6 +42,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -368,6 +369,21 @@ public class ShowTitleDetailActivity extends BaseActivity implements
 		//add by wuyue
 		wv_td.getSettings().setSupportZoom(true);
 		wv_td.getSettings().setBuiltInZoomControls(true);
+
+		wv_td.setWebViewClient(new WebViewClient(){
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				if (!url.startsWith("http") & !url.startsWith("https")) {
+					return super.shouldOverrideUrlLoading(view, url);
+				} else {
+					Intent intent = new Intent(ShowTitleDetailActivity.this, AdvertisementActivity.class);
+					intent.putExtra("adUrl",url);
+					startActivity(intent);
+					return false;
+				}
+			}
+		});
+
 		sendRequestData();
 
 		mController.getConfig().closeToast();

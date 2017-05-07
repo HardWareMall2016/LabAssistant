@@ -460,7 +460,10 @@ public class ActiveFragment extends BaseFragment {
 		if(user.getCurdayintegral()>0){
 			tv_add_integral.setVisibility(View.VISIBLE);
 			tv_add_integral.setText(String.format("+%d", user.getCurdayintegral()));
-		}else{
+		}else if(user.getCurdayintegral()<0){
+			tv_add_integral.setVisibility(View.VISIBLE);
+			tv_add_integral.setText(String.format("%d", user.getCurdayintegral()));
+		} else{
 			tv_add_integral.setVisibility(View.GONE);
 		}
 
@@ -709,16 +712,21 @@ public class ActiveFragment extends BaseFragment {
 			UIHelper.showSetting(getActivity());
 		}else if(id==R.id.jiFenContent){
 			final User user = AppContext.instance().getLoginInfo();
-			if(user==null||user.getCurdayintegral()==0){
+			if(user==null){
 				return;
 			}
 			CommonDialog dialog = DialogHelper.getPinterestDialogCancelable(getActivity());
-			dialog.setMessage("您今天截至目前获得积分："+user.getIntegral());
+
+			String messageContent="您今天截至目前获得积分："+user.getIntegral();
+			messageContent+="<br>消费的积分："+user.getIntegral();
+			dialog.setMessage(messageContent);
 			dialog.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
-					clearCurDayIntegral();
+					if (user.getCurdayintegral() != 0) {
+						clearCurDayIntegral();
+					}
 				}
 			});
 			dialog.show();
@@ -772,15 +780,15 @@ public class ActiveFragment extends BaseFragment {
 				super.onSuccess(statusCode, headers, response);
 				closeSignDialog();
 				try {
-					switch (response.getInt("code")){
+					switch (response.getInt("code")) {
 						case 88:
-							SignInDialog dialog=new SignInDialog(getActivity(),R.style.Dialog);
+							SignInDialog dialog = new SignInDialog(getActivity(), R.style.Dialog);
 							JSONObject json = new JSONObject(response.optString("data"));
-							String signremind=json.optString("signremind");
-							String integral=json.optString("integral");
-							String curmonth=json.optString("curmonth");
-							int continuecount=json.optInt("continuecount");
-							String daysignintegral=json.optString("daysignintegral");
+							String signremind = json.optString("signremind");
+							String integral = json.optString("integral");
+							String curmonth = json.optString("curmonth");
+							int continuecount = json.optInt("continuecount");
+							String daysignintegral = json.optString("daysignintegral");
 							dialog.setContinuecount(continuecount);
 							dialog.setSignremind(signremind);
 							dialog.setIntegral(integral);
@@ -791,25 +799,31 @@ public class ActiveFragment extends BaseFragment {
 
 							//刷新个人信息积分
 							tv_jifen.setText(integral + "分");
-							try{
-								User user=AppContext.instance().getLoginInfo();
-								int preIntegral=user.getIntegral();
+							try {
+								User user = AppContext.instance().getLoginInfo();
+								int preIntegral = user.getIntegral();
 
 								user.setIntegral(Integer.parseInt(integral));
 								AppContext.instance().saveLoginInfo(user);
 
-								int addIntegra=Integer.parseInt(integral)-preIntegral;
-								if(addIntegra>0){
+								int addIntegra = Integer.parseInt(integral) - preIntegral;
+								if (addIntegra > 0) {
 									tv_add_integral.setText(String.format("+%d", addIntegra));
 									user.setIntegral(Integer.parseInt(integral));
 									user.setCurdayintegral(addIntegra);
 									AppContext.instance().saveLoginInfo(user);
 									tv_add_integral.setVisibility(View.VISIBLE);
-								}else{
+								}else if(addIntegra<0){
+									tv_add_integral.setText(String.format("%d", addIntegra));
+									user.setIntegral(Integer.parseInt(integral));
+									user.setCurdayintegral(addIntegra);
+									AppContext.instance().saveLoginInfo(user);
+									tv_add_integral.setVisibility(View.VISIBLE);
+								} else {
 									tv_add_integral.setVisibility(View.GONE);
 								}
 
-							}catch (Exception ex){
+							} catch (Exception ex) {
 								/*tv_add_integral.setText("+2");
 								tv_add_integral.setVisibility(View.VISIBLE);*/
 							}
@@ -856,7 +870,11 @@ public class ActiveFragment extends BaseFragment {
 
 		if(message.getCurdayintegral()>0){
 			tv_add_integral.setVisibility(View.VISIBLE);
-			tv_add_integral.setText(String.format("+%d", message.getCurdayintegral()));
+			if(message.getCurdayintegral()>0){
+				tv_add_integral.setText(String.format("+%d", message.getCurdayintegral()));
+			}else{
+				tv_add_integral.setText(String.format("%d", message.getCurdayintegral()));
+			}
 		}else{
 			tv_add_integral.setVisibility(View.GONE);
 		}

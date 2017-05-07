@@ -437,7 +437,7 @@ public class SettingsFragment extends BaseFragment {
                             AppContext.showToast("已经是最新版本");
                         }
                     } else {
-                        AppContext.showToast("问题补充失败");
+                        AppContext.showToast("获取最新版本信息失败");
                     }
                 } catch (Exception e) {
                 }

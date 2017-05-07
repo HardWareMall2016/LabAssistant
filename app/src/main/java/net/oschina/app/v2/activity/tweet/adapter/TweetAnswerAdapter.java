@@ -313,6 +313,9 @@ public class TweetAnswerAdapter extends ListBaseAdapter {
 			if(String.valueOf(uid).equals(item.getQuid())){
 				if("0".equals(item.getIsread())){
 					vh.unread_answer.setText("new");
+					if(item.getNewcount()>0){
+						vh.unread_answer.setText(String.valueOf(item.getNewcount()+1));
+					}
 					vh.unread_answer.setVisibility(View.VISIBLE);
 				}else{
 					if(item.getNewcount()>0){

@@ -689,8 +689,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 						if(needUpdate(currentVersionName,serverVersion)){
 							showUpdateDialog(serverVersion,url);
 						}
-					} else {
-						AppContext.showToast("问题补充失败");
 					}
 				} catch (Exception e) {
 				}

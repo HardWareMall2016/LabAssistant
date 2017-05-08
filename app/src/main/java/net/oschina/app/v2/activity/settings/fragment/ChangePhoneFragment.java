@@ -97,6 +97,7 @@ public class ChangePhoneFragment extends BaseFragment {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("phone", phoneNumber);
+            jsonObject.put("type", "change");
             entity = new StringEntity(jsonObject.toString());
         } catch (Exception e) {
            return;

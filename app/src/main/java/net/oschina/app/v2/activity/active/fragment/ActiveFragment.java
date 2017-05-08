@@ -717,16 +717,16 @@ public class ActiveFragment extends BaseFragment {
 			}
 			CommonDialog dialog = DialogHelper.getPinterestDialogCancelable(getActivity());
 
-			String messageContent="您今天截至目前获得积分："+user.getIntegral();
-			messageContent+="<br>消费的积分："+user.getIntegral();
+			String messageContent="您今天截至目前获得积分："+user.getTodayintegral();
+			messageContent+="<br>消费的积分："+user.getTodayconsumeintegral();
 			dialog.setMessage(messageContent);
 			dialog.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
-					if (user.getCurdayintegral() != 0) {
+					//if (user.getCurdayintegral() != 0) {
 						clearCurDayIntegral();
-					}
+					//}
 				}
 			});
 			dialog.show();
@@ -868,12 +868,20 @@ public class ActiveFragment extends BaseFragment {
 		ActiveNumType.updateMessageLabel(message.getMnum(), mSysMessageNotice);
 		ActiveNumType.updateMessageLabel(message.getGnum(), mAttentionNotice);
 
-		if(message.getCurdayintegral()>0){
+
+		User user=AppContext.instance().getLoginInfo();
+		user.setCurdayintegral(message.getCurdayintegral());
+		user.setTodayintegral(message.getTodayintegral());
+		user.setTodayconsumeintegral(message.getTodayconsumeintegral());
+		AppContext.instance().saveLoginInfo(user);
+
+		int newIntegral=message.getTodayintegral()-message.getTodayconsumeintegral();
+		if(newIntegral!=0){
 			tv_add_integral.setVisibility(View.VISIBLE);
-			if(message.getCurdayintegral()>0){
-				tv_add_integral.setText(String.format("+%d", message.getCurdayintegral()));
+			if(newIntegral>0){
+				tv_add_integral.setText(String.format("+%d", newIntegral));
 			}else{
-				tv_add_integral.setText(String.format("%d", message.getCurdayintegral()));
+				tv_add_integral.setText(String.format("%d", newIntegral));
 			}
 		}else{
 			tv_add_integral.setVisibility(View.GONE);

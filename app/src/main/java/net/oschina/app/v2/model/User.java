@@ -62,6 +62,8 @@ public class User extends Base {
 	private boolean issigned;
 	private String info;//认证信息
 	private int curdayintegral;//当天积分数
+	private int todayintegral;//当天总积分
+	private int todayconsumeintegral;//当天消费
 
 	public int getCurdayintegral() {
 		return curdayintegral;
@@ -335,6 +337,22 @@ public class User extends Base {
 		this.info = info;
 	}
 
+	public int getTodayintegral() {
+		return todayintegral;
+	}
+
+	public void setTodayintegral(int todayintegral) {
+		this.todayintegral = todayintegral;
+	}
+
+	public int getTodayconsumeintegral() {
+		return todayconsumeintegral;
+	}
+
+	public void setTodayconsumeintegral(int todayconsumeintegral) {
+		this.todayconsumeintegral = todayconsumeintegral;
+	}
+
 	public static User parse(JSONObject json) throws IOException, AppException {
 		User user = new User();
 		JSONObject userinfo = json;
@@ -371,6 +389,8 @@ public class User extends Base {
 		user.setIssigned(userinfo.optBoolean("issigned"));
 		user.setInfo(userinfo.optString("info"));
 		user.setCurdayintegral(userinfo.optInt("curdayintegral"));
+		user.setTodayintegral(userinfo.optInt("todayintegral"));
+		user.setTodayconsumeintegral(userinfo.optInt("todayconsumeintegral"));
 
 		return user;
 	}

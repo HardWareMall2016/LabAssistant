@@ -80,8 +80,9 @@ public class FavoriteMeFragment extends BaseListFragment implements OnClickListe
 	@Override
 	protected void sendRequestData() {
 		// 响应结果存在问题，多返回了一个data节点
-		mCurrentPage = mCurrentPage < 1 ? 1 : mCurrentPage;
-		NewsApi.getFansList(AppContext.instance().getLoginUid(),mCurrentPage, mJsonHandler);
+		/*mCurrentPage = mCurrentPage < 1 ? 1 : mCurrentPage;
+		NewsApi.getFansList(AppContext.instance().getLoginUid(),mCurrentPage, mJsonHandler);*/
+		NewsApi.getFansList(AppContext.instance().getLoginUid(), mJsonHandler);
 	}
 
 	@Override

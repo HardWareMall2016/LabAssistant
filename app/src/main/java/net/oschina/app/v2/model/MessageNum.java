@@ -121,6 +121,22 @@ public class MessageNum implements Serializable {
 		this.curdayintegral = curdayintegral;
 	}
 
+	public int getTodayintegral() {
+		return todayintegral;
+	}
+
+	public void setTodayintegral(int todayintegral) {
+		this.todayintegral = todayintegral;
+	}
+
+	public int getTodayconsumeintegral() {
+		return todayconsumeintegral;
+	}
+
+	public void setTodayconsumeintegral(int todayconsumeintegral) {
+		this.todayconsumeintegral = todayconsumeintegral;
+	}
+
 	private int qnum;
 	private int anum;
 	private int znum;
@@ -137,6 +153,8 @@ public class MessageNum implements Serializable {
 	private int afternum;//追问我的
 	private int status;  //用户状态 【0禁用 1未禁用】
 	private int curdayintegral;//当天积分数
+	private int todayintegral;//当天总积分
+	private int todayconsumeintegral;//当天消费
 
 	public static MessageNum parse(JSONObject response) throws IOException,
 			AppException {
@@ -158,6 +176,9 @@ public class MessageNum implements Serializable {
 		messageNum.setChartnum(response.optInt("chartnum"));
 		messageNum.setAfternum(response.optInt("afternum"));
 		messageNum.setCurdayintegral(response.optInt("curdayintegral"));
+		messageNum.setTodayintegral(response.optInt("todayintegral"));
+		messageNum.setTodayconsumeintegral(response.optInt("todayconsumeintegral"));
+
 		return messageNum;
 	}
 	

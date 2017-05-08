@@ -717,7 +717,7 @@ public class ActiveFragment extends BaseFragment {
 			}
 			CommonDialog dialog = DialogHelper.getPinterestDialogCancelable(getActivity());
 
-			String messageContent="您今天截至目前获得积分："+user.getTodayintegral();
+			String messageContent="您今天截至目前<br>获得的积分："+user.getTodayintegral();
 			messageContent+="<br>消费的积分："+user.getTodayconsumeintegral();
 			dialog.setMessage(messageContent);
 			dialog.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
@@ -725,7 +725,7 @@ public class ActiveFragment extends BaseFragment {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.dismiss();
 					//if (user.getCurdayintegral() != 0) {
-						clearCurDayIntegral();
+					clearCurDayIntegral();
 					//}
 				}
 			});

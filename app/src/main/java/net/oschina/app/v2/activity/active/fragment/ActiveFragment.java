@@ -23,6 +23,7 @@ import net.oschina.app.v2.ui.dialog.WaitDialog;
 import net.oschina.app.v2.utils.ActiveNumType;
 import net.oschina.app.v2.utils.BitmapLoaderUtil;
 import net.oschina.app.v2.utils.FastBlurUtil;
+import net.oschina.app.v2.utils.ShareUtil;
 import net.oschina.app.v2.utils.SimpleTextWatcher;
 import net.oschina.app.v2.utils.UIHelper;
 import net.oschina.app.v2.utils.ViewFinder;
@@ -457,15 +458,22 @@ public class ActiveFragment extends BaseFragment {
 		btnZhichi.setText(String.format("收到%d个支持",user.getSupportednum()));
 
 		tv_jifen.setText(user.getIntegral() + "分");
-		if(user.getCurdayintegral()>0){
-			tv_add_integral.setVisibility(View.VISIBLE);
-			tv_add_integral.setText(String.format("+%d", user.getCurdayintegral()));
-		}else if(user.getCurdayintegral()<0){
-			tv_add_integral.setVisibility(View.VISIBLE);
-			tv_add_integral.setText(String.format("%d", user.getCurdayintegral()));
-		} else{
+
+		//积分发生改变
+		if(ShareUtil.getIntValue(ShareUtil.ORIGINAL_INTEGRAL,0)!=user.getIntegral()){
+			if(user.getCurdayintegral()>0){
+				tv_add_integral.setVisibility(View.VISIBLE);
+				tv_add_integral.setText(String.format("+%d", user.getCurdayintegral()));
+			}else if(user.getCurdayintegral()<0){
+				tv_add_integral.setVisibility(View.VISIBLE);
+				tv_add_integral.setText(String.format("%d", user.getCurdayintegral()));
+			} else{
+				tv_add_integral.setVisibility(View.GONE);
+			}
+		}else{
 			tv_add_integral.setVisibility(View.GONE);
 		}
+
 
 		if (user.getRealname_status() == 1) {
 			tv_verify.setText("已认证");
@@ -742,12 +750,15 @@ public class ActiveFragment extends BaseFragment {
 			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 				try {
 					if (response.optInt("code") == 88) {
-						final User user = AppContext.instance().getLoginInfo();
+						/*final User user = AppContext.instance().getLoginInfo();
 						if (user == null || user.getCurdayintegral() == 0) {
 							return;
 						}
 						user.setCurdayintegral(0);
-						AppContext.instance().saveLoginInfo(user);
+						AppContext.instance().saveLoginInfo(user);*/
+
+						User user = AppContext.instance().getLoginInfo();
+						ShareUtil.setIntValue(ShareUtil.ORIGINAL_INTEGRAL,user.getIntegral());
 						tv_add_integral.setVisibility(View.GONE);
 					} else {
 						AppContext.showToast("操作失败");
@@ -873,15 +884,21 @@ public class ActiveFragment extends BaseFragment {
 		user.setCurdayintegral(message.getCurdayintegral());
 		user.setTodayintegral(message.getTodayintegral());
 		user.setTodayconsumeintegral(message.getTodayconsumeintegral());
+		user.setIntegral(message.getTotalintegral());
 		AppContext.instance().saveLoginInfo(user);
 
-		int newIntegral=message.getTodayintegral()-message.getTodayconsumeintegral();
-		if(newIntegral!=0){
-			tv_add_integral.setVisibility(View.VISIBLE);
-			if(newIntegral>0){
-				tv_add_integral.setText(String.format("+%d", newIntegral));
+		//积分发生改变
+		if(ShareUtil.getIntValue(ShareUtil.ORIGINAL_INTEGRAL,0)!=message.getTotalintegral()){
+			int newIntegral=message.getTodayintegral()-message.getTodayconsumeintegral();
+			if(newIntegral!=0){
+				tv_add_integral.setVisibility(View.VISIBLE);
+				if(newIntegral>0){
+					tv_add_integral.setText(String.format("+%d", newIntegral));
+				}else{
+					tv_add_integral.setText(String.format("%d", newIntegral));
+				}
 			}else{
-				tv_add_integral.setText(String.format("%d", newIntegral));
+				tv_add_integral.setVisibility(View.GONE);
 			}
 		}else{
 			tv_add_integral.setVisibility(View.GONE);

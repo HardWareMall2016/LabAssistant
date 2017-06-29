@@ -137,6 +137,14 @@ public class MessageNum implements Serializable {
 		this.todayconsumeintegral = todayconsumeintegral;
 	}
 
+	public int getTotalintegral() {
+		return totalintegral;
+	}
+
+	public void setTotalintegral(int totalintegral) {
+		this.totalintegral = totalintegral;
+	}
+
 	private int qnum;
 	private int anum;
 	private int znum;
@@ -155,6 +163,7 @@ public class MessageNum implements Serializable {
 	private int curdayintegral;//当天积分数
 	private int todayintegral;//当天总积分
 	private int todayconsumeintegral;//当天消费
+	private int totalintegral;//总积分
 
 	public static MessageNum parse(JSONObject response) throws IOException,
 			AppException {
@@ -178,6 +187,7 @@ public class MessageNum implements Serializable {
 		messageNum.setCurdayintegral(response.optInt("curdayintegral"));
 		messageNum.setTodayintegral(response.optInt("todayintegral"));
 		messageNum.setTodayconsumeintegral(response.optInt("todayconsumeintegral"));
+		messageNum.setTotalintegral(response.optInt("totalintegral"));
 
 		return messageNum;
 	}

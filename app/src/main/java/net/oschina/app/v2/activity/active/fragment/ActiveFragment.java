@@ -460,7 +460,7 @@ public class ActiveFragment extends BaseFragment {
 		tv_jifen.setText(user.getIntegral() + "分");
 
 		//积分发生改变
-		if(ShareUtil.getIntValue(ShareUtil.ORIGINAL_INTEGRAL,0)!=user.getIntegral()){
+
 			if(user.getCurdayintegral()>0){
 				tv_add_integral.setVisibility(View.VISIBLE);
 				tv_add_integral.setText(String.format("+%d", user.getCurdayintegral()));
@@ -470,9 +470,6 @@ public class ActiveFragment extends BaseFragment {
 			} else{
 				tv_add_integral.setVisibility(View.GONE);
 			}
-		}else{
-			tv_add_integral.setVisibility(View.GONE);
-		}
 
 
 		if (user.getRealname_status() == 1) {
@@ -726,7 +723,7 @@ public class ActiveFragment extends BaseFragment {
 			CommonDialog dialog = DialogHelper.getPinterestDialogCancelable(getActivity());
 
 			String messageContent="您今天截至目前<br>获得的积分："+user.getTodayintegral();
-			messageContent+="<br>消费的积分："+user.getTodayconsumeintegral();
+			/*messageContent+="<br>消费的积分："+user.getTodayconsumeintegral();*/
 			dialog.setMessage(messageContent);
 			dialog.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
 				@Override
@@ -750,15 +747,15 @@ public class ActiveFragment extends BaseFragment {
 			public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 				try {
 					if (response.optInt("code") == 88) {
-						/*final User user = AppContext.instance().getLoginInfo();
+						final User user = AppContext.instance().getLoginInfo();
 						if (user == null || user.getCurdayintegral() == 0) {
 							return;
 						}
 						user.setCurdayintegral(0);
-						AppContext.instance().saveLoginInfo(user);*/
+						AppContext.instance().saveLoginInfo(user);
 
-						User user = AppContext.instance().getLoginInfo();
-						ShareUtil.setIntValue(ShareUtil.ORIGINAL_INTEGRAL,user.getIntegral());
+						/*User user = AppContext.instance().getLoginInfo();
+						ShareUtil.setIntValue(ShareUtil.ORIGINAL_INTEGRAL,user.getIntegral());*/
 						tv_add_integral.setVisibility(View.GONE);
 					} else {
 						AppContext.showToast("操作失败");
@@ -817,7 +814,9 @@ public class ActiveFragment extends BaseFragment {
 								user.setIntegral(Integer.parseInt(integral));
 								AppContext.instance().saveLoginInfo(user);
 
-								int addIntegra = Integer.parseInt(integral) - preIntegral;
+								int newintegral=user.getCurdayintegral();
+
+								int addIntegra = Integer.parseInt(integral) - preIntegral+newintegral;
 								if (addIntegra > 0) {
 									tv_add_integral.setText(String.format("+%d", addIntegra));
 									user.setIntegral(Integer.parseInt(integral));
@@ -888,19 +887,13 @@ public class ActiveFragment extends BaseFragment {
 		AppContext.instance().saveLoginInfo(user);
 
 		//积分发生改变
-		if(ShareUtil.getIntValue(ShareUtil.ORIGINAL_INTEGRAL,0)!=message.getTotalintegral()){
-			int newIntegral=message.getTodayintegral()-message.getTodayconsumeintegral();
-			if(newIntegral!=0){
-				tv_add_integral.setVisibility(View.VISIBLE);
-				if(newIntegral>0){
-					tv_add_integral.setText(String.format("+%d", newIntegral));
-				}else{
-					tv_add_integral.setText(String.format("%d", newIntegral));
-				}
-			}else{
-				tv_add_integral.setVisibility(View.GONE);
-			}
-		}else{
+		if(user.getCurdayintegral()>0){
+			tv_add_integral.setVisibility(View.VISIBLE);
+			tv_add_integral.setText(String.format("+%d", user.getCurdayintegral()));
+		}else if(user.getCurdayintegral()<0){
+			tv_add_integral.setVisibility(View.VISIBLE);
+			tv_add_integral.setText(String.format("%d", user.getCurdayintegral()));
+		} else{
 			tv_add_integral.setVisibility(View.GONE);
 		}
 	}

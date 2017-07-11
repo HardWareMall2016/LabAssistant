@@ -25,7 +25,7 @@ public class ShareUtil {
     public static final String VALUE_TURN_ON ="1";
 
     //原积分
-    public static final String ORIGINAL_INTEGRAL = "originalIntegral";
+    //public static final String ORIGINAL_INTEGRAL = "originalIntegral";
 
 
     private static SharedPreferences getInstance() {

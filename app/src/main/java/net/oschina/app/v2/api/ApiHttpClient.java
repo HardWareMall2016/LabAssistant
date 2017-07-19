@@ -20,7 +20,7 @@ public class ApiHttpClient {
 	// http://www.oschina.net/action/oauth2/authorize?response_type=code&client_id=F6QtiYRetdUEwsYKYvNR&state=xyz&redirect_uri=http://my.oschina.net/u/142883
 	// public final static String HOST = "phpapi.ccjjj.net";
 	//public final static String HOST = "ws.shiyanzhushou.com";
-	public final static String HOST = "test.shiyanzhushou.com";
+
 	private static String API_URL;
 	public static String ASSET_URL = "http://ws.shiyanzhushou.com/%s";
 	public static String ATTRIB_ASSET_URL = "http://ws.shiyanzhushou.com/%s";
@@ -28,11 +28,13 @@ public class ApiHttpClient {
 	public static final String DELETE = "DELETE";
 
 	//测试环境
-	public static String DEV_API_URL = "http://test.shiyanzhushou.com/%s";
-	public static String DEV_API_IMAGE_URL = "http://test.shiyanzhushou.com/%s";
+	//public final static String HOST = "test.shiyanzhushou.com";
+	/*public static String DEV_API_URL = "http://test.shiyanzhushou.com/%s";
+	public static String DEV_API_IMAGE_URL = "http://test.shiyanzhushou.com/%s";*/
 	//生产环境
-	/*public static String DEV_API_URL = "http://ws.shiyanzhushou.com/%s";
-	public static String DEV_API_IMAGE_URL = "http://ws.shiyanzhushou.com/%s";*/
+	public final static String HOST = "ws.shiyanzhushou.com";
+	public static String DEV_API_URL = "http://ws.shiyanzhushou.com/%s";
+	public static String DEV_API_IMAGE_URL = "http://ws.shiyanzhushou.com/%s";
 
 	public static final String GET = "GET";
 	public static final String POST = "POST";
